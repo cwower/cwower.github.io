@@ -128,6 +128,43 @@ timezone: 时区
       </tags>
   </entry>
   <entry>
+    <title>好用的Markdown编辑器 —— Pad2 和 Typora</title>
+    <url>/2018/04/21/Pad2%E5%92%8CTypora/</url>
+    <content><![CDATA[<blockquote>
+<p>前言：<br><del>选用“<a href="http://markdownpad.com/">MarkdownPad 2</a>”作为文档编写工具的原因：方便，支持实时预览</del>。<br><strong>[更新]：<code>目前已经由”MarkdownPad 2“转用”Typora“，但本文内容仍然有效</code>。</strong></p>
+</blockquote>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/markdownpad2.png?x-oss-process=style/watermark" alt="md pad 2"></p>
+<hr>
+<h2 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h2><ul>
+<li>MarkdownPad 2 的官网下载地址： <a href="http://markdownpad.com/">http://markdownpad.com/</a></li>
+<li>个人网盘下载（附激活码），点击【<a href="https://pan.baidu.com/s/1Aym5-XRNMuWupvOTIdFHNA">链接</a>】， 提取码：ib02 </li>
+</ul>
+<h2 id="2-破解"><a href="#2-破解" class="headerlink" title="2. 破解"></a>2. 破解</h2><p>安装完毕后，首次启动提示激活，如下图：点击<code>”Enter Key“</code> —&gt; 键入<code>”Email address“</code>和<code>”License key“</code></p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/mdpad2_enterkey.png?x-oss-process=style/watermark" alt="mdpad2_enterkey"></p>
+<h2 id="3-异常"><a href="#3-异常" class="headerlink" title="3. 异常"></a>3. 异常</h2><h3 id="3-1-http渲染"><a href="#3-1-http渲染" class="headerlink" title="3.1 http渲染"></a>3.1 http渲染</h3><p><strong>安装激活后提示</strong>：</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/erro_html_readering.png?x-oss-process=style/watermark" alt="erro_html_readering"></p>
+<p><strong>解决方案</strong>：<br>安装一个SDK的工具包，【<a href="http://markdownpad.com/download/awesomium_v1.6.6_sdk_win.exe">点击获取</a>】，重启pad2即可。</p>
+<h3 id="3-2-PDF格式转换"><a href="#3-2-PDF格式转换" class="headerlink" title="3.2 PDF格式转换"></a>3.2 PDF格式转换</h3><p><strong>问题描述</strong>：<br>”.md“文件中包含”https“的图片链接，通过Mdpad2可以进行预览展示，但使用Mdpad2将其导出为“pdf”文件后，包含”https“的图片链接无法通过”pdf“显示。如果你没有导出需求，可以忽略该问题。</p>
+<p><strong>解决方案</strong>：<br>可以考虑结合使用”<a href="https://www.typora.io/">Typora</a>“进行转换，它也是一款Markdown编辑器，轻便简洁，支持即时渲染技术。</p>
+<p>或者。。。直接放弃”MarkdownPad 2“转而使用”Typora“，这两种MarkDown编辑器都比较亲民。</p>
+<pre><code>”MarkdownPad 2“有左右两个分页窗口，实时预览效果比较好。
+”Typora“刚刚使用，给我的感觉就是简洁，自定义功能较多。
+</code></pre>
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!--  https://blog.csdn.net/xiaojin21cen/article/details/78752561  -->  
+<!--  https://blog.csdn.net/kuangay/article/details/79854665  -->  
+
+]]></content>
+      <categories>
+        <category>Tools</category>
+      </categories>
+      <tags>
+        <tag>markdown</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hello World</title>
     <url>/2021/01/31/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -145,6 +182,228 @@ timezone: 时区
       </categories>
       <tags>
         <tag>Github&amp;Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>markdown语法</title>
+    <url>/2018/04/21/markdown%E8%AF%AD%E6%B3%95/</url>
+    <content><![CDATA[<blockquote>
+<p>前言：  </p>
+</blockquote>
+<p>Markdown是一种纯文本格式的标记语言。通过简单的标记语法，它可以使普通文本内容具有一定的格式。</p>
+<p>Markdown语法主要分为如下几大部分： **标题，段落，区块引用，代码区块，强调，列表，分割线，链接，图片，反斜杠 \，符号’`’**。</p>
+<h1 id="一、基础语法"><a href="#一、基础语法" class="headerlink" title="一、基础语法"></a>一、基础语法</h1><h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><p>文章内容较多时，可以用标题分段，在想要设置为标题的文字前面加#来表示。<br>一个#是一级标题，二个#是二级标题，以此类推。可表示1-6级标题。<br>标准格式一般在#后跟个空格在写标题，如”# 社会”。</p>
+<p><strong>示例</strong>：  </p>
+<pre><code># 一级标题
+## 二级标题
+### 三级标题
+#### 四级标题
+##### 五级标题
+###### 六级标题
+</code></pre>
+<hr>
+<h2 id="段落-换行"><a href="#段落-换行" class="headerlink" title="段落/换行"></a>段落/换行</h2><p>如果另起一行，只需在当前行结尾加 2 个空格<br>若想在段内强制换行的方式是使用两个以上空格加上回车（引用中换行省略回车）。</p>
+<hr>
+<h2 id="空行"><a href="#空行" class="headerlink" title="空行"></a>空行</h2><pre><code>&amp;nbsp;
+</code></pre>
+<hr>
+<h2 id="强调"><a href="#强调" class="headerlink" title="强调"></a>强调</h2><p><strong>示例</strong>：</p>
+<pre><code>**粗体**
+__粗体__
+_斜体_
+</code></pre>
+<p><strong>效果</strong>：</p>
+<blockquote>
+<p><strong>粗体</strong><br><strong>粗体</strong><br><em>斜体</em></p>
+</blockquote>
+<hr>
+<h2 id="代码区块"><a href="#代码区块" class="headerlink" title="代码区块"></a>代码区块</h2><p>通常编辑器根据代码片段适配合适的高亮方法，但你也可以用 ``` 包裹一段代码，并指定一种语言</p>
+<pre><code><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">void main()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Hello, Markdown.&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</code></pre>
+<p>也可以使用 4 空格缩进，再贴上代码，实现相同的的效果</p>
+<pre><code>    void main()
+    &#123;
+        printf(&quot;Hello, Markdown.&quot;);
+    &#125;
+</code></pre>
+<p>如你不需要代码高亮，可以用下面的方法禁用：</p>
+<pre><code><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">    &#96;&#96;&#96;</span><br><span class="line"></span><br><span class="line">**注**：需要和普通段落之间存在空行。</span><br><span class="line"></span><br><span class="line">- - -</span><br><span class="line"></span><br><span class="line">## 列表</span><br><span class="line">**无序列表**：</span><br><span class="line"></span><br><span class="line">    - 列表文本前使用 [减号+空格]</span><br><span class="line">    + 列表文本前使用 [加号+空格]</span><br><span class="line">    * 列表文本前使用 [星号+空格]</span><br><span class="line"></span><br><span class="line">**有序列表**：</span><br><span class="line"></span><br><span class="line">    1. 列表前使用 [数字+&quot;.&quot;+空格]</span><br><span class="line">    3. 我们会自动帮你添加数字</span><br><span class="line">    1. 不用担心数字编号，显示的时候会自动排序</span><br><span class="line"></span><br><span class="line">**列表嵌套**:</span><br><span class="line"></span><br><span class="line">    1. 列出所有元素：</span><br><span class="line">        - 无序列表元素 A</span><br><span class="line">            1. 元素 A 的有序子列表</span><br><span class="line">        - 前面加四个空格</span><br><span class="line">    2. 列表里的多段换行：</span><br><span class="line">        前面必须加四个空格，</span><br><span class="line">        这样换行，整体的格式不会乱</span><br><span class="line">    3. 列表里引用：</span><br><span class="line"></span><br><span class="line">        &gt; 前面空一行</span><br><span class="line">        &gt; 仍然需要在 &gt; 前面加四个空格</span><br><span class="line"></span><br><span class="line">    4. 列表里代码段：</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+    前面四个空格，之后按代码语法 ``` 书写
+    <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">            或者直接空八个，引入代码块</span><br><span class="line"></span><br><span class="line">- - -</span><br><span class="line"></span><br><span class="line">## 引用</span><br><span class="line">**普通引用**：</span><br><span class="line"></span><br><span class="line">    &gt; 引用文本前使用 [大于号+空格]</span><br><span class="line">    &gt; 新起一行</span><br><span class="line"></span><br><span class="line">**引用里嵌套引用**：</span><br><span class="line"></span><br><span class="line">    &gt; 最外层引用</span><br><span class="line">    &gt; &gt; 多一个 &gt; 嵌套一层引用</span><br><span class="line">    &gt; &gt; &gt; 可以嵌套很多层</span><br><span class="line"></span><br><span class="line">**引用里嵌套列表**：</span><br><span class="line"></span><br><span class="line">    &gt; - 这是引用里嵌套的一个列表</span><br><span class="line">    &gt; - 还可以有子列表</span><br><span class="line">    &gt; * 子列表需要从 - 之后延后四个空格开始</span><br><span class="line"></span><br><span class="line">**引用里嵌套代码块**：</span><br><span class="line"></span><br><span class="line">    &gt; 同样的，在前面加四个空格形成代码块</span><br><span class="line">    &gt;  </span><br></pre></td></tr></table></figure>
+&gt; 或者使用 ``` 形成代码块
+&gt; ```
+</code></pre>
+<hr>
+<h2 id="分割线"><a href="#分割线" class="headerlink" title="分割线"></a>分割线</h2><p>分割线最常使用就是三个或以上<em>，还可以使用-和_。例：”</em> * * “ or “- - -“、”_ _ _”<br><strong>示例</strong>：</p>
+<pre><code>***
+* * *
+- - -
+_ _ _
+</code></pre>
+<p><strong>效果</strong>：</p>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<h2 id="删除线"><a href="#删除线" class="headerlink" title="删除线"></a>删除线</h2><p><strong>示例</strong>：</p>
+<pre><code>~~删除线~~
+</code></pre>
+<p><strong>效果</strong>：</p>
+<blockquote>
+<p><del>删除线</del></p>
+</blockquote>
+<hr>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><strong>示例</strong>：</p>
+<blockquote>
+<p>[孙红雷的博客](<a href="https://www.cnblogs.com/sunhongleibibi/">https://www.cnblogs.com/sunhongleibibi/</a>)</p>
+</blockquote>
+<p><strong>效果</strong>：</p>
+<blockquote>
+<p><a href="https://www.cnblogs.com/sunhongleibibi/">孙红雷的博客</a></p>
+</blockquote>
+<hr>
+<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><p>添加图片的形式和链接相似，只需在链接的基础上前方加一个！。</p>
+<blockquote>
+<p>![自定义名称](imageurl)</p>
+</blockquote>
+<hr>
+<h2 id="反义符"><a href="#反义符" class="headerlink" title="反义符"></a>反义符</h2><p>如果你的描述中需要用到 markdown 的符号，比如 _ # * 等，但又不想它被转义，这时候可以在这些符号前加反斜杠，如 _ # * 进行避免。</p>
+<pre><code>\_不想这里的文本变斜体\_
+\*\*不想这里的文本被加粗\*\*
+</code></pre>
+<hr>
+<h2 id="折叠栏位"><a href="#折叠栏位" class="headerlink" title="折叠栏位"></a>折叠栏位</h2><p><strong>注</strong>：有的编辑器好像不支持，本节为扩展学习</p>
+<p><strong>示例：</strong></p>
+<pre><code>&lt;details&gt;
+&lt;summary&gt;这里是折叠标签&lt;/summary&gt;
+`这里写代码aaa`
+`这里写代码bbb`
+&lt;/details&gt;
+</code></pre>
+<p><strong>展示：</strong></p>
+<details>
+<summary>这里是折叠标签</summary>
+`这里写代码aaa`
+`这里写代码bbb`
+</details>
+
+<hr>
+<h2 id="隐藏代码"><a href="#隐藏代码" class="headerlink" title="隐藏代码"></a>隐藏代码</h2><pre><code># 语法
+&lt;!--隐藏--&gt;
+</code></pre>
+<hr>
+<h1 id="二、markdowb表格"><a href="#二、markdowb表格" class="headerlink" title="二、markdowb表格"></a>二、markdowb表格</h1><h2 id="1-极简方法"><a href="#1-极简方法" class="headerlink" title="1. 极简方法"></a>1. 极简方法</h2><pre><code>name | 价格 | 数量
+-|-|-
+香蕉 | $1 | 5
+苹果 | $1 | 6
+草莓 | $1 | 7
+</code></pre>
+<p><strong>效果</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>价格</th>
+<th>数量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>香蕉</td>
+<td>$1</td>
+<td>5</td>
+</tr>
+<tr>
+<td>苹果</td>
+<td>$1</td>
+<td>6</td>
+</tr>
+<tr>
+<td>草莓</td>
+<td>$1</td>
+<td>7</td>
+</tr>
+</tbody></table>
+<h2 id="2-简单"><a href="#2-简单" class="headerlink" title="2. 简单"></a>2. 简单</h2><pre><code>name | 111 | 222 | 333 | 444
+- | :-: | :-: | :-: | -:
+aaa | bbb | ccc | ddd | eee| 
+fff | ggg| hhh | iii | 000|
+</code></pre>
+<p><strong>效果</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th align="center">111</th>
+<th align="center">222</th>
+<th align="center">333</th>
+<th align="right">444</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>aaa</td>
+<td align="center">bbb</td>
+<td align="center">ccc</td>
+<td align="center">ddd</td>
+<td align="right">eee</td>
+</tr>
+<tr>
+<td>fff</td>
+<td align="center">ggg</td>
+<td align="center">hhh</td>
+<td align="center">iii</td>
+<td align="right">000</td>
+</tr>
+</tbody></table>
+<h2 id="3-原生方法"><a href="#3-原生方法" class="headerlink" title="3. 原生方法"></a>3. 原生方法</h2><pre><code>name | 111 | 222 | 333 | 444
+:-: | :-: | :-: | :-: | :-:
+aaa | bbb | ccc | ddd | eee| 
+fff | ggg| hhh | iii | 000|
+</code></pre>
+<p><strong>效果</strong>：</p>
+<table>
+<thead>
+<tr>
+<th align="center">name</th>
+<th align="center">111</th>
+<th align="center">222</th>
+<th align="center">333</th>
+<th align="center">444</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">aaa</td>
+<td align="center">bbb</td>
+<td align="center">ccc</td>
+<td align="center">ddd</td>
+<td align="center">eee</td>
+</tr>
+<tr>
+<td align="center">fff</td>
+<td align="center">ggg</td>
+<td align="center">hhh</td>
+<td align="center">iii</td>
+<td align="center">000</td>
+</tr>
+</tbody></table>
+<h2 id="4-语法说明"><a href="#4-语法说明" class="headerlink" title="4. 语法说明"></a>4. 语法说明</h2><p>  简单方法虽然是稍微简单了些，但是前后因为没有格式所以第一列和最后一列没有居中，对于极简方式来说还相当繁琐。极简方式简单，但是都是左对齐。原生方式格式更美观。个人意见强迫症患者请用原生方式，其他请随意。</p>
+<ul>
+<li>|、-、:之间的多余空格会被忽略，不影响布局。</li>
+<li>默认标题栏居中对齐，内容居左对齐。</li>
+<li>-:表示内容和标题栏居右对齐，:-表示内容和标题栏居左对齐，:-:表示内容和标题栏居中对齐。</li>
+<li>内容和|之间的多余空格会被忽略，每行第一个|和最后一个|可以省略，-的数量至少有一个</li>
+</ul>
+<p>&nbsp;</p>
+<!--  **参考文档**：  -->
+<!--  https://www.w3cschool.cn/markdownyfsm/  -->
+<!--  https://segmentfault.com/markdown/  -->
+
+]]></content>
+      <categories>
+        <category>Tools</category>
+      </categories>
+      <tags>
+        <tag>markdown</tag>
       </tags>
   </entry>
 </search>
