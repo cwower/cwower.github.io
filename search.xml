@@ -1,63 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>好用的Markdown编辑器 —— Pad2 和 Typora</title>
-    <url>/2018/04/21/Pad2%E5%92%8CTypora/</url>
-    <content><![CDATA[<blockquote>
-<p>前言：<br><del>选用“<a href="http://markdownpad.com/">MarkdownPad 2</a>”作为文档编写工具的原因：方便，支持实时预览</del>。<br><strong>[更新]：<code>目前已经由”MarkdownPad 2“转用”Typora“，但本文内容仍然有效</code>。</strong></p>
-</blockquote>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/markdownpad2.png?x-oss-process=style/watermark" alt="md pad 2"></p>
-<hr>
-<h2 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h2><ul>
-<li>MarkdownPad 2 的官网下载地址： <a href="http://markdownpad.com/">http://markdownpad.com/</a></li>
-<li>个人网盘下载（附激活码），点击【<a href="https://pan.baidu.com/s/1Aym5-XRNMuWupvOTIdFHNA">链接</a>】， 提取码：ib02 </li>
-</ul>
-<h2 id="2-破解"><a href="#2-破解" class="headerlink" title="2. 破解"></a>2. 破解</h2><p>安装完毕后，首次启动提示激活，如下图：点击<code>”Enter Key“</code> —&gt; 键入<code>”Email address“</code>和<code>”License key“</code></p>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/mdpad2_enterkey.png?x-oss-process=style/watermark" alt="mdpad2_enterkey"></p>
-<h2 id="3-异常"><a href="#3-异常" class="headerlink" title="3. 异常"></a>3. 异常</h2><h3 id="3-1-http渲染"><a href="#3-1-http渲染" class="headerlink" title="3.1 http渲染"></a>3.1 http渲染</h3><p><strong>安装激活后提示</strong>：</p>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/erro_html_readering.png?x-oss-process=style/watermark" alt="erro_html_readering"></p>
-<p><strong>解决方案</strong>：<br>安装一个SDK的工具包，【<a href="http://markdownpad.com/download/awesomium_v1.6.6_sdk_win.exe">点击获取</a>】，重启pad2即可。</p>
-<h3 id="3-2-PDF格式转换"><a href="#3-2-PDF格式转换" class="headerlink" title="3.2 PDF格式转换"></a>3.2 PDF格式转换</h3><p><strong>问题描述</strong>：<br>”.md“文件中包含”https“的图片链接，通过Mdpad2可以进行预览展示，但使用Mdpad2将其导出为“pdf”文件后，包含”https“的图片链接无法通过”pdf“显示。如果你没有导出需求，可以忽略该问题。</p>
-<p><strong>解决方案</strong>：<br>可以考虑结合使用”<a href="https://www.typora.io/">Typora</a>“进行转换，它也是一款Markdown编辑器，轻便简洁，支持即时渲染技术。</p>
-<p>或者。。。直接放弃”MarkdownPad 2“转而使用”Typora“，这两种MarkDown编辑器都比较亲民。</p>
-<pre><code>”MarkdownPad 2“有左右两个分页窗口，实时预览效果比较好。
-”Typora“刚刚使用，给我的感觉就是简洁，自定义功能较多。
-</code></pre>
-<hr>
-<p>&nbsp;  </p>
-<!--**参考文章**：-->  
-<!--  https://blog.csdn.net/xiaojin21cen/article/details/78752561  -->  
-<!--  https://blog.csdn.net/kuangay/article/details/79854665  -->  
-
-]]></content>
-      <categories>
-        <category>Tools</category>
-      </categories>
-      <tags>
-        <tag>markdown</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2021/01/31/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-      <categories>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Github&amp;Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hexo 食用说明</title>
     <url>/2021/01/31/Github-Pages_Hexo/</url>
     <content><![CDATA[<h1 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h1><p><strong>部署环境</strong>：</p>
@@ -185,6 +128,63 @@ timezone: 时区
       </tags>
   </entry>
   <entry>
+    <title>好用的Markdown编辑器 —— Pad2 和 Typora</title>
+    <url>/2018/04/21/Pad2%E5%92%8CTypora/</url>
+    <content><![CDATA[<blockquote>
+<p>前言：<br><del>选用“<a href="http://markdownpad.com/">MarkdownPad 2</a>”作为文档编写工具的原因：方便，支持实时预览</del>。<br><strong>[更新]：<code>目前已经由”MarkdownPad 2“转用”Typora“，但本文内容仍然有效</code>。</strong></p>
+</blockquote>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/markdownpad2.png?x-oss-process=style/watermark" alt="md pad 2"></p>
+<hr>
+<h2 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h2><ul>
+<li>MarkdownPad 2 的官网下载地址： <a href="http://markdownpad.com/">http://markdownpad.com/</a></li>
+<li>个人网盘下载（附激活码），点击【<a href="https://pan.baidu.com/s/1Aym5-XRNMuWupvOTIdFHNA">链接</a>】， 提取码：ib02 </li>
+</ul>
+<h2 id="2-破解"><a href="#2-破解" class="headerlink" title="2. 破解"></a>2. 破解</h2><p>安装完毕后，首次启动提示激活，如下图：点击<code>”Enter Key“</code> —&gt; 键入<code>”Email address“</code>和<code>”License key“</code></p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/mdpad2_enterkey.png?x-oss-process=style/watermark" alt="mdpad2_enterkey"></p>
+<h2 id="3-异常"><a href="#3-异常" class="headerlink" title="3. 异常"></a>3. 异常</h2><h3 id="3-1-http渲染"><a href="#3-1-http渲染" class="headerlink" title="3.1 http渲染"></a>3.1 http渲染</h3><p><strong>安装激活后提示</strong>：</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/erro_html_readering.png?x-oss-process=style/watermark" alt="erro_html_readering"></p>
+<p><strong>解决方案</strong>：<br>安装一个SDK的工具包，【<a href="http://markdownpad.com/download/awesomium_v1.6.6_sdk_win.exe">点击获取</a>】，重启pad2即可。</p>
+<h3 id="3-2-PDF格式转换"><a href="#3-2-PDF格式转换" class="headerlink" title="3.2 PDF格式转换"></a>3.2 PDF格式转换</h3><p><strong>问题描述</strong>：<br>”.md“文件中包含”https“的图片链接，通过Mdpad2可以进行预览展示，但使用Mdpad2将其导出为“pdf”文件后，包含”https“的图片链接无法通过”pdf“显示。如果你没有导出需求，可以忽略该问题。</p>
+<p><strong>解决方案</strong>：<br>可以考虑结合使用”<a href="https://www.typora.io/">Typora</a>“进行转换，它也是一款Markdown编辑器，轻便简洁，支持即时渲染技术。</p>
+<p>或者。。。直接放弃”MarkdownPad 2“转而使用”Typora“，这两种MarkDown编辑器都比较亲民。</p>
+<pre><code>”MarkdownPad 2“有左右两个分页窗口，实时预览效果比较好。
+”Typora“刚刚使用，给我的感觉就是简洁，自定义功能较多。
+</code></pre>
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!--  https://blog.csdn.net/xiaojin21cen/article/details/78752561  -->  
+<!--  https://blog.csdn.net/kuangay/article/details/79854665  -->  
+
+]]></content>
+      <categories>
+        <category>Tools</category>
+      </categories>
+      <tags>
+        <tag>markdown</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2021/01/31/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Github&amp;Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>markdown语法</title>
     <url>/2018/04/21/markdown%E8%AF%AD%E6%B3%95/</url>
     <content><![CDATA[<blockquote>
@@ -281,175 +281,105 @@ _斜体_
 <p><strong>引用里嵌套代码块</strong>：</p>
 <pre><code>&gt; 同样的，在前面加四个空格形成代码块
 &gt;  
-&gt; ```
-&gt; 或者使用 ``` 形成代码块
-&gt; ```  
+&gt; <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">或者使用 &#96;&#96;&#96; 形成代码块</span><br><span class="line">&#96;&#96;&#96;  </span><br><span class="line">   </span><br><span class="line"></span><br><span class="line">- - -</span><br><span class="line"></span><br><span class="line">## 分割线</span><br><span class="line">分割线最常使用就是三个或以上*，还可以使用-和_。例：&quot;* * * &quot; or &quot;- - -&quot;、&quot;_ _ _&quot;</span><br><span class="line">**示例**：</span><br><span class="line"></span><br><span class="line">   ***</span><br><span class="line">   * * *</span><br><span class="line">   - - -</span><br><span class="line">   _ _ _</span><br><span class="line"></span><br><span class="line">**效果**：</span><br><span class="line"></span><br><span class="line">***</span><br><span class="line"></span><br><span class="line">* * *</span><br><span class="line"></span><br><span class="line">- - -</span><br><span class="line"></span><br><span class="line">_ _ _</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- - -</span><br><span class="line"></span><br><span class="line">## 删除线</span><br><span class="line">**示例**：</span><br><span class="line"></span><br><span class="line">   ~~删除线~~</span><br><span class="line"></span><br><span class="line">**效果**：</span><br><span class="line">~~删除线~~</span><br><span class="line"></span><br><span class="line">- - -</span><br><span class="line"></span><br><span class="line">## 文字超链接</span><br><span class="line">**示例**：</span><br><span class="line">\[孙红雷的博客\](https:&#x2F;&#x2F;www.cnblogs.com&#x2F;sunhongleibibi&#x2F;)</span><br><span class="line"></span><br><span class="line">**效果**：</span><br><span class="line">[孙红雷的博客](https:&#x2F;&#x2F;www.cnblogs.com&#x2F;sunhongleibibi&#x2F;)</span><br><span class="line"></span><br><span class="line">- - -</span><br><span class="line"></span><br><span class="line">## 图片展示</span><br><span class="line">添加图片的形式和链接相似，只需在链接的基础上前方加一个！。</span><br><span class="line">\!\[自定义名称\](imageurl)</span><br><span class="line"></span><br><span class="line">## 图片超链接：</span><br><span class="line">**示例**：</span><br></pre></td></tr></table></figure>
 </code></pre>
-<hr>
-<h2 id="分割线"><a href="#分割线" class="headerlink" title="分割线"></a>分割线</h2><p>分割线最常使用就是三个或以上<em>，还可以使用-和_。例：”</em> * * “ or “- - -“、”_ _ _”<br><strong>示例</strong>：</p>
-<pre><code>***
-* * *
+<p><a href="%E4%BD%A0%E7%9A%84%E9%93%BE%E6%8E%A5%E5%9C%B0%E5%9D%80"><img src="http://path/to/img.jpg" alt="alt text" title="title"></a></p>
+<pre><code>
 - - -
-_ _ _
-</code></pre>
-<p><strong>效果</strong>：</p>
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
-<h2 id="删除线"><a href="#删除线" class="headerlink" title="删除线"></a>删除线</h2><p><strong>示例</strong>：</p>
-<pre><code>~~删除线~~
-</code></pre>
-<p><strong>效果</strong>：</p>
-<blockquote>
-<p><del>删除线</del></p>
-</blockquote>
-<hr>
-<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><strong>示例</strong>：</p>
-<blockquote>
-<p>[孙红雷的博客](<a href="https://www.cnblogs.com/sunhongleibibi/">https://www.cnblogs.com/sunhongleibibi/</a>)</p>
-</blockquote>
-<p><strong>效果</strong>：</p>
-<blockquote>
-<p><a href="https://www.cnblogs.com/sunhongleibibi/">孙红雷的博客</a></p>
-</blockquote>
-<hr>
-<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><p>添加图片的形式和链接相似，只需在链接的基础上前方加一个！。</p>
-<blockquote>
-<p>![自定义名称](imageurl)</p>
-</blockquote>
-<hr>
-<h2 id="反义符"><a href="#反义符" class="headerlink" title="反义符"></a>反义符</h2><p>如果你的描述中需要用到 markdown 的符号，比如 _ # * 等，但又不想它被转义，这时候可以在这些符号前加反斜杠，如 _ # * 进行避免。</p>
-<pre><code>\_不想这里的文本变斜体\_
-\*\*不想这里的文本被加粗\*\*
-</code></pre>
-<hr>
-<h2 id="折叠栏位"><a href="#折叠栏位" class="headerlink" title="折叠栏位"></a>折叠栏位</h2><p><strong>注</strong>：有的编辑器好像不支持，本节为扩展学习</p>
-<p><strong>示例：</strong></p>
-<pre><code>&lt;details&gt;
+
+## 反义符
+如果你的描述中需要用到 markdown 的符号，比如 _ # * 等，但又不想它被转义，这时候可以在这些符号前加反斜杠，如 \_ \# \* 进行避免。
+
+    \_不想这里的文本变斜体\_
+    \*\*不想这里的文本被加粗\*\*
+
+- - -
+
+## 折叠栏位
+**注**：有的编辑器好像不支持，本节为扩展学习
+
+**示例：**
+
+    &lt;details&gt;
+    &lt;summary&gt;这里是折叠标签&lt;/summary&gt;
+    `这里写代码aaa`
+    `这里写代码bbb`
+    &lt;/details&gt;
+
+**展示：**
+&lt;details&gt;
 &lt;summary&gt;这里是折叠标签&lt;/summary&gt;
 `这里写代码aaa`
 `这里写代码bbb`
 &lt;/details&gt;
-</code></pre>
-<p><strong>展示：</strong></p>
-<details>
-<summary>这里是折叠标签</summary>
-`这里写代码aaa`
-`这里写代码bbb`
-</details>
 
-<hr>
-<h2 id="隐藏代码"><a href="#隐藏代码" class="headerlink" title="隐藏代码"></a>隐藏代码</h2><pre><code># 语法
-&lt;!--隐藏--&gt;
-</code></pre>
-<hr>
-<h1 id="二、markdowb表格"><a href="#二、markdowb表格" class="headerlink" title="二、markdowb表格"></a>二、markdowb表格</h1><h2 id="1-极简方法"><a href="#1-极简方法" class="headerlink" title="1. 极简方法"></a>1. 极简方法</h2><pre><code>name | 价格 | 数量
+- - -
+
+## 隐藏代码
+    # 语法
+    &lt;!--隐藏--&gt;
+
+- - -
+
+# 二、markdowb表格
+## 1. 极简方法
+
+    name | 价格 | 数量
+    -|-|-
+    香蕉 | $1 | 5
+    苹果 | $1 | 6
+    草莓 | $1 | 7
+
+**效果**：
+
+name | 价格 | 数量
 -|-|-
 香蕉 | $1 | 5
 苹果 | $1 | 6
 草莓 | $1 | 7
-</code></pre>
-<p><strong>效果</strong>：</p>
-<table>
-<thead>
-<tr>
-<th>name</th>
-<th>价格</th>
-<th>数量</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>香蕉</td>
-<td>$1</td>
-<td>5</td>
-</tr>
-<tr>
-<td>苹果</td>
-<td>$1</td>
-<td>6</td>
-</tr>
-<tr>
-<td>草莓</td>
-<td>$1</td>
-<td>7</td>
-</tr>
-</tbody></table>
-<h2 id="2-简单"><a href="#2-简单" class="headerlink" title="2. 简单"></a>2. 简单</h2><pre><code>name | 111 | 222 | 333 | 444
+
+## 2. 简单
+
+    name | 111 | 222 | 333 | 444
+    - | :-: | :-: | :-: | -:
+    aaa | bbb | ccc | ddd | eee| 
+    fff | ggg| hhh | iii | 000|
+
+**效果**：
+
+name | 111 | 222 | 333 | 444
 - | :-: | :-: | :-: | -:
 aaa | bbb | ccc | ddd | eee| 
 fff | ggg| hhh | iii | 000|
-</code></pre>
-<p><strong>效果</strong>：</p>
-<table>
-<thead>
-<tr>
-<th>name</th>
-<th align="center">111</th>
-<th align="center">222</th>
-<th align="center">333</th>
-<th align="right">444</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>aaa</td>
-<td align="center">bbb</td>
-<td align="center">ccc</td>
-<td align="center">ddd</td>
-<td align="right">eee</td>
-</tr>
-<tr>
-<td>fff</td>
-<td align="center">ggg</td>
-<td align="center">hhh</td>
-<td align="center">iii</td>
-<td align="right">000</td>
-</tr>
-</tbody></table>
-<h2 id="3-原生方法"><a href="#3-原生方法" class="headerlink" title="3. 原生方法"></a>3. 原生方法</h2><pre><code>name | 111 | 222 | 333 | 444
+
+## 3. 原生方法
+
+    name | 111 | 222 | 333 | 444
+    :-: | :-: | :-: | :-: | :-:
+    aaa | bbb | ccc | ddd | eee| 
+    fff | ggg| hhh | iii | 000|
+
+**效果**：
+
+name | 111 | 222 | 333 | 444
 :-: | :-: | :-: | :-: | :-:
 aaa | bbb | ccc | ddd | eee| 
 fff | ggg| hhh | iii | 000|
-</code></pre>
-<p><strong>效果</strong>：</p>
-<table>
-<thead>
-<tr>
-<th align="center">name</th>
-<th align="center">111</th>
-<th align="center">222</th>
-<th align="center">333</th>
-<th align="center">444</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">aaa</td>
-<td align="center">bbb</td>
-<td align="center">ccc</td>
-<td align="center">ddd</td>
-<td align="center">eee</td>
-</tr>
-<tr>
-<td align="center">fff</td>
-<td align="center">ggg</td>
-<td align="center">hhh</td>
-<td align="center">iii</td>
-<td align="center">000</td>
-</tr>
-</tbody></table>
-<h2 id="4-语法说明"><a href="#4-语法说明" class="headerlink" title="4. 语法说明"></a>4. 语法说明</h2><p>  简单方法虽然是稍微简单了些，但是前后因为没有格式所以第一列和最后一列没有居中，对于极简方式来说还相当繁琐。极简方式简单，但是都是左对齐。原生方式格式更美观。个人意见强迫症患者请用原生方式，其他请随意。</p>
-<ul>
-<li>|、-、:之间的多余空格会被忽略，不影响布局。</li>
-<li>默认标题栏居中对齐，内容居左对齐。</li>
-<li>-:表示内容和标题栏居右对齐，:-表示内容和标题栏居左对齐，:-:表示内容和标题栏居中对齐。</li>
-<li>内容和|之间的多余空格会被忽略，每行第一个|和最后一个|可以省略，-的数量至少有一个</li>
-</ul>
-<p>&nbsp;</p>
-<!--  **参考文档**：  -->
-<!--  https://www.w3cschool.cn/markdownyfsm/  -->
-<!--  https://segmentfault.com/markdown/  -->
 
+## 4. 语法说明
+  简单方法虽然是稍微简单了些，但是前后因为没有格式所以第一列和最后一列没有居中，对于极简方式来说还相当繁琐。极简方式简单，但是都是左对齐。原生方式格式更美观。个人意见强迫症患者请用原生方式，其他请随意。
+
+* |、-、:之间的多余空格会被忽略，不影响布局。
+* 默认标题栏居中对齐，内容居左对齐。
+* -:表示内容和标题栏居右对齐，:-表示内容和标题栏居左对齐，:-:表示内容和标题栏居中对齐。
+* 内容和|之间的多余空格会被忽略，每行第一个|和最后一个|可以省略，-的数量至少有一个
+
+&amp;nbsp;
+
+&lt;!--  **参考文档**：  --&gt;
+&lt;!--  https://www.w3cschool.cn/markdownyfsm/  --&gt;
+&lt;!--  https://segmentfault.com/markdown/  --&gt;
+</code></pre>
 ]]></content>
       <categories>
         <category>Tools</category>
