@@ -453,4 +453,48 @@ fff | ggg| hhh | iii | 000|
         <tag>markdown</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Go语言介绍</title>
+    <url>/2020/01/31/Go%E8%AF%AD%E8%A8%80%E7%AE%80%E4%BB%8B/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>知识文档</strong>：</p>
+</blockquote>
+<ul>
+<li><a href="http://wen.topgoer.com/docs/golang/golang-1ccjbpfstsfi1">go语言中文文档</a></li>
+<li><a href="https://www.liwenzhou.com/posts/Go/about_golang/">李文周的博客</a></li>
+</ul>
+<hr>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><strong><code>Google开发的开源编程语言</code></strong><br>诞生于2006年1月2日下午15点4分5秒，于2009年11月开源，2012年发布go稳定版。Go语言在多核并发上拥有原生的设计优势，Go语言从底层原生支持并发，<code>无须第三方库</code>、开发者的编程技巧和开发经验。<br>它的主要目标是“兼具Python 等动态语言的开发速度和C/C++等编译型语言的性能与安全性”</p>
+<p><strong><code>Go语言为并发而生</code></strong> ——21世纪的C语言<br>如上所述，硬件制造商正在为处理器添加越来越多的内核以提高性能。所有数据中心都在这些处理器上运行，更重要的是，今天的应用程序使用多个微服务来维护数据库连接，消息队列和维护缓存。因此，开发的软件和编程语言应该可以轻松地支持并发性，并且应该能够随着CPU核心数量的增加而可扩展。</p>
+<p>但是，大多数现代编程语言（如Java，Python等）都来自90年代的单线程环境。虽然一些编程语言的框架在不断地提高多核资源使用效率，例如 Java 的 Netty 等，但仍然需要开发人员花费大量的时间和精力搞懂这些框架的运行原理后才能熟练掌握。</p>
+<p>Go于2009年发布，当时多核处理器已经上市。Go语言在多核并发上拥有原生的设计优势，Go语言从底层原生支持并发，无须第三方库、开发者的编程技巧和开发经验。</p>
+<p>很多公司，特别是中国的互联网公司，即将或者已经完成了使用 Go 语言改造旧系统的过程。经过 Go 语言重构的系统能使用更少的硬件资源获得更高的并发和I/O吞吐表现。充分挖掘硬件设备的潜力也满足当前精细化运营的市场大环境。</p>
+<p>Go语言的并发是基于 <code>goroutine</code> 的，<code>goroutine</code> 类似于线程，但并非线程。可以将 <code>goroutine</code> 理解为一种虚拟线程。Go 语言运行时会参与调度 <code>goroutine</code>，并将 <code>goroutine</code> 合理地分配到每个 CPU 中，最大限度地使用CPU性能。开启一个<code>goroutine</code>的消耗非常小（大约2KB的内存），你可以轻松创建数百万个<code>goroutine</code>。</p>
+<p><code>goroutine</code>的特点：</p>
+<ol>
+<li><code>goroutine</code>具有可增长的分段堆栈。这意味着它们只在需要时才会使用更多内存。</li>
+<li><code>goroutine</code>的启动时间比线程快。</li>
+<li><code>goroutine</code>原生支持利用channel安全地进行通信。</li>
+<li><code>goroutine</code>共享数据结构时无需使用互斥锁。</li>
+</ol>
+<p><strong><code>编译型语言</code></strong><br>与其他现代高级语言（如Java/Python）相比，使用C，C++的最大好处是它们的性能。因为C/ C++是编译型语言而不是解释的语言。 处理器只能理解二进制文件，Java和Python这种高级语言在运行的时候需要先将人类可读的代码翻译成字节码，然后由专门的解释器再转变成处理器可以理解的二进制文件。<br><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/03/15511649241043.jpg?x-oss-process=style/original_format"></p>
+<p>同C,C++一样，Go语言也是编译型的语言，它直接将人类可读的代码编译成了处理器可以直接运行的二进制文件，执行效率更高，性能更好。</p>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><p><strong>语法简洁</strong><br>Go 语言简单易学，学习曲线平缓，不需要像 C/C++ 语言动辄需要两到三年的学习期。Go 语言被称为“互联网时代的C语言”。Go 语言的风格类似于C语言。其语法在C语言的基础上进行了大幅的简化，去掉了不需要的表达式括号，循环也只有 for 一种表示方法，就可以实现数值、键值等各种遍历。</p>
+<p><strong>代码风格统一</strong><br>Go 语言提供了一套格式化工具——go fmt。一些 Go 语言的开发环境或者编辑器在保存时，都会使用格式化工具进行修改代码的格式化，这样就保证了不同开发者提交的代码都是统一的格式。(吐槽下：再也不用担心那些看不懂的黑魔法了…)</p>
+<p><strong>开发效率高</strong><br>Go语言实现了开发效率与执行效率的完美结合，让你像写Python代码（效率）一样编写C代码（性能）。</p>
+<h2 id="Go的使用场景"><a href="#Go的使用场景" class="headerlink" title="Go的使用场景"></a>Go的使用场景</h2><p>目前Go语言已经⼴泛应用于人工智能、云计算开发、容器虚拟化、⼤数据开发、数据分析及科学计算、运维开发、爬虫开发、游戏开发等领域。</p>
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!---->  
+<!---->  
+
+]]></content>
+      <categories>
+        <category>123</category>
+      </categories>
+      <tags>
+        <tag>123</tag>
+      </tags>
+  </entry>
 </search>
