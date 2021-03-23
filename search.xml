@@ -123,6 +123,9 @@ timezone: 时区
       <categories>
         <category>吃喝玩乐</category>
       </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
   </entry>
   <entry>
     <title>Go语言开发环境</title>
@@ -273,6 +276,9 @@ timezone: 时区
       <categories>
         <category>吃喝玩乐</category>
       </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
   </entry>
   <entry>
     <title>Go语言介绍</title>
