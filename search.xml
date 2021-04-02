@@ -684,7 +684,7 @@ fff | ggg| hhh | iii | 000|
       </tags>
   </entry>
   <entry>
-    <title>Go语言开发环境</title>
+    <title>使用Go module导入本地包</title>
     <url>/2020/01/31/%E4%BD%BF%E7%94%A8Go_module%E5%AF%BC%E5%85%A5%E6%9C%AC%E5%9C%B0%E5%8C%85/</url>
     <content><![CDATA[<p>go module是<code>Go1.11版本之后</code>官方推出的版本管理工具，并且从<code>Go1.13</code>版本开始，go module将是Go语言默认的依赖管理工具。到今天<code>Go1.14</code>版本推出之后<code>Go modules</code>功能已经被正式推荐在生产环境下使用了。</p>
 <h2 id="1-1-前提"><a href="#1-1-前提" class="headerlink" title="1.1 前提"></a>1.1 前提</h2><p>假设我们现在有<code>moduledemo</code>和<code>mypackage</code>两个包，其中<code>moduledemo</code>包中会导入<code>mypackage</code>包并使用它的<code>New</code>方法。<br>mypackage/mypackage.go内容如下：</p>
