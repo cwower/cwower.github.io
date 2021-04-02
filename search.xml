@@ -239,63 +239,6 @@ timezone: 时区
       </tags>
   </entry>
   <entry>
-    <title>好用的Markdown编辑器 —— Pad2 和 Typora</title>
-    <url>/2018/04/21/Pad2%E5%92%8CTypora/</url>
-    <content><![CDATA[<blockquote>
-<p>前言：<br><del>选用“<a href="http://markdownpad.com/">MarkdownPad 2</a>”作为文档编写工具的原因：方便，支持实时预览</del>。<br><strong>[更新]：<code>目前已经由”MarkdownPad 2“转用”Typora“，但本文内容仍然有效</code>。</strong></p>
-</blockquote>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/markdownpad2.png?x-oss-process=style/watermark" alt="md pad 2"></p>
-<hr>
-<h2 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h2><ul>
-<li>MarkdownPad 2 的官网下载地址： <a href="http://markdownpad.com/">http://markdownpad.com/</a></li>
-<li>个人网盘下载（附激活码），点击【<a href="https://pan.baidu.com/s/1Aym5-XRNMuWupvOTIdFHNA">链接</a>】， 提取码：ib02 </li>
-</ul>
-<h2 id="2-破解"><a href="#2-破解" class="headerlink" title="2. 破解"></a>2. 破解</h2><p>安装完毕后，首次启动提示激活，如下图：点击<code>”Enter Key“</code> —&gt; 键入<code>”Email address“</code>和<code>”License key“</code></p>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/mdpad2_enterkey.png?x-oss-process=style/watermark" alt="mdpad2_enterkey"></p>
-<h2 id="3-异常"><a href="#3-异常" class="headerlink" title="3. 异常"></a>3. 异常</h2><h3 id="3-1-http渲染"><a href="#3-1-http渲染" class="headerlink" title="3.1 http渲染"></a>3.1 http渲染</h3><p><strong>安装激活后提示</strong>：</p>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/erro_html_readering.png?x-oss-process=style/watermark" alt="erro_html_readering"></p>
-<p><strong>解决方案</strong>：<br>安装一个SDK的工具包，【<a href="http://markdownpad.com/download/awesomium_v1.6.6_sdk_win.exe">点击获取</a>】，重启pad2即可。</p>
-<h3 id="3-2-PDF格式转换"><a href="#3-2-PDF格式转换" class="headerlink" title="3.2 PDF格式转换"></a>3.2 PDF格式转换</h3><p><strong>问题描述</strong>：<br>”.md“文件中包含”https“的图片链接，通过Mdpad2可以进行预览展示，但使用Mdpad2将其导出为“pdf”文件后，包含”https“的图片链接无法通过”pdf“显示。如果你没有导出需求，可以忽略该问题。</p>
-<p><strong>解决方案</strong>：<br>可以考虑结合使用”<a href="https://www.typora.io/">Typora</a>“进行转换，它也是一款Markdown编辑器，轻便简洁，支持即时渲染技术。</p>
-<p>或者。。。直接放弃”MarkdownPad 2“转而使用”Typora“，这两种MarkDown编辑器都比较亲民。</p>
-<pre><code>”MarkdownPad 2“有左右两个分页窗口，实时预览效果比较好。
-”Typora“刚刚使用，给我的感觉就是简洁，自定义功能较多。
-</code></pre>
-<hr>
-<p>&nbsp;  </p>
-<!--**参考文章**：-->  
-<!--  https://blog.csdn.net/xiaojin21cen/article/details/78752561  -->  
-<!--  https://blog.csdn.net/kuangay/article/details/79854665  -->  
-
-]]></content>
-      <categories>
-        <category>Tools</category>
-      </categories>
-      <tags>
-        <tag>markdown</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/1992/06/21/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-      <categories>
-        <category>吃喝玩乐</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Go语言介绍</title>
     <url>/2020/01/31/Go%E8%AF%AD%E8%A8%80%E7%AE%80%E4%BB%8B/</url>
     <content><![CDATA[<blockquote>
@@ -335,6 +278,63 @@ timezone: 时区
       <categories>
         <category>Go</category>
       </categories>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/1992/06/21/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>吃喝玩乐</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>好用的Markdown编辑器 —— Pad2 和 Typora</title>
+    <url>/2018/04/21/Pad2%E5%92%8CTypora/</url>
+    <content><![CDATA[<blockquote>
+<p>前言：<br><del>选用“<a href="http://markdownpad.com/">MarkdownPad 2</a>”作为文档编写工具的原因：方便，支持实时预览</del>。<br><strong>[更新]：<code>目前已经由”MarkdownPad 2“转用”Typora“，但本文内容仍然有效</code>。</strong></p>
+</blockquote>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/markdownpad2.png?x-oss-process=style/watermark" alt="md pad 2"></p>
+<hr>
+<h2 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h2><ul>
+<li>MarkdownPad 2 的官网下载地址： <a href="http://markdownpad.com/">http://markdownpad.com/</a></li>
+<li>个人网盘下载（附激活码），点击【<a href="https://pan.baidu.com/s/1Aym5-XRNMuWupvOTIdFHNA">链接</a>】， 提取码：ib02 </li>
+</ul>
+<h2 id="2-破解"><a href="#2-破解" class="headerlink" title="2. 破解"></a>2. 破解</h2><p>安装完毕后，首次启动提示激活，如下图：点击<code>”Enter Key“</code> —&gt; 键入<code>”Email address“</code>和<code>”License key“</code></p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/mdpad2_enterkey.png?x-oss-process=style/watermark" alt="mdpad2_enterkey"></p>
+<h2 id="3-异常"><a href="#3-异常" class="headerlink" title="3. 异常"></a>3. 异常</h2><h3 id="3-1-http渲染"><a href="#3-1-http渲染" class="headerlink" title="3.1 http渲染"></a>3.1 http渲染</h3><p><strong>安装激活后提示</strong>：</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/erro_html_readering.png?x-oss-process=style/watermark" alt="erro_html_readering"></p>
+<p><strong>解决方案</strong>：<br>安装一个SDK的工具包，【<a href="http://markdownpad.com/download/awesomium_v1.6.6_sdk_win.exe">点击获取</a>】，重启pad2即可。</p>
+<h3 id="3-2-PDF格式转换"><a href="#3-2-PDF格式转换" class="headerlink" title="3.2 PDF格式转换"></a>3.2 PDF格式转换</h3><p><strong>问题描述</strong>：<br>”.md“文件中包含”https“的图片链接，通过Mdpad2可以进行预览展示，但使用Mdpad2将其导出为“pdf”文件后，包含”https“的图片链接无法通过”pdf“显示。如果你没有导出需求，可以忽略该问题。</p>
+<p><strong>解决方案</strong>：<br>可以考虑结合使用”<a href="https://www.typora.io/">Typora</a>“进行转换，它也是一款Markdown编辑器，轻便简洁，支持即时渲染技术。</p>
+<p>或者。。。直接放弃”MarkdownPad 2“转而使用”Typora“，这两种MarkDown编辑器都比较亲民。</p>
+<pre><code>”MarkdownPad 2“有左右两个分页窗口，实时预览效果比较好。
+”Typora“刚刚使用，给我的感觉就是简洁，自定义功能较多。
+</code></pre>
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!--  https://blog.csdn.net/xiaojin21cen/article/details/78752561  -->  
+<!--  https://blog.csdn.net/kuangay/article/details/79854665  -->  
+
+]]></content>
+      <categories>
+        <category>Tools</category>
+      </categories>
+      <tags>
+        <tag>markdown</tag>
+      </tags>
   </entry>
   <entry>
     <title>markdown语法</title>
@@ -604,5 +604,80 @@ fff | ggg| hhh | iii | 000|
       <tags>
         <tag>markdown</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Go依赖管理—从godep到go mod</title>
+    <url>/2020/01/31/go%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E2%80%94_godep_gomod/</url>
+    <content><![CDATA[<h2 id="1-1-为什么需要依赖管理"><a href="#1-1-为什么需要依赖管理" class="headerlink" title="1.1 为什么需要依赖管理"></a>1.1 为什么需要依赖管理</h2><p>最早的时候，Go所依赖的所有的第三方库都放在GOPATH这个目录下面。这就导致了同一个库只能保存一个版本的代码。如果不同的项目依赖同一个第三方的库的不同版本，应该怎么解决？</p>
+<h2 id="1-2-godep"><a href="#1-2-godep" class="headerlink" title="1.2 godep"></a>1.2 godep</h2><p>Go语言从<code>v1.5</code>开始开始引入<code>vendor</code>模式，如果项目目录下有vendor目录，那么go工具链会优先使用<code>vendor</code>内的包进行编译、测试等。</p>
+<p><code>godep</code>是一个通过vender模式实现的Go语言的第三方依赖管理工具，类似的还有由社区维护准官方包管理工具<code>dep</code>。</p>
+<blockquote>
+<p>注意：在<code>Go1.11</code>之后，建议<a href="https://learnku.com/articles/33241">将 dep 更换为 go mod</a>进行项目管理，更方便</p>
+</blockquote>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>执行以下命令安装godep工具。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go get github.com&#x2F;tools&#x2F;godep</span><br></pre></td></tr></table></figure>
+<h3 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h3><p>安装好godep之后，在终端输入godep查看支持的所有命令。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">godep save     将依赖项输出并复制到Godeps.json文件中</span><br><span class="line">godep go       使用保存的依赖项运行go工具</span><br><span class="line">godep get      下载并安装具有指定依赖项的包</span><br><span class="line">godep path     打印依赖的GOPATH路径</span><br><span class="line">godep restore  在GOPATH中拉取依赖的版本</span><br><span class="line">godep update   更新选定的包或go版本</span><br><span class="line">godep diff     显示当前和以前保存的依赖项集之间的差异</span><br><span class="line">godep version  查看版本信息</span><br></pre></td></tr></table></figure>
+<p>使用godep help [command]可以看看具体命令的帮助信息</p>
+<h3 id="使用godep"><a href="#使用godep" class="headerlink" title="使用godep"></a>使用godep</h3><p>在项目目录下执行godep save命令，会在当前项目中创建Godeps和vender两个文件夹。</p>
+<p>其中Godeps文件夹下有一个Godeps.json的文件，里面记录了项目所依赖的包信息。 vender文件夹下是项目依赖的包的源代码文件。</p>
+<h3 id="vender机制"><a href="#vender机制" class="headerlink" title="vender机制"></a>vender机制</h3><p>Go1.5版本之后开始支持，能够控制Go语言程序编译时依赖包搜索路径的优先级。</p>
+<p>例如查找项目的某个依赖包，首先会在项目根目录下的<code>vender</code>文件夹中查找，如果没有找到就会去<code>$GOAPTH/src</code>目录下查找。</p>
+<h3 id="godep开发流程"><a href="#godep开发流程" class="headerlink" title="godep开发流程"></a>godep开发流程</h3><p>保证程序能够正常编译<br>执行godep save保存当前项目的所有第三方依赖的版本信息和代码<br>提交Godeps目录和vender目录到代码库。<br>如果要更新依赖的版本，可以直接修改Godeps.json文件中的对应项</p>
+<h2 id="1-3-go-module"><a href="#1-3-go-module" class="headerlink" title="1.3 go module"></a>1.3 go module</h2><p><code>go module</code>是Go1.11版本之后官方推出的版本管理工具，并且从Go1.13版本开始，<code>go module</code>将是Go语言默认的依赖管理工具。</p>
+<h3 id="GO111MODULE"><a href="#GO111MODULE" class="headerlink" title="GO111MODULE"></a>GO111MODULE</h3><p>要启用<code>go module</code>支持首先要设置环境变量<code>GO111MODULE</code>，通过它可以开启或关闭模块支持，它有三个可选值：<code>off、on、auto</code>，默认值是<code>auto</code>。</p>
+<ol>
+<li>GO111MODULE=off禁用模块支持，编译时会从GOPATH和vendor文件夹中查找包。</li>
+<li>GO111MODULE=on启用模块支持，编译时会忽略GOPATH和vendor文件夹，只根据 go.mod下载依赖。</li>
+<li>GO111MODULE=auto，当项目在$GOPATH/src外且项目根目录有go.mod文件时，开启模块支持。<br>简单来说，设置<code>GO111MODULE=on</code>之后就可以使用<code>go module</code>了，以后就没有必要在GOPATH中创建项目了，并且还能够很好的管理项目依赖的第三方包信息。<br>使用 go module 管理依赖后会在项目根目录下生成两个文件<code>go.mod</code>和<code>go.sum</code>。</li>
+</ol>
+<h3 id="GOPROXY"><a href="#GOPROXY" class="headerlink" title="GOPROXY"></a>GOPROXY</h3><p>Go1.11之后设置GOPROXY命令为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn</span><br></pre></td></tr></table></figure>
+<p>Go1.13之后<code>GOPROXY</code>默认值为<code>https://proxy.golang.org</code>，在国内是无法访问的，所以十分建议大家设置<code>GOPROXY=https://goproxy.cn</code>。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go env -w GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn,direct</span><br></pre></td></tr></table></figure>
+<h3 id="go-mod命令"><a href="#go-mod命令" class="headerlink" title="go mod命令"></a>go mod命令</h3><p>常用的go mod命令如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go mod download    下载依赖的module到本地cache（默认为$GOPATH&#x2F;pkg&#x2F;mod目录）</span><br><span class="line">go mod edit        编辑go.mod文件</span><br><span class="line">go mod graph       打印模块依赖图</span><br><span class="line">go mod init        初始化当前文件夹, 创建go.mod文件</span><br><span class="line">go mod tidy        增加缺少的module，删除无用的module</span><br><span class="line">go mod vendor      将依赖复制到vendor下</span><br><span class="line">go mod verify      校验依赖</span><br><span class="line">go mod why         解释为什么需要依赖</span><br></pre></td></tr></table></figure>
+<p><strong>go.mod</strong><br>go.mod文件记录了项目所有的依赖信息，其结构大致如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module github.com&#x2F;Q1mi&#x2F;studygo&#x2F;blogger</span><br><span class="line"></span><br><span class="line">go 1.12</span><br><span class="line"></span><br><span class="line">require (</span><br><span class="line">    github.com&#x2F;DeanThompson&#x2F;ginpprof v0.0.0-20190408063150-3be636683586</span><br><span class="line">    github.com&#x2F;gin-gonic&#x2F;gin v1.4.0</span><br><span class="line">    github.com&#x2F;go-sql-driver&#x2F;mysql v1.4.1</span><br><span class="line">    github.com&#x2F;jmoiron&#x2F;sqlx v1.2.0</span><br><span class="line">    github.com&#x2F;satori&#x2F;go.uuid v1.2.0</span><br><span class="line">    google.golang.org&#x2F;appengine v1.6.1 &#x2F;&#x2F; indirect</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>其中，</p>
+<ul>
+<li>module用来定义包名</li>
+<li>require用来定义依赖包及版本</li>
+<li>indirect表示间接引用</li>
+</ul>
+<p><strong><code>依赖的版本</code></strong><br>go mod支持语义化版本号，比如<code>go get foo@v1.2.3</code>，也可以跟git的分支或tag，比如<code>go get foo@master</code>，当然也可以跟git提交哈希，比如<code>go get foo@e3702bed2</code>。关于依赖的版本支持以下几种格式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">gopkg.in&#x2F;tomb.v1 v1.0.0-20141024135613-dd632973f1e7</span><br><span class="line">gopkg.in&#x2F;vmihailenco&#x2F;msgpack.v2 v2.9.1</span><br><span class="line">gopkg.in&#x2F;yaml.v2 &lt;&#x3D;v2.2.1</span><br><span class="line">github.com&#x2F;tatsushid&#x2F;go-fastping v0.0.0-20160109021039-d7bb493dee3e</span><br><span class="line">latest</span><br></pre></td></tr></table></figure>
+<p><strong><code>replace</code></strong><br>在国内访问golang.org/x的各个包都需要翻墙，你可以在go.mod中使用replace替换成github上对应的库。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">replace (</span><br><span class="line">    golang.org&#x2F;x&#x2F;crypto v0.0.0-20180820150726-614d502a4dac &#x3D;&gt; github.com&#x2F;golang&#x2F;crypto v0.0.0-20180820150726-614d502a4dac</span><br><span class="line">    golang.org&#x2F;x&#x2F;net v0.0.0-20180821023952-922f4815f713 &#x3D;&gt; github.com&#x2F;golang&#x2F;net v0.0.0-20180826012351-8a410e7b638d</span><br><span class="line">    golang.org&#x2F;x&#x2F;text v0.3.0 &#x3D;&gt; github.com&#x2F;golang&#x2F;text v0.3.0</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h3 id="go-get"><a href="#go-get" class="headerlink" title="go get"></a>go get</h3><p>在项目中执行<code>go get</code>命令可以下载依赖包，并且还可以指定下载的版本。</p>
+<ol>
+<li>运行go get -u将会升级到最新的次要版本或者修订版本(x.y.z, z是修订版本号， y是次要版本号)</li>
+<li>运行go get -u=patch将会升级到最新的修订版本</li>
+<li>运行go get package@version将会升级到指定的版本号version<br>如果下载所有依赖可以使用<code>go mod download</code>命令。</li>
+</ol>
+<h3 id="go-mod-edit"><a href="#go-mod-edit" class="headerlink" title="go mod edit"></a>go mod edit</h3><p><strong><code>格式化</code></strong><br>因为我们可以手动修改go.mod文件，所以有些时候需要格式化该文件。Go提供了一下命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go mod edit -fmt</span><br></pre></td></tr></table></figure>
+<p><strong><code>添加依赖项</code></strong><br>go mod edit -require=golang.org/x/text<br><strong><code>移除依赖项</code></strong><br>如果只是想修改go.mod文件中的内容，那么可以运行<code>go mod edit -droprequire=package path</code>，比如要在<code>go.mod</code>中移除<code>golang.org/x/tex</code>t包，可以使用如下命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go mod edit -droprequire&#x3D;golang.org&#x2F;x&#x2F;text</span><br></pre></td></tr></table></figure>
+<p>关于<code>go mod edit</code>的更多用法可以通过<code>go help mod edit</code>查看。</p>
+<h2 id="1-4在项目中使用go-module"><a href="#1-4在项目中使用go-module" class="headerlink" title="1.4在项目中使用go module"></a>1.4在项目中使用go module</h2><h3 id="既有项目"><a href="#既有项目" class="headerlink" title="既有项目"></a>既有项目</h3><p>如果需要对一个已经存在的项目启用<code>go module</code>，可以按照以下步骤操作：</p>
+<p>在项目目录下执行go mod init，生成一个go.mod文件。<br>执行go get，查找并记录当前项目的依赖，同时生成一个go.sum记录每个依赖库的版本和哈希值。</p>
+<h3 id="新项目"><a href="#新项目" class="headerlink" title="新项目"></a>新项目</h3><p>对于一个新创建的项目，我们可以在项目文件夹下按照以下步骤操作：</p>
+<ul>
+<li>执行go mod init 项目名命令，在当前项目文件夹下创建一个go.mod文件。</li>
+<li>手动编辑go.mod中的require依赖项或执行go get自动发现、维护依赖。</li>
+</ul>
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!---->  
+<!---->  
+
+
+
+]]></content>
+      <categories>
+        <category>Go</category>
+      </categories>
   </entry>
 </search>
