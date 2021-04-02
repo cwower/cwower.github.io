@@ -733,4 +733,67 @@ fff | ggg| hhh | iii | 000|
         <tag>markdown</tag>
       </tags>
   </entry>
+  <entry>
+    <title>go主要特征—标识符/关键字/构建/编译</title>
+    <url>/2020/01/31/go%E4%B8%BB%E8%A6%81%E7%89%B9%E5%BE%81/</url>
+    <content><![CDATA[<blockquote>
+<p>区别关键字和标识符：</p>
+</blockquote>
+<pre><code>标识（zhi）符，所谓标识符，就是指变量、函数、属性的名字，或者是函数的参数。
+
+关键字，就是在控制语句的开始或结束以及执行特定操作时具有关键作用、特定作用的符号。
+
+保留（关键）字不能用作常量、变量、函数名以及结构字段等标识符。从字面意思上即可得知它是被保留的，将来可能被用作关键字
+</code></pre>
+<p><strong>划重点了：</strong>·<code>关键字是系统自带的 ，标识符是自定义的</code>。</p>
+<hr>
+<h2 id="文件名"><a href="#文件名" class="headerlink" title="文件名"></a>文件名</h2><p>Go 的源文件以 .go 为后缀名存储在计算机中，这些<code>文件名均由小写字母组成</code>，如 <code>scanner.go</code> 。如果文件名由多个部分组成，则使用下划线 _ 对它们进行分隔，如 <code>scanner_test.go</code> 。<code>文件名不包含空格或其他特殊字符</code>。</p>
+<p>一个源文件可以包含任意多行的代码，Go 本身没有对源文件的大小进行限制。</p>
+<h2 id="Go语言命名"><a href="#Go语言命名" class="headerlink" title="Go语言命名"></a>Go语言命名</h2><p>Go的函数、变量、常量、自定义类型、包<code>(package)</code>的命名方式遵循以下规则：</p>
+<pre><code>1）首字符可以是任意的Unicode字符或者下划线
+2）剩余字符可以是Unicode字符、下划线、数字
+3）字符长度不限
+</code></pre>
+<h3 id="标识符"><a href="#标识符" class="headerlink" title="标识符"></a>标识符</h3><p><code>具有特殊意义的词</code>，比如变量、常量、函数。</p>
+<blockquote>
+<p>标识符是允许作为变量（函数、类等）名称的有效字符串</p>
+</blockquote>
+<p>Go语言中标识符由字母数字和_(下划线）组成，并且只能以字母和_开头，然后紧跟着 0 个或多个字符或 Unicode 数字。<br>举几个例子：<code>abc</code>, <code>_</code>, <code>_123</code>, <code>a123</code>。</p>
+<h3 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h3><p>关键字是编程语言中<code>预先定义好的具有特殊含义的标识符</code>。关键字和保留字都不建议用作变量名。</p>
+<p><strong>Go语言中有25个关键字：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">break        default      func         interface    select</span><br><span class="line">case         defer        go           map          struct</span><br><span class="line">chan         else         goto         package      switch</span><br><span class="line">const        fallthrough  if           range        type</span><br><span class="line">continue     for          import       return       var</span><br></pre></td></tr></table></figure>
+<p><strong>此外，Go语言中还有37个保留字：</strong><br>（分类为内置常量/类型/函数）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Constants:    true  false  iota  nil</span><br><span class="line"></span><br><span class="line">Types:    int  int8  int16  int32  int64  </span><br><span class="line">          uint  uint8  uint16  uint32  uint64  uintptr</span><br><span class="line">          float32  float64  complex128  complex64</span><br><span class="line">          bool  byte  rune  string  error</span><br><span class="line"></span><br><span class="line">Functions:   make  len  cap  new  append  copy  close  delete</span><br><span class="line">             complex  real  imag</span><br><span class="line">             panic  recover</span><br></pre></td></tr></table></figure>
+<h2 id="Go语言声明："><a href="#Go语言声明：" class="headerlink" title="Go语言声明："></a>Go语言声明：</h2><p>有四种主要声明方式：</p>
+<pre><code>var（声明变量）, const（声明常量）, type（声明类型） ,func（声明函数）。
+</code></pre>
+<p>Go的程序是保存在多个.go文件中，文件的第一行就是package XXX声明，用来说明该文件属于哪个包(package)，package声明下来就是import声明，再下来是类型，变量，常量，函数的声明。</p>
+<h2 id="预定义标识符的总结分类"><a href="#预定义标识符的总结分类" class="headerlink" title="预定义标识符的总结分类"></a>预定义标识符的总结分类</h2><blockquote>
+<p><a href="https://www.cnblogs.com/xzpin/p/11659839.html">Go 内置常量 类型和函数</a></p>
+</blockquote>
+<h2 id="Go项目构建及编译"><a href="#Go项目构建及编译" class="headerlink" title="Go项目构建及编译"></a>Go项目构建及编译</h2><p>一个Go工程中主要包含以下三个目录：</p>
+<pre><code>src：源代码文件
+pkg：包文件
+bin：相关bin文件
+</code></pre>
+<p>1: 建立工程文件夹 goproject<br>2: 在工程文件夹中建立src,pkg,bin文件夹<br>3: 在GOPATH中添加projiect路径 例 e:/goproject<br>4: 如工程中有自己的包examplepackage，那在src文件夹下建立以包名命名的文件夹 例 examplepackage<br>5：在src文件夹下编写主程序代码代码 goproject.go<br>6：在examplepackage文件夹中编写 examplepackage.go 和 包测试文件 examplepackage_test.go<br>7：编译调试包<br>go build examplepackage<br>go test examplepackage<br>go install examplepackage<br>这时在pkg文件夹中可以发现会有一个相应的操作系统文件夹如windows_386z, 在这个文件夹中会有examplepackage文件夹，在该文件中有examplepackage.a文件<br>8：编译主程序<br>go build goproject.go<br>成功后会生成goproject.exe文件<br>至此一个Go工程编辑成功。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1.建立工程文件夹 go</span><br><span class="line">$ pwd</span><br><span class="line">&#x2F;Users&#x2F;***&#x2F;Desktop&#x2F;go</span><br><span class="line">2: 在工程文件夹中建立src,pkg,bin文件夹</span><br><span class="line">$ ls</span><br><span class="line">bin        conf    pkg        src</span><br><span class="line">3: 在GOPATH中添加projiect路径</span><br><span class="line">$ go env</span><br><span class="line">GOPATH&#x3D;&quot;&#x2F;Users&#x2F;liupengjie&#x2F;Desktop&#x2F;go&quot;</span><br><span class="line">4: 那在src文件夹下建立以自己的包 example 文件夹</span><br><span class="line">$ cd src&#x2F;</span><br><span class="line">$ mkdir example</span><br><span class="line">5：在src文件夹下编写主程序代码代码 goproject.go</span><br><span class="line">6：在example文件夹中编写 example.go 和 包测试文件 example_test.go</span><br><span class="line">    example.go 写入如下代码：</span><br><span class="line"></span><br><span class="line">    package example</span><br><span class="line"></span><br><span class="line">    func add(a, b int) int &#123;</span><br><span class="line">        return a + b</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    func sub(a, b int) int &#123;</span><br><span class="line">        return a - b</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    example_test.go 写入如下代码：</span><br><span class="line"></span><br><span class="line">    package example</span><br><span class="line"></span><br><span class="line">    import (</span><br><span class="line">        &quot;testing&quot;</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    func TestAdd(t *testing.T) &#123;</span><br><span class="line">        r :&#x3D; add(2, 4)</span><br><span class="line">        if r !&#x3D; 6 &#123;</span><br><span class="line">            t.Fatalf(&quot;add(2, 4) error, expect:%d, actual:%d&quot;, 6, r)</span><br><span class="line">        &#125;</span><br><span class="line">        t.Logf(&quot;test add succ&quot;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">7：编译调试包</span><br><span class="line">$ go build example</span><br><span class="line">$ go test example</span><br><span class="line">ok      example    0.013s</span><br><span class="line">$ go install example</span><br><span class="line"></span><br><span class="line">$ ls &#x2F;Users&#x2F;***&#x2F;Desktop&#x2F;go&#x2F;pkg&#x2F;</span><br><span class="line">darwin_amd64</span><br><span class="line">$ ls &#x2F;Users&#x2F;***&#x2F;Desktop&#x2F;go&#x2F;pkg&#x2F;darwin_amd64&#x2F;</span><br><span class="line">example.a    </span><br><span class="line">8：编译主程序</span><br><span class="line">oproject.go 写入如下代码：</span><br><span class="line">package main </span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func main()&#123;</span><br><span class="line">    fmt.Println(&quot;go project test&quot;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$ go build goproject.go</span><br><span class="line">$ ls</span><br><span class="line"> example        goproject.go    goproject</span><br><span class="line"></span><br><span class="line">成功后会生成goproject文件，至此一个Go工程编辑成功。</span><br><span class="line"></span><br><span class="line">运行该文件：</span><br><span class="line">$ .&#x2F;goproject</span><br><span class="line">go project test</span><br></pre></td></tr></table></figure>
+<h2 id="go-编译问题"><a href="#go-编译问题" class="headerlink" title="go 编译问题"></a>go 编译问题</h2><p>golang的编译使用命令 go build , go install;除非仅写一个main函数，否则还是准备好目录结构；<br>GOPATH=工程根目录；其下应创建src，pkg，bin目录，bin目录中用于生成可执行文件，pkg目录中用于生成.a文件；<br>golang中的import name，实际是到GOPATH中去寻找name.a, 使用时是该name.a的源码中生命的package 名字；这个在前面已经介绍过了。</p>
+<p>注意点：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1.系统编译时 go install abc_name时，系统会到GOPATH的src目录中寻找abc_name目录，然后编译其下的go文件；</span><br><span class="line">2.同一个目录中所有的go文件的package声明必须相同，所以main方法要单独放一个文件，否则在eclipse和liteide中都会报错；</span><br><span class="line">编译报错如下：（假设test目录中有个main.go 和mymath.go,其中main.go声明package为main，mymath.go声明packag 为test);</span><br><span class="line"></span><br><span class="line">    $ go install test</span><br><span class="line">    can&#39;t load package: package test: found packages main (main.go) and test (mymath.go) in &#x2F;home&#x2F;wanjm&#x2F;go&#x2F;src&#x2F;test</span><br><span class="line">    报错说 不能加载package test（这是命令行的参数），因为发现了两个package，分别时main.go 和 mymath.go;</span><br><span class="line"></span><br><span class="line">3.对于main方法，只能在bin目录下运行 go build path_tomain.go; 可以用-o参数指出输出文件名；</span><br><span class="line">4.可以添加参数 go build -gcflags &quot;-N -l&quot; ****,可以更好的便于gdb；详细参见 http:&#x2F;&#x2F;golang.org&#x2F;doc&#x2F;gdb</span><br><span class="line">5.gdb全局变量主一点。 如有全局变量 a；则应写为 p &#39;main.a&#39;；注意但引号不可少；</span><br></pre></td></tr></table></figure>
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!--https://www.cnblogs.com/xzpin/p/11659839.html-->  
+<!--https://www.pianshen.com/article/2306569585/-->  
+<!--http://wen.topgoer.com/docs/golang/chapter02-1-->
+<!--https://blog.csdn.net/vongolar/article/details/108314005-->  
+]]></content>
+      <categories>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>env</tag>
+      </tags>
+  </entry>
 </search>
