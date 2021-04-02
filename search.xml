@@ -679,5 +679,8 @@ fff | ggg| hhh | iii | 000|
       <categories>
         <category>Go</category>
       </categories>
+      <tags>
+        <tag>env</tag>
+      </tags>
   </entry>
 </search>
