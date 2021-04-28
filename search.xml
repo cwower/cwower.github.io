@@ -289,10 +289,10 @@ timezone: 时区
 <p>我们还可以使用<code>-o</code>参数来指定编译后得到的可执行文件的名字。</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go build -o heiheihei.exe</span><br></pre></td></tr></table></figure>
 <h3 id="go-install"><a href="#go-install" class="headerlink" title="go install"></a>go install</h3><p><code>go install</code>表示安装的意思，它先编译源代码得到可执行文件，然后将可执行文件移动到<code>GOPATH</code>的bin目录下。因为我们的环境变量中配置了<code>GOPATH</code>下的bin目录，所以我们就可以在任意地方直接执行可执行文件了。</p>
-<h4 id="go-install与go-build-的区别"><a href="#go-install与go-build-的区别" class="headerlink" title="go install与go build 的区别"></a>go install与go build 的区别</h4><p><code>goinstall</code>与<code>gobuild</code>都可生成执行文件</p>
-<p><code>gobuild</code>会生成可实行文件放在当前目录中。<br><code>goinstall</code>则会把它放到<code>$GOPATH/bin</code>中。</p>
-<p><code>goinstall</code>还会把导入的依赖包编译到<code>$GOPATH/pkg</code>，并缓存，如果包未做更改，下次编译则直接使用缓存。<code>gobuild</code>命令加参数<code>-i</code>也能达到<code>goinstall</code>的效果。</p>
-<p>如果项目很大，每次编译都要花很长时间，则建议使用<code>goinstall</code>来编译，充分利用它对依赖包的缓存功能。</p>
+<h4 id="go-install与go-build-的区别"><a href="#go-install与go-build-的区别" class="headerlink" title="go install与go build 的区别"></a>go install与go build 的区别</h4><p><code>go install</code>与<code>go build</code>都可生成执行文件</p>
+<p><code>go build</code>会生成可实行文件放在当前目录中。<br><code>go install</code>则会把它放到<code>$GOPATH/bin</code>中。</p>
+<p><code>go install</code>还会把导入的依赖包编译到<code>$GOPATH/pkg</code>，并缓存，如果包未做更改，下次编译则直接使用缓存。<code>go build</code>命令加参数<code>-i</code>也能达到<code>go install</code>的效果。</p>
+<p>如果项目很大，每次编译都要花很长时间，则建议使用<code>go install</code>来编译，充分利用它对依赖包的缓存功能。</p>
 <h3 id="go-run"><a href="#go-run" class="headerlink" title="go run"></a>go run</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 直接执行go文件，不用编译</span><br><span class="line">go run main.go</span><br></pre></td></tr></table></figure>
 <h3 id="跨平台编译-more"><a href="#跨平台编译-more" class="headerlink" title="跨平台编译(more)"></a>跨平台编译(<a href="%5Bhttps://www.liwenzhou.com/posts/Go/install_go_dev/#autoid-1-5-4%5D(https://www.liwenzhou.com/posts/Go/install_go_dev/#autoid-1-5-4)">more</a>)</h3><p>默认我们go build的可执行文件都是当前操作系统可执行的文件，如果我想在windows下编译一个linux下可执行文件，那需要怎么做呢？</p>
 <p>只需要指定目标操作系统的平台和处理器架构即可：</p>
