@@ -348,7 +348,7 @@ timezone: 时区
 <p><strong>注意：</strong></p>
 <ol>
 <li>数组支持 “==“、”!=” 操作符，因为内存总是被初始化过的。</li>
-<li>[n]<em>T表示指针数组，</em>[n]T表示数组指针 。</li>
+<li>[n]*T表示指针数组，*[n]T表示数组指针 。</li>
 </ol>
 <h2 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h2><p>求数组[1, 3, 5, 7, 8]所有元素的和<br>找出数组中和为指定值的两个元素的下标，比如从数组[1, 3, 5, 7, 8]中找出和为8的两个元素的下标分别为(0,3)和(1,2)。</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
