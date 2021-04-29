@@ -284,43 +284,6 @@ timezone: 时区
       </categories>
   </entry>
   <entry>
-    <title>好用的Markdown编辑器 —— Pad2 和 Typora</title>
-    <url>/2018/04/21/Pad2%E5%92%8CTypora/</url>
-    <content><![CDATA[<blockquote>
-<p>前言：<br><del>选用“<a href="http://markdownpad.com/">MarkdownPad 2</a>”作为文档编写工具的原因：方便，支持实时预览</del>。<br><strong>[更新]：<code>目前已经由”MarkdownPad 2“转用”Typora“，但本文内容仍然有效</code>。</strong></p>
-</blockquote>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/markdownpad2.png?x-oss-process=style/watermark" alt="md pad 2"></p>
-<hr>
-<h2 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h2><ul>
-<li>MarkdownPad 2 的官网下载地址： <a href="http://markdownpad.com/">http://markdownpad.com/</a></li>
-<li>个人网盘下载（附激活码），点击【<a href="https://pan.baidu.com/s/1Aym5-XRNMuWupvOTIdFHNA">链接</a>】， 提取码：ib02 </li>
-</ul>
-<h2 id="2-破解"><a href="#2-破解" class="headerlink" title="2. 破解"></a>2. 破解</h2><p>安装完毕后，首次启动提示激活，如下图：点击<code>”Enter Key“</code> —&gt; 键入<code>”Email address“</code>和<code>”License key“</code></p>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/mdpad2_enterkey.png?x-oss-process=style/watermark" alt="mdpad2_enterkey"></p>
-<h2 id="3-异常"><a href="#3-异常" class="headerlink" title="3. 异常"></a>3. 异常</h2><h3 id="3-1-http渲染"><a href="#3-1-http渲染" class="headerlink" title="3.1 http渲染"></a>3.1 http渲染</h3><p><strong>安装激活后提示</strong>：</p>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/erro_html_readering.png?x-oss-process=style/watermark" alt="erro_html_readering"></p>
-<p><strong>解决方案</strong>：<br>安装一个SDK的工具包，【<a href="http://markdownpad.com/download/awesomium_v1.6.6_sdk_win.exe">点击获取</a>】，重启pad2即可。</p>
-<h3 id="3-2-PDF格式转换"><a href="#3-2-PDF格式转换" class="headerlink" title="3.2 PDF格式转换"></a>3.2 PDF格式转换</h3><p><strong>问题描述</strong>：<br>”.md“文件中包含”https“的图片链接，通过Mdpad2可以进行预览展示，但使用Mdpad2将其导出为“pdf”文件后，包含”https“的图片链接无法通过”pdf“显示。如果你没有导出需求，可以忽略该问题。</p>
-<p><strong>解决方案</strong>：<br>可以考虑结合使用”<a href="https://www.typora.io/">Typora</a>“进行转换，它也是一款Markdown编辑器，轻便简洁，支持即时渲染技术。</p>
-<p>或者。。。直接放弃”MarkdownPad 2“转而使用”Typora“，这两种MarkDown编辑器都比较亲民。</p>
-<pre><code>”MarkdownPad 2“有左右两个分页窗口，实时预览效果比较好。
-”Typora“刚刚使用，给我的感觉就是简洁，自定义功能较多。
-</code></pre>
-<hr>
-<p>&nbsp;  </p>
-<!--**参考文章**：-->  
-<!--  https://blog.csdn.net/xiaojin21cen/article/details/78752561  -->  
-<!--  https://blog.csdn.net/kuangay/article/details/79854665  -->  
-
-]]></content>
-      <categories>
-        <category>Tools</category>
-      </categories>
-      <tags>
-        <tag>markdown</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>go基础之数组</title>
     <url>/2020/04/09/go_base_array/</url>
     <content><![CDATA[<h1 id="Array-数组"><a href="#Array-数组" class="headerlink" title="Array(数组)"></a>Array(数组)</h1><p>数组：是同一种数据类型的固定长度的序列。 在Go语言中，数组从声明时就确定，使用时可以修改数组成员，但是数组大小不可变化。 基本语法：</p>
@@ -359,6 +322,43 @@ timezone: 时区
       </categories>
       <tags>
         <tag>go base</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>好用的Markdown编辑器 —— Pad2 和 Typora</title>
+    <url>/2018/04/21/Pad2%E5%92%8CTypora/</url>
+    <content><![CDATA[<blockquote>
+<p>前言：<br><del>选用“<a href="http://markdownpad.com/">MarkdownPad 2</a>”作为文档编写工具的原因：方便，支持实时预览</del>。<br><strong>[更新]：<code>目前已经由”MarkdownPad 2“转用”Typora“，但本文内容仍然有效</code>。</strong></p>
+</blockquote>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/markdownpad2.png?x-oss-process=style/watermark" alt="md pad 2"></p>
+<hr>
+<h2 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h2><ul>
+<li>MarkdownPad 2 的官网下载地址： <a href="http://markdownpad.com/">http://markdownpad.com/</a></li>
+<li>个人网盘下载（附激活码），点击【<a href="https://pan.baidu.com/s/1Aym5-XRNMuWupvOTIdFHNA">链接</a>】， 提取码：ib02 </li>
+</ul>
+<h2 id="2-破解"><a href="#2-破解" class="headerlink" title="2. 破解"></a>2. 破解</h2><p>安装完毕后，首次启动提示激活，如下图：点击<code>”Enter Key“</code> —&gt; 键入<code>”Email address“</code>和<code>”License key“</code></p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/mdpad2_enterkey.png?x-oss-process=style/watermark" alt="mdpad2_enterkey"></p>
+<h2 id="3-异常"><a href="#3-异常" class="headerlink" title="3. 异常"></a>3. 异常</h2><h3 id="3-1-http渲染"><a href="#3-1-http渲染" class="headerlink" title="3.1 http渲染"></a>3.1 http渲染</h3><p><strong>安装激活后提示</strong>：</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/erro_html_readering.png?x-oss-process=style/watermark" alt="erro_html_readering"></p>
+<p><strong>解决方案</strong>：<br>安装一个SDK的工具包，【<a href="http://markdownpad.com/download/awesomium_v1.6.6_sdk_win.exe">点击获取</a>】，重启pad2即可。</p>
+<h3 id="3-2-PDF格式转换"><a href="#3-2-PDF格式转换" class="headerlink" title="3.2 PDF格式转换"></a>3.2 PDF格式转换</h3><p><strong>问题描述</strong>：<br>”.md“文件中包含”https“的图片链接，通过Mdpad2可以进行预览展示，但使用Mdpad2将其导出为“pdf”文件后，包含”https“的图片链接无法通过”pdf“显示。如果你没有导出需求，可以忽略该问题。</p>
+<p><strong>解决方案</strong>：<br>可以考虑结合使用”<a href="https://www.typora.io/">Typora</a>“进行转换，它也是一款Markdown编辑器，轻便简洁，支持即时渲染技术。</p>
+<p>或者。。。直接放弃”MarkdownPad 2“转而使用”Typora“，这两种MarkDown编辑器都比较亲民。</p>
+<pre><code>”MarkdownPad 2“有左右两个分页窗口，实时预览效果比较好。
+”Typora“刚刚使用，给我的感觉就是简洁，自定义功能较多。
+</code></pre>
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!--  https://blog.csdn.net/xiaojin21cen/article/details/78752561  -->  
+<!--  https://blog.csdn.net/kuangay/article/details/79854665  -->  
+
+]]></content>
+      <categories>
+        <category>Tools</category>
+      </categories>
+      <tags>
+        <tag>markdown</tag>
       </tags>
   </entry>
   <entry>
@@ -436,6 +436,140 @@ timezone: 时区
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
 
+]]></content>
+      <categories>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>go base</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Go基础之切片</title>
+    <url>/2020/04/29/go_base_slice/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>知识文档</strong>：</p>
+</blockquote>
+<ul>
+<li><a href="http://wen.topgoer.com/docs/golang/chapter03-10">切片Slice</a></li>
+</ul>
+<hr>
+<p>切片（Slice）是一个拥有相同类型元素的可变长度的序列。它是基于数组类型做的一层封装。切片一般用于快速地操作一块数据集合。</p>
+<pre><code>1. 切片：切片是数组的一个引用，因此切片是引用类型，它的内部结构包含地址、长度和容量。
+2. 切片的长度可以改变，因此，切片是一个可变的数组。
+3. 切片遍历方式和数组一样，可以用len()求长度。表示可用元素数量，读写操作不能超过该限制。 
+4. cap可以求出slice最大扩张容量，不能超出数组限制。0 &lt;= len(slice) &lt;= len(array)，其中array是slice引用的数组。
+5. 切片的定义：var 变量名 []类型，比如 var str []string  var arr []int。
+6. 如果 slice == nil，那么 len、cap 结果都等于 0。
+</code></pre>
+<h2 id="切片定义"><a href="#切片定义" class="headerlink" title="切片定义"></a>切片定义</h2><p>声明切片类型的基本语法如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name []T</span><br></pre></td></tr></table></figure>
+<p>其中，</p>
+<ul>
+<li>name:表示变量名</li>
+<li>T:表示切片中的元素类型</li>
+</ul>
+<p>举个例子：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    &#x2F;&#x2F; 声明切片类型</span><br><span class="line">    var a []string              &#x2F;&#x2F;声明一个字符串切片</span><br><span class="line">    var b &#x3D; []int&#123;&#125;             &#x2F;&#x2F;声明一个整型切片并初始化</span><br><span class="line">    var c &#x3D; []bool&#123;false, true&#125; &#x2F;&#x2F;声明一个布尔切片并初始化</span><br><span class="line">    var d &#x3D; []bool&#123;false, true&#125; &#x2F;&#x2F;声明一个布尔切片并初始化</span><br><span class="line">    fmt.Println(a)              &#x2F;&#x2F;[]</span><br><span class="line">    fmt.Println(b)              &#x2F;&#x2F;[]</span><br><span class="line">    fmt.Println(c)              &#x2F;&#x2F;[false true]</span><br><span class="line">    fmt.Println(a &#x3D;&#x3D; nil)       &#x2F;&#x2F;true</span><br><span class="line">    fmt.Println(b &#x3D;&#x3D; nil)       &#x2F;&#x2F;false</span><br><span class="line">    fmt.Println(c &#x3D;&#x3D; nil)       &#x2F;&#x2F;false</span><br><span class="line">    &#x2F;&#x2F; fmt.Println(c &#x3D;&#x3D; d)   &#x2F;&#x2F;切片是引用类型，不支持直接比较，只能和nil比较</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="切片的长度和容量"><a href="#切片的长度和容量" class="headerlink" title="切片的长度和容量"></a>切片的长度和容量</h3><p>切片拥有自己的长度和容量，我们可以通过使用内置的<code>len()</code>函数求长度，使用内置的<code>cap()</code>函数求切片的容量。</p>
+<h3 id="切片表达式"><a href="#切片表达式" class="headerlink" title="切片表达式"></a>切片表达式</h3><p>切片表达式从字符串、数组、指向数组或切片的指针构造子字符串或切片。它有两种变体：一种指定<code>low</code>和<code>high</code>两个索引界限值的简单的形式，另一种是除了<code>low</code>和<code>high</code>索引界限值外还指定容量的完整的形式。</p>
+<p><strong><code>简单切片表达式</code></strong><br>切片的底层就是一个数组，所以我们可以基于数组通过切片表达式得到切片。 切片表达式中的<code>low</code>和<code>high</code>表示一个索引范围（左包含，右不包含），也就是下面代码中从数组a中选出<code>1&lt;=索引值&lt;4</code>的元素组成切片s，得到的切片<code>长度=high-low</code>，容量等于得到的切片的底层数组的容量。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [5]int&#123;1, 2, 3, 4, 5&#125;</span><br><span class="line">    s :&#x3D; a[1:3]  &#x2F;&#x2F; s :&#x3D; a[low:high]</span><br><span class="line">    fmt.Printf(&quot;s:%v len(s):%v cap(s):%v\n&quot;, s, len(s), cap(s))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">s:[2 3] len(s):2 cap(s):4</span><br></pre></td></tr></table></figure>
+<p>为了方便起见，可以省略切片表达式中的任何索引。省略了low则默认为0；省略了high则默认为切片操作数的长度:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">a[2:]  &#x2F;&#x2F; 等同于 a[2:len(a)]</span><br><span class="line">a[:3]  &#x2F;&#x2F; 等同于 a[0:3]</span><br><span class="line">a[:]   &#x2F;&#x2F; 等同于 a[0:len(a)]</span><br></pre></td></tr></table></figure>
+<p><code>注意</code>：<br>对于数组或字符串，如果<code>0 &lt;= low &lt;= high &lt;= len(a)</code>，则索引合法，否则就会索引越界（out of range）。</p>
+<p>对切片再执行切片表达式时（切片再切片），<code>high</code>的上限边界是切片的容量<code>cap(a)</code>，而不是长度。<code>常量索引</code>必须是非负的，并且可以用int类型的值表示;对于数组或常量字符串，常量索引也必须在有效范围内。如果<code>low</code>和<code>high</code>两个指标都是常数，它们必须满足<code>low &lt;= high</code>。如果索引在运行时超出范围，就会发生运行时<code>panic</code>。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [5]int&#123;1, 2, 3, 4, 5&#125;</span><br><span class="line">    s :&#x3D; a[1:3]  &#x2F;&#x2F; s :&#x3D; a[low:high]</span><br><span class="line">    fmt.Printf(&quot;s:%v len(s):%v cap(s):%v\n&quot;, s, len(s), cap(s))</span><br><span class="line">    s2 :&#x3D; s[3:4]  &#x2F;&#x2F; 索引的上限是cap(s)而不是len(s)</span><br><span class="line">    fmt.Printf(&quot;s2:%v len(s2):%v cap(s2):%v\n&quot;, s2, len(s2), cap(s2))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">s:[2 3] len(s):2 cap(s):4</span><br><span class="line">s2:[5] len(s2):1 cap(s2):1</span><br></pre></td></tr></table></figure>
+<p><strong><code>完整切片表达式</code></strong><br>对于数组，指向数组的指针，或切片a(<code>注意不能是字符串</code>)支持完整切片表达式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">a[low : high : max]</span><br></pre></td></tr></table></figure>
+<p>上面的代码会构造与简单切片表达式·<code>a[low: high]</code>相同类型、相同长度和元素的切片。另外，它会将得到的结果切片的容量设置为<code>max-low</code>。在完整切片表达式中只有第一个索引值（low）可以省略；它默认为0。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [5]int&#123;1, 2, 3, 4, 5&#125;</span><br><span class="line">    t :&#x3D; a[1:3:5]</span><br><span class="line">    fmt.Printf(&quot;t:%v len(t):%v cap(t):%v\n&quot;, t, len(t), cap(t))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">t:[2 3] len(t):2 cap(t):4</span><br></pre></td></tr></table></figure>
+<p>完整切片表达式需要满足的条件是<code>0 &lt;= low &lt;= high &lt;= max &lt;= cap(a)</code>，其他条件和简单切片表达式相同。</p>
+<h3 id="使用make-函数构造切片"><a href="#使用make-函数构造切片" class="headerlink" title="使用make()函数构造切片"></a>使用make()函数构造切片</h3><p>我们上面都是基于数组来创建的切片，如果需要动态的创建一个切片，我们就需要使用内置的make()函数，格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">make([]T, size, cap)</span><br></pre></td></tr></table></figure>
+<p>其中：</p>
+<ul>
+<li>T:切片的元素类型</li>
+<li>size:切片中元素的数量</li>
+<li>cap:切片的容量</li>
+</ul>
+<p>举个例子：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; make([]int, 2, 10)</span><br><span class="line">    fmt.Println(a)      &#x2F;&#x2F;[0 0]</span><br><span class="line">    fmt.Println(len(a)) &#x2F;&#x2F;2</span><br><span class="line">    fmt.Println(cap(a)) &#x2F;&#x2F;10</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码中<code>a</code>的内部存储空间已经分配了10个，但实际上只用了2个。 容量并不会影响当前元素的个数，所以<code>len(a)</code>返回2，<code>cap(a)</code>则返回该切片的容量。</p>
+<h3 id="切片的本质"><a href="#切片的本质" class="headerlink" title="切片的本质"></a>切片的本质</h3><p>切片的本质就是对底层数组的封装，它包含了三个信息：底层数组的指针、切片的长度（len）和切片的容量（cap）。<br>举个例子，现在有一个数组<code>a := [8]int&#123;0, 1, 2, 3, 4, 5, 6, 7&#125;</code>，切片<code>s1 := a[:5]</code>，相应示意图如下。<br><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/04/slice_01.png?x-oss-process=style/original_format"></p>
+<p>切片<code>s2 := a[3:6]</code>，相应示意图如下：<br><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/04/slice_02.png?x-oss-process=style/original_format"></p>
+<h3 id="判断切片是否为空"><a href="#判断切片是否为空" class="headerlink" title="判断切片是否为空"></a>判断切片是否为空</h3><p>要检查切片是否为空，请始终使用<code>len(s) == 0</code>来判断，而不应该使用<code>s == nil</code>来判断。</p>
+<h2 id="切片不能直接比较"><a href="#切片不能直接比较" class="headerlink" title="切片不能直接比较"></a>切片不能直接比较</h2><p>切片之间是不能比较的，我们不能使用<code>==</code>操作符来判断两个切片是否含有全部相等元素。 切片唯一合法的比较操作是和<code>nil</code>比较。 一个<code>nil</code>值的切片并没有底层数组，一个<code>nil</code>值的切片的长度和容量都是0。但是我们不能说一个长度和容量都是0的切片一定是<code>nil</code>，例如下面的示例：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var s1 []int         &#x2F;&#x2F;len(s1)&#x3D;0;cap(s1)&#x3D;0;s1&#x3D;&#x3D;nil</span><br><span class="line">s2 :&#x3D; []int&#123;&#125;        &#x2F;&#x2F;len(s2)&#x3D;0;cap(s2)&#x3D;0;s2!&#x3D;nil</span><br><span class="line">s3 :&#x3D; make([]int, 0) &#x2F;&#x2F;len(s3)&#x3D;0;cap(s3)&#x3D;0;s3!&#x3D;nil</span><br></pre></td></tr></table></figure>
+<p>所以要判断一个切片是否是空的，要是用<code>len(s) == 0</code>来判断，不应该使用<code>s == nil</code>来判断。</p>
+<h2 id="切片的赋值拷贝"><a href="#切片的赋值拷贝" class="headerlink" title="切片的赋值拷贝"></a>切片的赋值拷贝</h2><p>下面的代码中演示了拷贝前后两个变量共享底层数组，对一个切片的修改会影响另一个切片的内容，这点需要特别注意。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    s1 :&#x3D; make([]int, 3) &#x2F;&#x2F;[0 0 0]</span><br><span class="line">    s2 :&#x3D; s1             &#x2F;&#x2F;将s1直接赋值给s2，s1和s2共用一个底层数组</span><br><span class="line">    s2[0] &#x3D; 100</span><br><span class="line">    fmt.Println(s1) &#x2F;&#x2F;[100 0 0]</span><br><span class="line">    fmt.Println(s2) &#x2F;&#x2F;[100 0 0]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="切片遍历"><a href="#切片遍历" class="headerlink" title="切片遍历"></a>切片遍历</h2><p>切片的遍历方式和数组是一致的，支持索引遍历和<code>for range</code>遍历。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    s :&#x3D; []int&#123;1, 3, 5&#125;</span><br><span class="line"></span><br><span class="line">    for i :&#x3D; 0; i &lt; len(s); i++ &#123;</span><br><span class="line">        fmt.Println(i, s[i])</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    for index, value :&#x3D; range s &#123;</span><br><span class="line">        fmt.Println(index, value)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="append-方法为切片添加元素"><a href="#append-方法为切片添加元素" class="headerlink" title="append()方法为切片添加元素"></a>append()方法为切片添加元素</h2><p>Go语言的内建函数<code>append()</code>可以为切片动态添加元素。 可以一次添加一个元素，可以添加多个元素，也可以添加另一个切片中的元素（后面加…）。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main()&#123;</span><br><span class="line">    var s []int</span><br><span class="line">    s &#x3D; append(s, 1)        &#x2F;&#x2F; [1]</span><br><span class="line">    s &#x3D; append(s, 2, 3, 4)  &#x2F;&#x2F; [1 2 3 4]</span><br><span class="line">    s2 :&#x3D; []int&#123;5, 6, 7&#125;  </span><br><span class="line">    s &#x3D; append(s, s2...)    &#x2F;&#x2F; [1 2 3 4 5 6 7]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>**<code>注意</code>**：通过var声明的零值切片可以在<code>append()</code>函数直接使用，无需初始化。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var s []int</span><br><span class="line">s &#x3D; append(s, 1, 2, 3)</span><br></pre></td></tr></table></figure>
+<p>没有必要像下面的代码一样初始化一个切片再传入<code>append()</code>函数使用，</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">s :&#x3D; []int&#123;&#125;  &#x2F;&#x2F; 没有必要初始化</span><br><span class="line">s &#x3D; append(s, 1, 2, 3)</span><br><span class="line"></span><br><span class="line">var s &#x3D; make([]int)  &#x2F;&#x2F; 没有必要初始化</span><br><span class="line">s &#x3D; append(s, 1, 2, 3)</span><br></pre></td></tr></table></figure>
+<p>每个切片会指向一个底层数组，这个数组的容量够用就添加新增元素。当底层数组不能容纳新增的元素时，切片就会自动按照一定的策略进行“扩容”，此时该切片指向的底层数组就会更换。“扩容”操作往往发生在<code>append()</code>函数调用时，所以我们通常都需要用原变量接收append函数的返回值。<br>举个例子：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    &#x2F;&#x2F;append()添加元素和切片扩容</span><br><span class="line">    var numSlice []int</span><br><span class="line">    for i :&#x3D; 0; i &lt; 10; i++ &#123;</span><br><span class="line">        numSlice &#x3D; append(numSlice, i)</span><br><span class="line">        fmt.Printf(&quot;%v  len:%d  cap:%d  ptr:%p\n&quot;, numSlice, len(numSlice), cap(numSlice), numSlice)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[0]  len:1  cap:1  ptr:0xc0000a8000</span><br><span class="line">[0 1]  len:2  cap:2  ptr:0xc0000a8040</span><br><span class="line">[0 1 2]  len:3  cap:4  ptr:0xc0000b2020</span><br><span class="line">[0 1 2 3]  len:4  cap:4  ptr:0xc0000b2020</span><br><span class="line">[0 1 2 3 4]  len:5  cap:8  ptr:0xc0000b6000</span><br><span class="line">[0 1 2 3 4 5]  len:6  cap:8  ptr:0xc0000b6000</span><br><span class="line">[0 1 2 3 4 5 6]  len:7  cap:8  ptr:0xc0000b6000</span><br><span class="line">[0 1 2 3 4 5 6 7]  len:8  cap:8  ptr:0xc0000b6000</span><br><span class="line">[0 1 2 3 4 5 6 7 8]  len:9  cap:16  ptr:0xc0000b8000</span><br><span class="line">[0 1 2 3 4 5 6 7 8 9]  len:10  cap:16  ptr:0xc0000b8000</span><br></pre></td></tr></table></figure>
+<p>从上面的结果可以看出：</p>
+<ul>
+<li>append()函数将元素追加到切片的最后并返回该切片。</li>
+<li>切片numSlice的容量按照1，2，4，8，16这样的规则自动进行扩容，每次扩容后都是扩容前的2倍。</li>
+</ul>
+<p>append()函数还支持一次性追加多个元素。 例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var citySlice []string</span><br><span class="line">&#x2F;&#x2F; 追加一个元素</span><br><span class="line">citySlice &#x3D; append(citySlice, &quot;北京&quot;)</span><br><span class="line">&#x2F;&#x2F; 追加多个元素</span><br><span class="line">citySlice &#x3D; append(citySlice, &quot;上海&quot;, &quot;广州&quot;, &quot;深圳&quot;)</span><br><span class="line">&#x2F;&#x2F; 追加切片</span><br><span class="line">a :&#x3D; []string&#123;&quot;成都&quot;, &quot;重庆&quot;&#125;</span><br><span class="line">citySlice &#x3D; append(citySlice, a...)</span><br><span class="line">fmt.Println(citySlice) &#x2F;&#x2F;[北京 上海 广州 深圳 成都 重庆]</span><br></pre></td></tr></table></figure>
+<h2 id="切片的扩容策略"><a href="#切片的扩容策略" class="headerlink" title="切片的扩容策略"></a>切片的扩容策略</h2><p>可以通过查看<code>$GOROOT/src/runtime/slice.go</code>源码，其中扩容相关代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">newcap :&#x3D; old.cap</span><br><span class="line">doublecap :&#x3D; newcap + newcap</span><br><span class="line">if cap &gt; doublecap &#123;</span><br><span class="line">    newcap &#x3D; cap</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    if old.len &lt; 1024 &#123;</span><br><span class="line">        newcap &#x3D; doublecap</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        &#x2F;&#x2F; Check 0 &lt; newcap to detect overflow</span><br><span class="line">        &#x2F;&#x2F; and prevent an infinite loop.</span><br><span class="line">        for 0 &lt; newcap &amp;&amp; newcap &lt; cap &#123;</span><br><span class="line">            newcap +&#x3D; newcap &#x2F; 4</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F; Set newcap to the requested cap when</span><br><span class="line">        &#x2F;&#x2F; the newcap calculation overflowed.</span><br><span class="line">        if newcap &lt;&#x3D; 0 &#123;</span><br><span class="line">            newcap &#x3D; cap</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从上面的代码可以看出以下内容：</p>
+<ul>
+<li>首先判断，如果新申请容量（cap）大于2倍的旧容量（old.cap），最终容量（newcap）就是新申请的容量（cap）。</li>
+<li>否则判断，如果旧切片的长度小于1024，则最终容量(newcap)就是旧容量(old.cap)的两倍，即（newcap=doublecap），</li>
+<li>否则判断，如果旧切片长度大于等于1024，则最终容量（newcap）从旧容量（old.cap）开始循环增加原来的1/4，即（newcap=old.cap,for {newcap += newcap/4}）直到最终容量（newcap）大于等于新申请的容量(cap)，即（newcap &gt;= cap）</li>
+<li>如果最终容量（cap）计算值溢出，则最终容量（cap）就是新申请容量（cap）。</li>
+</ul>
+<p>需要注意的是，切片扩容还会根据切片中元素的类型不同而做不同的处理，比如int和string类型的处理方式就不一样。</p>
+<h2 id="使用copy-函数复制切片"><a href="#使用copy-函数复制切片" class="headerlink" title="使用copy()函数复制切片"></a>使用copy()函数复制切片</h2><p>首先我们来看一个问题：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; []int&#123;1, 2, 3, 4, 5&#125;</span><br><span class="line">    b :&#x3D; a</span><br><span class="line">    fmt.Println(a) &#x2F;&#x2F;[1 2 3 4 5]</span><br><span class="line">    fmt.Println(b) &#x2F;&#x2F;[1 2 3 4 5]</span><br><span class="line">    b[0] &#x3D; 1000</span><br><span class="line">    fmt.Println(a) &#x2F;&#x2F;[1000 2 3 4 5]</span><br><span class="line">    fmt.Println(b) &#x2F;&#x2F;[1000 2 3 4 5]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于切片是引用类型，所以a和b其实都指向了同一块内存地址。修改b的同时a的值也会发生变化。</p>
+<p>Go语言内建的<code>copy()</code>函数可以迅速地将一个切片的数据复制到另外一个切片空间中，<code>copy()</code>函数的使用格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">copy(destSlice, srcSlice []T)</span><br></pre></td></tr></table></figure>
+<p>其中：</p>
+<ul>
+<li>srcSlice: 数据来源切片</li>
+<li>destSlice: 目标切片</li>
+</ul>
+<p>举个例子：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    &#x2F;&#x2F; copy()复制切片</span><br><span class="line">    a :&#x3D; []int&#123;1, 2, 3, 4, 5&#125;</span><br><span class="line">    c :&#x3D; make([]int, 5, 5)</span><br><span class="line">    copy(c, a)     &#x2F;&#x2F;使用copy()函数将切片a中的元素复制到切片c</span><br><span class="line">    fmt.Println(a) &#x2F;&#x2F;[1 2 3 4 5]</span><br><span class="line">    fmt.Println(c) &#x2F;&#x2F;[1 2 3 4 5]</span><br><span class="line">    c[0] &#x3D; 1000</span><br><span class="line">    fmt.Println(a) &#x2F;&#x2F;[1 2 3 4 5]</span><br><span class="line">    fmt.Println(c) &#x2F;&#x2F;[1000 2 3 4 5]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="从切片中删除元素"><a href="#从切片中删除元素" class="headerlink" title="从切片中删除元素"></a>从切片中删除元素</h2><p>Go语言中并没有删除切片元素的专用方法，我们可以使用切片本身的特性来删除元素。 代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    &#x2F;&#x2F; 从切片中删除元素</span><br><span class="line">    a :&#x3D; []int&#123;30, 31, 32, 33, 34, 35, 36, 37&#125;</span><br><span class="line">    &#x2F;&#x2F; 要删除索引为2的元素</span><br><span class="line">    a &#x3D; append(a[:2], a[3:]...)</span><br><span class="line">    fmt.Println(a) &#x2F;&#x2F;[30 31 33 34 35 36 37]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>总结一下就是：要从切片a中删除索引为<code>index</code>的元素，操作方法是<code>a = append(a[:index], a[index+1:]...)</code></p>
+<h2 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h2><ol>
+<li><p>请写出下面代码的输出结果。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var a &#x3D; make([]string, 5, 10)</span><br><span class="line">    for i :&#x3D; 0; i &lt; 10; i++ &#123;</span><br><span class="line">        a &#x3D; append(a, fmt.Sprintf(&quot;%v&quot;, i))</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(a)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>解答：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>请使用内置的sort包对数组var a = […]int{3, 7, 8, 9, 1}进行排序（附加题，自行查资料解答）。<br>解答：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!---->  
+<!---->  
 ]]></content>
       <categories>
         <category>Go</category>
@@ -700,154 +834,6 @@ bin：相关bin文件
 <!--https://www.pianshen.com/article/2306569585/-->  
 <!--http://wen.topgoer.com/docs/golang/chapter02-1-->
 <!--https://blog.csdn.net/vongolar/article/details/108314005-->  
-]]></content>
-      <categories>
-        <category>Go</category>
-      </categories>
-      <tags>
-        <tag>env</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Go依赖管理—从godep到go mod</title>
-    <url>/2020/01/31/go%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E2%80%94_godep_gomod/</url>
-    <content><![CDATA[<h2 id="1-1-为什么需要依赖管理"><a href="#1-1-为什么需要依赖管理" class="headerlink" title="1.1 为什么需要依赖管理"></a>1.1 为什么需要依赖管理</h2><p>最早的时候，Go所依赖的所有的第三方库都放在GOPATH这个目录下面。这就导致了同一个库只能保存一个版本的代码。如果不同的项目依赖同一个第三方的库的不同版本，应该怎么解决？</p>
-<h2 id="1-2-godep"><a href="#1-2-godep" class="headerlink" title="1.2 godep"></a>1.2 godep</h2><p>Go语言从<code>v1.5</code>开始开始引入<code>vendor</code>模式，如果项目目录下有vendor目录，那么go工具链会优先使用<code>vendor</code>内的包进行编译、测试等。</p>
-<p><code>godep</code>是一个通过vender模式实现的Go语言的第三方依赖管理工具，类似的还有由社区维护准官方包管理工具<code>dep</code>。</p>
-<blockquote>
-<p>注意：在<code>Go1.11</code>之后，建议<a href="https://learnku.com/articles/33241">将 dep 更换为 go mod</a>进行项目管理，更方便</p>
-</blockquote>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>执行以下命令安装godep工具。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go get github.com&#x2F;tools&#x2F;godep</span><br></pre></td></tr></table></figure>
-<h3 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h3><p>安装好godep之后，在终端输入godep查看支持的所有命令。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">godep save     将依赖项输出并复制到Godeps.json文件中</span><br><span class="line">godep go       使用保存的依赖项运行go工具</span><br><span class="line">godep get      下载并安装具有指定依赖项的包</span><br><span class="line">godep path     打印依赖的GOPATH路径</span><br><span class="line">godep restore  在GOPATH中拉取依赖的版本</span><br><span class="line">godep update   更新选定的包或go版本</span><br><span class="line">godep diff     显示当前和以前保存的依赖项集之间的差异</span><br><span class="line">godep version  查看版本信息</span><br></pre></td></tr></table></figure>
-<p>使用godep help [command]可以看看具体命令的帮助信息</p>
-<h3 id="使用godep"><a href="#使用godep" class="headerlink" title="使用godep"></a>使用godep</h3><p>在项目目录下执行godep save命令，会在当前项目中创建Godeps和vender两个文件夹。</p>
-<p>其中Godeps文件夹下有一个Godeps.json的文件，里面记录了项目所依赖的包信息。 vender文件夹下是项目依赖的包的源代码文件。</p>
-<h3 id="vender机制"><a href="#vender机制" class="headerlink" title="vender机制"></a>vender机制</h3><p>Go1.5版本之后开始支持，能够控制Go语言程序编译时依赖包搜索路径的优先级。</p>
-<p>例如查找项目的某个依赖包，首先会在项目根目录下的<code>vender</code>文件夹中查找，如果没有找到就会去<code>$GOAPTH/src</code>目录下查找。</p>
-<h3 id="godep开发流程"><a href="#godep开发流程" class="headerlink" title="godep开发流程"></a>godep开发流程</h3><p>保证程序能够正常编译<br>执行godep save保存当前项目的所有第三方依赖的版本信息和代码<br>提交Godeps目录和vender目录到代码库。<br>如果要更新依赖的版本，可以直接修改Godeps.json文件中的对应项</p>
-<h2 id="1-3-go-module"><a href="#1-3-go-module" class="headerlink" title="1.3 go module"></a>1.3 go module</h2><p><code>go module</code>是Go1.11版本之后官方推出的版本管理工具，并且从Go1.13版本开始，<code>go module</code>将是Go语言默认的依赖管理工具。</p>
-<h3 id="GO111MODULE"><a href="#GO111MODULE" class="headerlink" title="GO111MODULE"></a>GO111MODULE</h3><p>要启用<code>go module</code>支持首先要设置环境变量<code>GO111MODULE</code>，通过它可以开启或关闭模块支持，它有三个可选值：<code>off、on、auto</code>，默认值是<code>auto</code>。</p>
-<ol>
-<li>GO111MODULE=off禁用模块支持，编译时会从GOPATH和vendor文件夹中查找包。</li>
-<li>GO111MODULE=on启用模块支持，编译时会忽略GOPATH和vendor文件夹，只根据 go.mod下载依赖。</li>
-<li>GO111MODULE=auto，当项目在$GOPATH/src外且项目根目录有go.mod文件时，开启模块支持。<br>简单来说，设置<code>GO111MODULE=on</code>之后就可以使用<code>go module</code>了，以后就没有必要在GOPATH中创建项目了，并且还能够很好的管理项目依赖的第三方包信息。<br>使用 go module 管理依赖后会在项目根目录下生成两个文件<code>go.mod</code>和<code>go.sum</code>。</li>
-</ol>
-<h3 id="GOPROXY"><a href="#GOPROXY" class="headerlink" title="GOPROXY"></a>GOPROXY</h3><p>Go1.11之后设置GOPROXY命令为：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn</span><br></pre></td></tr></table></figure>
-<p>Go1.13之后<code>GOPROXY</code>默认值为<code>https://proxy.golang.org</code>，在国内是无法访问的，所以十分建议大家设置<code>GOPROXY=https://goproxy.cn</code>。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go env -w GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn,direct</span><br></pre></td></tr></table></figure>
-<h3 id="go-mod命令"><a href="#go-mod命令" class="headerlink" title="go mod命令"></a>go mod命令</h3><p>常用的go mod命令如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go mod download    下载依赖的module到本地cache（默认为$GOPATH&#x2F;pkg&#x2F;mod目录）</span><br><span class="line">go mod edit        编辑go.mod文件</span><br><span class="line">go mod graph       打印模块依赖图</span><br><span class="line">go mod init        初始化当前文件夹, 创建go.mod文件</span><br><span class="line">go mod tidy        增加缺少的module，删除无用的module</span><br><span class="line">go mod vendor      将依赖复制到vendor下</span><br><span class="line">go mod verify      校验依赖</span><br><span class="line">go mod why         解释为什么需要依赖</span><br></pre></td></tr></table></figure>
-<p><strong>go.mod</strong><br>go.mod文件记录了项目所有的依赖信息，其结构大致如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module github.com&#x2F;Q1mi&#x2F;studygo&#x2F;blogger</span><br><span class="line"></span><br><span class="line">go 1.12</span><br><span class="line"></span><br><span class="line">require (</span><br><span class="line">    github.com&#x2F;DeanThompson&#x2F;ginpprof v0.0.0-20190408063150-3be636683586</span><br><span class="line">    github.com&#x2F;gin-gonic&#x2F;gin v1.4.0</span><br><span class="line">    github.com&#x2F;go-sql-driver&#x2F;mysql v1.4.1</span><br><span class="line">    github.com&#x2F;jmoiron&#x2F;sqlx v1.2.0</span><br><span class="line">    github.com&#x2F;satori&#x2F;go.uuid v1.2.0</span><br><span class="line">    google.golang.org&#x2F;appengine v1.6.1 &#x2F;&#x2F; indirect</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p>其中，</p>
-<ul>
-<li>module用来定义包名</li>
-<li>require用来定义依赖包及版本</li>
-<li>indirect表示间接引用</li>
-</ul>
-<p><strong><code>依赖的版本</code></strong><br>go mod支持语义化版本号，比如<code>go get foo@v1.2.3</code>，也可以跟git的分支或tag，比如<code>go get foo@master</code>，当然也可以跟git提交哈希，比如<code>go get foo@e3702bed2</code>。关于依赖的版本支持以下几种格式：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">gopkg.in&#x2F;tomb.v1 v1.0.0-20141024135613-dd632973f1e7</span><br><span class="line">gopkg.in&#x2F;vmihailenco&#x2F;msgpack.v2 v2.9.1</span><br><span class="line">gopkg.in&#x2F;yaml.v2 &lt;&#x3D;v2.2.1</span><br><span class="line">github.com&#x2F;tatsushid&#x2F;go-fastping v0.0.0-20160109021039-d7bb493dee3e</span><br><span class="line">latest</span><br></pre></td></tr></table></figure>
-<p><strong><code>replace</code></strong><br>在国内访问golang.org/x的各个包都需要翻墙，你可以在go.mod中使用replace替换成github上对应的库。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">replace (</span><br><span class="line">    golang.org&#x2F;x&#x2F;crypto v0.0.0-20180820150726-614d502a4dac &#x3D;&gt; github.com&#x2F;golang&#x2F;crypto v0.0.0-20180820150726-614d502a4dac</span><br><span class="line">    golang.org&#x2F;x&#x2F;net v0.0.0-20180821023952-922f4815f713 &#x3D;&gt; github.com&#x2F;golang&#x2F;net v0.0.0-20180826012351-8a410e7b638d</span><br><span class="line">    golang.org&#x2F;x&#x2F;text v0.3.0 &#x3D;&gt; github.com&#x2F;golang&#x2F;text v0.3.0</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<h3 id="go-get"><a href="#go-get" class="headerlink" title="go get"></a>go get</h3><p>在项目中执行<code>go get</code>命令可以下载依赖包，并且还可以指定下载的版本。</p>
-<ol>
-<li>运行go get -u将会升级到最新的次要版本或者修订版本(x.y.z, z是修订版本号， y是次要版本号)</li>
-<li>运行go get -u=patch将会升级到最新的修订版本</li>
-<li>运行go get package@version将会升级到指定的版本号version<br>如果下载所有依赖可以使用<code>go mod download</code>命令。</li>
-</ol>
-<h3 id="go-mod-edit"><a href="#go-mod-edit" class="headerlink" title="go mod edit"></a>go mod edit</h3><p><strong><code>格式化</code></strong><br>因为我们可以手动修改go.mod文件，所以有些时候需要格式化该文件。Go提供了一下命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go mod edit -fmt</span><br></pre></td></tr></table></figure>
-<p><strong><code>添加依赖项</code></strong><br>go mod edit -require=golang.org/x/text<br><strong><code>移除依赖项</code></strong><br>如果只是想修改go.mod文件中的内容，那么可以运行<code>go mod edit -droprequire=package path</code>，比如要在<code>go.mod</code>中移除<code>golang.org/x/tex</code>t包，可以使用如下命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go mod edit -droprequire&#x3D;golang.org&#x2F;x&#x2F;text</span><br></pre></td></tr></table></figure>
-<p>关于<code>go mod edit</code>的更多用法可以通过<code>go help mod edit</code>查看。</p>
-<h2 id="1-4在项目中使用go-module"><a href="#1-4在项目中使用go-module" class="headerlink" title="1.4在项目中使用go module"></a>1.4在项目中使用go module</h2><h3 id="既有项目"><a href="#既有项目" class="headerlink" title="既有项目"></a>既有项目</h3><p>如果需要对一个已经存在的项目启用<code>go module</code>，可以按照以下步骤操作：</p>
-<p>在项目目录下执行go mod init，生成一个go.mod文件。<br>执行go get，查找并记录当前项目的依赖，同时生成一个go.sum记录每个依赖库的版本和哈希值。</p>
-<h3 id="新项目"><a href="#新项目" class="headerlink" title="新项目"></a>新项目</h3><p>对于一个新创建的项目，我们可以在项目文件夹下按照以下步骤操作：</p>
-<ul>
-<li>执行go mod init 项目名命令，在当前项目文件夹下创建一个go.mod文件。</li>
-<li>手动编辑go.mod中的require依赖项或执行go get自动发现、维护依赖。</li>
-</ul>
-<hr>
-<p>&nbsp;  </p>
-<!--**参考文章**：-->  
-<!---->  
-<!---->  
-
-
-
-]]></content>
-      <categories>
-        <category>Go</category>
-      </categories>
-      <tags>
-        <tag>env</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/1992/06/21/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-      <categories>
-        <category>吃喝玩乐</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用Go module导入本地包</title>
-    <url>/2020/01/31/%E4%BD%BF%E7%94%A8Go_module%E5%AF%BC%E5%85%A5%E6%9C%AC%E5%9C%B0%E5%8C%85/</url>
-    <content><![CDATA[<p>go module是<code>Go1.11版本之后</code>官方推出的版本管理工具，并且从<code>Go1.13</code>版本开始，go module将是Go语言默认的依赖管理工具。到今天<code>Go1.14</code>版本推出之后<code>Go modules</code>功能已经被正式推荐在生产环境下使用了。</p>
-<h2 id="1-1-前提"><a href="#1-1-前提" class="headerlink" title="1.1 前提"></a>1.1 前提</h2><p>假设我们现在有<code>moduledemo</code>和<code>mypackage</code>两个包，其中<code>moduledemo</code>包中会导入<code>mypackage</code>包并使用它的<code>New</code>方法。<br>mypackage/mypackage.go内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package mypackage</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">func New()&#123;</span><br><span class="line">    fmt.Println(&quot;mypackage.New&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>我们现在分两种情况讨论：</p>
-<h2 id="1-2-在同一个项目下"><a href="#1-2-在同一个项目下" class="headerlink" title="1.2 在同一个项目下"></a>1.2 在同一个项目下</h2><p><code>注意</code>：在一个项目（project）下我们是可以定义多个包（package）的。</p>
-<h3 id="1-2-1-目录结构"><a href="#1-2-1-目录结构" class="headerlink" title="1.2.1 目录结构"></a>1.2.1 目录结构</h3><p>现在的情况是，我们在<code>moduledemo/main.go</code>中调用了<code>mypackage</code>这个包。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">moduledemo</span><br><span class="line">├── go.mod</span><br><span class="line">├── main.go</span><br><span class="line">└── mypackage</span><br><span class="line">    └── mypackage.go</span><br></pre></td></tr></table></figure>
-<h3 id="1-2-2-导入包"><a href="#1-2-2-导入包" class="headerlink" title="1.2.2 导入包"></a>1.2.2 导入包</h3><p>这个时候，我们需要在<code>moduledemo/go.mod</code>中按如下定义：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module moduledemo</span><br><span class="line"></span><br><span class="line">go 1.14</span><br></pre></td></tr></table></figure>
-<p>然后在<code>moduledemo/main.go</code>中按如下方式导入<code>mypackage</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">    &quot;moduledemo&#x2F;mypackage&quot;  &#x2F;&#x2F; 导入同一项目下的mypackage包</span><br><span class="line">)</span><br><span class="line">func main() &#123;</span><br><span class="line">    mypackage.New()</span><br><span class="line">    fmt.Println(&quot;main&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="1-2-3-栗子"><a href="#1-2-3-栗子" class="headerlink" title="1.2.3 栗子"></a>1.2.3 栗子</h3><p>举一反三，假设我们现在有文件目录结构如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">└── bubble</span><br><span class="line">    ├── dao</span><br><span class="line">    │   └── mysql.go</span><br><span class="line">    ├── go.mod</span><br><span class="line">    └── main.go</span><br></pre></td></tr></table></figure>
-<p>其中<code>bubble/go.mod</code>内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module github.com&#x2F;q1mi&#x2F;bubble</span><br><span class="line"></span><br><span class="line">go 1.14</span><br></pre></td></tr></table></figure>
-<p><code>bubble/dao/mysql.go</code>内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package dao</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">func New()&#123;</span><br><span class="line">    fmt.Println(&quot;mypackage.New&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>bubble/main.go</code>内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">    &quot;github.com&#x2F;q1mi&#x2F;bubble&#x2F;dao&quot;</span><br><span class="line">)</span><br><span class="line">func main() &#123;</span><br><span class="line">    dao.New()</span><br><span class="line">    fmt.Println(&quot;main&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="1-3-不在同一个项目下"><a href="#1-3-不在同一个项目下" class="headerlink" title="1.3 不在同一个项目下"></a>1.3 不在同一个项目下</h2><h3 id="1-3-1-目录结构"><a href="#1-3-1-目录结构" class="headerlink" title="1.3.1 目录结构"></a>1.3.1 目录结构</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">├── moduledemo</span><br><span class="line">│   ├── go.mod</span><br><span class="line">│   └── main.go</span><br><span class="line">└── mypackage</span><br><span class="line">    ├── go.mod</span><br><span class="line">    └── mypackage.go</span><br></pre></td></tr></table></figure>
-<h3 id="1-3-2-导入包"><a href="#1-3-2-导入包" class="headerlink" title="1.3.2 导入包"></a>1.3.2 导入包</h3><p>这个时候，<code>mypackage</code>也需要进行module初始化，即拥有一个属于自己的<code>go.mod</code>文件，内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module mypackage</span><br><span class="line"></span><br><span class="line">go 1.14</span><br></pre></td></tr></table></figure>
-<p>然后我们在<code>moduledemo/main.go</code>中按如下方式导入：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">    &quot;mypackage&quot;</span><br><span class="line">)</span><br><span class="line">func main() &#123;</span><br><span class="line">    mypackage.New()</span><br><span class="line">    fmt.Println(&quot;main&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>因为这两个包不在同一个项目路径下，你想要导入本地包，并且这些包也没有发布到远程的github或其他代码仓库地址。这个时候我们就需要在<code>go.mod</code>文件中使用<code>replace</code>指令。</p>
-<p>在调用方也就是<code>moduledemo/go.mod</code>中按如下方式指定使用相对路径来寻找<code>mypackage</code>这个包。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module moduledemo</span><br><span class="line"></span><br><span class="line">go 1.14</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">require &quot;mypackage&quot; v0.0.0</span><br><span class="line">replace &quot;mypackage&quot; &#x3D;&gt; &quot;..&#x2F;mypackage&quot;</span><br></pre></td></tr></table></figure>
-<h3 id="1-3-3-举个例子"><a href="#1-3-3-举个例子" class="headerlink" title="1.3.3 举个例子"></a>1.3.3 举个例子</h3><p>最后我们再举个例子巩固下上面的内容。</p>
-<p>我们现在有文件目录结构如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">├── p1</span><br><span class="line">│   ├── go.mod</span><br><span class="line">│   └── main.go</span><br><span class="line">└── p2</span><br><span class="line">    ├── go.mod</span><br><span class="line">    └── p2.go</span><br></pre></td></tr></table></figure>
-<p><code>p1/main.go</code>中想要导入p2.go中定义的函数。</p>
-<p><code>p2/go.mod</code>内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module liwenzhou.com&#x2F;q1mi&#x2F;p2</span><br><span class="line"></span><br><span class="line">go 1.14</span><br></pre></td></tr></table></figure>
-<p><code>p1/main.go</code>中按如下方式导入</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">    &quot;liwenzhou.com&#x2F;q1mi&#x2F;p2&quot;</span><br><span class="line">)</span><br><span class="line">func main() &#123;</span><br><span class="line">    p2.New()</span><br><span class="line">    fmt.Println(&quot;main&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>因为我并没有把<code>liwenzhou.com/q1mi/p2</code>这个包上传到<code>liwenzhou.com</code>这个网站，我们只是想导入本地的包，这个时候就需要用到<code>replace</code>这个指令了。</p>
-<p><code>p1/go.mod</code>内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module github.com&#x2F;q1mi&#x2F;p1</span><br><span class="line"></span><br><span class="line">go 1.14</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">require &quot;liwenzhou.com&#x2F;q1mi&#x2F;p2&quot; v0.0.0</span><br><span class="line">replace &quot;liwenzhou.com&#x2F;q1mi&#x2F;p2&quot; &#x3D;&gt; &quot;..&#x2F;p2&quot;</span><br></pre></td></tr></table></figure>
-<p>此时，我们就可以正常编译p1这个项目了。</p>
 ]]></content>
       <categories>
         <category>Go</category>
@@ -1126,137 +1112,151 @@ fff | ggg| hhh | iii | 000|
       </tags>
   </entry>
   <entry>
-    <title>Go基础之切片</title>
-    <url>/2020/04/29/go_base_slice/</url>
-    <content><![CDATA[<blockquote>
-<p><strong>知识文档</strong>：</p>
+    <title>Hello World</title>
+    <url>/1992/06/21/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>吃喝玩乐</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Go依赖管理—从godep到go mod</title>
+    <url>/2020/01/31/go%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E2%80%94_godep_gomod/</url>
+    <content><![CDATA[<h2 id="1-1-为什么需要依赖管理"><a href="#1-1-为什么需要依赖管理" class="headerlink" title="1.1 为什么需要依赖管理"></a>1.1 为什么需要依赖管理</h2><p>最早的时候，Go所依赖的所有的第三方库都放在GOPATH这个目录下面。这就导致了同一个库只能保存一个版本的代码。如果不同的项目依赖同一个第三方的库的不同版本，应该怎么解决？</p>
+<h2 id="1-2-godep"><a href="#1-2-godep" class="headerlink" title="1.2 godep"></a>1.2 godep</h2><p>Go语言从<code>v1.5</code>开始开始引入<code>vendor</code>模式，如果项目目录下有vendor目录，那么go工具链会优先使用<code>vendor</code>内的包进行编译、测试等。</p>
+<p><code>godep</code>是一个通过vender模式实现的Go语言的第三方依赖管理工具，类似的还有由社区维护准官方包管理工具<code>dep</code>。</p>
+<blockquote>
+<p>注意：在<code>Go1.11</code>之后，建议<a href="https://learnku.com/articles/33241">将 dep 更换为 go mod</a>进行项目管理，更方便</p>
 </blockquote>
-<ul>
-<li><a href="http://wen.topgoer.com/docs/golang/chapter03-10">切片Slice</a></li>
-</ul>
-<hr>
-<p>切片（Slice）是一个拥有相同类型元素的可变长度的序列。它是基于数组类型做的一层封装。切片一般用于快速地操作一块数据集合。</p>
-<pre><code>1. 切片：切片是数组的一个引用，因此切片是引用类型，它的内部结构包含地址、长度和容量。
-2. 切片的长度可以改变，因此，切片是一个可变的数组。
-3. 切片遍历方式和数组一样，可以用len()求长度。表示可用元素数量，读写操作不能超过该限制。 
-4. cap可以求出slice最大扩张容量，不能超出数组限制。0 &lt;= len(slice) &lt;= len(array)，其中array是slice引用的数组。
-5. 切片的定义：var 变量名 []类型，比如 var str []string  var arr []int。
-6. 如果 slice == nil，那么 len、cap 结果都等于 0。
-</code></pre>
-<h2 id="切片定义"><a href="#切片定义" class="headerlink" title="切片定义"></a>切片定义</h2><p>声明切片类型的基本语法如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name []T</span><br></pre></td></tr></table></figure>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>执行以下命令安装godep工具。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go get github.com&#x2F;tools&#x2F;godep</span><br></pre></td></tr></table></figure>
+<h3 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h3><p>安装好godep之后，在终端输入godep查看支持的所有命令。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">godep save     将依赖项输出并复制到Godeps.json文件中</span><br><span class="line">godep go       使用保存的依赖项运行go工具</span><br><span class="line">godep get      下载并安装具有指定依赖项的包</span><br><span class="line">godep path     打印依赖的GOPATH路径</span><br><span class="line">godep restore  在GOPATH中拉取依赖的版本</span><br><span class="line">godep update   更新选定的包或go版本</span><br><span class="line">godep diff     显示当前和以前保存的依赖项集之间的差异</span><br><span class="line">godep version  查看版本信息</span><br></pre></td></tr></table></figure>
+<p>使用godep help [command]可以看看具体命令的帮助信息</p>
+<h3 id="使用godep"><a href="#使用godep" class="headerlink" title="使用godep"></a>使用godep</h3><p>在项目目录下执行godep save命令，会在当前项目中创建Godeps和vender两个文件夹。</p>
+<p>其中Godeps文件夹下有一个Godeps.json的文件，里面记录了项目所依赖的包信息。 vender文件夹下是项目依赖的包的源代码文件。</p>
+<h3 id="vender机制"><a href="#vender机制" class="headerlink" title="vender机制"></a>vender机制</h3><p>Go1.5版本之后开始支持，能够控制Go语言程序编译时依赖包搜索路径的优先级。</p>
+<p>例如查找项目的某个依赖包，首先会在项目根目录下的<code>vender</code>文件夹中查找，如果没有找到就会去<code>$GOAPTH/src</code>目录下查找。</p>
+<h3 id="godep开发流程"><a href="#godep开发流程" class="headerlink" title="godep开发流程"></a>godep开发流程</h3><p>保证程序能够正常编译<br>执行godep save保存当前项目的所有第三方依赖的版本信息和代码<br>提交Godeps目录和vender目录到代码库。<br>如果要更新依赖的版本，可以直接修改Godeps.json文件中的对应项</p>
+<h2 id="1-3-go-module"><a href="#1-3-go-module" class="headerlink" title="1.3 go module"></a>1.3 go module</h2><p><code>go module</code>是Go1.11版本之后官方推出的版本管理工具，并且从Go1.13版本开始，<code>go module</code>将是Go语言默认的依赖管理工具。</p>
+<h3 id="GO111MODULE"><a href="#GO111MODULE" class="headerlink" title="GO111MODULE"></a>GO111MODULE</h3><p>要启用<code>go module</code>支持首先要设置环境变量<code>GO111MODULE</code>，通过它可以开启或关闭模块支持，它有三个可选值：<code>off、on、auto</code>，默认值是<code>auto</code>。</p>
+<ol>
+<li>GO111MODULE=off禁用模块支持，编译时会从GOPATH和vendor文件夹中查找包。</li>
+<li>GO111MODULE=on启用模块支持，编译时会忽略GOPATH和vendor文件夹，只根据 go.mod下载依赖。</li>
+<li>GO111MODULE=auto，当项目在$GOPATH/src外且项目根目录有go.mod文件时，开启模块支持。<br>简单来说，设置<code>GO111MODULE=on</code>之后就可以使用<code>go module</code>了，以后就没有必要在GOPATH中创建项目了，并且还能够很好的管理项目依赖的第三方包信息。<br>使用 go module 管理依赖后会在项目根目录下生成两个文件<code>go.mod</code>和<code>go.sum</code>。</li>
+</ol>
+<h3 id="GOPROXY"><a href="#GOPROXY" class="headerlink" title="GOPROXY"></a>GOPROXY</h3><p>Go1.11之后设置GOPROXY命令为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn</span><br></pre></td></tr></table></figure>
+<p>Go1.13之后<code>GOPROXY</code>默认值为<code>https://proxy.golang.org</code>，在国内是无法访问的，所以十分建议大家设置<code>GOPROXY=https://goproxy.cn</code>。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go env -w GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn,direct</span><br></pre></td></tr></table></figure>
+<h3 id="go-mod命令"><a href="#go-mod命令" class="headerlink" title="go mod命令"></a>go mod命令</h3><p>常用的go mod命令如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go mod download    下载依赖的module到本地cache（默认为$GOPATH&#x2F;pkg&#x2F;mod目录）</span><br><span class="line">go mod edit        编辑go.mod文件</span><br><span class="line">go mod graph       打印模块依赖图</span><br><span class="line">go mod init        初始化当前文件夹, 创建go.mod文件</span><br><span class="line">go mod tidy        增加缺少的module，删除无用的module</span><br><span class="line">go mod vendor      将依赖复制到vendor下</span><br><span class="line">go mod verify      校验依赖</span><br><span class="line">go mod why         解释为什么需要依赖</span><br></pre></td></tr></table></figure>
+<p><strong>go.mod</strong><br>go.mod文件记录了项目所有的依赖信息，其结构大致如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module github.com&#x2F;Q1mi&#x2F;studygo&#x2F;blogger</span><br><span class="line"></span><br><span class="line">go 1.12</span><br><span class="line"></span><br><span class="line">require (</span><br><span class="line">    github.com&#x2F;DeanThompson&#x2F;ginpprof v0.0.0-20190408063150-3be636683586</span><br><span class="line">    github.com&#x2F;gin-gonic&#x2F;gin v1.4.0</span><br><span class="line">    github.com&#x2F;go-sql-driver&#x2F;mysql v1.4.1</span><br><span class="line">    github.com&#x2F;jmoiron&#x2F;sqlx v1.2.0</span><br><span class="line">    github.com&#x2F;satori&#x2F;go.uuid v1.2.0</span><br><span class="line">    google.golang.org&#x2F;appengine v1.6.1 &#x2F;&#x2F; indirect</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 <p>其中，</p>
 <ul>
-<li>name:表示变量名</li>
-<li>T:表示切片中的元素类型</li>
+<li>module用来定义包名</li>
+<li>require用来定义依赖包及版本</li>
+<li>indirect表示间接引用</li>
 </ul>
-<p>举个例子：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    &#x2F;&#x2F; 声明切片类型</span><br><span class="line">    var a []string              &#x2F;&#x2F;声明一个字符串切片</span><br><span class="line">    var b &#x3D; []int&#123;&#125;             &#x2F;&#x2F;声明一个整型切片并初始化</span><br><span class="line">    var c &#x3D; []bool&#123;false, true&#125; &#x2F;&#x2F;声明一个布尔切片并初始化</span><br><span class="line">    var d &#x3D; []bool&#123;false, true&#125; &#x2F;&#x2F;声明一个布尔切片并初始化</span><br><span class="line">    fmt.Println(a)              &#x2F;&#x2F;[]</span><br><span class="line">    fmt.Println(b)              &#x2F;&#x2F;[]</span><br><span class="line">    fmt.Println(c)              &#x2F;&#x2F;[false true]</span><br><span class="line">    fmt.Println(a &#x3D;&#x3D; nil)       &#x2F;&#x2F;true</span><br><span class="line">    fmt.Println(b &#x3D;&#x3D; nil)       &#x2F;&#x2F;false</span><br><span class="line">    fmt.Println(c &#x3D;&#x3D; nil)       &#x2F;&#x2F;false</span><br><span class="line">    &#x2F;&#x2F; fmt.Println(c &#x3D;&#x3D; d)   &#x2F;&#x2F;切片是引用类型，不支持直接比较，只能和nil比较</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="切片的长度和容量"><a href="#切片的长度和容量" class="headerlink" title="切片的长度和容量"></a>切片的长度和容量</h3><p>切片拥有自己的长度和容量，我们可以通过使用内置的<code>len()</code>函数求长度，使用内置的<code>cap()</code>函数求切片的容量。</p>
-<h3 id="切片表达式"><a href="#切片表达式" class="headerlink" title="切片表达式"></a>切片表达式</h3><p>切片表达式从字符串、数组、指向数组或切片的指针构造子字符串或切片。它有两种变体：一种指定<code>low</code>和<code>high</code>两个索引界限值的简单的形式，另一种是除了<code>low</code>和<code>high</code>索引界限值外还指定容量的完整的形式。</p>
-<p><strong><code>简单切片表达式</code></strong><br>切片的底层就是一个数组，所以我们可以基于数组通过切片表达式得到切片。 切片表达式中的<code>low</code>和<code>high</code>表示一个索引范围（左包含，右不包含），也就是下面代码中从数组a中选出<code>1&lt;=索引值&lt;4</code>的元素组成切片s，得到的切片<code>长度=high-low</code>，容量等于得到的切片的底层数组的容量。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [5]int&#123;1, 2, 3, 4, 5&#125;</span><br><span class="line">    s :&#x3D; a[1:3]  &#x2F;&#x2F; s :&#x3D; a[low:high]</span><br><span class="line">    fmt.Printf(&quot;s:%v len(s):%v cap(s):%v\n&quot;, s, len(s), cap(s))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">s:[2 3] len(s):2 cap(s):4</span><br></pre></td></tr></table></figure>
-<p>为了方便起见，可以省略切片表达式中的任何索引。省略了low则默认为0；省略了high则默认为切片操作数的长度:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">a[2:]  &#x2F;&#x2F; 等同于 a[2:len(a)]</span><br><span class="line">a[:3]  &#x2F;&#x2F; 等同于 a[0:3]</span><br><span class="line">a[:]   &#x2F;&#x2F; 等同于 a[0:len(a)]</span><br></pre></td></tr></table></figure>
-<p><code>注意</code>：<br>对于数组或字符串，如果<code>0 &lt;= low &lt;= high &lt;= len(a)</code>，则索引合法，否则就会索引越界（out of range）。</p>
-<p>对切片再执行切片表达式时（切片再切片），<code>high</code>的上限边界是切片的容量<code>cap(a)</code>，而不是长度。<code>常量索引</code>必须是非负的，并且可以用int类型的值表示;对于数组或常量字符串，常量索引也必须在有效范围内。如果<code>low</code>和<code>high</code>两个指标都是常数，它们必须满足<code>low &lt;= high</code>。如果索引在运行时超出范围，就会发生运行时<code>panic</code>。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [5]int&#123;1, 2, 3, 4, 5&#125;</span><br><span class="line">    s :&#x3D; a[1:3]  &#x2F;&#x2F; s :&#x3D; a[low:high]</span><br><span class="line">    fmt.Printf(&quot;s:%v len(s):%v cap(s):%v\n&quot;, s, len(s), cap(s))</span><br><span class="line">    s2 :&#x3D; s[3:4]  &#x2F;&#x2F; 索引的上限是cap(s)而不是len(s)</span><br><span class="line">    fmt.Printf(&quot;s2:%v len(s2):%v cap(s2):%v\n&quot;, s2, len(s2), cap(s2))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">s:[2 3] len(s):2 cap(s):4</span><br><span class="line">s2:[5] len(s2):1 cap(s2):1</span><br></pre></td></tr></table></figure>
-<p><strong><code>完整切片表达式</code></strong><br>对于数组，指向数组的指针，或切片a(<code>注意不能是字符串</code>)支持完整切片表达式：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">a[low : high : max]</span><br></pre></td></tr></table></figure>
-<p>上面的代码会构造与简单切片表达式·<code>a[low: high]</code>相同类型、相同长度和元素的切片。另外，它会将得到的结果切片的容量设置为<code>max-low</code>。在完整切片表达式中只有第一个索引值（low）可以省略；它默认为0。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [5]int&#123;1, 2, 3, 4, 5&#125;</span><br><span class="line">    t :&#x3D; a[1:3:5]</span><br><span class="line">    fmt.Printf(&quot;t:%v len(t):%v cap(t):%v\n&quot;, t, len(t), cap(t))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出结果：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">t:[2 3] len(t):2 cap(t):4</span><br></pre></td></tr></table></figure>
-<p>完整切片表达式需要满足的条件是<code>0 &lt;= low &lt;= high &lt;= max &lt;= cap(a)</code>，其他条件和简单切片表达式相同。</p>
-<h3 id="使用make-函数构造切片"><a href="#使用make-函数构造切片" class="headerlink" title="使用make()函数构造切片"></a>使用make()函数构造切片</h3><p>我们上面都是基于数组来创建的切片，如果需要动态的创建一个切片，我们就需要使用内置的make()函数，格式如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">make([]T, size, cap)</span><br></pre></td></tr></table></figure>
-<p>其中：</p>
-<ul>
-<li>T:切片的元素类型</li>
-<li>size:切片中元素的数量</li>
-<li>cap:切片的容量</li>
-</ul>
-<p>举个例子：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; make([]int, 2, 10)</span><br><span class="line">    fmt.Println(a)      &#x2F;&#x2F;[0 0]</span><br><span class="line">    fmt.Println(len(a)) &#x2F;&#x2F;2</span><br><span class="line">    fmt.Println(cap(a)) &#x2F;&#x2F;10</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上面代码中<code>a</code>的内部存储空间已经分配了10个，但实际上只用了2个。 容量并不会影响当前元素的个数，所以<code>len(a)</code>返回2，<code>cap(a)</code>则返回该切片的容量。</p>
-<h3 id="切片的本质"><a href="#切片的本质" class="headerlink" title="切片的本质"></a>切片的本质</h3><p>切片的本质就是对底层数组的封装，它包含了三个信息：底层数组的指针、切片的长度（len）和切片的容量（cap）。<br>举个例子，现在有一个数组<code>a := [8]int&#123;0, 1, 2, 3, 4, 5, 6, 7&#125;</code>，切片<code>s1 := a[:5]</code>，相应示意图如下。<br><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/04/slice_01.png?x-oss-process=style/original_format"></p>
-<p>切片<code>s2 := a[3:6]</code>，相应示意图如下：<br><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/04/slice_02.png?x-oss-process=style/original_format"></p>
-<h3 id="判断切片是否为空"><a href="#判断切片是否为空" class="headerlink" title="判断切片是否为空"></a>判断切片是否为空</h3><p>要检查切片是否为空，请始终使用<code>len(s) == 0</code>来判断，而不应该使用<code>s == nil</code>来判断。</p>
-<h2 id="切片不能直接比较"><a href="#切片不能直接比较" class="headerlink" title="切片不能直接比较"></a>切片不能直接比较</h2><p>切片之间是不能比较的，我们不能使用<code>==</code>操作符来判断两个切片是否含有全部相等元素。 切片唯一合法的比较操作是和<code>nil</code>比较。 一个<code>nil</code>值的切片并没有底层数组，一个<code>nil</code>值的切片的长度和容量都是0。但是我们不能说一个长度和容量都是0的切片一定是<code>nil</code>，例如下面的示例：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var s1 []int         &#x2F;&#x2F;len(s1)&#x3D;0;cap(s1)&#x3D;0;s1&#x3D;&#x3D;nil</span><br><span class="line">s2 :&#x3D; []int&#123;&#125;        &#x2F;&#x2F;len(s2)&#x3D;0;cap(s2)&#x3D;0;s2!&#x3D;nil</span><br><span class="line">s3 :&#x3D; make([]int, 0) &#x2F;&#x2F;len(s3)&#x3D;0;cap(s3)&#x3D;0;s3!&#x3D;nil</span><br></pre></td></tr></table></figure>
-<p>所以要判断一个切片是否是空的，要是用<code>len(s) == 0</code>来判断，不应该使用<code>s == nil</code>来判断。</p>
-<h2 id="切片的赋值拷贝"><a href="#切片的赋值拷贝" class="headerlink" title="切片的赋值拷贝"></a>切片的赋值拷贝</h2><p>下面的代码中演示了拷贝前后两个变量共享底层数组，对一个切片的修改会影响另一个切片的内容，这点需要特别注意。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    s1 :&#x3D; make([]int, 3) &#x2F;&#x2F;[0 0 0]</span><br><span class="line">    s2 :&#x3D; s1             &#x2F;&#x2F;将s1直接赋值给s2，s1和s2共用一个底层数组</span><br><span class="line">    s2[0] &#x3D; 100</span><br><span class="line">    fmt.Println(s1) &#x2F;&#x2F;[100 0 0]</span><br><span class="line">    fmt.Println(s2) &#x2F;&#x2F;[100 0 0]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="切片遍历"><a href="#切片遍历" class="headerlink" title="切片遍历"></a>切片遍历</h2><p>切片的遍历方式和数组是一致的，支持索引遍历和<code>for range</code>遍历。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    s :&#x3D; []int&#123;1, 3, 5&#125;</span><br><span class="line"></span><br><span class="line">    for i :&#x3D; 0; i &lt; len(s); i++ &#123;</span><br><span class="line">        fmt.Println(i, s[i])</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    for index, value :&#x3D; range s &#123;</span><br><span class="line">        fmt.Println(index, value)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="append-方法为切片添加元素"><a href="#append-方法为切片添加元素" class="headerlink" title="append()方法为切片添加元素"></a>append()方法为切片添加元素</h2><p>Go语言的内建函数<code>append()</code>可以为切片动态添加元素。 可以一次添加一个元素，可以添加多个元素，也可以添加另一个切片中的元素（后面加…）。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main()&#123;</span><br><span class="line">    var s []int</span><br><span class="line">    s &#x3D; append(s, 1)        &#x2F;&#x2F; [1]</span><br><span class="line">    s &#x3D; append(s, 2, 3, 4)  &#x2F;&#x2F; [1 2 3 4]</span><br><span class="line">    s2 :&#x3D; []int&#123;5, 6, 7&#125;  </span><br><span class="line">    s &#x3D; append(s, s2...)    &#x2F;&#x2F; [1 2 3 4 5 6 7]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>**<code>注意</code>**：通过var声明的零值切片可以在<code>append()</code>函数直接使用，无需初始化。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var s []int</span><br><span class="line">s &#x3D; append(s, 1, 2, 3)</span><br></pre></td></tr></table></figure>
-<p>没有必要像下面的代码一样初始化一个切片再传入<code>append()</code>函数使用，</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">s :&#x3D; []int&#123;&#125;  &#x2F;&#x2F; 没有必要初始化</span><br><span class="line">s &#x3D; append(s, 1, 2, 3)</span><br><span class="line"></span><br><span class="line">var s &#x3D; make([]int)  &#x2F;&#x2F; 没有必要初始化</span><br><span class="line">s &#x3D; append(s, 1, 2, 3)</span><br></pre></td></tr></table></figure>
-<p>每个切片会指向一个底层数组，这个数组的容量够用就添加新增元素。当底层数组不能容纳新增的元素时，切片就会自动按照一定的策略进行“扩容”，此时该切片指向的底层数组就会更换。“扩容”操作往往发生在<code>append()</code>函数调用时，所以我们通常都需要用原变量接收append函数的返回值。<br>举个例子：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    &#x2F;&#x2F;append()添加元素和切片扩容</span><br><span class="line">    var numSlice []int</span><br><span class="line">    for i :&#x3D; 0; i &lt; 10; i++ &#123;</span><br><span class="line">        numSlice &#x3D; append(numSlice, i)</span><br><span class="line">        fmt.Printf(&quot;%v  len:%d  cap:%d  ptr:%p\n&quot;, numSlice, len(numSlice), cap(numSlice), numSlice)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[0]  len:1  cap:1  ptr:0xc0000a8000</span><br><span class="line">[0 1]  len:2  cap:2  ptr:0xc0000a8040</span><br><span class="line">[0 1 2]  len:3  cap:4  ptr:0xc0000b2020</span><br><span class="line">[0 1 2 3]  len:4  cap:4  ptr:0xc0000b2020</span><br><span class="line">[0 1 2 3 4]  len:5  cap:8  ptr:0xc0000b6000</span><br><span class="line">[0 1 2 3 4 5]  len:6  cap:8  ptr:0xc0000b6000</span><br><span class="line">[0 1 2 3 4 5 6]  len:7  cap:8  ptr:0xc0000b6000</span><br><span class="line">[0 1 2 3 4 5 6 7]  len:8  cap:8  ptr:0xc0000b6000</span><br><span class="line">[0 1 2 3 4 5 6 7 8]  len:9  cap:16  ptr:0xc0000b8000</span><br><span class="line">[0 1 2 3 4 5 6 7 8 9]  len:10  cap:16  ptr:0xc0000b8000</span><br></pre></td></tr></table></figure>
-<p>从上面的结果可以看出：</p>
-<ul>
-<li>append()函数将元素追加到切片的最后并返回该切片。</li>
-<li>切片numSlice的容量按照1，2，4，8，16这样的规则自动进行扩容，每次扩容后都是扩容前的2倍。</li>
-</ul>
-<p>append()函数还支持一次性追加多个元素。 例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var citySlice []string</span><br><span class="line">&#x2F;&#x2F; 追加一个元素</span><br><span class="line">citySlice &#x3D; append(citySlice, &quot;北京&quot;)</span><br><span class="line">&#x2F;&#x2F; 追加多个元素</span><br><span class="line">citySlice &#x3D; append(citySlice, &quot;上海&quot;, &quot;广州&quot;, &quot;深圳&quot;)</span><br><span class="line">&#x2F;&#x2F; 追加切片</span><br><span class="line">a :&#x3D; []string&#123;&quot;成都&quot;, &quot;重庆&quot;&#125;</span><br><span class="line">citySlice &#x3D; append(citySlice, a...)</span><br><span class="line">fmt.Println(citySlice) &#x2F;&#x2F;[北京 上海 广州 深圳 成都 重庆]</span><br></pre></td></tr></table></figure>
-<h2 id="切片的扩容策略"><a href="#切片的扩容策略" class="headerlink" title="切片的扩容策略"></a>切片的扩容策略</h2><p>可以通过查看<code>$GOROOT/src/runtime/slice.go</code>源码，其中扩容相关代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">newcap :&#x3D; old.cap</span><br><span class="line">doublecap :&#x3D; newcap + newcap</span><br><span class="line">if cap &gt; doublecap &#123;</span><br><span class="line">    newcap &#x3D; cap</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    if old.len &lt; 1024 &#123;</span><br><span class="line">        newcap &#x3D; doublecap</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        &#x2F;&#x2F; Check 0 &lt; newcap to detect overflow</span><br><span class="line">        &#x2F;&#x2F; and prevent an infinite loop.</span><br><span class="line">        for 0 &lt; newcap &amp;&amp; newcap &lt; cap &#123;</span><br><span class="line">            newcap +&#x3D; newcap &#x2F; 4</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F; Set newcap to the requested cap when</span><br><span class="line">        &#x2F;&#x2F; the newcap calculation overflowed.</span><br><span class="line">        if newcap &lt;&#x3D; 0 &#123;</span><br><span class="line">            newcap &#x3D; cap</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>从上面的代码可以看出以下内容：</p>
-<ul>
-<li>首先判断，如果新申请容量（cap）大于2倍的旧容量（old.cap），最终容量（newcap）就是新申请的容量（cap）。</li>
-<li>否则判断，如果旧切片的长度小于1024，则最终容量(newcap)就是旧容量(old.cap)的两倍，即（newcap=doublecap），</li>
-<li>否则判断，如果旧切片长度大于等于1024，则最终容量（newcap）从旧容量（old.cap）开始循环增加原来的1/4，即（newcap=old.cap,for {newcap += newcap/4}）直到最终容量（newcap）大于等于新申请的容量(cap)，即（newcap &gt;= cap）</li>
-<li>如果最终容量（cap）计算值溢出，则最终容量（cap）就是新申请容量（cap）。</li>
-</ul>
-<p>需要注意的是，切片扩容还会根据切片中元素的类型不同而做不同的处理，比如int和string类型的处理方式就不一样。</p>
-<h2 id="使用copy-函数复制切片"><a href="#使用copy-函数复制切片" class="headerlink" title="使用copy()函数复制切片"></a>使用copy()函数复制切片</h2><p>首先我们来看一个问题：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; []int&#123;1, 2, 3, 4, 5&#125;</span><br><span class="line">    b :&#x3D; a</span><br><span class="line">    fmt.Println(a) &#x2F;&#x2F;[1 2 3 4 5]</span><br><span class="line">    fmt.Println(b) &#x2F;&#x2F;[1 2 3 4 5]</span><br><span class="line">    b[0] &#x3D; 1000</span><br><span class="line">    fmt.Println(a) &#x2F;&#x2F;[1000 2 3 4 5]</span><br><span class="line">    fmt.Println(b) &#x2F;&#x2F;[1000 2 3 4 5]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>由于切片是引用类型，所以a和b其实都指向了同一块内存地址。修改b的同时a的值也会发生变化。</p>
-<p>Go语言内建的<code>copy()</code>函数可以迅速地将一个切片的数据复制到另外一个切片空间中，<code>copy()</code>函数的使用格式如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">copy(destSlice, srcSlice []T)</span><br></pre></td></tr></table></figure>
-<p>其中：</p>
-<ul>
-<li>srcSlice: 数据来源切片</li>
-<li>destSlice: 目标切片</li>
-</ul>
-<p>举个例子：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    &#x2F;&#x2F; copy()复制切片</span><br><span class="line">    a :&#x3D; []int&#123;1, 2, 3, 4, 5&#125;</span><br><span class="line">    c :&#x3D; make([]int, 5, 5)</span><br><span class="line">    copy(c, a)     &#x2F;&#x2F;使用copy()函数将切片a中的元素复制到切片c</span><br><span class="line">    fmt.Println(a) &#x2F;&#x2F;[1 2 3 4 5]</span><br><span class="line">    fmt.Println(c) &#x2F;&#x2F;[1 2 3 4 5]</span><br><span class="line">    c[0] &#x3D; 1000</span><br><span class="line">    fmt.Println(a) &#x2F;&#x2F;[1 2 3 4 5]</span><br><span class="line">    fmt.Println(c) &#x2F;&#x2F;[1000 2 3 4 5]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="从切片中删除元素"><a href="#从切片中删除元素" class="headerlink" title="从切片中删除元素"></a>从切片中删除元素</h2><p>Go语言中并没有删除切片元素的专用方法，我们可以使用切片本身的特性来删除元素。 代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    &#x2F;&#x2F; 从切片中删除元素</span><br><span class="line">    a :&#x3D; []int&#123;30, 31, 32, 33, 34, 35, 36, 37&#125;</span><br><span class="line">    &#x2F;&#x2F; 要删除索引为2的元素</span><br><span class="line">    a &#x3D; append(a[:2], a[3:]...)</span><br><span class="line">    fmt.Println(a) &#x2F;&#x2F;[30 31 33 34 35 36 37]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>总结一下就是：要从切片a中删除索引为<code>index</code>的元素，操作方法是<code>a = append(a[:index], a[index+1:]...)</code></p>
-<h2 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h2><ol>
-<li><p>请写出下面代码的输出结果。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var a &#x3D; make([]string, 5, 10)</span><br><span class="line">    for i :&#x3D; 0; i &lt; 10; i++ &#123;</span><br><span class="line">        a &#x3D; append(a, fmt.Sprintf(&quot;%v&quot;, i))</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(a)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>解答：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>请使用内置的sort包对数组var a = […]int{3, 7, 8, 9, 1}进行排序（附加题，自行查资料解答）。<br>解答：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-
-</li>
+<p><strong><code>依赖的版本</code></strong><br>go mod支持语义化版本号，比如<code>go get foo@v1.2.3</code>，也可以跟git的分支或tag，比如<code>go get foo@master</code>，当然也可以跟git提交哈希，比如<code>go get foo@e3702bed2</code>。关于依赖的版本支持以下几种格式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">gopkg.in&#x2F;tomb.v1 v1.0.0-20141024135613-dd632973f1e7</span><br><span class="line">gopkg.in&#x2F;vmihailenco&#x2F;msgpack.v2 v2.9.1</span><br><span class="line">gopkg.in&#x2F;yaml.v2 &lt;&#x3D;v2.2.1</span><br><span class="line">github.com&#x2F;tatsushid&#x2F;go-fastping v0.0.0-20160109021039-d7bb493dee3e</span><br><span class="line">latest</span><br></pre></td></tr></table></figure>
+<p><strong><code>replace</code></strong><br>在国内访问golang.org/x的各个包都需要翻墙，你可以在go.mod中使用replace替换成github上对应的库。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">replace (</span><br><span class="line">    golang.org&#x2F;x&#x2F;crypto v0.0.0-20180820150726-614d502a4dac &#x3D;&gt; github.com&#x2F;golang&#x2F;crypto v0.0.0-20180820150726-614d502a4dac</span><br><span class="line">    golang.org&#x2F;x&#x2F;net v0.0.0-20180821023952-922f4815f713 &#x3D;&gt; github.com&#x2F;golang&#x2F;net v0.0.0-20180826012351-8a410e7b638d</span><br><span class="line">    golang.org&#x2F;x&#x2F;text v0.3.0 &#x3D;&gt; github.com&#x2F;golang&#x2F;text v0.3.0</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h3 id="go-get"><a href="#go-get" class="headerlink" title="go get"></a>go get</h3><p>在项目中执行<code>go get</code>命令可以下载依赖包，并且还可以指定下载的版本。</p>
+<ol>
+<li>运行go get -u将会升级到最新的次要版本或者修订版本(x.y.z, z是修订版本号， y是次要版本号)</li>
+<li>运行go get -u=patch将会升级到最新的修订版本</li>
+<li>运行go get package@version将会升级到指定的版本号version<br>如果下载所有依赖可以使用<code>go mod download</code>命令。</li>
 </ol>
+<h3 id="go-mod-edit"><a href="#go-mod-edit" class="headerlink" title="go mod edit"></a>go mod edit</h3><p><strong><code>格式化</code></strong><br>因为我们可以手动修改go.mod文件，所以有些时候需要格式化该文件。Go提供了一下命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go mod edit -fmt</span><br></pre></td></tr></table></figure>
+<p><strong><code>添加依赖项</code></strong><br>go mod edit -require=golang.org/x/text<br><strong><code>移除依赖项</code></strong><br>如果只是想修改go.mod文件中的内容，那么可以运行<code>go mod edit -droprequire=package path</code>，比如要在<code>go.mod</code>中移除<code>golang.org/x/tex</code>t包，可以使用如下命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go mod edit -droprequire&#x3D;golang.org&#x2F;x&#x2F;text</span><br></pre></td></tr></table></figure>
+<p>关于<code>go mod edit</code>的更多用法可以通过<code>go help mod edit</code>查看。</p>
+<h2 id="1-4在项目中使用go-module"><a href="#1-4在项目中使用go-module" class="headerlink" title="1.4在项目中使用go module"></a>1.4在项目中使用go module</h2><h3 id="既有项目"><a href="#既有项目" class="headerlink" title="既有项目"></a>既有项目</h3><p>如果需要对一个已经存在的项目启用<code>go module</code>，可以按照以下步骤操作：</p>
+<p>在项目目录下执行go mod init，生成一个go.mod文件。<br>执行go get，查找并记录当前项目的依赖，同时生成一个go.sum记录每个依赖库的版本和哈希值。</p>
+<h3 id="新项目"><a href="#新项目" class="headerlink" title="新项目"></a>新项目</h3><p>对于一个新创建的项目，我们可以在项目文件夹下按照以下步骤操作：</p>
+<ul>
+<li>执行go mod init 项目名命令，在当前项目文件夹下创建一个go.mod文件。</li>
+<li>手动编辑go.mod中的require依赖项或执行go get自动发现、维护依赖。</li>
+</ul>
 <hr>
 <p>&nbsp;  </p>
 <!--**参考文章**：-->  
 <!---->  
 <!---->  
+
+
+
 ]]></content>
       <categories>
         <category>Go</category>
       </categories>
       <tags>
-        <tag>go base</tag>
+        <tag>env</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用Go module导入本地包</title>
+    <url>/2020/01/31/%E4%BD%BF%E7%94%A8Go_module%E5%AF%BC%E5%85%A5%E6%9C%AC%E5%9C%B0%E5%8C%85/</url>
+    <content><![CDATA[<p>go module是<code>Go1.11版本之后</code>官方推出的版本管理工具，并且从<code>Go1.13</code>版本开始，go module将是Go语言默认的依赖管理工具。到今天<code>Go1.14</code>版本推出之后<code>Go modules</code>功能已经被正式推荐在生产环境下使用了。</p>
+<h2 id="1-1-前提"><a href="#1-1-前提" class="headerlink" title="1.1 前提"></a>1.1 前提</h2><p>假设我们现在有<code>moduledemo</code>和<code>mypackage</code>两个包，其中<code>moduledemo</code>包中会导入<code>mypackage</code>包并使用它的<code>New</code>方法。<br>mypackage/mypackage.go内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package mypackage</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">func New()&#123;</span><br><span class="line">    fmt.Println(&quot;mypackage.New&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们现在分两种情况讨论：</p>
+<h2 id="1-2-在同一个项目下"><a href="#1-2-在同一个项目下" class="headerlink" title="1.2 在同一个项目下"></a>1.2 在同一个项目下</h2><p><code>注意</code>：在一个项目（project）下我们是可以定义多个包（package）的。</p>
+<h3 id="1-2-1-目录结构"><a href="#1-2-1-目录结构" class="headerlink" title="1.2.1 目录结构"></a>1.2.1 目录结构</h3><p>现在的情况是，我们在<code>moduledemo/main.go</code>中调用了<code>mypackage</code>这个包。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">moduledemo</span><br><span class="line">├── go.mod</span><br><span class="line">├── main.go</span><br><span class="line">└── mypackage</span><br><span class="line">    └── mypackage.go</span><br></pre></td></tr></table></figure>
+<h3 id="1-2-2-导入包"><a href="#1-2-2-导入包" class="headerlink" title="1.2.2 导入包"></a>1.2.2 导入包</h3><p>这个时候，我们需要在<code>moduledemo/go.mod</code>中按如下定义：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module moduledemo</span><br><span class="line"></span><br><span class="line">go 1.14</span><br></pre></td></tr></table></figure>
+<p>然后在<code>moduledemo/main.go</code>中按如下方式导入<code>mypackage</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">    &quot;moduledemo&#x2F;mypackage&quot;  &#x2F;&#x2F; 导入同一项目下的mypackage包</span><br><span class="line">)</span><br><span class="line">func main() &#123;</span><br><span class="line">    mypackage.New()</span><br><span class="line">    fmt.Println(&quot;main&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="1-2-3-栗子"><a href="#1-2-3-栗子" class="headerlink" title="1.2.3 栗子"></a>1.2.3 栗子</h3><p>举一反三，假设我们现在有文件目录结构如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">└── bubble</span><br><span class="line">    ├── dao</span><br><span class="line">    │   └── mysql.go</span><br><span class="line">    ├── go.mod</span><br><span class="line">    └── main.go</span><br></pre></td></tr></table></figure>
+<p>其中<code>bubble/go.mod</code>内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module github.com&#x2F;q1mi&#x2F;bubble</span><br><span class="line"></span><br><span class="line">go 1.14</span><br></pre></td></tr></table></figure>
+<p><code>bubble/dao/mysql.go</code>内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package dao</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">func New()&#123;</span><br><span class="line">    fmt.Println(&quot;mypackage.New&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>bubble/main.go</code>内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">    &quot;github.com&#x2F;q1mi&#x2F;bubble&#x2F;dao&quot;</span><br><span class="line">)</span><br><span class="line">func main() &#123;</span><br><span class="line">    dao.New()</span><br><span class="line">    fmt.Println(&quot;main&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="1-3-不在同一个项目下"><a href="#1-3-不在同一个项目下" class="headerlink" title="1.3 不在同一个项目下"></a>1.3 不在同一个项目下</h2><h3 id="1-3-1-目录结构"><a href="#1-3-1-目录结构" class="headerlink" title="1.3.1 目录结构"></a>1.3.1 目录结构</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">├── moduledemo</span><br><span class="line">│   ├── go.mod</span><br><span class="line">│   └── main.go</span><br><span class="line">└── mypackage</span><br><span class="line">    ├── go.mod</span><br><span class="line">    └── mypackage.go</span><br></pre></td></tr></table></figure>
+<h3 id="1-3-2-导入包"><a href="#1-3-2-导入包" class="headerlink" title="1.3.2 导入包"></a>1.3.2 导入包</h3><p>这个时候，<code>mypackage</code>也需要进行module初始化，即拥有一个属于自己的<code>go.mod</code>文件，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module mypackage</span><br><span class="line"></span><br><span class="line">go 1.14</span><br></pre></td></tr></table></figure>
+<p>然后我们在<code>moduledemo/main.go</code>中按如下方式导入：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">    &quot;mypackage&quot;</span><br><span class="line">)</span><br><span class="line">func main() &#123;</span><br><span class="line">    mypackage.New()</span><br><span class="line">    fmt.Println(&quot;main&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为这两个包不在同一个项目路径下，你想要导入本地包，并且这些包也没有发布到远程的github或其他代码仓库地址。这个时候我们就需要在<code>go.mod</code>文件中使用<code>replace</code>指令。</p>
+<p>在调用方也就是<code>moduledemo/go.mod</code>中按如下方式指定使用相对路径来寻找<code>mypackage</code>这个包。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module moduledemo</span><br><span class="line"></span><br><span class="line">go 1.14</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">require &quot;mypackage&quot; v0.0.0</span><br><span class="line">replace &quot;mypackage&quot; &#x3D;&gt; &quot;..&#x2F;mypackage&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="1-3-3-举个例子"><a href="#1-3-3-举个例子" class="headerlink" title="1.3.3 举个例子"></a>1.3.3 举个例子</h3><p>最后我们再举个例子巩固下上面的内容。</p>
+<p>我们现在有文件目录结构如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">├── p1</span><br><span class="line">│   ├── go.mod</span><br><span class="line">│   └── main.go</span><br><span class="line">└── p2</span><br><span class="line">    ├── go.mod</span><br><span class="line">    └── p2.go</span><br></pre></td></tr></table></figure>
+<p><code>p1/main.go</code>中想要导入p2.go中定义的函数。</p>
+<p><code>p2/go.mod</code>内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module liwenzhou.com&#x2F;q1mi&#x2F;p2</span><br><span class="line"></span><br><span class="line">go 1.14</span><br></pre></td></tr></table></figure>
+<p><code>p1/main.go</code>中按如下方式导入</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">    &quot;liwenzhou.com&#x2F;q1mi&#x2F;p2&quot;</span><br><span class="line">)</span><br><span class="line">func main() &#123;</span><br><span class="line">    p2.New()</span><br><span class="line">    fmt.Println(&quot;main&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为我并没有把<code>liwenzhou.com/q1mi/p2</code>这个包上传到<code>liwenzhou.com</code>这个网站，我们只是想导入本地的包，这个时候就需要用到<code>replace</code>这个指令了。</p>
+<p><code>p1/go.mod</code>内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module github.com&#x2F;q1mi&#x2F;p1</span><br><span class="line"></span><br><span class="line">go 1.14</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">require &quot;liwenzhou.com&#x2F;q1mi&#x2F;p2&quot; v0.0.0</span><br><span class="line">replace &quot;liwenzhou.com&#x2F;q1mi&#x2F;p2&quot; &#x3D;&gt; &quot;..&#x2F;p2&quot;</span><br></pre></td></tr></table></figure>
+<p>此时，我们就可以正常编译p1这个项目了。</p>
+]]></content>
+      <categories>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>env</tag>
       </tags>
   </entry>
 </search>
