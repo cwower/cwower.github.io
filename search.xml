@@ -128,6 +128,147 @@ timezone: 时区
       </tags>
   </entry>
   <entry>
+    <title>好用的Markdown编辑器 —— Pad2 和 Typora</title>
+    <url>/2018/04/21/Pad2%E5%92%8CTypora/</url>
+    <content><![CDATA[<blockquote>
+<p>前言：<br><del>选用“<a href="http://markdownpad.com/">MarkdownPad 2</a>”作为文档编写工具的原因：方便，支持实时预览</del>。<br><strong>[更新]：<code>目前已经由”MarkdownPad 2“转用”Typora“，但本文内容仍然有效</code>。</strong></p>
+</blockquote>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/markdownpad2.png?x-oss-process=style/watermark" alt="md pad 2"></p>
+<hr>
+<h2 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h2><ul>
+<li>MarkdownPad 2 的官网下载地址： <a href="http://markdownpad.com/">http://markdownpad.com/</a></li>
+<li>个人网盘下载（附激活码），点击【<a href="https://pan.baidu.com/s/1Aym5-XRNMuWupvOTIdFHNA">链接</a>】， 提取码：ib02 </li>
+</ul>
+<h2 id="2-破解"><a href="#2-破解" class="headerlink" title="2. 破解"></a>2. 破解</h2><p>安装完毕后，首次启动提示激活，如下图：点击<code>”Enter Key“</code> —&gt; 键入<code>”Email address“</code>和<code>”License key“</code></p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/mdpad2_enterkey.png?x-oss-process=style/watermark" alt="mdpad2_enterkey"></p>
+<h2 id="3-异常"><a href="#3-异常" class="headerlink" title="3. 异常"></a>3. 异常</h2><h3 id="3-1-http渲染"><a href="#3-1-http渲染" class="headerlink" title="3.1 http渲染"></a>3.1 http渲染</h3><p><strong>安装激活后提示</strong>：</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/erro_html_readering.png?x-oss-process=style/watermark" alt="erro_html_readering"></p>
+<p><strong>解决方案</strong>：<br>安装一个SDK的工具包，【<a href="http://markdownpad.com/download/awesomium_v1.6.6_sdk_win.exe">点击获取</a>】，重启pad2即可。</p>
+<h3 id="3-2-PDF格式转换"><a href="#3-2-PDF格式转换" class="headerlink" title="3.2 PDF格式转换"></a>3.2 PDF格式转换</h3><p><strong>问题描述</strong>：<br>”.md“文件中包含”https“的图片链接，通过Mdpad2可以进行预览展示，但使用Mdpad2将其导出为“pdf”文件后，包含”https“的图片链接无法通过”pdf“显示。如果你没有导出需求，可以忽略该问题。</p>
+<p><strong>解决方案</strong>：<br>可以考虑结合使用”<a href="https://www.typora.io/">Typora</a>“进行转换，它也是一款Markdown编辑器，轻便简洁，支持即时渲染技术。</p>
+<p>或者。。。直接放弃”MarkdownPad 2“转而使用”Typora“，这两种MarkDown编辑器都比较亲民。</p>
+<pre><code>”MarkdownPad 2“有左右两个分页窗口，实时预览效果比较好。
+”Typora“刚刚使用，给我的感觉就是简洁，自定义功能较多。
+</code></pre>
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!--  https://blog.csdn.net/xiaojin21cen/article/details/78752561  -->  
+<!--  https://blog.csdn.net/kuangay/article/details/79854665  -->  
+
+]]></content>
+      <categories>
+        <category>Tools</category>
+      </categories>
+      <tags>
+        <tag>markdown</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Go语言介绍</title>
+    <url>/2020/01/31/Go%E8%AF%AD%E8%A8%80%E7%AE%80%E4%BB%8B/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>知识文档</strong>：</p>
+</blockquote>
+<ul>
+<li><a href="http://wen.topgoer.com/docs/golang/golang-1ccjbpfstsfi1">go语言中文文档</a></li>
+<li><a href="https://www.liwenzhou.com/posts/Go/about_golang/">李文周的博客</a></li>
+</ul>
+<hr>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><strong><code>Google开发的开源编程语言</code></strong><br>诞生于2006年1月2日下午15点4分5秒，于2009年11月开源，2012年发布go稳定版。Go语言在多核并发上拥有原生的设计优势，Go语言从底层原生支持并发，<code>无须第三方库</code>、开发者的编程技巧和开发经验。<br>它的主要目标是“兼具Python 等动态语言的开发速度和C/C++等编译型语言的性能与安全性”</p>
+<p><strong><code>Go语言为并发而生</code></strong> ——21世纪的C语言<br>硬件制造商正在为处理器添加越来越多的内核以提高性能。所有数据中心都在这些处理器上运行，更重要的是，今天的应用程序使用多个微服务来维护数据库连接，消息队列和维护缓存。因此，开发的软件和编程语言应该可以轻松地支持并发性，并且应该能够随着CPU核心数量的增加而可扩展。</p>
+<p>但是，大多数现代编程语言（如Java，Python等）都来自90年代的单线程环境。虽然一些编程语言的框架在不断地提高多核资源使用效率，例如 Java 的 Netty 等，但仍然需要开发人员花费大量的时间和精力搞懂这些框架的运行原理后才能熟练掌握。</p>
+<p>Go于2009年发布，当时多核处理器已经上市。Go语言在多核并发上拥有原生的设计优势，Go语言从底层原生支持并发，无须第三方库、开发者的编程技巧和开发经验。</p>
+<p>很多公司，特别是中国的互联网公司，即将或者已经完成了使用 Go 语言改造旧系统的过程。经过 Go 语言重构的系统能使用更少的硬件资源获得更高的并发和I/O吞吐表现。充分挖掘硬件设备的潜力也满足当前精细化运营的市场大环境。</p>
+<p>Go语言的并发是基于 <code>goroutine</code> 的，<code>goroutine</code> 类似于线程，但并非线程。可以将 <code>goroutine</code> 理解为一种虚拟线程。Go 语言运行时会参与调度 <code>goroutine</code>，并将 <code>goroutine</code> 合理地分配到每个 CPU 中，最大限度地使用CPU性能。开启一个<code>goroutine</code>的消耗非常小（大约2KB的内存），你可以轻松创建数百万个<code>goroutine</code>。</p>
+<p><code>goroutine</code>的特点：</p>
+<ol>
+<li><code>goroutine</code>具有可增长的分段堆栈。这意味着它们只在需要时才会使用更多内存。</li>
+<li><code>goroutine</code>的启动时间比线程快。</li>
+<li><code>goroutine</code>原生支持利用channel安全地进行通信。</li>
+<li><code>goroutine</code>共享数据结构时无需使用互斥锁。</li>
+</ol>
+<p><strong><code>编译型语言</code></strong><br>与其他现代高级语言（如Java/Python）相比，使用C，C++的最大好处是它们的性能。因为C/ C++是编译型语言而不是解释的语言。 处理器只能理解二进制文件，Java和Python这种高级语言在运行的时候需要先将人类可读的代码翻译成字节码，然后由专门的解释器再转变成处理器可以理解的二进制文件。<br><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/03/15511649241043.jpg?x-oss-process=style/original_format"></p>
+<p>同C,C++一样，Go语言也是编译型的语言，它直接将人类可读的代码编译成了处理器可以直接运行的二进制文件，执行效率更高，性能更好。</p>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><p><strong>语法简洁</strong><br>Go 语言简单易学，学习曲线平缓，不需要像 C/C++ 语言动辄需要两到三年的学习期。Go 语言被称为“互联网时代的C语言”。Go 语言的风格类似于C语言。其语法在C语言的基础上进行了大幅的简化，去掉了不需要的表达式括号，循环也只有 for 一种表示方法，就可以实现数值、键值等各种遍历。</p>
+<p><strong>代码风格统一</strong><br>Go 语言提供了一套格式化工具——go fmt。一些 Go 语言的开发环境或者编辑器在保存时，都会使用格式化工具进行修改代码的格式化，这样就保证了不同开发者提交的代码都是统一的格式。(吐槽下：再也不用担心那些看不懂的黑魔法了…)</p>
+<p><strong>开发效率高</strong><br>Go语言实现了开发效率与执行效率的完美结合，让你像写Python代码（效率）一样编写C代码（性能）。</p>
+<h2 id="Go的使用场景"><a href="#Go的使用场景" class="headerlink" title="Go的使用场景"></a>Go的使用场景</h2><p>目前Go语言已经⼴泛应用于人工智能、云计算开发、容器虚拟化、⼤数据开发、数据分析及科学计算、运维开发、爬虫开发、游戏开发等领域。</p>
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!---->  
+<!---->  
+
+]]></content>
+      <categories>
+        <category>Go</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>go基础之map</title>
+    <url>/2020/04/30/go_base_map/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="http://wen.topgoer.com/docs/golang/chapter03-13">map</a> 是Go语言中提供的<code>映射关系容器</code>，其内部使用散列表（hash）实现。</p>
+</blockquote>
+<h1 id="map"><a href="#map" class="headerlink" title="map"></a>map</h1><p>map是一种无序的基于key-value的数据结构，Go语言中的map是引用类型，必须初始化才能使用。</p>
+<h2 id="map的定义语法"><a href="#map的定义语法" class="headerlink" title="map的定义语法"></a>map的定义语法</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">map[KeyType]ValueType</span><br></pre></td></tr></table></figure>
+<p>其中，</p>
+<ul>
+<li>KeyType:表示键的类型。</li>
+<li>ValueType:表示键对应的值的类型。</li>
+</ul>
+<p>map类型的变量默认初始值为nil，需要使用make()函数来分配内存。语法为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">make(map[KeyType]ValueType, [cap])</span><br></pre></td></tr></table></figure>
+<p>其中cap表示map的容量，该参数虽然不是必须的，但是我们应该在初始化map的时候就为其指定一个合适的容量。</p>
+<h2 id="map的使用"><a href="#map的使用" class="headerlink" title="map的使用"></a>map的使用</h2><p>map中的数据都是成对出现的，map的基本使用示例代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int, 8)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    fmt.Println(scoreMap)                  &#x2F;&#x2F; map[小明:100 张三:90]</span><br><span class="line">    fmt.Println(scoreMap[&quot;小明&quot;])          &#x2F;&#x2F; 100</span><br><span class="line">    fmt.Printf(&quot;type of a:%T\n&quot;, scoreMap) &#x2F;&#x2F;type of a:map[string]int</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]string, 8)</span><br><span class="line">    scoreMap[&quot;射手&quot;] &#x3D; &quot;小鲁蛋&quot;</span><br><span class="line">    scoreMap[&quot;打野&quot;] &#x3D; &quot;赵云&quot;</span><br><span class="line">    scoreMap[&quot;辅助&quot;] &#x3D; &quot;廉颇&quot;</span><br><span class="line">    fmt.Println(scoreMap)</span><br><span class="line">    fmt.Printf(&quot;type of scoreMap is: %T\n&quot;, scoreMap)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 输出：</span><br><span class="line">&#x2F;&#x2F; map[坦边:吕布 射手:小鲁蛋 打野:赵云 辅助:廉颇]</span><br><span class="line">&#x2F;&#x2F; type of scoreMap is: map[string]string</span><br></pre></td></tr></table></figure>
+<p>map也支持在声明的时候填充元素，例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    userLogin :&#x3D; map[string]string&#123;</span><br><span class="line">        &quot;username&quot;: &quot;xyxxb&quot;,</span><br><span class="line">        &quot;password&quot;: &quot;123123&quot;,</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(userLogin) &#x2F;&#x2F; map[password:123123 username:xyxxb]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="判断某个键是否存在"><a href="#判断某个键是否存在" class="headerlink" title="判断某个键是否存在"></a>判断某个键是否存在</h2><p>Go语言中判断map中键是否存在的特殊写法，格式如下:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">value, ok :&#x3D; map[key]</span><br></pre></td></tr></table></figure>
+<p>举个例子：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    &#x2F;&#x2F; 如果key存在ok为true,v为对应的值；不存在ok为false,v为值类型的零值</span><br><span class="line">    v, ok :&#x3D; scoreMap[&quot;张三&quot;]</span><br><span class="line">    if ok &#123;</span><br><span class="line">        fmt.Println(v)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        fmt.Println(&quot;查无此人&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h2><p>使用for range遍历map</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    scoreMap[&quot;娜扎&quot;] &#x3D; 60</span><br><span class="line">    for k, v :&#x3D; range scoreMap &#123;</span><br><span class="line">        fmt.Println(k, v)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>仅遍历key的时候，可以按下面的写法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    scoreMap[&quot;娜扎&quot;] &#x3D; 60</span><br><span class="line">    for k :&#x3D; range scoreMap &#123;</span><br><span class="line">        scoreMap[&quot;小明&quot;] &#x3D; 120</span><br><span class="line">        fmt.Println(k) &#x2F;&#x2F; 取value：fmt.Println(scoreMap[k])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>**<code>注意</code>**： 遍历map时的元素顺序与添加键值对的顺序无关。</p>
+<h2 id="使用delete-函数删除键值对"><a href="#使用delete-函数删除键值对" class="headerlink" title="使用delete()函数删除键值对"></a>使用delete()函数删除键值对</h2><p>使用delete()内建函数从map中删除一组键值对，delete()函数的格式如下：<br>其中，</p>
+<ul>
+<li>map:表示要删除键值对的map</li>
+<li>key:表示要删除的键值对的键</li>
+</ul>
+<p>示例代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main()&#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    scoreMap[&quot;娜扎&quot;] &#x3D; 60</span><br><span class="line">    delete(scoreMap, &quot;小明&quot;)&#x2F;&#x2F;将小明:100从map中删除</span><br><span class="line">    for k,v :&#x3D; range scoreMap&#123;</span><br><span class="line">        fmt.Println(k, v)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="按照指定顺序遍历map"><a href="#按照指定顺序遍历map" class="headerlink" title="按照指定顺序遍历map"></a>按照指定顺序遍历map</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    rand.Seed(time.Now().UnixNano()) &#x2F;&#x2F;初始化随机数种子</span><br><span class="line"></span><br><span class="line">    var scoreMap &#x3D; make(map[string]int, 200)</span><br><span class="line"></span><br><span class="line">    for i :&#x3D; 0; i &lt; 100; i++ &#123;</span><br><span class="line">        key :&#x3D; fmt.Sprintf(&quot;stu%02d&quot;, i) &#x2F;&#x2F; 生成stu开头的字符串</span><br><span class="line">        value :&#x3D; rand.Intn(100)          &#x2F;&#x2F; 生成0~99的随机整数</span><br><span class="line">        scoreMap[key] &#x3D; value</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 取出map中的所有key存入切片keys</span><br><span class="line">    var keys &#x3D; make([]string, 0, 200)</span><br><span class="line">    for key :&#x3D; range scoreMap &#123;</span><br><span class="line">        keys &#x3D; append(keys, key)</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 对切片进行排序</span><br><span class="line">    sort.Strings(keys)</span><br><span class="line">    &#x2F;&#x2F; 按照排序后的key遍历map</span><br><span class="line">    for _, key :&#x3D; range keys &#123;</span><br><span class="line">        fmt.Println(key, scoreMap[key])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="元素为map类型的切片"><a href="#元素为map类型的切片" class="headerlink" title="元素为map类型的切片"></a>元素为map类型的切片</h2><p>下面的代码演示了切片中的元素为map类型时的操作：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var mapSlice &#x3D; make([]map[string]string, 3)</span><br><span class="line">    for index, value :&#x3D; range mapSlice &#123;</span><br><span class="line">        fmt.Printf(&quot;index:%d value:%v\n&quot;, index, value)</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(&quot;after init&quot;)</span><br><span class="line">    &#x2F;&#x2F; 对切片中的map元素进行初始化</span><br><span class="line">    mapSlice[0] &#x3D; make(map[string]string, 10)</span><br><span class="line">    mapSlice[0][&quot;name&quot;] &#x3D; &quot;小王子&quot;</span><br><span class="line">    mapSlice[0][&quot;password&quot;] &#x3D; &quot;123456&quot;</span><br><span class="line">    mapSlice[0][&quot;address&quot;] &#x3D; &quot;沙河&quot;</span><br><span class="line">    for index, value :&#x3D; range mapSlice &#123;</span><br><span class="line">        fmt.Printf(&quot;index:%d value:%v\n&quot;, index, value)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">index:0 value:map[]</span><br><span class="line">index:1 value:map[]</span><br><span class="line">index:2 value:map[]</span><br><span class="line">after init</span><br><span class="line">index:0 value:map[address:沙河 name:小王子 password:123456]</span><br><span class="line">index:1 value:map[]</span><br><span class="line">index:2 value:map[]</span><br></pre></td></tr></table></figure>
+<h2 id="值为切片类型的map"><a href="#值为切片类型的map" class="headerlink" title="值为切片类型的map"></a>值为切片类型的map</h2><p>下面的代码演示了map中值为切片类型的操作：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var sliceMap &#x3D; make(map[string][]string, 3)</span><br><span class="line">    fmt.Println(sliceMap)</span><br><span class="line">    fmt.Println(&quot;after init&quot;)</span><br><span class="line">    key :&#x3D; &quot;中国&quot;</span><br><span class="line">    value, ok :&#x3D; sliceMap[key]</span><br><span class="line">    if !ok &#123;</span><br><span class="line">        value &#x3D; make([]string, 0, 2)</span><br><span class="line">    &#125;</span><br><span class="line">    value &#x3D; append(value, &quot;北京&quot;, &quot;上海&quot;)</span><br><span class="line">    sliceMap[key] &#x3D; value</span><br><span class="line">    fmt.Println(sliceMap)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">map[]</span><br><span class="line">after init</span><br><span class="line">map[中国:[北京 上海]]</span><br></pre></td></tr></table></figure>
+<h2 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h2><p>写一个程序，统计一个字符串中每个单词出现的次数。比如：”how do you do”中how=1 do=2 you=1。<br>观察下面代码，写出最终的打印结果。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    type Map map[string][]int</span><br><span class="line">    m :&#x3D; make(Map)</span><br><span class="line">    s :&#x3D; []int&#123;1, 2&#125;</span><br><span class="line">    s &#x3D; append(s, 3)</span><br><span class="line">    fmt.Printf(&quot;%+v\n&quot;, s)</span><br><span class="line">    m[&quot;q1mi&quot;] &#x3D; s</span><br><span class="line">    s &#x3D; append(s[:1], s[2:]...)</span><br><span class="line">    fmt.Printf(&quot;%+v\n&quot;, s)</span><br><span class="line">    fmt.Printf(&quot;%+v\n&quot;, m[&quot;q1mi&quot;])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>解答：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!---->  
+<!---->  
+]]></content>
+      <categories>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>go base</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Go语言开发环境</title>
     <url>/2020/01/31/Go%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
     <content><![CDATA[<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><blockquote>
@@ -240,147 +381,6 @@ timezone: 时区
       </categories>
       <tags>
         <tag>env</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Go语言介绍</title>
-    <url>/2020/01/31/Go%E8%AF%AD%E8%A8%80%E7%AE%80%E4%BB%8B/</url>
-    <content><![CDATA[<blockquote>
-<p><strong>知识文档</strong>：</p>
-</blockquote>
-<ul>
-<li><a href="http://wen.topgoer.com/docs/golang/golang-1ccjbpfstsfi1">go语言中文文档</a></li>
-<li><a href="https://www.liwenzhou.com/posts/Go/about_golang/">李文周的博客</a></li>
-</ul>
-<hr>
-<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><strong><code>Google开发的开源编程语言</code></strong><br>诞生于2006年1月2日下午15点4分5秒，于2009年11月开源，2012年发布go稳定版。Go语言在多核并发上拥有原生的设计优势，Go语言从底层原生支持并发，<code>无须第三方库</code>、开发者的编程技巧和开发经验。<br>它的主要目标是“兼具Python 等动态语言的开发速度和C/C++等编译型语言的性能与安全性”</p>
-<p><strong><code>Go语言为并发而生</code></strong> ——21世纪的C语言<br>硬件制造商正在为处理器添加越来越多的内核以提高性能。所有数据中心都在这些处理器上运行，更重要的是，今天的应用程序使用多个微服务来维护数据库连接，消息队列和维护缓存。因此，开发的软件和编程语言应该可以轻松地支持并发性，并且应该能够随着CPU核心数量的增加而可扩展。</p>
-<p>但是，大多数现代编程语言（如Java，Python等）都来自90年代的单线程环境。虽然一些编程语言的框架在不断地提高多核资源使用效率，例如 Java 的 Netty 等，但仍然需要开发人员花费大量的时间和精力搞懂这些框架的运行原理后才能熟练掌握。</p>
-<p>Go于2009年发布，当时多核处理器已经上市。Go语言在多核并发上拥有原生的设计优势，Go语言从底层原生支持并发，无须第三方库、开发者的编程技巧和开发经验。</p>
-<p>很多公司，特别是中国的互联网公司，即将或者已经完成了使用 Go 语言改造旧系统的过程。经过 Go 语言重构的系统能使用更少的硬件资源获得更高的并发和I/O吞吐表现。充分挖掘硬件设备的潜力也满足当前精细化运营的市场大环境。</p>
-<p>Go语言的并发是基于 <code>goroutine</code> 的，<code>goroutine</code> 类似于线程，但并非线程。可以将 <code>goroutine</code> 理解为一种虚拟线程。Go 语言运行时会参与调度 <code>goroutine</code>，并将 <code>goroutine</code> 合理地分配到每个 CPU 中，最大限度地使用CPU性能。开启一个<code>goroutine</code>的消耗非常小（大约2KB的内存），你可以轻松创建数百万个<code>goroutine</code>。</p>
-<p><code>goroutine</code>的特点：</p>
-<ol>
-<li><code>goroutine</code>具有可增长的分段堆栈。这意味着它们只在需要时才会使用更多内存。</li>
-<li><code>goroutine</code>的启动时间比线程快。</li>
-<li><code>goroutine</code>原生支持利用channel安全地进行通信。</li>
-<li><code>goroutine</code>共享数据结构时无需使用互斥锁。</li>
-</ol>
-<p><strong><code>编译型语言</code></strong><br>与其他现代高级语言（如Java/Python）相比，使用C，C++的最大好处是它们的性能。因为C/ C++是编译型语言而不是解释的语言。 处理器只能理解二进制文件，Java和Python这种高级语言在运行的时候需要先将人类可读的代码翻译成字节码，然后由专门的解释器再转变成处理器可以理解的二进制文件。<br><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/03/15511649241043.jpg?x-oss-process=style/original_format"></p>
-<p>同C,C++一样，Go语言也是编译型的语言，它直接将人类可读的代码编译成了处理器可以直接运行的二进制文件，执行效率更高，性能更好。</p>
-<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><p><strong>语法简洁</strong><br>Go 语言简单易学，学习曲线平缓，不需要像 C/C++ 语言动辄需要两到三年的学习期。Go 语言被称为“互联网时代的C语言”。Go 语言的风格类似于C语言。其语法在C语言的基础上进行了大幅的简化，去掉了不需要的表达式括号，循环也只有 for 一种表示方法，就可以实现数值、键值等各种遍历。</p>
-<p><strong>代码风格统一</strong><br>Go 语言提供了一套格式化工具——go fmt。一些 Go 语言的开发环境或者编辑器在保存时，都会使用格式化工具进行修改代码的格式化，这样就保证了不同开发者提交的代码都是统一的格式。(吐槽下：再也不用担心那些看不懂的黑魔法了…)</p>
-<p><strong>开发效率高</strong><br>Go语言实现了开发效率与执行效率的完美结合，让你像写Python代码（效率）一样编写C代码（性能）。</p>
-<h2 id="Go的使用场景"><a href="#Go的使用场景" class="headerlink" title="Go的使用场景"></a>Go的使用场景</h2><p>目前Go语言已经⼴泛应用于人工智能、云计算开发、容器虚拟化、⼤数据开发、数据分析及科学计算、运维开发、爬虫开发、游戏开发等领域。</p>
-<hr>
-<p>&nbsp;  </p>
-<!--**参考文章**：-->  
-<!---->  
-<!---->  
-
-]]></content>
-      <categories>
-        <category>Go</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>好用的Markdown编辑器 —— Pad2 和 Typora</title>
-    <url>/2018/04/21/Pad2%E5%92%8CTypora/</url>
-    <content><![CDATA[<blockquote>
-<p>前言：<br><del>选用“<a href="http://markdownpad.com/">MarkdownPad 2</a>”作为文档编写工具的原因：方便，支持实时预览</del>。<br><strong>[更新]：<code>目前已经由”MarkdownPad 2“转用”Typora“，但本文内容仍然有效</code>。</strong></p>
-</blockquote>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/markdownpad2.png?x-oss-process=style/watermark" alt="md pad 2"></p>
-<hr>
-<h2 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h2><ul>
-<li>MarkdownPad 2 的官网下载地址： <a href="http://markdownpad.com/">http://markdownpad.com/</a></li>
-<li>个人网盘下载（附激活码），点击【<a href="https://pan.baidu.com/s/1Aym5-XRNMuWupvOTIdFHNA">链接</a>】， 提取码：ib02 </li>
-</ul>
-<h2 id="2-破解"><a href="#2-破解" class="headerlink" title="2. 破解"></a>2. 破解</h2><p>安装完毕后，首次启动提示激活，如下图：点击<code>”Enter Key“</code> —&gt; 键入<code>”Email address“</code>和<code>”License key“</code></p>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/mdpad2_enterkey.png?x-oss-process=style/watermark" alt="mdpad2_enterkey"></p>
-<h2 id="3-异常"><a href="#3-异常" class="headerlink" title="3. 异常"></a>3. 异常</h2><h3 id="3-1-http渲染"><a href="#3-1-http渲染" class="headerlink" title="3.1 http渲染"></a>3.1 http渲染</h3><p><strong>安装激活后提示</strong>：</p>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/erro_html_readering.png?x-oss-process=style/watermark" alt="erro_html_readering"></p>
-<p><strong>解决方案</strong>：<br>安装一个SDK的工具包，【<a href="http://markdownpad.com/download/awesomium_v1.6.6_sdk_win.exe">点击获取</a>】，重启pad2即可。</p>
-<h3 id="3-2-PDF格式转换"><a href="#3-2-PDF格式转换" class="headerlink" title="3.2 PDF格式转换"></a>3.2 PDF格式转换</h3><p><strong>问题描述</strong>：<br>”.md“文件中包含”https“的图片链接，通过Mdpad2可以进行预览展示，但使用Mdpad2将其导出为“pdf”文件后，包含”https“的图片链接无法通过”pdf“显示。如果你没有导出需求，可以忽略该问题。</p>
-<p><strong>解决方案</strong>：<br>可以考虑结合使用”<a href="https://www.typora.io/">Typora</a>“进行转换，它也是一款Markdown编辑器，轻便简洁，支持即时渲染技术。</p>
-<p>或者。。。直接放弃”MarkdownPad 2“转而使用”Typora“，这两种MarkDown编辑器都比较亲民。</p>
-<pre><code>”MarkdownPad 2“有左右两个分页窗口，实时预览效果比较好。
-”Typora“刚刚使用，给我的感觉就是简洁，自定义功能较多。
-</code></pre>
-<hr>
-<p>&nbsp;  </p>
-<!--**参考文章**：-->  
-<!--  https://blog.csdn.net/xiaojin21cen/article/details/78752561  -->  
-<!--  https://blog.csdn.net/kuangay/article/details/79854665  -->  
-
-]]></content>
-      <categories>
-        <category>Tools</category>
-      </categories>
-      <tags>
-        <tag>markdown</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>go基础之map</title>
-    <url>/2020/04/30/go_base_map/</url>
-    <content><![CDATA[<blockquote>
-<p><a href="http://wen.topgoer.com/docs/golang/chapter03-13">map</a> 是Go语言中提供的<code>映射关系容器</code>，其内部使用散列表（hash）实现。</p>
-</blockquote>
-<h1 id="map"><a href="#map" class="headerlink" title="map"></a>map</h1><p>map是一种无序的基于key-value的数据结构，Go语言中的map是引用类型，必须初始化才能使用。</p>
-<h2 id="map的定义语法"><a href="#map的定义语法" class="headerlink" title="map的定义语法"></a>map的定义语法</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">map[KeyType]ValueType</span><br></pre></td></tr></table></figure>
-<p>其中，</p>
-<ul>
-<li>KeyType:表示键的类型。</li>
-<li>ValueType:表示键对应的值的类型。</li>
-</ul>
-<p>map类型的变量默认初始值为nil，需要使用make()函数来分配内存。语法为：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">make(map[KeyType]ValueType, [cap])</span><br></pre></td></tr></table></figure>
-<p>其中cap表示map的容量，该参数虽然不是必须的，但是我们应该在初始化map的时候就为其指定一个合适的容量。</p>
-<h2 id="map的使用"><a href="#map的使用" class="headerlink" title="map的使用"></a>map的使用</h2><p>map中的数据都是成对出现的，map的基本使用示例代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int, 8)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    fmt.Println(scoreMap)                  &#x2F;&#x2F; map[小明:100 张三:90]</span><br><span class="line">    fmt.Println(scoreMap[&quot;小明&quot;])          &#x2F;&#x2F; 100</span><br><span class="line">    fmt.Printf(&quot;type of a:%T\n&quot;, scoreMap) &#x2F;&#x2F;type of a:map[string]int</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]string, 8)</span><br><span class="line">    scoreMap[&quot;射手&quot;] &#x3D; &quot;小鲁蛋&quot;</span><br><span class="line">    scoreMap[&quot;打野&quot;] &#x3D; &quot;赵云&quot;</span><br><span class="line">    scoreMap[&quot;辅助&quot;] &#x3D; &quot;廉颇&quot;</span><br><span class="line">    fmt.Println(scoreMap)</span><br><span class="line">    fmt.Printf(&quot;type of scoreMap is: %T\n&quot;, scoreMap)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 输出：</span><br><span class="line">&#x2F;&#x2F; map[坦边:吕布 射手:小鲁蛋 打野:赵云 辅助:廉颇]</span><br><span class="line">&#x2F;&#x2F; type of scoreMap is: map[string]string</span><br></pre></td></tr></table></figure>
-<p>map也支持在声明的时候填充元素，例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    userLogin :&#x3D; map[string]string&#123;</span><br><span class="line">        &quot;username&quot;: &quot;xyxxb&quot;,</span><br><span class="line">        &quot;password&quot;: &quot;123123&quot;,</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(userLogin) &#x2F;&#x2F; map[password:123123 username:xyxxb]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="判断某个键是否存在"><a href="#判断某个键是否存在" class="headerlink" title="判断某个键是否存在"></a>判断某个键是否存在</h2><p>Go语言中判断map中键是否存在的特殊写法，格式如下:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">value, ok :&#x3D; map[key]</span><br></pre></td></tr></table></figure>
-<p>举个例子：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    &#x2F;&#x2F; 如果key存在ok为true,v为对应的值；不存在ok为false,v为值类型的零值</span><br><span class="line">    v, ok :&#x3D; scoreMap[&quot;张三&quot;]</span><br><span class="line">    if ok &#123;</span><br><span class="line">        fmt.Println(v)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        fmt.Println(&quot;查无此人&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h2><p>使用for range遍历map</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    scoreMap[&quot;娜扎&quot;] &#x3D; 60</span><br><span class="line">    for k, v :&#x3D; range scoreMap &#123;</span><br><span class="line">        fmt.Println(k, v)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>仅遍历key的时候，可以按下面的写法：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    scoreMap[&quot;娜扎&quot;] &#x3D; 60</span><br><span class="line">    for k :&#x3D; range scoreMap &#123;</span><br><span class="line">        scoreMap[&quot;小明&quot;] &#x3D; 120</span><br><span class="line">        fmt.Println(k) &#x2F;&#x2F; 取value：fmt.Println(scoreMap[k])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>**<code>注意</code>**： 遍历map时的元素顺序与添加键值对的顺序无关。</p>
-<h2 id="使用delete-函数删除键值对"><a href="#使用delete-函数删除键值对" class="headerlink" title="使用delete()函数删除键值对"></a>使用delete()函数删除键值对</h2><p>使用delete()内建函数从map中删除一组键值对，delete()函数的格式如下：<br>其中，</p>
-<ul>
-<li>map:表示要删除键值对的map</li>
-<li>key:表示要删除的键值对的键</li>
-</ul>
-<p>示例代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main()&#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    scoreMap[&quot;娜扎&quot;] &#x3D; 60</span><br><span class="line">    delete(scoreMap, &quot;小明&quot;)&#x2F;&#x2F;将小明:100从map中删除</span><br><span class="line">    for k,v :&#x3D; range scoreMap&#123;</span><br><span class="line">        fmt.Println(k, v)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="按照指定顺序遍历map"><a href="#按照指定顺序遍历map" class="headerlink" title="按照指定顺序遍历map"></a>按照指定顺序遍历map</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    rand.Seed(time.Now().UnixNano()) &#x2F;&#x2F;初始化随机数种子</span><br><span class="line"></span><br><span class="line">    var scoreMap &#x3D; make(map[string]int, 200)</span><br><span class="line"></span><br><span class="line">    for i :&#x3D; 0; i &lt; 100; i++ &#123;</span><br><span class="line">        key :&#x3D; fmt.Sprintf(&quot;stu%02d&quot;, i) &#x2F;&#x2F; 生成stu开头的字符串</span><br><span class="line">        value :&#x3D; rand.Intn(100)          &#x2F;&#x2F; 生成0~99的随机整数</span><br><span class="line">        scoreMap[key] &#x3D; value</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 取出map中的所有key存入切片keys</span><br><span class="line">    var keys &#x3D; make([]string, 0, 200)</span><br><span class="line">    for key :&#x3D; range scoreMap &#123;</span><br><span class="line">        keys &#x3D; append(keys, key)</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 对切片进行排序</span><br><span class="line">    sort.Strings(keys)</span><br><span class="line">    &#x2F;&#x2F; 按照排序后的key遍历map</span><br><span class="line">    for _, key :&#x3D; range keys &#123;</span><br><span class="line">        fmt.Println(key, scoreMap[key])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="元素为map类型的切片"><a href="#元素为map类型的切片" class="headerlink" title="元素为map类型的切片"></a>元素为map类型的切片</h2><p>下面的代码演示了切片中的元素为map类型时的操作：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var mapSlice &#x3D; make([]map[string]string, 3)</span><br><span class="line">    for index, value :&#x3D; range mapSlice &#123;</span><br><span class="line">        fmt.Printf(&quot;index:%d value:%v\n&quot;, index, value)</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(&quot;after init&quot;)</span><br><span class="line">    &#x2F;&#x2F; 对切片中的map元素进行初始化</span><br><span class="line">    mapSlice[0] &#x3D; make(map[string]string, 10)</span><br><span class="line">    mapSlice[0][&quot;name&quot;] &#x3D; &quot;小王子&quot;</span><br><span class="line">    mapSlice[0][&quot;password&quot;] &#x3D; &quot;123456&quot;</span><br><span class="line">    mapSlice[0][&quot;address&quot;] &#x3D; &quot;沙河&quot;</span><br><span class="line">    for index, value :&#x3D; range mapSlice &#123;</span><br><span class="line">        fmt.Printf(&quot;index:%d value:%v\n&quot;, index, value)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">index:0 value:map[]</span><br><span class="line">index:1 value:map[]</span><br><span class="line">index:2 value:map[]</span><br><span class="line">after init</span><br><span class="line">index:0 value:map[address:沙河 name:小王子 password:123456]</span><br><span class="line">index:1 value:map[]</span><br><span class="line">index:2 value:map[]</span><br></pre></td></tr></table></figure>
-<h2 id="值为切片类型的map"><a href="#值为切片类型的map" class="headerlink" title="值为切片类型的map"></a>值为切片类型的map</h2><p>下面的代码演示了map中值为切片类型的操作：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var sliceMap &#x3D; make(map[string][]string, 3)</span><br><span class="line">    fmt.Println(sliceMap)</span><br><span class="line">    fmt.Println(&quot;after init&quot;)</span><br><span class="line">    key :&#x3D; &quot;中国&quot;</span><br><span class="line">    value, ok :&#x3D; sliceMap[key]</span><br><span class="line">    if !ok &#123;</span><br><span class="line">        value &#x3D; make([]string, 0, 2)</span><br><span class="line">    &#125;</span><br><span class="line">    value &#x3D; append(value, &quot;北京&quot;, &quot;上海&quot;)</span><br><span class="line">    sliceMap[key] &#x3D; value</span><br><span class="line">    fmt.Println(sliceMap)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">map[]</span><br><span class="line">after init</span><br><span class="line">map[中国:[北京 上海]]</span><br></pre></td></tr></table></figure>
-<h2 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h2><p>写一个程序，统计一个字符串中每个单词出现的次数。比如：”how do you do”中how=1 do=2 you=1。<br>观察下面代码，写出最终的打印结果。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    type Map map[string][]int</span><br><span class="line">    m :&#x3D; make(Map)</span><br><span class="line">    s :&#x3D; []int&#123;1, 2&#125;</span><br><span class="line">    s &#x3D; append(s, 3)</span><br><span class="line">    fmt.Printf(&quot;%+v\n&quot;, s)</span><br><span class="line">    m[&quot;q1mi&quot;] &#x3D; s</span><br><span class="line">    s &#x3D; append(s[:1], s[2:]...)</span><br><span class="line">    fmt.Printf(&quot;%+v\n&quot;, s)</span><br><span class="line">    fmt.Printf(&quot;%+v\n&quot;, m[&quot;q1mi&quot;])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>解答：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-
-<hr>
-<p>&nbsp;  </p>
-<!--**参考文章**：-->  
-<!---->  
-<!---->  
-]]></content>
-      <categories>
-        <category>Go</category>
-      </categories>
-      <tags>
-        <tag>go base</tag>
       </tags>
   </entry>
   <entry>
