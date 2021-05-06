@@ -128,43 +128,6 @@ timezone: 时区
       </tags>
   </entry>
   <entry>
-    <title>好用的Markdown编辑器 —— Pad2 和 Typora</title>
-    <url>/2018/04/21/Pad2%E5%92%8CTypora/</url>
-    <content><![CDATA[<blockquote>
-<p>前言：<br><del>选用“<a href="http://markdownpad.com/">MarkdownPad 2</a>”作为文档编写工具的原因：方便，支持实时预览</del>。<br><strong>[更新]：<code>目前已经由”MarkdownPad 2“转用”Typora“，但本文内容仍然有效</code>。</strong></p>
-</blockquote>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/markdownpad2.png?x-oss-process=style/watermark" alt="md pad 2"></p>
-<hr>
-<h2 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h2><ul>
-<li>MarkdownPad 2 的官网下载地址： <a href="http://markdownpad.com/">http://markdownpad.com/</a></li>
-<li>个人网盘下载（附激活码），点击【<a href="https://pan.baidu.com/s/1Aym5-XRNMuWupvOTIdFHNA">链接</a>】， 提取码：ib02 </li>
-</ul>
-<h2 id="2-破解"><a href="#2-破解" class="headerlink" title="2. 破解"></a>2. 破解</h2><p>安装完毕后，首次启动提示激活，如下图：点击<code>”Enter Key“</code> —&gt; 键入<code>”Email address“</code>和<code>”License key“</code></p>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/mdpad2_enterkey.png?x-oss-process=style/watermark" alt="mdpad2_enterkey"></p>
-<h2 id="3-异常"><a href="#3-异常" class="headerlink" title="3. 异常"></a>3. 异常</h2><h3 id="3-1-http渲染"><a href="#3-1-http渲染" class="headerlink" title="3.1 http渲染"></a>3.1 http渲染</h3><p><strong>安装激活后提示</strong>：</p>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/erro_html_readering.png?x-oss-process=style/watermark" alt="erro_html_readering"></p>
-<p><strong>解决方案</strong>：<br>安装一个SDK的工具包，【<a href="http://markdownpad.com/download/awesomium_v1.6.6_sdk_win.exe">点击获取</a>】，重启pad2即可。</p>
-<h3 id="3-2-PDF格式转换"><a href="#3-2-PDF格式转换" class="headerlink" title="3.2 PDF格式转换"></a>3.2 PDF格式转换</h3><p><strong>问题描述</strong>：<br>”.md“文件中包含”https“的图片链接，通过Mdpad2可以进行预览展示，但使用Mdpad2将其导出为“pdf”文件后，包含”https“的图片链接无法通过”pdf“显示。如果你没有导出需求，可以忽略该问题。</p>
-<p><strong>解决方案</strong>：<br>可以考虑结合使用”<a href="https://www.typora.io/">Typora</a>“进行转换，它也是一款Markdown编辑器，轻便简洁，支持即时渲染技术。</p>
-<p>或者。。。直接放弃”MarkdownPad 2“转而使用”Typora“，这两种MarkDown编辑器都比较亲民。</p>
-<pre><code>”MarkdownPad 2“有左右两个分页窗口，实时预览效果比较好。
-”Typora“刚刚使用，给我的感觉就是简洁，自定义功能较多。
-</code></pre>
-<hr>
-<p>&nbsp;  </p>
-<!--**参考文章**：-->  
-<!--  https://blog.csdn.net/xiaojin21cen/article/details/78752561  -->  
-<!--  https://blog.csdn.net/kuangay/article/details/79854665  -->  
-
-]]></content>
-      <categories>
-        <category>Tools</category>
-      </categories>
-      <tags>
-        <tag>markdown</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Go语言介绍</title>
     <url>/2020/01/31/Go%E8%AF%AD%E8%A8%80%E7%AE%80%E4%BB%8B/</url>
     <content><![CDATA[<blockquote>
@@ -204,71 +167,6 @@ timezone: 时区
       <categories>
         <category>Go</category>
       </categories>
-  </entry>
-  <entry>
-    <title>go基础之map</title>
-    <url>/2020/04/30/go_base_map/</url>
-    <content><![CDATA[<blockquote>
-<p><a href="http://wen.topgoer.com/docs/golang/chapter03-13">map</a> 是Go语言中提供的<code>映射关系容器</code>，其内部使用散列表（hash）实现。</p>
-</blockquote>
-<h1 id="map"><a href="#map" class="headerlink" title="map"></a>map</h1><p>map是一种无序的基于key-value的数据结构，Go语言中的map是引用类型，必须初始化才能使用。</p>
-<h2 id="map的定义语法"><a href="#map的定义语法" class="headerlink" title="map的定义语法"></a>map的定义语法</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">map[KeyType]ValueType</span><br></pre></td></tr></table></figure>
-<p>其中，</p>
-<ul>
-<li>KeyType:表示键的类型。</li>
-<li>ValueType:表示键对应的值的类型。</li>
-</ul>
-<p>map类型的变量默认初始值为nil，需要使用make()函数来分配内存。语法为：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">make(map[KeyType]ValueType, [cap])</span><br></pre></td></tr></table></figure>
-<p>其中cap表示map的容量，该参数虽然不是必须的，但是我们应该在初始化map的时候就为其指定一个合适的容量。</p>
-<h2 id="map的使用"><a href="#map的使用" class="headerlink" title="map的使用"></a>map的使用</h2><p>map中的数据都是成对出现的，map的基本使用示例代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int, 8)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    fmt.Println(scoreMap)                  &#x2F;&#x2F; map[小明:100 张三:90]</span><br><span class="line">    fmt.Println(scoreMap[&quot;小明&quot;])          &#x2F;&#x2F; 100</span><br><span class="line">    fmt.Printf(&quot;type of a:%T\n&quot;, scoreMap) &#x2F;&#x2F;type of a:map[string]int</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]string, 8)</span><br><span class="line">    scoreMap[&quot;射手&quot;] &#x3D; &quot;小鲁蛋&quot;</span><br><span class="line">    scoreMap[&quot;打野&quot;] &#x3D; &quot;赵云&quot;</span><br><span class="line">    scoreMap[&quot;辅助&quot;] &#x3D; &quot;廉颇&quot;</span><br><span class="line">    fmt.Println(scoreMap)</span><br><span class="line">    fmt.Printf(&quot;type of scoreMap is: %T\n&quot;, scoreMap)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 输出：</span><br><span class="line">&#x2F;&#x2F; map[坦边:吕布 射手:小鲁蛋 打野:赵云 辅助:廉颇]</span><br><span class="line">&#x2F;&#x2F; type of scoreMap is: map[string]string</span><br></pre></td></tr></table></figure>
-<p>map也支持在声明的时候填充元素，例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    userLogin :&#x3D; map[string]string&#123;</span><br><span class="line">        &quot;username&quot;: &quot;xyxxb&quot;,</span><br><span class="line">        &quot;password&quot;: &quot;123123&quot;,</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(userLogin) &#x2F;&#x2F; map[password:123123 username:xyxxb]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="判断某个键是否存在"><a href="#判断某个键是否存在" class="headerlink" title="判断某个键是否存在"></a>判断某个键是否存在</h2><p>Go语言中判断map中键是否存在的特殊写法，格式如下:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">value, ok :&#x3D; map[key]</span><br></pre></td></tr></table></figure>
-<p>举个例子：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    &#x2F;&#x2F; 如果key存在ok为true,v为对应的值；不存在ok为false,v为值类型的零值</span><br><span class="line">    v, ok :&#x3D; scoreMap[&quot;张三&quot;]</span><br><span class="line">    if ok &#123;</span><br><span class="line">        fmt.Println(v)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        fmt.Println(&quot;查无此人&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h2><p>使用for range遍历map</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    scoreMap[&quot;娜扎&quot;] &#x3D; 60</span><br><span class="line">    for k, v :&#x3D; range scoreMap &#123;</span><br><span class="line">        fmt.Println(k, v)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>仅遍历key的时候，可以按下面的写法：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    scoreMap[&quot;娜扎&quot;] &#x3D; 60</span><br><span class="line">    for k :&#x3D; range scoreMap &#123;</span><br><span class="line">        scoreMap[&quot;小明&quot;] &#x3D; 120</span><br><span class="line">        fmt.Println(k) &#x2F;&#x2F; 取value：fmt.Println(scoreMap[k])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>**<code>注意</code>**： 遍历map时的元素顺序与添加键值对的顺序无关。</p>
-<h2 id="使用delete-函数删除键值对"><a href="#使用delete-函数删除键值对" class="headerlink" title="使用delete()函数删除键值对"></a>使用delete()函数删除键值对</h2><p>使用delete()内建函数从map中删除一组键值对，delete()函数的格式如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">delete(map, key)</span><br></pre></td></tr></table></figure>
-<p>其中，</p>
-<ul>
-<li>map:表示要删除键值对的map</li>
-<li>key:表示要删除的键值对的键</li>
-</ul>
-<p>示例代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main()&#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    scoreMap[&quot;娜扎&quot;] &#x3D; 60</span><br><span class="line">    delete(scoreMap, &quot;小明&quot;)&#x2F;&#x2F;将小明:100从map中删除</span><br><span class="line">    for k,v :&#x3D; range scoreMap&#123;</span><br><span class="line">        fmt.Println(k, v)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="按照指定顺序遍历map"><a href="#按照指定顺序遍历map" class="headerlink" title="按照指定顺序遍历map"></a>按照指定顺序遍历map</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    rand.Seed(time.Now().UnixNano()) &#x2F;&#x2F;初始化随机数种子</span><br><span class="line"></span><br><span class="line">    var scoreMap &#x3D; make(map[string]int, 200)</span><br><span class="line"></span><br><span class="line">    for i :&#x3D; 0; i &lt; 100; i++ &#123;</span><br><span class="line">        key :&#x3D; fmt.Sprintf(&quot;stu%02d&quot;, i) &#x2F;&#x2F; 生成stu开头的字符串</span><br><span class="line">        value :&#x3D; rand.Intn(100)          &#x2F;&#x2F; 生成0~99的随机整数</span><br><span class="line">        scoreMap[key] &#x3D; value</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 取出map中的所有key存入切片keys</span><br><span class="line">    var keys &#x3D; make([]string, 0, 200)</span><br><span class="line">    for key :&#x3D; range scoreMap &#123;</span><br><span class="line">        keys &#x3D; append(keys, key)</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 对切片进行排序</span><br><span class="line">    sort.Strings(keys)</span><br><span class="line">    &#x2F;&#x2F; 按照排序后的key遍历map</span><br><span class="line">    for _, key :&#x3D; range keys &#123;</span><br><span class="line">        fmt.Println(key, scoreMap[key])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="元素为map类型的切片"><a href="#元素为map类型的切片" class="headerlink" title="元素为map类型的切片"></a>元素为map类型的切片</h2><p>下面的代码演示了切片中的元素为map类型时的操作：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var mapSlice &#x3D; make([]map[string]string, 3)</span><br><span class="line">    for index, value :&#x3D; range mapSlice &#123;</span><br><span class="line">        fmt.Printf(&quot;index:%d value:%v\n&quot;, index, value)</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(&quot;after init&quot;)</span><br><span class="line">    &#x2F;&#x2F; 对切片中的map元素进行初始化</span><br><span class="line">    mapSlice[0] &#x3D; make(map[string]string, 10)</span><br><span class="line">    mapSlice[0][&quot;name&quot;] &#x3D; &quot;小王子&quot;</span><br><span class="line">    mapSlice[0][&quot;password&quot;] &#x3D; &quot;123456&quot;</span><br><span class="line">    mapSlice[0][&quot;address&quot;] &#x3D; &quot;沙河&quot;</span><br><span class="line">    for index, value :&#x3D; range mapSlice &#123;</span><br><span class="line">        fmt.Printf(&quot;index:%d value:%v\n&quot;, index, value)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">index:0 value:map[]</span><br><span class="line">index:1 value:map[]</span><br><span class="line">index:2 value:map[]</span><br><span class="line">after init</span><br><span class="line">index:0 value:map[address:沙河 name:小王子 password:123456]</span><br><span class="line">index:1 value:map[]</span><br><span class="line">index:2 value:map[]</span><br></pre></td></tr></table></figure>
-<h2 id="值为切片类型的map"><a href="#值为切片类型的map" class="headerlink" title="值为切片类型的map"></a>值为切片类型的map</h2><p>下面的代码演示了map中值为切片类型的操作：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var sliceMap &#x3D; make(map[string][]string, 3)</span><br><span class="line">    fmt.Println(sliceMap)</span><br><span class="line">    fmt.Println(&quot;after init&quot;)</span><br><span class="line">    key :&#x3D; &quot;中国&quot;</span><br><span class="line">    value, ok :&#x3D; sliceMap[key]</span><br><span class="line">    if !ok &#123;</span><br><span class="line">        value &#x3D; make([]string, 0, 2)</span><br><span class="line">    &#125;</span><br><span class="line">    value &#x3D; append(value, &quot;北京&quot;, &quot;上海&quot;)</span><br><span class="line">    sliceMap[key] &#x3D; value</span><br><span class="line">    fmt.Println(sliceMap)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">map[]</span><br><span class="line">after init</span><br><span class="line">map[中国:[北京 上海]]</span><br></pre></td></tr></table></figure>
-<h2 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h2><p>写一个程序，统计一个字符串中每个单词出现的次数。比如：”how do you do”中how=1 do=2 you=1。<br>观察下面代码，写出最终的打印结果。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    type Map map[string][]int</span><br><span class="line">    m :&#x3D; make(Map)</span><br><span class="line">    s :&#x3D; []int&#123;1, 2&#125;</span><br><span class="line">    s &#x3D; append(s, 3)</span><br><span class="line">    fmt.Printf(&quot;%+v\n&quot;, s)</span><br><span class="line">    m[&quot;q1mi&quot;] &#x3D; s</span><br><span class="line">    s &#x3D; append(s[:1], s[2:]...)</span><br><span class="line">    fmt.Printf(&quot;%+v\n&quot;, s)</span><br><span class="line">    fmt.Printf(&quot;%+v\n&quot;, m[&quot;q1mi&quot;])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>解答：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-
-<hr>
-<p>&nbsp;  </p>
-<!--**参考文章**：-->  
-<!---->  
-<!---->  
-]]></content>
-      <categories>
-        <category>Go</category>
-      </categories>
-      <tags>
-        <tag>go base</tag>
-      </tags>
   </entry>
   <entry>
     <title>Go语言开发环境</title>
@@ -383,6 +281,108 @@ timezone: 时区
       </categories>
       <tags>
         <tag>env</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>好用的Markdown编辑器 —— Pad2 和 Typora</title>
+    <url>/2018/04/21/Pad2%E5%92%8CTypora/</url>
+    <content><![CDATA[<blockquote>
+<p>前言：<br><del>选用“<a href="http://markdownpad.com/">MarkdownPad 2</a>”作为文档编写工具的原因：方便，支持实时预览</del>。<br><strong>[更新]：<code>目前已经由”MarkdownPad 2“转用”Typora“，但本文内容仍然有效</code>。</strong></p>
+</blockquote>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/markdownpad2.png?x-oss-process=style/watermark" alt="md pad 2"></p>
+<hr>
+<h2 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h2><ul>
+<li>MarkdownPad 2 的官网下载地址： <a href="http://markdownpad.com/">http://markdownpad.com/</a></li>
+<li>个人网盘下载（附激活码），点击【<a href="https://pan.baidu.com/s/1Aym5-XRNMuWupvOTIdFHNA">链接</a>】， 提取码：ib02 </li>
+</ul>
+<h2 id="2-破解"><a href="#2-破解" class="headerlink" title="2. 破解"></a>2. 破解</h2><p>安装完毕后，首次启动提示激活，如下图：点击<code>”Enter Key“</code> —&gt; 键入<code>”Email address“</code>和<code>”License key“</code></p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/mdpad2_enterkey.png?x-oss-process=style/watermark" alt="mdpad2_enterkey"></p>
+<h2 id="3-异常"><a href="#3-异常" class="headerlink" title="3. 异常"></a>3. 异常</h2><h3 id="3-1-http渲染"><a href="#3-1-http渲染" class="headerlink" title="3.1 http渲染"></a>3.1 http渲染</h3><p><strong>安装激活后提示</strong>：</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/erro_html_readering.png?x-oss-process=style/watermark" alt="erro_html_readering"></p>
+<p><strong>解决方案</strong>：<br>安装一个SDK的工具包，【<a href="http://markdownpad.com/download/awesomium_v1.6.6_sdk_win.exe">点击获取</a>】，重启pad2即可。</p>
+<h3 id="3-2-PDF格式转换"><a href="#3-2-PDF格式转换" class="headerlink" title="3.2 PDF格式转换"></a>3.2 PDF格式转换</h3><p><strong>问题描述</strong>：<br>”.md“文件中包含”https“的图片链接，通过Mdpad2可以进行预览展示，但使用Mdpad2将其导出为“pdf”文件后，包含”https“的图片链接无法通过”pdf“显示。如果你没有导出需求，可以忽略该问题。</p>
+<p><strong>解决方案</strong>：<br>可以考虑结合使用”<a href="https://www.typora.io/">Typora</a>“进行转换，它也是一款Markdown编辑器，轻便简洁，支持即时渲染技术。</p>
+<p>或者。。。直接放弃”MarkdownPad 2“转而使用”Typora“，这两种MarkDown编辑器都比较亲民。</p>
+<pre><code>”MarkdownPad 2“有左右两个分页窗口，实时预览效果比较好。
+”Typora“刚刚使用，给我的感觉就是简洁，自定义功能较多。
+</code></pre>
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!--  https://blog.csdn.net/xiaojin21cen/article/details/78752561  -->  
+<!--  https://blog.csdn.net/kuangay/article/details/79854665  -->  
+
+]]></content>
+      <categories>
+        <category>Tools</category>
+      </categories>
+      <tags>
+        <tag>markdown</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>go基础之map</title>
+    <url>/2020/04/30/go_base_map/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="http://wen.topgoer.com/docs/golang/chapter03-13">map</a> 是Go语言中提供的<code>映射关系容器</code>，其内部使用散列表（hash）实现。</p>
+</blockquote>
+<h1 id="map"><a href="#map" class="headerlink" title="map"></a>map</h1><p>map是一种无序的基于key-value的数据结构，Go语言中的map是引用类型，必须初始化才能使用。</p>
+<h2 id="map的定义语法"><a href="#map的定义语法" class="headerlink" title="map的定义语法"></a>map的定义语法</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">map[KeyType]ValueType</span><br></pre></td></tr></table></figure>
+<p>其中，</p>
+<ul>
+<li>KeyType:表示键的类型。</li>
+<li>ValueType:表示键对应的值的类型。</li>
+</ul>
+<p>map类型的变量默认初始值为nil，需要使用make()函数来分配内存。语法为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">make(map[KeyType]ValueType, [cap])</span><br></pre></td></tr></table></figure>
+<p>其中cap表示map的容量，该参数虽然不是必须的，但是我们应该在初始化map的时候就为其指定一个合适的容量。</p>
+<h2 id="map的使用"><a href="#map的使用" class="headerlink" title="map的使用"></a>map的使用</h2><p>map中的数据都是成对出现的，map的基本使用示例代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int, 8)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    fmt.Println(scoreMap)                  &#x2F;&#x2F; map[小明:100 张三:90]</span><br><span class="line">    fmt.Println(scoreMap[&quot;小明&quot;])          &#x2F;&#x2F; 100</span><br><span class="line">    fmt.Printf(&quot;type of a:%T\n&quot;, scoreMap) &#x2F;&#x2F;type of a:map[string]int</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]string, 8)</span><br><span class="line">    scoreMap[&quot;射手&quot;] &#x3D; &quot;小鲁蛋&quot;</span><br><span class="line">    scoreMap[&quot;打野&quot;] &#x3D; &quot;赵云&quot;</span><br><span class="line">    scoreMap[&quot;辅助&quot;] &#x3D; &quot;廉颇&quot;</span><br><span class="line">    fmt.Println(scoreMap)</span><br><span class="line">    fmt.Printf(&quot;type of scoreMap is: %T\n&quot;, scoreMap)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 输出：</span><br><span class="line">&#x2F;&#x2F; map[坦边:吕布 射手:小鲁蛋 打野:赵云 辅助:廉颇]</span><br><span class="line">&#x2F;&#x2F; type of scoreMap is: map[string]string</span><br></pre></td></tr></table></figure>
+<p>map也支持在声明的时候填充元素，例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    userLogin :&#x3D; map[string]string&#123;</span><br><span class="line">        &quot;username&quot;: &quot;xyxxb&quot;,</span><br><span class="line">        &quot;password&quot;: &quot;123123&quot;,</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(userLogin) &#x2F;&#x2F; map[password:123123 username:xyxxb]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="判断某个键是否存在"><a href="#判断某个键是否存在" class="headerlink" title="判断某个键是否存在"></a>判断某个键是否存在</h2><p>Go语言中判断map中键是否存在的特殊写法，格式如下:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">value, ok :&#x3D; map[key]</span><br></pre></td></tr></table></figure>
+<p>举个例子：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    &#x2F;&#x2F; 如果key存在ok为true,v为对应的值；不存在ok为false,v为值类型的零值</span><br><span class="line">    v, ok :&#x3D; scoreMap[&quot;张三&quot;]</span><br><span class="line">    if ok &#123;</span><br><span class="line">        fmt.Println(v)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        fmt.Println(&quot;查无此人&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h2><p>使用for range遍历map</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    scoreMap[&quot;娜扎&quot;] &#x3D; 60</span><br><span class="line">    for k, v :&#x3D; range scoreMap &#123;</span><br><span class="line">        fmt.Println(k, v)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>仅遍历key的时候，可以按下面的写法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    scoreMap[&quot;娜扎&quot;] &#x3D; 60</span><br><span class="line">    for k :&#x3D; range scoreMap &#123;</span><br><span class="line">        scoreMap[&quot;小明&quot;] &#x3D; 120</span><br><span class="line">        fmt.Println(k) &#x2F;&#x2F; 取value：fmt.Println(scoreMap[k])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>**<code>注意</code>**： 遍历map时的元素顺序与添加键值对的顺序无关。</p>
+<h2 id="使用delete-函数删除键值对"><a href="#使用delete-函数删除键值对" class="headerlink" title="使用delete()函数删除键值对"></a>使用delete()函数删除键值对</h2><p>使用delete()内建函数从map中删除一组键值对，delete()函数的格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">delete(map, key)</span><br></pre></td></tr></table></figure>
+<p>其中，</p>
+<ul>
+<li>map:表示要删除键值对的map</li>
+<li>key:表示要删除的键值对的键</li>
+</ul>
+<p>示例代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main()&#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    scoreMap[&quot;娜扎&quot;] &#x3D; 60</span><br><span class="line">    delete(scoreMap, &quot;小明&quot;)&#x2F;&#x2F;将小明:100从map中删除</span><br><span class="line">    for k,v :&#x3D; range scoreMap&#123;</span><br><span class="line">        fmt.Println(k, v)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="按照指定顺序遍历map"><a href="#按照指定顺序遍历map" class="headerlink" title="按照指定顺序遍历map"></a>按照指定顺序遍历map</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    rand.Seed(time.Now().UnixNano()) &#x2F;&#x2F;初始化随机数种子</span><br><span class="line"></span><br><span class="line">    var scoreMap &#x3D; make(map[string]int, 200)</span><br><span class="line"></span><br><span class="line">    for i :&#x3D; 0; i &lt; 100; i++ &#123;</span><br><span class="line">        key :&#x3D; fmt.Sprintf(&quot;stu%02d&quot;, i) &#x2F;&#x2F; 生成stu开头的字符串</span><br><span class="line">        value :&#x3D; rand.Intn(100)          &#x2F;&#x2F; 生成0~99的随机整数</span><br><span class="line">        scoreMap[key] &#x3D; value</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 取出map中的所有key存入切片keys</span><br><span class="line">    var keys &#x3D; make([]string, 0, 200)</span><br><span class="line">    for key :&#x3D; range scoreMap &#123;</span><br><span class="line">        keys &#x3D; append(keys, key)</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 对切片进行排序</span><br><span class="line">    sort.Strings(keys)</span><br><span class="line">    &#x2F;&#x2F; 按照排序后的key遍历map</span><br><span class="line">    for _, key :&#x3D; range keys &#123;</span><br><span class="line">        fmt.Println(key, scoreMap[key])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="元素为map类型的切片"><a href="#元素为map类型的切片" class="headerlink" title="元素为map类型的切片"></a>元素为map类型的切片</h2><p>下面的代码演示了切片中的元素为map类型时的操作：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var mapSlice &#x3D; make([]map[string]string, 3)</span><br><span class="line">    for index, value :&#x3D; range mapSlice &#123;</span><br><span class="line">        fmt.Printf(&quot;index:%d value:%v\n&quot;, index, value)</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(&quot;after init&quot;)</span><br><span class="line">    &#x2F;&#x2F; 对切片中的map元素进行初始化</span><br><span class="line">    mapSlice[0] &#x3D; make(map[string]string, 10)</span><br><span class="line">    mapSlice[0][&quot;name&quot;] &#x3D; &quot;小王子&quot;</span><br><span class="line">    mapSlice[0][&quot;password&quot;] &#x3D; &quot;123456&quot;</span><br><span class="line">    mapSlice[0][&quot;address&quot;] &#x3D; &quot;沙河&quot;</span><br><span class="line">    for index, value :&#x3D; range mapSlice &#123;</span><br><span class="line">        fmt.Printf(&quot;index:%d value:%v\n&quot;, index, value)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">index:0 value:map[]</span><br><span class="line">index:1 value:map[]</span><br><span class="line">index:2 value:map[]</span><br><span class="line">after init</span><br><span class="line">index:0 value:map[address:沙河 name:小王子 password:123456]</span><br><span class="line">index:1 value:map[]</span><br><span class="line">index:2 value:map[]</span><br></pre></td></tr></table></figure>
+<h2 id="值为切片类型的map"><a href="#值为切片类型的map" class="headerlink" title="值为切片类型的map"></a>值为切片类型的map</h2><p>下面的代码演示了map中值为切片类型的操作：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var sliceMap &#x3D; make(map[string][]string, 3)</span><br><span class="line">    fmt.Println(sliceMap)</span><br><span class="line">    fmt.Println(&quot;after init&quot;)</span><br><span class="line">    key :&#x3D; &quot;中国&quot;</span><br><span class="line">    value, ok :&#x3D; sliceMap[key]</span><br><span class="line">    if !ok &#123;</span><br><span class="line">        value &#x3D; make([]string, 0, 2)</span><br><span class="line">    &#125;</span><br><span class="line">    value &#x3D; append(value, &quot;北京&quot;, &quot;上海&quot;)</span><br><span class="line">    sliceMap[key] &#x3D; value</span><br><span class="line">    fmt.Println(sliceMap)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">map[]</span><br><span class="line">after init</span><br><span class="line">map[中国:[北京 上海]]</span><br></pre></td></tr></table></figure>
+<h2 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h2><p>写一个程序，统计一个字符串中每个单词出现的次数。比如：”how do you do”中how=1 do=2 you=1。<br>观察下面代码，写出最终的打印结果。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    type Map map[string][]int</span><br><span class="line">    m :&#x3D; make(Map)</span><br><span class="line">    s :&#x3D; []int&#123;1, 2&#125;</span><br><span class="line">    s &#x3D; append(s, 3)</span><br><span class="line">    fmt.Printf(&quot;%+v\n&quot;, s)</span><br><span class="line">    m[&quot;q1mi&quot;] &#x3D; s</span><br><span class="line">    s &#x3D; append(s[:1], s[2:]...)</span><br><span class="line">    fmt.Printf(&quot;%+v\n&quot;, s)</span><br><span class="line">    fmt.Printf(&quot;%+v\n&quot;, m[&quot;q1mi&quot;])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>解答：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!---->  
+<!---->  
+]]></content>
+      <categories>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>go base</tag>
       </tags>
   </entry>
   <entry>
@@ -785,66 +785,6 @@ timezone: 时区
       </tags>
   </entry>
   <entry>
-    <title>go基础之变量和常量</title>
-    <url>/2020/04/08/go_var_constant/</url>
-    <content><![CDATA[<h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><h2 id="变量类型"><a href="#变量类型" class="headerlink" title="变量类型"></a>变量类型</h2><p>变量（Variable）的功能是存储数据。不同的变量保存的数据类型可能会不一样。经过半个多世纪的发展，编程语言已经基本形成了一套固定的类型，常见变量的数据类型有：<code>整型、浮点型、布尔型</code>等。</p>
-<p>Go语言中的每一个变量都有自己的类型，并且变量必须经过声明才能开始使用。</p>
-<h2 id="变量声明-var"><a href="#变量声明-var" class="headerlink" title="变量声明 var"></a>变量声明 var</h2><p>Go语言中的变量需要声明后才能使用，同一作用域内不支持重复声明。 并且Go语言的变量声明后必须使用。</p>
-<h3 id="标准声明"><a href="#标准声明" class="headerlink" title="标准声明"></a>标准声明</h3><p>Go语言的变量声明格式为：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var 变量名 变量类型</span><br></pre></td></tr></table></figure>
-<p>变量声明以关键字<code>var</code>开头，变量类型放在变量的后面，行尾无需分号。 举个例子：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name string</span><br><span class="line">var age int</span><br><span class="line">var isOk bool</span><br></pre></td></tr></table></figure>
-<h3 id="批量声明"><a href="#批量声明" class="headerlink" title="批量声明"></a>批量声明</h3><p>每声明一个变量就需要写<code>var</code>关键字会比较繁琐，go语言中还支持批量变量声明：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var (</span><br><span class="line">    a string</span><br><span class="line">    b int</span><br><span class="line">    c bool</span><br><span class="line">    d float32</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<h3 id="变量的初始化"><a href="#变量的初始化" class="headerlink" title="变量的初始化"></a>变量的初始化</h3><p>Go语言在声明变量的时候，会自动对变量对应的内存区域进行初始化操作。每个变量会被初始化成其类型的默认值，例如： 整型和浮点型变量的默认值为<code>0</code>。 字符串变量的默认值为<code>空字符串</code>。 布尔型变量默认为<code>false</code>。 切片、函数、指针变量的默认为<code>nil</code>。</p>
-<p>当然我们也可在声明变量的时候为其指定初始值。变量初始化的标准格式如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var 变量名 类型 &#x3D; 表达式</span><br></pre></td></tr></table></figure>
-<p>举个例子：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name string &#x3D; &quot;Q1mi&quot;</span><br><span class="line">var age int &#x3D; 18</span><br></pre></td></tr></table></figure>
-<p>或者一次初始化多个变量</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name, age &#x3D; &quot;Q1mi&quot;, 20</span><br></pre></td></tr></table></figure>
-<p><strong>类型推导</strong><br>有时候我们会将变量的类型省略，这个时候编译器会根据等号右边的值来推导变量的类型完成初始化。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name &#x3D; &quot;Q1mi&quot;</span><br><span class="line">var age &#x3D; 18</span><br></pre></td></tr></table></figure>
-<h3 id="短变量声明"><a href="#短变量声明" class="headerlink" title="短变量声明 :="></a><strong>短变量声明</strong> :=</h3><p>在函数内部，可以使用更简略的<code>:=</code>方式声明并初始化变量。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">)</span><br><span class="line">&#x2F;&#x2F; 全局变量m</span><br><span class="line">var m &#x3D; 100</span><br><span class="line">&#x2F;&#x2F; n :&#x3D; &quot;smile111&quot; &#x2F;&#x2F; 非法，短变量声明方式只能用于函数内部</span><br><span class="line">func main() &#123;</span><br><span class="line">    n :&#x3D; 10</span><br><span class="line">    m :&#x3D; 200 &#x2F;&#x2F; 此处声明局部变量m</span><br><span class="line">    fmt.Println(m, n)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="匿名变量"><a href="#匿名变量" class="headerlink" title="匿名变量 _"></a><strong>匿名变量</strong> _</h3><p>在使用多重赋值时，如果想要忽略某个值，可以使用<code>匿名变量（anonymous variable）</code>。 匿名变量用一个下划线_表示，例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func foo() (int, string) &#123;</span><br><span class="line">    return 10, &quot;Q1mi&quot;</span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">    x, _ :&#x3D; foo()</span><br><span class="line">    _, y :&#x3D; foo()</span><br><span class="line">    fmt.Println(&quot;x&#x3D;&quot;, x)</span><br><span class="line">    fmt.Println(&quot;y&#x3D;&quot;, y)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>匿名变量不占用命名空间，不会分配内存，所以匿名变量之间不存在重复声明。 (在<code>Lua</code>等编程语言里，匿名变量也被叫做哑元变量。)</p>
-<p> <code>注意事项：</code></p>
-<ol>
-<li>函数外的每个语句都必须以关键字开始（var、const、func等）</li>
-<li><code>:=</code>不能使用在函数外。</li>
-<li><code>_</code>多用于占位，表示忽略值。</li>
-</ol>
-<h2 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h2><p>相对于变量，常量是恒定不变的值，多用于定义程序运行期间不会改变的那些值。 常量的声明和变量声明非常类似，只是把<code>var</code>换成了<code>const</code>，常量在定义的时候必须赋值。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const pi &#x3D; 3.1415</span><br><span class="line">const e &#x3D; 2.7182</span><br></pre></td></tr></table></figure>
-<p>声明了<code>pi</code>和<code>e</code>这两个常量之后，在整个程序运行期间它们的值都不能再发生变化了。</p>
-<p>多个常量也可以一起声明：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    pi &#x3D; 3.1415</span><br><span class="line">    e &#x3D; 2.7182</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p>const同时声明多个常量时，如果省略了值则表示和上面一行的值相同。 例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; 100</span><br><span class="line">    n2</span><br><span class="line">    n3</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p>上面示例中，常量<code>n1</code>、<code>n2</code>、<code>n3</code>的值都是100。</p>
-<h3 id="iota"><a href="#iota" class="headerlink" title="iota"></a>iota</h3><p><code>iota</code>是go语言的常量计数器，只能在常量的表达式中使用。</p>
-<p><code>iota</code>在const关键字出现时将被重置为0。const中每新增一行常量声明将使iota计数一次(iota可理解为const语句块中的行索引)。 使用iota能简化定义，在定义枚举时很有用。</p>
-<p><strong>举个例子：</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; iota &#x2F;&#x2F;0</span><br><span class="line">    n2        &#x2F;&#x2F;1</span><br><span class="line">    n3        &#x2F;&#x2F;2</span><br><span class="line">    n4        &#x2F;&#x2F;3</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p><strong>几个常见的iota示例:</strong><br>使用<code>_</code>跳过某些值</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; iota &#x2F;&#x2F;0</span><br><span class="line">    n2        &#x2F;&#x2F;1</span><br><span class="line">    _</span><br><span class="line">    n4        &#x2F;&#x2F;3</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p><code>iota</code>声明中间插队</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; iota &#x2F;&#x2F;0</span><br><span class="line">    n2 &#x3D; 100  &#x2F;&#x2F;100</span><br><span class="line">    n3 &#x3D; iota &#x2F;&#x2F;2</span><br><span class="line">    n4        &#x2F;&#x2F;3</span><br><span class="line">)</span><br><span class="line">const n5 &#x3D; iota &#x2F;&#x2F;0</span><br></pre></td></tr></table></figure>
-<p>定义数量级 （这里的<code>&lt;&lt;</code>表示左移操作，<code>1&lt;&lt;10</code>表示将1的二进制表示向左移10位，也就是由<code>1</code>变成了<code>10000000000</code>，也就是十进制的1024。同理<code>2&lt;&lt;2</code>表示将2的二进制表示向左移2位，也就是由<code>10</code>变成了<code>1000</code>，也就是十进制的8。）</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    _  &#x3D; iota</span><br><span class="line">    KB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    MB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    GB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    TB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    PB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p>多个<code>iota</code>定义在一行</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    a, b &#x3D; iota + 1, iota + 2 &#x2F;&#x2F;1,2</span><br><span class="line">    c, d                      &#x2F;&#x2F;2,3</span><br><span class="line">    e, f                      &#x2F;&#x2F;3,4</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Go</category>
-      </categories>
-      <tags>
-        <tag>go base</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>go主要特征—标识符、关键字、构建、编译</title>
     <url>/2020/01/31/go%E4%B8%BB%E8%A6%81%E7%89%B9%E5%BE%81/</url>
     <content><![CDATA[<blockquote>
@@ -908,101 +848,63 @@ bin：相关bin文件
       </tags>
   </entry>
   <entry>
-    <title>Go依赖管理—从godep到go mod</title>
-    <url>/2020/01/31/go%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E2%80%94_godep_gomod/</url>
-    <content><![CDATA[<h2 id="1-1-为什么需要依赖管理"><a href="#1-1-为什么需要依赖管理" class="headerlink" title="1.1 为什么需要依赖管理"></a>1.1 为什么需要依赖管理</h2><p>最早的时候，Go所依赖的所有的第三方库都放在GOPATH这个目录下面。这就导致了同一个库只能保存一个版本的代码。如果不同的项目依赖同一个第三方的库的不同版本，应该怎么解决？</p>
-<h2 id="1-2-godep"><a href="#1-2-godep" class="headerlink" title="1.2 godep"></a>1.2 godep</h2><p>Go语言从<code>v1.5</code>开始开始引入<code>vendor</code>模式，如果项目目录下有vendor目录，那么go工具链会优先使用<code>vendor</code>内的包进行编译、测试等。</p>
-<p><code>godep</code>是一个通过vender模式实现的Go语言的第三方依赖管理工具，类似的还有由社区维护准官方包管理工具<code>dep</code>。</p>
-<blockquote>
-<p>注意：在<code>Go1.11</code>之后，建议<a href="https://learnku.com/articles/33241">将 dep 更换为 go mod</a>进行项目管理，更方便</p>
-</blockquote>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>执行以下命令安装godep工具。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go get github.com&#x2F;tools&#x2F;godep</span><br></pre></td></tr></table></figure>
-<h3 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h3><p>安装好godep之后，在终端输入godep查看支持的所有命令。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">godep save     将依赖项输出并复制到Godeps.json文件中</span><br><span class="line">godep go       使用保存的依赖项运行go工具</span><br><span class="line">godep get      下载并安装具有指定依赖项的包</span><br><span class="line">godep path     打印依赖的GOPATH路径</span><br><span class="line">godep restore  在GOPATH中拉取依赖的版本</span><br><span class="line">godep update   更新选定的包或go版本</span><br><span class="line">godep diff     显示当前和以前保存的依赖项集之间的差异</span><br><span class="line">godep version  查看版本信息</span><br></pre></td></tr></table></figure>
-<p>使用godep help [command]可以看看具体命令的帮助信息</p>
-<h3 id="使用godep"><a href="#使用godep" class="headerlink" title="使用godep"></a>使用godep</h3><p>在项目目录下执行godep save命令，会在当前项目中创建Godeps和vender两个文件夹。</p>
-<p>其中Godeps文件夹下有一个Godeps.json的文件，里面记录了项目所依赖的包信息。 vender文件夹下是项目依赖的包的源代码文件。</p>
-<h3 id="vender机制"><a href="#vender机制" class="headerlink" title="vender机制"></a>vender机制</h3><p>Go1.5版本之后开始支持，能够控制Go语言程序编译时依赖包搜索路径的优先级。</p>
-<p>例如查找项目的某个依赖包，首先会在项目根目录下的<code>vender</code>文件夹中查找，如果没有找到就会去<code>$GOAPTH/src</code>目录下查找。</p>
-<h3 id="godep开发流程"><a href="#godep开发流程" class="headerlink" title="godep开发流程"></a>godep开发流程</h3><p>保证程序能够正常编译<br>执行godep save保存当前项目的所有第三方依赖的版本信息和代码<br>提交Godeps目录和vender目录到代码库。<br>如果要更新依赖的版本，可以直接修改Godeps.json文件中的对应项</p>
-<h2 id="1-3-go-module"><a href="#1-3-go-module" class="headerlink" title="1.3 go module"></a>1.3 go module</h2><p><code>go module</code>是Go1.11版本之后官方推出的版本管理工具，并且从Go1.13版本开始，<code>go module</code>将是Go语言默认的依赖管理工具。</p>
-<h3 id="GO111MODULE"><a href="#GO111MODULE" class="headerlink" title="GO111MODULE"></a>GO111MODULE</h3><p>要启用<code>go module</code>支持首先要设置环境变量<code>GO111MODULE</code>，通过它可以开启或关闭模块支持，它有三个可选值：<code>off、on、auto</code>，默认值是<code>auto</code>。</p>
+    <title>go基础之变量和常量</title>
+    <url>/2020/04/08/go_var_constant/</url>
+    <content><![CDATA[<h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><h2 id="变量类型"><a href="#变量类型" class="headerlink" title="变量类型"></a>变量类型</h2><p>变量（Variable）的功能是存储数据。不同的变量保存的数据类型可能会不一样。经过半个多世纪的发展，编程语言已经基本形成了一套固定的类型，常见变量的数据类型有：<code>整型、浮点型、布尔型</code>等。</p>
+<p>Go语言中的每一个变量都有自己的类型，并且变量必须经过声明才能开始使用。</p>
+<h2 id="变量声明-var"><a href="#变量声明-var" class="headerlink" title="变量声明 var"></a>变量声明 var</h2><p>Go语言中的变量需要声明后才能使用，同一作用域内不支持重复声明。 并且Go语言的变量声明后必须使用。</p>
+<h3 id="标准声明"><a href="#标准声明" class="headerlink" title="标准声明"></a>标准声明</h3><p>Go语言的变量声明格式为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var 变量名 变量类型</span><br></pre></td></tr></table></figure>
+<p>变量声明以关键字<code>var</code>开头，变量类型放在变量的后面，行尾无需分号。 举个例子：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name string</span><br><span class="line">var age int</span><br><span class="line">var isOk bool</span><br></pre></td></tr></table></figure>
+<h3 id="批量声明"><a href="#批量声明" class="headerlink" title="批量声明"></a>批量声明</h3><p>每声明一个变量就需要写<code>var</code>关键字会比较繁琐，go语言中还支持批量变量声明：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var (</span><br><span class="line">    a string</span><br><span class="line">    b int</span><br><span class="line">    c bool</span><br><span class="line">    d float32</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h3 id="变量的初始化"><a href="#变量的初始化" class="headerlink" title="变量的初始化"></a>变量的初始化</h3><p>Go语言在声明变量的时候，会自动对变量对应的内存区域进行初始化操作。每个变量会被初始化成其类型的默认值，例如： 整型和浮点型变量的默认值为<code>0</code>。 字符串变量的默认值为<code>空字符串</code>。 布尔型变量默认为<code>false</code>。 切片、函数、指针变量的默认为<code>nil</code>。</p>
+<p>当然我们也可在声明变量的时候为其指定初始值。变量初始化的标准格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var 变量名 类型 &#x3D; 表达式</span><br></pre></td></tr></table></figure>
+<p>举个例子：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name string &#x3D; &quot;Q1mi&quot;</span><br><span class="line">var age int &#x3D; 18</span><br></pre></td></tr></table></figure>
+<p>或者一次初始化多个变量</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name, age &#x3D; &quot;Q1mi&quot;, 20</span><br></pre></td></tr></table></figure>
+<p><strong>类型推导</strong><br>有时候我们会将变量的类型省略，这个时候编译器会根据等号右边的值来推导变量的类型完成初始化。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name &#x3D; &quot;Q1mi&quot;</span><br><span class="line">var age &#x3D; 18</span><br></pre></td></tr></table></figure>
+<h3 id="短变量声明"><a href="#短变量声明" class="headerlink" title="短变量声明 :="></a><strong>短变量声明</strong> :=</h3><p>在函数内部，可以使用更简略的<code>:=</code>方式声明并初始化变量。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">)</span><br><span class="line">&#x2F;&#x2F; 全局变量m</span><br><span class="line">var m &#x3D; 100</span><br><span class="line">&#x2F;&#x2F; n :&#x3D; &quot;smile111&quot; &#x2F;&#x2F; 非法，短变量声明方式只能用于函数内部</span><br><span class="line">func main() &#123;</span><br><span class="line">    n :&#x3D; 10</span><br><span class="line">    m :&#x3D; 200 &#x2F;&#x2F; 此处声明局部变量m</span><br><span class="line">    fmt.Println(m, n)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="匿名变量"><a href="#匿名变量" class="headerlink" title="匿名变量 _"></a><strong>匿名变量</strong> _</h3><p>在使用多重赋值时，如果想要忽略某个值，可以使用<code>匿名变量（anonymous variable）</code>。 匿名变量用一个下划线_表示，例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func foo() (int, string) &#123;</span><br><span class="line">    return 10, &quot;Q1mi&quot;</span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">    x, _ :&#x3D; foo()</span><br><span class="line">    _, y :&#x3D; foo()</span><br><span class="line">    fmt.Println(&quot;x&#x3D;&quot;, x)</span><br><span class="line">    fmt.Println(&quot;y&#x3D;&quot;, y)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>匿名变量不占用命名空间，不会分配内存，所以匿名变量之间不存在重复声明。 (在<code>Lua</code>等编程语言里，匿名变量也被叫做哑元变量。)</p>
+<p> <code>注意事项：</code></p>
 <ol>
-<li>GO111MODULE=off禁用模块支持，编译时会从GOPATH和vendor文件夹中查找包。</li>
-<li>GO111MODULE=on启用模块支持，编译时会忽略GOPATH和vendor文件夹，只根据 go.mod下载依赖。</li>
-<li>GO111MODULE=auto，当项目在$GOPATH/src外且项目根目录有go.mod文件时，开启模块支持。<br>简单来说，设置<code>GO111MODULE=on</code>之后就可以使用<code>go module</code>了，以后就没有必要在GOPATH中创建项目了，并且还能够很好的管理项目依赖的第三方包信息。<br>使用 go module 管理依赖后会在项目根目录下生成两个文件<code>go.mod</code>和<code>go.sum</code>。</li>
+<li>函数外的每个语句都必须以关键字开始（var、const、func等）</li>
+<li><code>:=</code>不能使用在函数外。</li>
+<li><code>_</code>多用于占位，表示忽略值。</li>
 </ol>
-<h3 id="GOPROXY"><a href="#GOPROXY" class="headerlink" title="GOPROXY"></a>GOPROXY</h3><p>Go1.11之后设置GOPROXY命令为：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn</span><br></pre></td></tr></table></figure>
-<p>Go1.13之后<code>GOPROXY</code>默认值为<code>https://proxy.golang.org</code>，在国内是无法访问的，所以十分建议大家设置<code>GOPROXY=https://goproxy.cn</code>。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go env -w GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn,direct</span><br></pre></td></tr></table></figure>
-<h3 id="go-mod命令"><a href="#go-mod命令" class="headerlink" title="go mod命令"></a>go mod命令</h3><p>常用的go mod命令如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go mod download    下载依赖的module到本地cache（默认为$GOPATH&#x2F;pkg&#x2F;mod目录）</span><br><span class="line">go mod edit        编辑go.mod文件</span><br><span class="line">go mod graph       打印模块依赖图</span><br><span class="line">go mod init        初始化当前文件夹, 创建go.mod文件</span><br><span class="line">go mod tidy        增加缺少的module，删除无用的module</span><br><span class="line">go mod vendor      将依赖复制到vendor下</span><br><span class="line">go mod verify      校验依赖</span><br><span class="line">go mod why         解释为什么需要依赖</span><br></pre></td></tr></table></figure>
-<p><strong>go.mod</strong><br>go.mod文件记录了项目所有的依赖信息，其结构大致如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module github.com&#x2F;Q1mi&#x2F;studygo&#x2F;blogger</span><br><span class="line"></span><br><span class="line">go 1.12</span><br><span class="line"></span><br><span class="line">require (</span><br><span class="line">    github.com&#x2F;DeanThompson&#x2F;ginpprof v0.0.0-20190408063150-3be636683586</span><br><span class="line">    github.com&#x2F;gin-gonic&#x2F;gin v1.4.0</span><br><span class="line">    github.com&#x2F;go-sql-driver&#x2F;mysql v1.4.1</span><br><span class="line">    github.com&#x2F;jmoiron&#x2F;sqlx v1.2.0</span><br><span class="line">    github.com&#x2F;satori&#x2F;go.uuid v1.2.0</span><br><span class="line">    google.golang.org&#x2F;appengine v1.6.1 &#x2F;&#x2F; indirect</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p>其中，</p>
-<ul>
-<li>module用来定义包名</li>
-<li>require用来定义依赖包及版本</li>
-<li>indirect表示间接引用</li>
-</ul>
-<p><strong><code>依赖的版本</code></strong><br>go mod支持语义化版本号，比如<code>go get foo@v1.2.3</code>，也可以跟git的分支或tag，比如<code>go get foo@master</code>，当然也可以跟git提交哈希，比如<code>go get foo@e3702bed2</code>。关于依赖的版本支持以下几种格式：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">gopkg.in&#x2F;tomb.v1 v1.0.0-20141024135613-dd632973f1e7</span><br><span class="line">gopkg.in&#x2F;vmihailenco&#x2F;msgpack.v2 v2.9.1</span><br><span class="line">gopkg.in&#x2F;yaml.v2 &lt;&#x3D;v2.2.1</span><br><span class="line">github.com&#x2F;tatsushid&#x2F;go-fastping v0.0.0-20160109021039-d7bb493dee3e</span><br><span class="line">latest</span><br></pre></td></tr></table></figure>
-<p><strong><code>replace</code></strong><br>在国内访问golang.org/x的各个包都需要翻墙，你可以在go.mod中使用replace替换成github上对应的库。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">replace (</span><br><span class="line">    golang.org&#x2F;x&#x2F;crypto v0.0.0-20180820150726-614d502a4dac &#x3D;&gt; github.com&#x2F;golang&#x2F;crypto v0.0.0-20180820150726-614d502a4dac</span><br><span class="line">    golang.org&#x2F;x&#x2F;net v0.0.0-20180821023952-922f4815f713 &#x3D;&gt; github.com&#x2F;golang&#x2F;net v0.0.0-20180826012351-8a410e7b638d</span><br><span class="line">    golang.org&#x2F;x&#x2F;text v0.3.0 &#x3D;&gt; github.com&#x2F;golang&#x2F;text v0.3.0</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<h3 id="go-get"><a href="#go-get" class="headerlink" title="go get"></a>go get</h3><p>在项目中执行<code>go get</code>命令可以下载依赖包，并且还可以指定下载的版本。</p>
-<ol>
-<li>运行go get -u将会升级到最新的次要版本或者修订版本(x.y.z, z是修订版本号， y是次要版本号)</li>
-<li>运行go get -u=patch将会升级到最新的修订版本</li>
-<li>运行go get package@version将会升级到指定的版本号version<br>如果下载所有依赖可以使用<code>go mod download</code>命令。</li>
-</ol>
-<h3 id="go-mod-edit"><a href="#go-mod-edit" class="headerlink" title="go mod edit"></a>go mod edit</h3><p><strong><code>格式化</code></strong><br>因为我们可以手动修改go.mod文件，所以有些时候需要格式化该文件。Go提供了一下命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go mod edit -fmt</span><br></pre></td></tr></table></figure>
-<p><strong><code>添加依赖项</code></strong><br>go mod edit -require=golang.org/x/text<br><strong><code>移除依赖项</code></strong><br>如果只是想修改go.mod文件中的内容，那么可以运行<code>go mod edit -droprequire=package path</code>，比如要在<code>go.mod</code>中移除<code>golang.org/x/tex</code>t包，可以使用如下命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go mod edit -droprequire&#x3D;golang.org&#x2F;x&#x2F;text</span><br></pre></td></tr></table></figure>
-<p>关于<code>go mod edit</code>的更多用法可以通过<code>go help mod edit</code>查看。</p>
-<h2 id="1-4在项目中使用go-module"><a href="#1-4在项目中使用go-module" class="headerlink" title="1.4在项目中使用go module"></a>1.4在项目中使用go module</h2><h3 id="既有项目"><a href="#既有项目" class="headerlink" title="既有项目"></a>既有项目</h3><p>如果需要对一个已经存在的项目启用<code>go module</code>，可以按照以下步骤操作：</p>
-<p>在项目目录下执行go mod init，生成一个go.mod文件。<br>执行go get，查找并记录当前项目的依赖，同时生成一个go.sum记录每个依赖库的版本和哈希值。</p>
-<h3 id="新项目"><a href="#新项目" class="headerlink" title="新项目"></a>新项目</h3><p>对于一个新创建的项目，我们可以在项目文件夹下按照以下步骤操作：</p>
-<ul>
-<li>执行go mod init 项目名命令，在当前项目文件夹下创建一个go.mod文件。</li>
-<li>手动编辑go.mod中的require依赖项或执行go get自动发现、维护依赖。</li>
-</ul>
-<hr>
-<p>&nbsp;  </p>
-<!--**参考文章**：-->  
-<!---->  
-<!---->  
-
-
-
+<h2 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h2><p>相对于变量，常量是恒定不变的值，多用于定义程序运行期间不会改变的那些值。 常量的声明和变量声明非常类似，只是把<code>var</code>换成了<code>const</code>，常量在定义的时候必须赋值。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const pi &#x3D; 3.1415</span><br><span class="line">const e &#x3D; 2.7182</span><br></pre></td></tr></table></figure>
+<p>声明了<code>pi</code>和<code>e</code>这两个常量之后，在整个程序运行期间它们的值都不能再发生变化了。</p>
+<p>多个常量也可以一起声明：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    pi &#x3D; 3.1415</span><br><span class="line">    e &#x3D; 2.7182</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>const同时声明多个常量时，如果省略了值则表示和上面一行的值相同。 例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; 100</span><br><span class="line">    n2</span><br><span class="line">    n3</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>上面示例中，常量<code>n1</code>、<code>n2</code>、<code>n3</code>的值都是100。</p>
+<h3 id="iota"><a href="#iota" class="headerlink" title="iota"></a>iota</h3><p><code>iota</code>是go语言的常量计数器，只能在常量的表达式中使用。</p>
+<p><code>iota</code>在const关键字出现时将被重置为0。const中每新增一行常量声明将使iota计数一次(iota可理解为const语句块中的行索引)。 使用iota能简化定义，在定义枚举时很有用。</p>
+<p><strong>举个例子：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; iota &#x2F;&#x2F;0</span><br><span class="line">    n2        &#x2F;&#x2F;1</span><br><span class="line">    n3        &#x2F;&#x2F;2</span><br><span class="line">    n4        &#x2F;&#x2F;3</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><strong>几个常见的iota示例:</strong><br>使用<code>_</code>跳过某些值</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; iota &#x2F;&#x2F;0</span><br><span class="line">    n2        &#x2F;&#x2F;1</span><br><span class="line">    _</span><br><span class="line">    n4        &#x2F;&#x2F;3</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><code>iota</code>声明中间插队</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; iota &#x2F;&#x2F;0</span><br><span class="line">    n2 &#x3D; 100  &#x2F;&#x2F;100</span><br><span class="line">    n3 &#x3D; iota &#x2F;&#x2F;2</span><br><span class="line">    n4        &#x2F;&#x2F;3</span><br><span class="line">)</span><br><span class="line">const n5 &#x3D; iota &#x2F;&#x2F;0</span><br></pre></td></tr></table></figure>
+<p>定义数量级 （这里的<code>&lt;&lt;</code>表示左移操作，<code>1&lt;&lt;10</code>表示将1的二进制表示向左移10位，也就是由<code>1</code>变成了<code>10000000000</code>，也就是十进制的1024。同理<code>2&lt;&lt;2</code>表示将2的二进制表示向左移2位，也就是由<code>10</code>变成了<code>1000</code>，也就是十进制的8。）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    _  &#x3D; iota</span><br><span class="line">    KB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    MB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    GB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    TB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    PB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>多个<code>iota</code>定义在一行</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    a, b &#x3D; iota + 1, iota + 2 &#x2F;&#x2F;1,2</span><br><span class="line">    c, d                      &#x2F;&#x2F;2,3</span><br><span class="line">    e, f                      &#x2F;&#x2F;3,4</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>Go</category>
       </categories>
       <tags>
-        <tag>env</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/1992/06/21/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-      <categories>
-        <category>吃喝玩乐</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
+        <tag>go base</tag>
       </tags>
   </entry>
   <entry>
@@ -1275,6 +1177,26 @@ fff | ggg| hhh | iii | 000|
       </tags>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/1992/06/21/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>吃喝玩乐</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用Go module导入本地包</title>
     <url>/2020/01/31/%E4%BD%BF%E7%94%A8Go_module%E5%AF%BC%E5%85%A5%E6%9C%AC%E5%9C%B0%E5%8C%85/</url>
     <content><![CDATA[<p>go module是<code>Go1.11版本之后</code>官方推出的版本管理工具，并且从<code>Go1.13</code>版本开始，go module将是Go语言默认的依赖管理工具。到今天<code>Go1.14</code>版本推出之后<code>Go modules</code>功能已经被正式推荐在生产环境下使用了。</p>
@@ -1316,6 +1238,84 @@ fff | ggg| hhh | iii | 000|
 <p><code>p1/go.mod</code>内容如下：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module github.com&#x2F;q1mi&#x2F;p1</span><br><span class="line"></span><br><span class="line">go 1.14</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">require &quot;liwenzhou.com&#x2F;q1mi&#x2F;p2&quot; v0.0.0</span><br><span class="line">replace &quot;liwenzhou.com&#x2F;q1mi&#x2F;p2&quot; &#x3D;&gt; &quot;..&#x2F;p2&quot;</span><br></pre></td></tr></table></figure>
 <p>此时，我们就可以正常编译p1这个项目了。</p>
+]]></content>
+      <categories>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>env</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Go依赖管理—从godep到go mod</title>
+    <url>/2020/01/31/go%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E2%80%94_godep_gomod/</url>
+    <content><![CDATA[<h2 id="1-1-为什么需要依赖管理"><a href="#1-1-为什么需要依赖管理" class="headerlink" title="1.1 为什么需要依赖管理"></a>1.1 为什么需要依赖管理</h2><p>最早的时候，Go所依赖的所有的第三方库都放在GOPATH这个目录下面。这就导致了同一个库只能保存一个版本的代码。如果不同的项目依赖同一个第三方的库的不同版本，应该怎么解决？</p>
+<h2 id="1-2-godep"><a href="#1-2-godep" class="headerlink" title="1.2 godep"></a>1.2 godep</h2><p>Go语言从<code>v1.5</code>开始开始引入<code>vendor</code>模式，如果项目目录下有vendor目录，那么go工具链会优先使用<code>vendor</code>内的包进行编译、测试等。</p>
+<p><code>godep</code>是一个通过vender模式实现的Go语言的第三方依赖管理工具，类似的还有由社区维护准官方包管理工具<code>dep</code>。</p>
+<blockquote>
+<p>注意：在<code>Go1.11</code>之后，建议<a href="https://learnku.com/articles/33241">将 dep 更换为 go mod</a>进行项目管理，更方便</p>
+</blockquote>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>执行以下命令安装godep工具。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go get github.com&#x2F;tools&#x2F;godep</span><br></pre></td></tr></table></figure>
+<h3 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h3><p>安装好godep之后，在终端输入godep查看支持的所有命令。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">godep save     将依赖项输出并复制到Godeps.json文件中</span><br><span class="line">godep go       使用保存的依赖项运行go工具</span><br><span class="line">godep get      下载并安装具有指定依赖项的包</span><br><span class="line">godep path     打印依赖的GOPATH路径</span><br><span class="line">godep restore  在GOPATH中拉取依赖的版本</span><br><span class="line">godep update   更新选定的包或go版本</span><br><span class="line">godep diff     显示当前和以前保存的依赖项集之间的差异</span><br><span class="line">godep version  查看版本信息</span><br></pre></td></tr></table></figure>
+<p>使用godep help [command]可以看看具体命令的帮助信息</p>
+<h3 id="使用godep"><a href="#使用godep" class="headerlink" title="使用godep"></a>使用godep</h3><p>在项目目录下执行godep save命令，会在当前项目中创建Godeps和vender两个文件夹。</p>
+<p>其中Godeps文件夹下有一个Godeps.json的文件，里面记录了项目所依赖的包信息。 vender文件夹下是项目依赖的包的源代码文件。</p>
+<h3 id="vender机制"><a href="#vender机制" class="headerlink" title="vender机制"></a>vender机制</h3><p>Go1.5版本之后开始支持，能够控制Go语言程序编译时依赖包搜索路径的优先级。</p>
+<p>例如查找项目的某个依赖包，首先会在项目根目录下的<code>vender</code>文件夹中查找，如果没有找到就会去<code>$GOAPTH/src</code>目录下查找。</p>
+<h3 id="godep开发流程"><a href="#godep开发流程" class="headerlink" title="godep开发流程"></a>godep开发流程</h3><p>保证程序能够正常编译<br>执行godep save保存当前项目的所有第三方依赖的版本信息和代码<br>提交Godeps目录和vender目录到代码库。<br>如果要更新依赖的版本，可以直接修改Godeps.json文件中的对应项</p>
+<h2 id="1-3-go-module"><a href="#1-3-go-module" class="headerlink" title="1.3 go module"></a>1.3 go module</h2><p><code>go module</code>是Go1.11版本之后官方推出的版本管理工具，并且从Go1.13版本开始，<code>go module</code>将是Go语言默认的依赖管理工具。</p>
+<h3 id="GO111MODULE"><a href="#GO111MODULE" class="headerlink" title="GO111MODULE"></a>GO111MODULE</h3><p>要启用<code>go module</code>支持首先要设置环境变量<code>GO111MODULE</code>，通过它可以开启或关闭模块支持，它有三个可选值：<code>off、on、auto</code>，默认值是<code>auto</code>。</p>
+<ol>
+<li>GO111MODULE=off禁用模块支持，编译时会从GOPATH和vendor文件夹中查找包。</li>
+<li>GO111MODULE=on启用模块支持，编译时会忽略GOPATH和vendor文件夹，只根据 go.mod下载依赖。</li>
+<li>GO111MODULE=auto，当项目在$GOPATH/src外且项目根目录有go.mod文件时，开启模块支持。<br>简单来说，设置<code>GO111MODULE=on</code>之后就可以使用<code>go module</code>了，以后就没有必要在GOPATH中创建项目了，并且还能够很好的管理项目依赖的第三方包信息。<br>使用 go module 管理依赖后会在项目根目录下生成两个文件<code>go.mod</code>和<code>go.sum</code>。</li>
+</ol>
+<h3 id="GOPROXY"><a href="#GOPROXY" class="headerlink" title="GOPROXY"></a>GOPROXY</h3><p>Go1.11之后设置GOPROXY命令为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn</span><br></pre></td></tr></table></figure>
+<p>Go1.13之后<code>GOPROXY</code>默认值为<code>https://proxy.golang.org</code>，在国内是无法访问的，所以十分建议大家设置<code>GOPROXY=https://goproxy.cn</code>。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go env -w GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn,direct</span><br></pre></td></tr></table></figure>
+<h3 id="go-mod命令"><a href="#go-mod命令" class="headerlink" title="go mod命令"></a>go mod命令</h3><p>常用的go mod命令如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go mod download    下载依赖的module到本地cache（默认为$GOPATH&#x2F;pkg&#x2F;mod目录）</span><br><span class="line">go mod edit        编辑go.mod文件</span><br><span class="line">go mod graph       打印模块依赖图</span><br><span class="line">go mod init        初始化当前文件夹, 创建go.mod文件</span><br><span class="line">go mod tidy        增加缺少的module，删除无用的module</span><br><span class="line">go mod vendor      将依赖复制到vendor下</span><br><span class="line">go mod verify      校验依赖</span><br><span class="line">go mod why         解释为什么需要依赖</span><br></pre></td></tr></table></figure>
+<p><strong>go.mod</strong><br>go.mod文件记录了项目所有的依赖信息，其结构大致如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module github.com&#x2F;Q1mi&#x2F;studygo&#x2F;blogger</span><br><span class="line"></span><br><span class="line">go 1.12</span><br><span class="line"></span><br><span class="line">require (</span><br><span class="line">    github.com&#x2F;DeanThompson&#x2F;ginpprof v0.0.0-20190408063150-3be636683586</span><br><span class="line">    github.com&#x2F;gin-gonic&#x2F;gin v1.4.0</span><br><span class="line">    github.com&#x2F;go-sql-driver&#x2F;mysql v1.4.1</span><br><span class="line">    github.com&#x2F;jmoiron&#x2F;sqlx v1.2.0</span><br><span class="line">    github.com&#x2F;satori&#x2F;go.uuid v1.2.0</span><br><span class="line">    google.golang.org&#x2F;appengine v1.6.1 &#x2F;&#x2F; indirect</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>其中，</p>
+<ul>
+<li>module用来定义包名</li>
+<li>require用来定义依赖包及版本</li>
+<li>indirect表示间接引用</li>
+</ul>
+<p><strong><code>依赖的版本</code></strong><br>go mod支持语义化版本号，比如<code>go get foo@v1.2.3</code>，也可以跟git的分支或tag，比如<code>go get foo@master</code>，当然也可以跟git提交哈希，比如<code>go get foo@e3702bed2</code>。关于依赖的版本支持以下几种格式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">gopkg.in&#x2F;tomb.v1 v1.0.0-20141024135613-dd632973f1e7</span><br><span class="line">gopkg.in&#x2F;vmihailenco&#x2F;msgpack.v2 v2.9.1</span><br><span class="line">gopkg.in&#x2F;yaml.v2 &lt;&#x3D;v2.2.1</span><br><span class="line">github.com&#x2F;tatsushid&#x2F;go-fastping v0.0.0-20160109021039-d7bb493dee3e</span><br><span class="line">latest</span><br></pre></td></tr></table></figure>
+<p><strong><code>replace</code></strong><br>在国内访问golang.org/x的各个包都需要翻墙，你可以在go.mod中使用replace替换成github上对应的库。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">replace (</span><br><span class="line">    golang.org&#x2F;x&#x2F;crypto v0.0.0-20180820150726-614d502a4dac &#x3D;&gt; github.com&#x2F;golang&#x2F;crypto v0.0.0-20180820150726-614d502a4dac</span><br><span class="line">    golang.org&#x2F;x&#x2F;net v0.0.0-20180821023952-922f4815f713 &#x3D;&gt; github.com&#x2F;golang&#x2F;net v0.0.0-20180826012351-8a410e7b638d</span><br><span class="line">    golang.org&#x2F;x&#x2F;text v0.3.0 &#x3D;&gt; github.com&#x2F;golang&#x2F;text v0.3.0</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h3 id="go-get"><a href="#go-get" class="headerlink" title="go get"></a>go get</h3><p>在项目中执行<code>go get</code>命令可以下载依赖包，并且还可以指定下载的版本。</p>
+<ol>
+<li>运行go get -u将会升级到最新的次要版本或者修订版本(x.y.z, z是修订版本号， y是次要版本号)</li>
+<li>运行go get -u=patch将会升级到最新的修订版本</li>
+<li>运行go get package@version将会升级到指定的版本号version<br>如果下载所有依赖可以使用<code>go mod download</code>命令。</li>
+</ol>
+<h3 id="go-mod-edit"><a href="#go-mod-edit" class="headerlink" title="go mod edit"></a>go mod edit</h3><p><strong><code>格式化</code></strong><br>因为我们可以手动修改go.mod文件，所以有些时候需要格式化该文件。Go提供了一下命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go mod edit -fmt</span><br></pre></td></tr></table></figure>
+<p><strong><code>添加依赖项</code></strong><br>go mod edit -require=golang.org/x/text<br><strong><code>移除依赖项</code></strong><br>如果只是想修改go.mod文件中的内容，那么可以运行<code>go mod edit -droprequire=package path</code>，比如要在<code>go.mod</code>中移除<code>golang.org/x/tex</code>t包，可以使用如下命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go mod edit -droprequire&#x3D;golang.org&#x2F;x&#x2F;text</span><br></pre></td></tr></table></figure>
+<p>关于<code>go mod edit</code>的更多用法可以通过<code>go help mod edit</code>查看。</p>
+<h2 id="1-4在项目中使用go-module"><a href="#1-4在项目中使用go-module" class="headerlink" title="1.4在项目中使用go module"></a>1.4在项目中使用go module</h2><h3 id="既有项目"><a href="#既有项目" class="headerlink" title="既有项目"></a>既有项目</h3><p>如果需要对一个已经存在的项目启用<code>go module</code>，可以按照以下步骤操作：</p>
+<p>在项目目录下执行go mod init，生成一个go.mod文件。<br>执行go get，查找并记录当前项目的依赖，同时生成一个go.sum记录每个依赖库的版本和哈希值。</p>
+<h3 id="新项目"><a href="#新项目" class="headerlink" title="新项目"></a>新项目</h3><p>对于一个新创建的项目，我们可以在项目文件夹下按照以下步骤操作：</p>
+<ul>
+<li>执行go mod init 项目名命令，在当前项目文件夹下创建一个go.mod文件。</li>
+<li>手动编辑go.mod中的require依赖项或执行go get自动发现、维护依赖。</li>
+</ul>
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!---->  
+<!---->  
+
+
+
 ]]></content>
       <categories>
         <category>Go</category>
