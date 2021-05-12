@@ -206,7 +206,8 @@ timezone: 时区
         <category>Go</category>
       </categories>
       <tags>
-        <tag>go base</tag>
+        <tag>go语言基础</tag>
+        <tag>array</tag>
       </tags>
   </entry>
   <entry>
@@ -407,7 +408,8 @@ timezone: 时区
         <category>Go</category>
       </categories>
       <tags>
-        <tag>go base</tag>
+        <tag>go语言基础</tag>
+        <tag>函数</tag>
       </tags>
   </entry>
   <entry>
@@ -515,7 +517,8 @@ timezone: 时区
         <category>Go</category>
       </categories>
       <tags>
-        <tag>go base</tag>
+        <tag>go语言基础</tag>
+        <tag>函数</tag>
       </tags>
   </entry>
   <entry>
@@ -580,7 +583,8 @@ timezone: 时区
         <category>Go</category>
       </categories>
       <tags>
-        <tag>go base</tag>
+        <tag>go语言基础</tag>
+        <tag>map</tag>
       </tags>
   </entry>
   <entry>
@@ -663,11 +667,12 @@ timezone: 时区
         <category>Go</category>
       </categories>
       <tags>
-        <tag>go base</tag>
+        <tag>go语言基础</tag>
+        <tag>流程控制</tag>
       </tags>
   </entry>
   <entry>
-    <title>Go基础之切片</title>
+    <title>go基础之切片</title>
     <url>/2020/04/29/go_base_slice/</url>
     <content><![CDATA[<blockquote>
 <p><strong>知识文档</strong>：</p>
@@ -797,7 +802,8 @@ timezone: 时区
         <category>Go</category>
       </categories>
       <tags>
-        <tag>go base</tag>
+        <tag>go语言基础</tag>
+        <tag>slice</tag>
       </tags>
   </entry>
   <entry>
@@ -998,7 +1004,8 @@ timezone: 时区
         <category>Go</category>
       </categories>
       <tags>
-        <tag>go base</tag>
+        <tag>go语言基础</tag>
+        <tag>variable</tag>
       </tags>
   </entry>
   <entry>
