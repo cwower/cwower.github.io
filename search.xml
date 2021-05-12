@@ -908,7 +908,8 @@ timezone: 时区
         <category>Go</category>
       </categories>
       <tags>
-        <tag>go base</tag>
+        <tag>go语言基础</tag>
+        <tag>数据类型</tag>
       </tags>
   </entry>
   <entry>
@@ -944,7 +945,8 @@ timezone: 时区
         <category>Go</category>
       </categories>
       <tags>
-        <tag>go base</tag>
+        <tag>go语言基础</tag>
+        <tag>%占位符</tag>
       </tags>
   </entry>
   <entry>
