@@ -1,6 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Go语言介绍</title>
+    <url>/2020/01/31/Go%E8%AF%AD%E8%A8%80%E7%AE%80%E4%BB%8B/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>知识文档</strong>：</p>
+</blockquote>
+<ul>
+<li><a href="http://wen.topgoer.com/docs/golang/golang-1ccjbpfstsfi1">go语言中文文档</a></li>
+<li><a href="https://www.liwenzhou.com/posts/Go/about_golang/">李文周的博客</a></li>
+</ul>
+<hr>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><strong><code>Google开发的开源编程语言</code></strong><br>诞生于2006年1月2日下午15点4分5秒，于2009年11月开源，2012年发布go稳定版。Go语言在多核并发上拥有原生的设计优势，Go语言从底层原生支持并发，<code>无须第三方库</code>、开发者的编程技巧和开发经验。<br>它的主要目标是“兼具Python 等动态语言的开发速度和C/C++等编译型语言的性能与安全性”</p>
+<p><strong><code>Go语言为并发而生</code></strong> ——21世纪的C语言<br>硬件制造商正在为处理器添加越来越多的内核以提高性能。所有数据中心都在这些处理器上运行，更重要的是，今天的应用程序使用多个微服务来维护数据库连接，消息队列和维护缓存。因此，开发的软件和编程语言应该可以轻松地支持并发性，并且应该能够随着CPU核心数量的增加而可扩展。</p>
+<p>但是，大多数现代编程语言（如Java，Python等）都来自90年代的单线程环境。虽然一些编程语言的框架在不断地提高多核资源使用效率，例如 Java 的 Netty 等，但仍然需要开发人员花费大量的时间和精力搞懂这些框架的运行原理后才能熟练掌握。</p>
+<p>Go于2009年发布，当时多核处理器已经上市。Go语言在多核并发上拥有原生的设计优势，Go语言从底层原生支持并发，无须第三方库、开发者的编程技巧和开发经验。</p>
+<p>很多公司，特别是中国的互联网公司，即将或者已经完成了使用 Go 语言改造旧系统的过程。经过 Go 语言重构的系统能使用更少的硬件资源获得更高的并发和I/O吞吐表现。充分挖掘硬件设备的潜力也满足当前精细化运营的市场大环境。</p>
+<p>Go语言的并发是基于 <code>goroutine</code> 的，<code>goroutine</code> 类似于线程，但并非线程。可以将 <code>goroutine</code> 理解为一种虚拟线程。Go 语言运行时会参与调度 <code>goroutine</code>，并将 <code>goroutine</code> 合理地分配到每个 CPU 中，最大限度地使用CPU性能。开启一个<code>goroutine</code>的消耗非常小（大约2KB的内存），你可以轻松创建数百万个<code>goroutine</code>。</p>
+<p><code>goroutine</code>的特点：</p>
+<ol>
+<li><code>goroutine</code>具有可增长的分段堆栈。这意味着它们只在需要时才会使用更多内存。</li>
+<li><code>goroutine</code>的启动时间比线程快。</li>
+<li><code>goroutine</code>原生支持利用channel安全地进行通信。</li>
+<li><code>goroutine</code>共享数据结构时无需使用互斥锁。</li>
+</ol>
+<p><strong><code>编译型语言</code></strong><br>与其他现代高级语言（如Java/Python）相比，使用C，C++的最大好处是它们的性能。因为C/ C++是编译型语言而不是解释的语言。 处理器只能理解二进制文件，Java和Python这种高级语言在运行的时候需要先将人类可读的代码翻译成字节码，然后由专门的解释器再转变成处理器可以理解的二进制文件。<br><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/03/15511649241043.jpg?x-oss-process=style/original_format"></p>
+<p>同C,C++一样，Go语言也是编译型的语言，它直接将人类可读的代码编译成了处理器可以直接运行的二进制文件，执行效率更高，性能更好。</p>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><p><strong>语法简洁</strong><br>Go 语言简单易学，学习曲线平缓，不需要像 C/C++ 语言动辄需要两到三年的学习期。Go 语言被称为“互联网时代的C语言”。Go 语言的风格类似于C语言。其语法在C语言的基础上进行了大幅的简化，去掉了不需要的表达式括号，循环也只有 for 一种表示方法，就可以实现数值、键值等各种遍历。</p>
+<p><strong>代码风格统一</strong><br>Go 语言提供了一套格式化工具——go fmt。一些 Go 语言的开发环境或者编辑器在保存时，都会使用格式化工具进行修改代码的格式化，这样就保证了不同开发者提交的代码都是统一的格式。(吐槽下：再也不用担心那些看不懂的黑魔法了…)</p>
+<p><strong>开发效率高</strong><br>Go语言实现了开发效率与执行效率的完美结合，让你像写Python代码（效率）一样编写C代码（性能）。</p>
+<h2 id="Go的使用场景"><a href="#Go的使用场景" class="headerlink" title="Go的使用场景"></a>Go的使用场景</h2><p>目前Go语言已经⼴泛应用于人工智能、云计算开发、容器虚拟化、⼤数据开发、数据分析及科学计算、运维开发、爬虫开发、游戏开发等领域。</p>
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!---->  
+<!---->  
+
+]]></content>
+      <categories>
+        <category>Go</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Go语言开发环境</title>
+    <url>/2020/01/31/Go%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
+    <content><![CDATA[<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><blockquote>
+<p>下载地址：</p>
+</blockquote>
+<p>Go官网下载地址：<a href="https://golang.org/dl/">https://golang.org/dl/</a><br>Go官方镜像站（推荐）：<a href="https://golang.google.cn/dl/">https://golang.google.cn/dl/</a></p>
+<blockquote>
+<p>版本的选择：</p>
+</blockquote>
+<p>Windows平台和Mac平台推荐下载可执行文件版，Linux平台下载压缩文件版。<br>Go语言更新迭代比较快，推荐使用较新版本，体验最新特性。</p>
+<h3 id="Linux下安装"><a href="#Linux下安装" class="headerlink" title="Linux下安装"></a>Linux下安装</h3><blockquote>
+<p>下载地址：</p>
+</blockquote>
+<p>Go官网下载地址：<a href="https://golang.org/dl/">https://golang.org/dl/</a><br>Go官方镜像站（推荐）：<a href="https://golang.google.cn/dl/">https://golang.google.cn/dl/</a></p>
+<p>如果不是要在Linux平台敲go代码就不需要在Linux平台安装Go，我们开发机上写好的go代码只需要跨平台编译（详见文章末尾的跨平台编译）好之后就可以拷贝到Linux服务器上运行了，这也是go程序跨平台易部署的优势。</p>
+<p>我们在版本选择页面选择并下载好<code>go1.14.1.linux-amd64.tar.gz</code>文件：</p>
+<p><code>wget https://dl.google.com/go/go1.14.1.linux-amd64.tar.gz</code><br>将下载好的文件解压到/usr/local目录下：</p>
+<p><code>tar -zxvf go1.14.1.linux-amd64.tar.gz -C /usr/local  # 解压</code><br>如果提示没有权限，加上sudo以root用户的身份再运行。执行完就可以在/usr/local/下看到go目录了。</p>
+<p>配置环境变量： Linux下有两个文件可以配置环境变量，其中/etc/profile是对所有用户生效的；$HOME/.profile是对当前用户生效的，根据自己的情况自行选择一个文件打开，添加如下两行代码，保存退出。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export GOROOT&#x3D;&#x2F;usr&#x2F;local&#x2F;go</span><br><span class="line">export PATH&#x3D;$PATH:$GOROOT&#x2F;bin</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在开发 Go 项目时，你还需要一个环境变量来保存你的工作目录。<br><code>export GOPATH=$HOME/Applications/Go</code><br><code>$GOPATH</code> 可以包含多个工作目录，取决于你的个人情况。如果你设置了多个工作目录，那么当你在之后使用 <code>go get</code>（远程包安装命令）时远程包将会被安装在第一个目录下。</p>
+</blockquote>
+<p>修改/etc/profile后要重启生效，修改$HOME/.profile后使用source命令加载$HOME/.profile文件即可生效。 检查：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">~ go version</span><br><span class="line">go version go1.14.1 linux&#x2F;amd64</span><br></pre></td></tr></table></figure>
+<p><strong>GOPROXY</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ export GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ echo &quot;export GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn&quot; &gt;&gt; ~&#x2F;.profile &amp;&amp; source ~&#x2F;.profile</span><br></pre></td></tr></table></figure>
+<h2 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h2><h3 id="GOROOT和GOPATH"><a href="#GOROOT和GOPATH" class="headerlink" title="GOROOT和GOPATH"></a>GOROOT和GOPATH</h3><p><code>GOROOT</code>和<code>GOPATH</code>都是环境变量，其中<code>GOROOT</code>是我们安装go开发包的路径，而从Go 1.8版本开始，Go开发包在安装完成后会为<code>GOPATH</code>设置一个默认目录，参见下表。<br><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/golang/gopath_20200915161111.png?x-oss-process=style/original_format"></p>
+<p>我们只需要记住默认的<code>GOPATH</code>路径在哪里就可以了，并且默认情况下 <code>GOROOT</code>下的bin目录及<code>GOPATH</code>下的bin目录都已经添加到环境变量中了，我们也不需要额外配置了。</p>
+<hr>
+<p>Go<code>1.14版本之后</code>，都推荐使用<code>go mod</code>模式来管理依赖环境了，也不再强制我们把代码必须写在<code>GOPATH</code>下面的src目录了；<code>GOPATH</code>下可以包含多个包含 Go 语言源码文件、包文件和可执行文件的路径，而这些路径下又必须分别包含三个规定的目录：<code>src、pkg 和 bin</code>，这三个目录分别用于存放源码文件、包文件和可执行文件。你可以在你电脑的任意位置编写go代码。（网上有些教程适用于1.11版本之前。）</p>
+<blockquote>
+<p>在<code>老版本1.11之前</code>，Go语言开发的时候，我们的代码总是会保存在<code>$GOPATH/src</code>目录下。在工程经过<code>go build、go install</code>或<code>go get</code>等指令后，会将下载的第三方包源代码文件放在<code>$GOPATH/src</code>目录下， 产生的二进制可执行文件放在 <code>$GOPATH/bin</code>目录下，生成的中间缓存文件会被保存在<code>$GOPATH/pkg</code> 下。<br>如果我们使用版本管理工具（Version Control System，VCS。常用如Git）来管理我们的项目代码时，我们只需要添加$GOPATH/src目录的源代码即可。bin 和 pkg 目录的内容无需版本控制。</p>
+</blockquote>
+<h3 id="GOPROXY"><a href="#GOPROXY" class="headerlink" title="GOPROXY"></a>GOPROXY</h3><p>默认GoPROXY配置是：<code>GOPROXY=https://proxy.golang.org,direct</code>，由于国内访问不到<code>https://proxy.golang.org</code>，所以我们需要换一个PROXY，这里推荐使用<code>https://goproxy.io</code>或<code>https://goproxy.cn</code>。</p>
+<p>可以执行下面的命令修改GOPROXY：<br><code>go env -w GOPROXY=https://goproxy.cn,direct</code></p>
+<h3 id="企业开发者的go项目结构"><a href="#企业开发者的go项目结构" class="headerlink" title="企业开发者的go项目结构"></a>企业开发者的go项目结构</h3><blockquote>
+<p>参考文档：<a href="%5Bhttp://www.topgoer.com/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/%E9%85%8D%E7%BD%AEgopath.html%5D(http://www.topgoer.com/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/%E9%85%8D%E7%BD%AEgopath.html)">go语言中文文档</a></p>
+</blockquote>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/golang/gopath-qy.png?x-oss-process=style/original_format"></p>
+<h2 id="编辑器"><a href="#编辑器" class="headerlink" title="编辑器"></a>编辑器</h2><h3 id="vs-code"><a href="#vs-code" class="headerlink" title="vs code"></a>vs code</h3><p><code>Visual Studio Code</code>，简称<code>VS Code</code>，它是目前使用人数最多的编辑器。尽管它由微软发布于2015年，与其他热门编辑器相比显得有些年轻，但它在过去几年中一直在不停的更新，它在最新的<code>Stack Overflow</code>调查中被选为<code>Web</code>开发人员中最受欢迎的文本编辑器。</p>
+<p><code>VS Code</code>不仅仅是一个基本的代码编辑器。有人说它更像是<code>IDE</code>而不是代码编辑器，因为它提供了许多通常只在<code>IDE</code>中才有的功能。主要功能包括内置调试工具，智能代码提示，集成终端以及对简易的<code>Git</code>操作（微软刚收购了GitHub）。作为初学者，您可以利用这些功能大大提高编程效率。</p>
+<blockquote>
+<p>下载地址：</p>
+</blockquote>
+<p><a href="https://code.visualstudio.com/">https://code.visualstudio.com/</a></p>
+<h4 id="配置中文"><a href="#配置中文" class="headerlink" title="配置中文"></a>配置中文</h4><p>点击左侧菜单栏最后一项<code>管理扩展</code>，在搜索框中输入<code>chinese</code>，选中结果列表第一项，点击<code>install</code>安装。<br><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/03/install_cn_language.gif?x-oss-process=style/gif_format"></p>
+<h4 id="安装go插件"><a href="#安装go插件" class="headerlink" title="安装go插件"></a>安装go插件</h4><p>启动<code>vscode</code>选择插件-&gt;搜<code>go</code>选择<code>Go for Visual Studio Code</code>插件点击安装即可</p>
+<h4 id="安装Go语言开发工具包"><a href="#安装Go语言开发工具包" class="headerlink" title="安装Go语言开发工具包"></a>安装Go语言开发工具包</h4><p>在Go语言开发的时候为我们提供诸如代码提示、代码自动补全等功能。</p>
+<p>Windows平台按下<code>Ctrl+Shift+P</code>，Mac平台按<code>Command+Shift+P</code>，这个时候<code>VS Code</code>界面会弹出一个输入框；</p>
+<p>我们在这个输入框中输入&gt;<code>go:install</code>，下面会自动搜索相关命令，我们选择<code>Go:Install/Update Tools</code>这个命令，选中并会回车执行该命令（或者使用鼠标点击该命令）<br><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/03/16tools.png?x-oss-process=style/original_format"></p>
+<p>VS Code此时会下载并安装上图列出来的16个工具，但是由于国内的网络环境基本上都会出现安装失败</p>
+<p><strong>两种方法解决这个问题：</strong></p>
+<blockquote>
+<p>方法一：使用git下载源代码再安装</p>
+</blockquote>
+<p>我们可以手动从github上下载工具，(执行此步骤前提需要你的电脑上已经安装了git)<br>第一步：现在自己的<code>GOPATH</code>的<code>src</code>目录下创建<code>golang.org/x</code>目录<br>第二步：在终端/cmd中cd到<code>GOPATH/src/golang.org/x</code>目录下<br>第三步：执行<code>git clone https://github.com/golang/tools.git tools</code>命令<br>第四步：执行<code>git clone https://github.com/golang/lint.git</code>命令<br>第五步：按下<code>Ctrl/Command+Shift+P</code>再次执行<code>Go:Install/Update Tools</code>命令，在弹出的窗口全选并点击确定，这一次的安装都会SUCCESSED了。<br>经过上面的步骤就可以安装成功了。 这个时候创建一个Go文件，就能正常使用代码提示、代码格式化等工具了。</p>
+<blockquote>
+<p>方法二：下载已经编译好的可执行文件</p>
+</blockquote>
+<p>如果上面的步骤执行失败了或者懒得一步一步执行，可以直接下载我已经编译好的可执行文件，拷贝到自己电脑上的 <code>go/bin</code>(GO的安装包目录不是代码包啊) 目录下。 </p>
+<blockquote>
+<blockquote>
+<p>链接: <a href="https://pan.baidu.com/s/1kxXsoSXmqwloTKsvRGZbpQ">https://pan.baidu.com/s/1kxXsoSXmqwloTKsvRGZbpQ</a><br>提取码: cucu</p>
+</blockquote>
+</blockquote>
+<p>注意：特别是Mac下需要给拷贝的这些文件赋予可执行的权限。</p>
+<h2 id="第一个Go程序"><a href="#第一个Go程序" class="headerlink" title="第一个Go程序"></a>第一个Go程序</h2><h3 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h3><p>现在我们来创建第一个Go项目——<code>hello</code>。在我们桌面创建一个<code>hello</code>目录。<br>在该目录中创建一个main.go文件：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package main &#x2F;&#x2F; 声明 main 包，表明当前是一个可执行程序</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot; &#x2F;&#x2F; 导入内置 fmt 包</span><br><span class="line"></span><br><span class="line">func main()&#123; &#x2F;&#x2F; main函数，是程序执行的入口</span><br><span class="line">    fmt.Println(&quot;Hello World!&quot;) &#x2F;&#x2F; 在终端打印 Hello World!</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="go-build"><a href="#go-build" class="headerlink" title="go build"></a>go build</h3><p><code>go build</code>表示将源代码编译成可执行文件，或者在其他目录执行以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go build hello</span><br></pre></td></tr></table></figure>
+<p>go编译器会去 <code>GOPATH</code>的src目录下查找你要编译的<code>hello</code>项目</p>
+<blockquote>
+<p>如果报错<code>go: cannot find main module; see &#39;go help modules&#39;</code>，可能是变量<code>GO111MODULE</code>导致，试试设置为<code>GO111MODULE=off</code></p>
+</blockquote>
+<p>编译得到的可执行文件会保存在执行编译命令的当前目录下，如果是windows平台会在当前目录下找到hello.exe可执行文件。</p>
+<p>可在终端直接执行该hello.exe文件：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">c:\desktop\hello&gt;hello.exe</span><br><span class="line">Hello World!</span><br></pre></td></tr></table></figure>
+<p>我们还可以使用<code>-o</code>参数来指定编译后得到的可执行文件的名字。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go build -o heiheihei.exe</span><br></pre></td></tr></table></figure>
+<h3 id="go-install"><a href="#go-install" class="headerlink" title="go install"></a>go install</h3><p><code>go install</code>表示安装的意思，它先编译源代码得到可执行文件，然后将可执行文件移动到<code>GOPATH</code>的bin目录下。因为我们的环境变量中配置了<code>GOPATH</code>下的bin目录，所以我们就可以在任意地方直接执行可执行文件了。</p>
+<h4 id="go-install与go-build-的区别"><a href="#go-install与go-build-的区别" class="headerlink" title="go install与go build 的区别"></a>go install与go build 的区别</h4><p><code>go install</code>与<code>go build</code>都可生成执行文件</p>
+<p><code>go build</code>会生成可实行文件放在当前目录中。<br><code>go install</code>则会把它放到<code>$GOPATH/bin</code>中。</p>
+<p><code>go install</code>还会把导入的依赖包编译到<code>$GOPATH/pkg</code>，并缓存，如果包未做更改，下次编译则直接使用缓存。<code>go build</code>命令加参数<code>-i</code>也能达到<code>go install</code>的效果。</p>
+<p>如果项目很大，每次编译都要花很长时间，则建议使用<code>go install</code>来编译，充分利用它对依赖包的缓存功能。</p>
+<h3 id="go-run"><a href="#go-run" class="headerlink" title="go run"></a>go run</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 直接执行go文件，不用编译</span><br><span class="line">go run main.go</span><br></pre></td></tr></table></figure>
+<h3 id="跨平台编译-more"><a href="#跨平台编译-more" class="headerlink" title="跨平台编译(more)"></a>跨平台编译(<a href="%5Bhttps://www.liwenzhou.com/posts/Go/install_go_dev/#autoid-1-5-4%5D(https://www.liwenzhou.com/posts/Go/install_go_dev/#autoid-1-5-4)">more</a>)</h3><p>默认我们go build的可执行文件都是当前操作系统可执行的文件，如果我想在windows下编译一个linux下可执行文件，那需要怎么做呢？</p>
+<p>只需要指定目标操作系统的平台和处理器架构即可：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SET CGO_ENABLED&#x3D;0  &#x2F;&#x2F; 禁用CGO</span><br><span class="line">SET GOOS&#x3D;linux  &#x2F;&#x2F; 目标平台是linux</span><br><span class="line">SET GOARCH&#x3D;amd64  &#x2F;&#x2F; 目标处理器架构是amd64</span><br></pre></td></tr></table></figure>
+<p>使用了cgo的代码是不支持跨平台编译的</p>
+<p>然后再执行go build命令，得到的就是能够在Linux平台运行的可执行文件了。</p>
+<p>Mac 下编译 Linux 和 Windows平台 64位 可执行程序：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;linux GOARCH&#x3D;amd64 go build</span><br><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;windows GOARCH&#x3D;amd64 go build</span><br></pre></td></tr></table></figure>
+<p>Linux 下编译 Mac 和 Windows 平台64位可执行程序：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;darwin GOARCH&#x3D;amd64 go build</span><br><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;windows GOARCH&#x3D;amd64 go build</span><br></pre></td></tr></table></figure>
+<p>Windows下编译Mac平台64位可执行程序：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SET CGO_ENABLED&#x3D;0</span><br><span class="line">SET GOOS&#x3D;darwin</span><br><span class="line">SET GOARCH&#x3D;amd64</span><br><span class="line">go build</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!--  https://www.liwenzhou.com/posts/Go/install_go_dev/  -->
+<!--  path https://learnku.com/docs/the-way-to-go/go-environment-variable/3565  -->
+<!--  mod https://blog.csdn.net/weixin_39003229/article/details/97638573  -->
+]]></content>
+      <categories>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>env</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo 食用说明</title>
     <url>/1992/06/21/Github-Pages_Hexo/</url>
     <content><![CDATA[<h1 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h1><p><strong>部署环境</strong>：</p>
@@ -128,121 +284,6 @@ timezone: 时区
       </tags>
   </entry>
   <entry>
-    <title>Go语言开发环境</title>
-    <url>/2020/01/31/Go%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
-    <content><![CDATA[<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><blockquote>
-<p>下载地址：</p>
-</blockquote>
-<p>Go官网下载地址：<a href="https://golang.org/dl/">https://golang.org/dl/</a><br>Go官方镜像站（推荐）：<a href="https://golang.google.cn/dl/">https://golang.google.cn/dl/</a></p>
-<blockquote>
-<p>版本的选择：</p>
-</blockquote>
-<p>Windows平台和Mac平台推荐下载可执行文件版，Linux平台下载压缩文件版。<br>Go语言更新迭代比较快，推荐使用较新版本，体验最新特性。</p>
-<h3 id="Linux下安装"><a href="#Linux下安装" class="headerlink" title="Linux下安装"></a>Linux下安装</h3><blockquote>
-<p>下载地址：</p>
-</blockquote>
-<p>Go官网下载地址：<a href="https://golang.org/dl/">https://golang.org/dl/</a><br>Go官方镜像站（推荐）：<a href="https://golang.google.cn/dl/">https://golang.google.cn/dl/</a></p>
-<p>如果不是要在Linux平台敲go代码就不需要在Linux平台安装Go，我们开发机上写好的go代码只需要跨平台编译（详见文章末尾的跨平台编译）好之后就可以拷贝到Linux服务器上运行了，这也是go程序跨平台易部署的优势。</p>
-<p>我们在版本选择页面选择并下载好<code>go1.14.1.linux-amd64.tar.gz</code>文件：</p>
-<p><code>wget https://dl.google.com/go/go1.14.1.linux-amd64.tar.gz</code><br>将下载好的文件解压到/usr/local目录下：</p>
-<p><code>tar -zxvf go1.14.1.linux-amd64.tar.gz -C /usr/local  # 解压</code><br>如果提示没有权限，加上sudo以root用户的身份再运行。执行完就可以在/usr/local/下看到go目录了。</p>
-<p>配置环境变量： Linux下有两个文件可以配置环境变量，其中/etc/profile是对所有用户生效的；$HOME/.profile是对当前用户生效的，根据自己的情况自行选择一个文件打开，添加如下两行代码，保存退出。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export GOROOT&#x3D;&#x2F;usr&#x2F;local&#x2F;go</span><br><span class="line">export PATH&#x3D;$PATH:$GOROOT&#x2F;bin</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>在开发 Go 项目时，你还需要一个环境变量来保存你的工作目录。<br><code>export GOPATH=$HOME/Applications/Go</code><br><code>$GOPATH</code> 可以包含多个工作目录，取决于你的个人情况。如果你设置了多个工作目录，那么当你在之后使用 <code>go get</code>（远程包安装命令）时远程包将会被安装在第一个目录下。</p>
-</blockquote>
-<p>修改/etc/profile后要重启生效，修改$HOME/.profile后使用source命令加载$HOME/.profile文件即可生效。 检查：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">~ go version</span><br><span class="line">go version go1.14.1 linux&#x2F;amd64</span><br></pre></td></tr></table></figure>
-<p><strong>GOPROXY</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ export GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn</span><br></pre></td></tr></table></figure>
-<p>或者</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ echo &quot;export GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn&quot; &gt;&gt; ~&#x2F;.profile &amp;&amp; source ~&#x2F;.profile</span><br></pre></td></tr></table></figure>
-<h2 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h2><h3 id="GOROOT和GOPATH"><a href="#GOROOT和GOPATH" class="headerlink" title="GOROOT和GOPATH"></a>GOROOT和GOPATH</h3><p><code>GOROOT</code>和<code>GOPATH</code>都是环境变量，其中<code>GOROOT</code>是我们安装go开发包的路径，而从Go 1.8版本开始，Go开发包在安装完成后会为<code>GOPATH</code>设置一个默认目录，参见下表。<br><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/golang/gopath_20200915161111.png?x-oss-process=style/original_format"></p>
-<p>我们只需要记住默认的<code>GOPATH</code>路径在哪里就可以了，并且默认情况下 <code>GOROOT</code>下的bin目录及<code>GOPATH</code>下的bin目录都已经添加到环境变量中了，我们也不需要额外配置了。</p>
-<hr>
-<p>Go<code>1.14版本之后</code>，都推荐使用<code>go mod</code>模式来管理依赖环境了，也不再强制我们把代码必须写在<code>GOPATH</code>下面的src目录了；<code>GOPATH</code>下可以包含多个包含 Go 语言源码文件、包文件和可执行文件的路径，而这些路径下又必须分别包含三个规定的目录：<code>src、pkg 和 bin</code>，这三个目录分别用于存放源码文件、包文件和可执行文件。你可以在你电脑的任意位置编写go代码。（网上有些教程适用于1.11版本之前。）</p>
-<blockquote>
-<p>在<code>老版本1.11之前</code>，Go语言开发的时候，我们的代码总是会保存在<code>$GOPATH/src</code>目录下。在工程经过<code>go build、go install</code>或<code>go get</code>等指令后，会将下载的第三方包源代码文件放在<code>$GOPATH/src</code>目录下， 产生的二进制可执行文件放在 <code>$GOPATH/bin</code>目录下，生成的中间缓存文件会被保存在<code>$GOPATH/pkg</code> 下。<br>如果我们使用版本管理工具（Version Control System，VCS。常用如Git）来管理我们的项目代码时，我们只需要添加$GOPATH/src目录的源代码即可。bin 和 pkg 目录的内容无需版本控制。</p>
-</blockquote>
-<h3 id="GOPROXY"><a href="#GOPROXY" class="headerlink" title="GOPROXY"></a>GOPROXY</h3><p>默认GoPROXY配置是：<code>GOPROXY=https://proxy.golang.org,direct</code>，由于国内访问不到<code>https://proxy.golang.org</code>，所以我们需要换一个PROXY，这里推荐使用<code>https://goproxy.io</code>或<code>https://goproxy.cn</code>。</p>
-<p>可以执行下面的命令修改GOPROXY：<br><code>go env -w GOPROXY=https://goproxy.cn,direct</code></p>
-<h3 id="企业开发者的go项目结构"><a href="#企业开发者的go项目结构" class="headerlink" title="企业开发者的go项目结构"></a>企业开发者的go项目结构</h3><blockquote>
-<p>参考文档：<a href="%5Bhttp://www.topgoer.com/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/%E9%85%8D%E7%BD%AEgopath.html%5D(http://www.topgoer.com/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/%E9%85%8D%E7%BD%AEgopath.html)">go语言中文文档</a></p>
-</blockquote>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/golang/gopath-qy.png?x-oss-process=style/original_format"></p>
-<h2 id="编辑器"><a href="#编辑器" class="headerlink" title="编辑器"></a>编辑器</h2><h3 id="vs-code"><a href="#vs-code" class="headerlink" title="vs code"></a>vs code</h3><p><code>Visual Studio Code</code>，简称<code>VS Code</code>，它是目前使用人数最多的编辑器。尽管它由微软发布于2015年，与其他热门编辑器相比显得有些年轻，但它在过去几年中一直在不停的更新，它在最新的<code>Stack Overflow</code>调查中被选为<code>Web</code>开发人员中最受欢迎的文本编辑器。</p>
-<p><code>VS Code</code>不仅仅是一个基本的代码编辑器。有人说它更像是<code>IDE</code>而不是代码编辑器，因为它提供了许多通常只在<code>IDE</code>中才有的功能。主要功能包括内置调试工具，智能代码提示，集成终端以及对简易的<code>Git</code>操作（微软刚收购了GitHub）。作为初学者，您可以利用这些功能大大提高编程效率。</p>
-<blockquote>
-<p>下载地址：</p>
-</blockquote>
-<p><a href="https://code.visualstudio.com/">https://code.visualstudio.com/</a></p>
-<h4 id="配置中文"><a href="#配置中文" class="headerlink" title="配置中文"></a>配置中文</h4><p>点击左侧菜单栏最后一项<code>管理扩展</code>，在搜索框中输入<code>chinese</code>，选中结果列表第一项，点击<code>install</code>安装。<br><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/03/install_cn_language.gif?x-oss-process=style/gif_format"></p>
-<h4 id="安装go插件"><a href="#安装go插件" class="headerlink" title="安装go插件"></a>安装go插件</h4><p>启动<code>vscode</code>选择插件-&gt;搜<code>go</code>选择<code>Go for Visual Studio Code</code>插件点击安装即可</p>
-<h4 id="安装Go语言开发工具包"><a href="#安装Go语言开发工具包" class="headerlink" title="安装Go语言开发工具包"></a>安装Go语言开发工具包</h4><p>在Go语言开发的时候为我们提供诸如代码提示、代码自动补全等功能。</p>
-<p>Windows平台按下<code>Ctrl+Shift+P</code>，Mac平台按<code>Command+Shift+P</code>，这个时候<code>VS Code</code>界面会弹出一个输入框；</p>
-<p>我们在这个输入框中输入&gt;<code>go:install</code>，下面会自动搜索相关命令，我们选择<code>Go:Install/Update Tools</code>这个命令，选中并会回车执行该命令（或者使用鼠标点击该命令）<br><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/03/16tools.png?x-oss-process=style/original_format"></p>
-<p>VS Code此时会下载并安装上图列出来的16个工具，但是由于国内的网络环境基本上都会出现安装失败</p>
-<p><strong>两种方法解决这个问题：</strong></p>
-<blockquote>
-<p>方法一：使用git下载源代码再安装</p>
-</blockquote>
-<p>我们可以手动从github上下载工具，(执行此步骤前提需要你的电脑上已经安装了git)<br>第一步：现在自己的<code>GOPATH</code>的<code>src</code>目录下创建<code>golang.org/x</code>目录<br>第二步：在终端/cmd中cd到<code>GOPATH/src/golang.org/x</code>目录下<br>第三步：执行<code>git clone https://github.com/golang/tools.git tools</code>命令<br>第四步：执行<code>git clone https://github.com/golang/lint.git</code>命令<br>第五步：按下<code>Ctrl/Command+Shift+P</code>再次执行<code>Go:Install/Update Tools</code>命令，在弹出的窗口全选并点击确定，这一次的安装都会SUCCESSED了。<br>经过上面的步骤就可以安装成功了。 这个时候创建一个Go文件，就能正常使用代码提示、代码格式化等工具了。</p>
-<blockquote>
-<p>方法二：下载已经编译好的可执行文件</p>
-</blockquote>
-<p>如果上面的步骤执行失败了或者懒得一步一步执行，可以直接下载我已经编译好的可执行文件，拷贝到自己电脑上的 <code>go/bin</code>(GO的安装包目录不是代码包啊) 目录下。 </p>
-<blockquote>
-<blockquote>
-<p>链接: <a href="https://pan.baidu.com/s/1kxXsoSXmqwloTKsvRGZbpQ">https://pan.baidu.com/s/1kxXsoSXmqwloTKsvRGZbpQ</a><br>提取码: cucu</p>
-</blockquote>
-</blockquote>
-<p>注意：特别是Mac下需要给拷贝的这些文件赋予可执行的权限。</p>
-<h2 id="第一个Go程序"><a href="#第一个Go程序" class="headerlink" title="第一个Go程序"></a>第一个Go程序</h2><h3 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h3><p>现在我们来创建第一个Go项目——<code>hello</code>。在我们桌面创建一个<code>hello</code>目录。<br>在该目录中创建一个main.go文件：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package main &#x2F;&#x2F; 声明 main 包，表明当前是一个可执行程序</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot; &#x2F;&#x2F; 导入内置 fmt 包</span><br><span class="line"></span><br><span class="line">func main()&#123; &#x2F;&#x2F; main函数，是程序执行的入口</span><br><span class="line">    fmt.Println(&quot;Hello World!&quot;) &#x2F;&#x2F; 在终端打印 Hello World!</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="go-build"><a href="#go-build" class="headerlink" title="go build"></a>go build</h3><p><code>go build</code>表示将源代码编译成可执行文件，或者在其他目录执行以下命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go build hello</span><br></pre></td></tr></table></figure>
-<p>go编译器会去 <code>GOPATH</code>的src目录下查找你要编译的<code>hello</code>项目</p>
-<blockquote>
-<p>如果报错<code>go: cannot find main module; see &#39;go help modules&#39;</code>，可能是变量<code>GO111MODULE</code>导致，试试设置为<code>GO111MODULE=off</code></p>
-</blockquote>
-<p>编译得到的可执行文件会保存在执行编译命令的当前目录下，如果是windows平台会在当前目录下找到hello.exe可执行文件。</p>
-<p>可在终端直接执行该hello.exe文件：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">c:\desktop\hello&gt;hello.exe</span><br><span class="line">Hello World!</span><br></pre></td></tr></table></figure>
-<p>我们还可以使用<code>-o</code>参数来指定编译后得到的可执行文件的名字。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go build -o heiheihei.exe</span><br></pre></td></tr></table></figure>
-<h3 id="go-install"><a href="#go-install" class="headerlink" title="go install"></a>go install</h3><p><code>go install</code>表示安装的意思，它先编译源代码得到可执行文件，然后将可执行文件移动到<code>GOPATH</code>的bin目录下。因为我们的环境变量中配置了<code>GOPATH</code>下的bin目录，所以我们就可以在任意地方直接执行可执行文件了。</p>
-<h4 id="go-install与go-build-的区别"><a href="#go-install与go-build-的区别" class="headerlink" title="go install与go build 的区别"></a>go install与go build 的区别</h4><p><code>go install</code>与<code>go build</code>都可生成执行文件</p>
-<p><code>go build</code>会生成可实行文件放在当前目录中。<br><code>go install</code>则会把它放到<code>$GOPATH/bin</code>中。</p>
-<p><code>go install</code>还会把导入的依赖包编译到<code>$GOPATH/pkg</code>，并缓存，如果包未做更改，下次编译则直接使用缓存。<code>go build</code>命令加参数<code>-i</code>也能达到<code>go install</code>的效果。</p>
-<p>如果项目很大，每次编译都要花很长时间，则建议使用<code>go install</code>来编译，充分利用它对依赖包的缓存功能。</p>
-<h3 id="go-run"><a href="#go-run" class="headerlink" title="go run"></a>go run</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 直接执行go文件，不用编译</span><br><span class="line">go run main.go</span><br></pre></td></tr></table></figure>
-<h3 id="跨平台编译-more"><a href="#跨平台编译-more" class="headerlink" title="跨平台编译(more)"></a>跨平台编译(<a href="%5Bhttps://www.liwenzhou.com/posts/Go/install_go_dev/#autoid-1-5-4%5D(https://www.liwenzhou.com/posts/Go/install_go_dev/#autoid-1-5-4)">more</a>)</h3><p>默认我们go build的可执行文件都是当前操作系统可执行的文件，如果我想在windows下编译一个linux下可执行文件，那需要怎么做呢？</p>
-<p>只需要指定目标操作系统的平台和处理器架构即可：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SET CGO_ENABLED&#x3D;0  &#x2F;&#x2F; 禁用CGO</span><br><span class="line">SET GOOS&#x3D;linux  &#x2F;&#x2F; 目标平台是linux</span><br><span class="line">SET GOARCH&#x3D;amd64  &#x2F;&#x2F; 目标处理器架构是amd64</span><br></pre></td></tr></table></figure>
-<p>使用了cgo的代码是不支持跨平台编译的</p>
-<p>然后再执行go build命令，得到的就是能够在Linux平台运行的可执行文件了。</p>
-<p>Mac 下编译 Linux 和 Windows平台 64位 可执行程序：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;linux GOARCH&#x3D;amd64 go build</span><br><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;windows GOARCH&#x3D;amd64 go build</span><br></pre></td></tr></table></figure>
-<p>Linux 下编译 Mac 和 Windows 平台64位可执行程序：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;darwin GOARCH&#x3D;amd64 go build</span><br><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;windows GOARCH&#x3D;amd64 go build</span><br></pre></td></tr></table></figure>
-<p>Windows下编译Mac平台64位可执行程序：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SET CGO_ENABLED&#x3D;0</span><br><span class="line">SET GOOS&#x3D;darwin</span><br><span class="line">SET GOARCH&#x3D;amd64</span><br><span class="line">go build</span><br></pre></td></tr></table></figure>
-
-<hr>
-<p>&nbsp;  </p>
-<!--**参考文章**：-->  
-<!--  https://www.liwenzhou.com/posts/Go/install_go_dev/  -->
-<!--  path https://learnku.com/docs/the-way-to-go/go-environment-variable/3565  -->
-<!--  mod https://blog.csdn.net/weixin_39003229/article/details/97638573  -->
-]]></content>
-      <categories>
-        <category>Go</category>
-      </categories>
-      <tags>
-        <tag>env</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Ad-Hoc命令——简单任务的执行</title>
     <url>/2020/06/07/ansible_ad_hoc/</url>
     <content><![CDATA[<blockquote>
@@ -356,47 +397,6 @@ timezone: 时区
       </tags>
   </entry>
   <entry>
-    <title>Go语言介绍</title>
-    <url>/2020/01/31/Go%E8%AF%AD%E8%A8%80%E7%AE%80%E4%BB%8B/</url>
-    <content><![CDATA[<blockquote>
-<p><strong>知识文档</strong>：</p>
-</blockquote>
-<ul>
-<li><a href="http://wen.topgoer.com/docs/golang/golang-1ccjbpfstsfi1">go语言中文文档</a></li>
-<li><a href="https://www.liwenzhou.com/posts/Go/about_golang/">李文周的博客</a></li>
-</ul>
-<hr>
-<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><strong><code>Google开发的开源编程语言</code></strong><br>诞生于2006年1月2日下午15点4分5秒，于2009年11月开源，2012年发布go稳定版。Go语言在多核并发上拥有原生的设计优势，Go语言从底层原生支持并发，<code>无须第三方库</code>、开发者的编程技巧和开发经验。<br>它的主要目标是“兼具Python 等动态语言的开发速度和C/C++等编译型语言的性能与安全性”</p>
-<p><strong><code>Go语言为并发而生</code></strong> ——21世纪的C语言<br>硬件制造商正在为处理器添加越来越多的内核以提高性能。所有数据中心都在这些处理器上运行，更重要的是，今天的应用程序使用多个微服务来维护数据库连接，消息队列和维护缓存。因此，开发的软件和编程语言应该可以轻松地支持并发性，并且应该能够随着CPU核心数量的增加而可扩展。</p>
-<p>但是，大多数现代编程语言（如Java，Python等）都来自90年代的单线程环境。虽然一些编程语言的框架在不断地提高多核资源使用效率，例如 Java 的 Netty 等，但仍然需要开发人员花费大量的时间和精力搞懂这些框架的运行原理后才能熟练掌握。</p>
-<p>Go于2009年发布，当时多核处理器已经上市。Go语言在多核并发上拥有原生的设计优势，Go语言从底层原生支持并发，无须第三方库、开发者的编程技巧和开发经验。</p>
-<p>很多公司，特别是中国的互联网公司，即将或者已经完成了使用 Go 语言改造旧系统的过程。经过 Go 语言重构的系统能使用更少的硬件资源获得更高的并发和I/O吞吐表现。充分挖掘硬件设备的潜力也满足当前精细化运营的市场大环境。</p>
-<p>Go语言的并发是基于 <code>goroutine</code> 的，<code>goroutine</code> 类似于线程，但并非线程。可以将 <code>goroutine</code> 理解为一种虚拟线程。Go 语言运行时会参与调度 <code>goroutine</code>，并将 <code>goroutine</code> 合理地分配到每个 CPU 中，最大限度地使用CPU性能。开启一个<code>goroutine</code>的消耗非常小（大约2KB的内存），你可以轻松创建数百万个<code>goroutine</code>。</p>
-<p><code>goroutine</code>的特点：</p>
-<ol>
-<li><code>goroutine</code>具有可增长的分段堆栈。这意味着它们只在需要时才会使用更多内存。</li>
-<li><code>goroutine</code>的启动时间比线程快。</li>
-<li><code>goroutine</code>原生支持利用channel安全地进行通信。</li>
-<li><code>goroutine</code>共享数据结构时无需使用互斥锁。</li>
-</ol>
-<p><strong><code>编译型语言</code></strong><br>与其他现代高级语言（如Java/Python）相比，使用C，C++的最大好处是它们的性能。因为C/ C++是编译型语言而不是解释的语言。 处理器只能理解二进制文件，Java和Python这种高级语言在运行的时候需要先将人类可读的代码翻译成字节码，然后由专门的解释器再转变成处理器可以理解的二进制文件。<br><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/03/15511649241043.jpg?x-oss-process=style/original_format"></p>
-<p>同C,C++一样，Go语言也是编译型的语言，它直接将人类可读的代码编译成了处理器可以直接运行的二进制文件，执行效率更高，性能更好。</p>
-<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><p><strong>语法简洁</strong><br>Go 语言简单易学，学习曲线平缓，不需要像 C/C++ 语言动辄需要两到三年的学习期。Go 语言被称为“互联网时代的C语言”。Go 语言的风格类似于C语言。其语法在C语言的基础上进行了大幅的简化，去掉了不需要的表达式括号，循环也只有 for 一种表示方法，就可以实现数值、键值等各种遍历。</p>
-<p><strong>代码风格统一</strong><br>Go 语言提供了一套格式化工具——go fmt。一些 Go 语言的开发环境或者编辑器在保存时，都会使用格式化工具进行修改代码的格式化，这样就保证了不同开发者提交的代码都是统一的格式。(吐槽下：再也不用担心那些看不懂的黑魔法了…)</p>
-<p><strong>开发效率高</strong><br>Go语言实现了开发效率与执行效率的完美结合，让你像写Python代码（效率）一样编写C代码（性能）。</p>
-<h2 id="Go的使用场景"><a href="#Go的使用场景" class="headerlink" title="Go的使用场景"></a>Go的使用场景</h2><p>目前Go语言已经⼴泛应用于人工智能、云计算开发、容器虚拟化、⼤数据开发、数据分析及科学计算、运维开发、爬虫开发、游戏开发等领域。</p>
-<hr>
-<p>&nbsp;  </p>
-<!--**参考文章**：-->  
-<!---->  
-<!---->  
-
-]]></content>
-      <categories>
-        <category>Go</category>
-      </categories>
-  </entry>
-  <entry>
     <title>好用的Markdown编辑器 —— Pad2 和 Typora</title>
     <url>/2018/04/21/Pad2%E5%92%8CTypora/</url>
     <content><![CDATA[<blockquote>
@@ -431,53 +431,6 @@ timezone: 时区
       </categories>
       <tags>
         <tag>markdown</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ansible简介与安装</title>
-    <url>/2020/05/09/ansible_env_install/</url>
-    <content><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Ansible是一个开源配置管理工具，可以使用它来自动化任务，部署应用程序实现IT基础架构。</p>
-<p>Ansible可以用来自动化日常任务，比如：</p>
-<ul>
-<li>服务器的初始化配置</li>
-<li>安全基线配置</li>
-<li>更新系统和打补丁</li>
-<li>安装软件包等</li>
-</ul>
-<p>Ansible架构相对比较简单，仅需通过SSH连接客户机执行任务即可：</p>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/ansible/d0c8a786c9177f3ef2e7a557829ef2c29e3d5674.jpeg?x-oss-process=style/original_format"></p>
-<p><strong><code>工作机制</code>：</strong>Ansible 在管理节点将 Ansible 模块通过 SSH 协议（或者 Kerberos、LDAP）推送到被管理端执行，执行完之后自动删除，可以使用版本控制系统（git/svn）来管理自定义模块及playbooks。</p>
-<h2 id="概念术语"><a href="#概念术语" class="headerlink" title="概念术语"></a>概念术语</h2><p>Ansible使用过程中会用到一些概念术语，<strong>与节点有关的重要术语包括</strong><code>控制节点，受管节点，清单和主机文件</code>：<br><strong>控制节点（Control node）</strong>：指安装了Ansible的主机，也叫Ansible服务器端,管理机。 Ansible控制节点主要用于发布运行任务，执行控制命令。Ansible的程序都安装在控制节点上，控制节点需要安装Python和Ansible所需的各种依赖库。注意：目前Ansible还不能安装在Windows下。</p>
-<p><strong>受控节点（Managed nodes）</strong>：也叫客户机，就是想用Ansible执行任务的客户服务器。</p>
-<p><strong>清单（<code>Inventory</code>）</strong>：Ansible 可同时操作属于一个组的多台主机,组和主机之间的关系通过 inventory 文件配置，默认的文件路径为 /etc/ansible/hosts</p>
-<pre><code>清单（Inventory）列表通常保存在一个名为hosts的主机文件中。在hosts文件中，可以使用IP地址或者主机名来表示具体的管理主机和认证信息，并可以根据主机的用户进行分组。缺省文件：/etc/ansible/hosts，可以通过-i指定自定义的hosts文件。
-</code></pre>
-<p><strong>模块（<code>Modules</code>）</strong>：模块是Ansible执行特定任务的代码块。比如：添加用户，上传文件和对客户机执行ping操作等。Ansible现在默认自带450多个模块，，Ansible Galaxy公共存储库则包含大约1600个模块。</p>
-<p><strong>任务（<code>Task</code>）</strong>：是Ansible客户机上执行的操作。可以使用”ad-hoc”单行命令执行一个任务，例：<code>$ansible all -a &quot;/bin/echo hello&quot;</code>。</p>
-<p><strong>剧本（<code>Playbook</code>）</strong>：是利用YAML标记语言编写的可重复执行的任务的列表，playbook实现任务的更便捷的读写和贡献。比如，在Github上有大量的Ansible playbooks共享，你要你有一双善于发现的眼睛你就能找到大量的宝藏。</p>
-<p><strong>角色（<code>roles</code>）</strong>：角色是Ansible 1.2版本引入的新特性，用于层次性、结构化地组织playbook。roles能够根据层次型结构自动装载变量文件、tasks以及handlers等。</p>
-<p><strong>连接插件（<code>Connectior Plugins</code>）</strong>：ansible基于连接插件连接到各个主机上，虽然ansible是使用ssh连接到各个主机的，但是它还支持其他的连接方法，所以需要有连接插件</p>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/ansible/7c1ed21b0ef41bd512788660a38b48ce38db3dd6.jpeg?x-oss-process=style/original_format"></p>
-<h2 id="Ansible的优势"><a href="#Ansible的优势" class="headerlink" title="Ansible的优势"></a>Ansible的优势</h2><p><strong>无需客户端</strong></p>
-<p>与Chef、Puppet以及Saltstack（现在也支持Agentless方式salt-ssh）不同，Ansible是无客户端Agent的，所以无需在客户机上安装或配置任何程序，就可以运行Ansible任务。由于Ansible不会在客户机上安装任何软件或运行监听程序，因此消除了许多管理开销，我们可以在即可上手使用Ansible管理服务器，同时Ansible的更新也不会影响任何客户机。</p>
-<p><strong>使用SSH进行通讯</strong></p>
-<p>默认情况下，Ansible使用SSH协议在管理机和客户机之间进行通信。可以使用SFTP与客户机进行安全的文件传输。</p>
-<p><strong>并行执行</strong></p>
-<p>Ansible与客户机并行通信，可以更快地运行自动化任务。默认情况下，forks值为5，可以按需，在配置文件中增大该值。</p>
-<h2 id="安装-more"><a href="#安装-more" class="headerlink" title="安装(more)"></a>安装(<a href="https://ansible-tran.readthedocs.io/en/latest/docs/intro_installation.html">more</a>)</h2><p><strong>YUM安装</strong>：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install -y http:&#x2F;&#x2F;dl.fedoraproject.org&#x2F;pub&#x2F;epel&#x2F;epel-release-latest-7.noarch.rpm</span><br><span class="line">yum info ansible</span><br><span class="line">yum install ansible</span><br><span class="line">ansible --version</span><br></pre></td></tr></table></figure>
-<p><strong>pip3安装指定版本</strong>：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip3 install ansible&#x3D;&#x3D;2.8.10 --trusted-host mirrors.aliyun.com --index-url&#x3D;http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;pypi&#x2F;simple&#x2F;</span><br></pre></td></tr></table></figure>
-<hr>
-<p>&nbsp;  </p>
-<!--**参考文章**：-->  
-<!--https://baijiahao.baidu.com/s?id=1650879841344431164&wfr=spider&for=pc-->  
-]]></content>
-      <categories>
-        <category>Ansible</category>
-      </categories>
-      <tags>
-        <tag>env</tag>
       </tags>
   </entry>
   <entry>
@@ -536,6 +489,53 @@ timezone: 时区
       <tags>
         <tag>env</tag>
         <tag>ansible基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ansible简介与安装</title>
+    <url>/2020/05/09/ansible_env_install/</url>
+    <content><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Ansible是一个开源配置管理工具，可以使用它来自动化任务，部署应用程序实现IT基础架构。</p>
+<p>Ansible可以用来自动化日常任务，比如：</p>
+<ul>
+<li>服务器的初始化配置</li>
+<li>安全基线配置</li>
+<li>更新系统和打补丁</li>
+<li>安装软件包等</li>
+</ul>
+<p>Ansible架构相对比较简单，仅需通过SSH连接客户机执行任务即可：</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/ansible/d0c8a786c9177f3ef2e7a557829ef2c29e3d5674.jpeg?x-oss-process=style/original_format"></p>
+<p><strong><code>工作机制</code>：</strong>Ansible 在管理节点将 Ansible 模块通过 SSH 协议（或者 Kerberos、LDAP）推送到被管理端执行，执行完之后自动删除，可以使用版本控制系统（git/svn）来管理自定义模块及playbooks。</p>
+<h2 id="概念术语"><a href="#概念术语" class="headerlink" title="概念术语"></a>概念术语</h2><p>Ansible使用过程中会用到一些概念术语，<strong>与节点有关的重要术语包括</strong><code>控制节点，受管节点，清单和主机文件</code>：<br><strong>控制节点（Control node）</strong>：指安装了Ansible的主机，也叫Ansible服务器端,管理机。 Ansible控制节点主要用于发布运行任务，执行控制命令。Ansible的程序都安装在控制节点上，控制节点需要安装Python和Ansible所需的各种依赖库。注意：目前Ansible还不能安装在Windows下。</p>
+<p><strong>受控节点（Managed nodes）</strong>：也叫客户机，就是想用Ansible执行任务的客户服务器。</p>
+<p><strong>清单（<code>Inventory</code>）</strong>：Ansible 可同时操作属于一个组的多台主机,组和主机之间的关系通过 inventory 文件配置，默认的文件路径为 /etc/ansible/hosts</p>
+<pre><code>清单（Inventory）列表通常保存在一个名为hosts的主机文件中。在hosts文件中，可以使用IP地址或者主机名来表示具体的管理主机和认证信息，并可以根据主机的用户进行分组。缺省文件：/etc/ansible/hosts，可以通过-i指定自定义的hosts文件。
+</code></pre>
+<p><strong>模块（<code>Modules</code>）</strong>：模块是Ansible执行特定任务的代码块。比如：添加用户，上传文件和对客户机执行ping操作等。Ansible现在默认自带450多个模块，，Ansible Galaxy公共存储库则包含大约1600个模块。</p>
+<p><strong>任务（<code>Task</code>）</strong>：是Ansible客户机上执行的操作。可以使用”ad-hoc”单行命令执行一个任务，例：<code>$ansible all -a &quot;/bin/echo hello&quot;</code>。</p>
+<p><strong>剧本（<code>Playbook</code>）</strong>：是利用YAML标记语言编写的可重复执行的任务的列表，playbook实现任务的更便捷的读写和贡献。比如，在Github上有大量的Ansible playbooks共享，你要你有一双善于发现的眼睛你就能找到大量的宝藏。</p>
+<p><strong>角色（<code>roles</code>）</strong>：角色是Ansible 1.2版本引入的新特性，用于层次性、结构化地组织playbook。roles能够根据层次型结构自动装载变量文件、tasks以及handlers等。</p>
+<p><strong>连接插件（<code>Connectior Plugins</code>）</strong>：ansible基于连接插件连接到各个主机上，虽然ansible是使用ssh连接到各个主机的，但是它还支持其他的连接方法，所以需要有连接插件</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/ansible/7c1ed21b0ef41bd512788660a38b48ce38db3dd6.jpeg?x-oss-process=style/original_format"></p>
+<h2 id="Ansible的优势"><a href="#Ansible的优势" class="headerlink" title="Ansible的优势"></a>Ansible的优势</h2><p><strong>无需客户端</strong></p>
+<p>与Chef、Puppet以及Saltstack（现在也支持Agentless方式salt-ssh）不同，Ansible是无客户端Agent的，所以无需在客户机上安装或配置任何程序，就可以运行Ansible任务。由于Ansible不会在客户机上安装任何软件或运行监听程序，因此消除了许多管理开销，我们可以在即可上手使用Ansible管理服务器，同时Ansible的更新也不会影响任何客户机。</p>
+<p><strong>使用SSH进行通讯</strong></p>
+<p>默认情况下，Ansible使用SSH协议在管理机和客户机之间进行通信。可以使用SFTP与客户机进行安全的文件传输。</p>
+<p><strong>并行执行</strong></p>
+<p>Ansible与客户机并行通信，可以更快地运行自动化任务。默认情况下，forks值为5，可以按需，在配置文件中增大该值。</p>
+<h2 id="安装-more"><a href="#安装-more" class="headerlink" title="安装(more)"></a>安装(<a href="https://ansible-tran.readthedocs.io/en/latest/docs/intro_installation.html">more</a>)</h2><p><strong>YUM安装</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install -y http:&#x2F;&#x2F;dl.fedoraproject.org&#x2F;pub&#x2F;epel&#x2F;epel-release-latest-7.noarch.rpm</span><br><span class="line">yum info ansible</span><br><span class="line">yum install ansible</span><br><span class="line">ansible --version</span><br></pre></td></tr></table></figure>
+<p><strong>pip3安装指定版本</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip3 install ansible&#x3D;&#x3D;2.8.10 --trusted-host mirrors.aliyun.com --index-url&#x3D;http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;pypi&#x2F;simple&#x2F;</span><br></pre></td></tr></table></figure>
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!--https://baijiahao.baidu.com/s?id=1650879841344431164&wfr=spider&for=pc-->  
+]]></content>
+      <categories>
+        <category>Ansible</category>
+      </categories>
+      <tags>
+        <tag>env</tag>
       </tags>
   </entry>
   <entry>
@@ -651,6 +651,48 @@ timezone: 时区
       </tags>
   </entry>
   <entry>
+    <title>go基础之数组</title>
+    <url>/2020/04/09/go_base_array/</url>
+    <content><![CDATA[<h1 id="Array-数组"><a href="#Array-数组" class="headerlink" title="Array(数组)"></a>Array(数组)</h1><p>数组：是同一种数据类型的固定长度的序列。 在Go语言中，数组从声明时就确定，使用时可以修改数组成员，但是数组大小不可变化。 基本语法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 定义一个长度为3元素类型为int的数组a</span><br><span class="line">var a [3]int</span><br></pre></td></tr></table></figure>
+<h2 id="数组定义"><a href="#数组定义" class="headerlink" title="数组定义"></a>数组定义</h2><p><code>var 数组变量名 [元素数量]Type</code><br>比如：<code>var a [5]int</code>， 数组的长度必须是常量，并且长度是数组类型的一部分。一旦定义，长度不能变。<code>[5]int和[10]int</code>是不同的类型。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var a [3]int</span><br><span class="line">var b [4]int</span><br><span class="line">a &#x3D; b &#x2F;&#x2F;不可以这样做，因为此时a和b是不同的类型</span><br></pre></td></tr></table></figure>
+<p>数组可以通过下标进行访问，下标是从0开始，最后一个元素下标是：<code>len-1</code>，访问越界（下标在合法范围之外），则触发访问越界，会panic。</p>
+<h2 id="数组的初始化"><a href="#数组的初始化" class="headerlink" title="数组的初始化"></a>数组的初始化</h2><p><strong><em>一维数组</em></strong></p>
+<h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h3><p>初始化数组时可以使用初始化列表来设置数组元素的值。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var testArray [3]int                        &#x2F;&#x2F;数组会初始化为int类型的零值</span><br><span class="line">    var numArray &#x3D; [3]int&#123;1, 2&#125;                 &#x2F;&#x2F;使用指定的初始值完成初始化</span><br><span class="line">    var cityArray &#x3D; [3]string&#123;&quot;北京&quot;, &quot;上海&quot;, &quot;深圳&quot;&#125; &#x2F;&#x2F;使用指定的初始值完成初始化</span><br><span class="line">    fmt.Println(testArray)                      &#x2F;&#x2F;[0 0 0]</span><br><span class="line">    fmt.Println(numArray)                       &#x2F;&#x2F;[1 2 0]</span><br><span class="line">    fmt.Println(cityArray)                      &#x2F;&#x2F;[北京 上海 深圳]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>按照上面的方法每次都要确保提供的初始值和数组长度一致，一般情况下我们可以让编译器根据初始值的个数自行推断数组的长度，例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var testArray [3]int</span><br><span class="line">    var numArray &#x3D; [...]int&#123;1, 2&#125;</span><br><span class="line">    var cityArray &#x3D; [...]string&#123;&quot;北京&quot;, &quot;上海&quot;, &quot;深圳&quot;&#125;</span><br><span class="line">    fmt.Println(testArray)                          &#x2F;&#x2F;[0 0 0]</span><br><span class="line">    fmt.Println(numArray)                           &#x2F;&#x2F;[1 2]</span><br><span class="line">    fmt.Printf(&quot;type of numArray:%T\n&quot;, numArray)   &#x2F;&#x2F;type of numArray:[2]int</span><br><span class="line">    fmt.Println(cityArray)                          &#x2F;&#x2F;[北京 上海 深圳]</span><br><span class="line">    fmt.Printf(&quot;type of cityArray:%T\n&quot;, cityArray) &#x2F;&#x2F;type of cityArray:[3]string</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a>方法三</h3><p>我们还可以使用指定索引值的方式来初始化数组，例如:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [...]int&#123;1: 1, 3: 5&#125;</span><br><span class="line">    fmt.Println(a)                  &#x2F;&#x2F; [0 1 0 5]</span><br><span class="line">    fmt.Printf(&quot;type of a:%T\n&quot;, a) &#x2F;&#x2F;type of a:[4]int</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="数组的遍历"><a href="#数组的遍历" class="headerlink" title="数组的遍历"></a>数组的遍历</h2><p><strong><em>一维数组</em></strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 遍历数组a有以下两种方法：</span><br><span class="line">func main() &#123;</span><br><span class="line">    var a &#x3D; [...]string&#123;&quot;北京&quot;, &quot;上海&quot;, &quot;深圳&quot;&#125;</span><br><span class="line">    &#x2F;&#x2F; 方法1：for循环遍历</span><br><span class="line">    for i :&#x3D; 0; i &lt; len(a); i++ &#123;</span><br><span class="line">        fmt.Println(a[i])</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 方法2：for range遍历</span><br><span class="line">    for index, value :&#x3D; range a &#123;</span><br><span class="line">        fmt.Println(index, value)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="多维数组"><a href="#多维数组" class="headerlink" title="多维数组"></a>多维数组</h2><h3 id="二维数组的定义"><a href="#二维数组的定义" class="headerlink" title="二维数组的定义"></a>二维数组的定义</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [3][2]string&#123;</span><br><span class="line">        &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">        &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">        &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(a) &#x2F;&#x2F;[[北京 上海] [广州 深圳] [成都 重庆]]</span><br><span class="line">    fmt.Println(a[2][1]) &#x2F;&#x2F;支持索引取值:重庆</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="二维数组的遍历"><a href="#二维数组的遍历" class="headerlink" title="二维数组的遍历"></a>二维数组的遍历</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [3][2]string&#123;</span><br><span class="line">        &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">        &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">        &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    for _, v1 :&#x3D; range a &#123;</span><br><span class="line">        for _, v2 :&#x3D; range v1 &#123;</span><br><span class="line">            fmt.Printf(&quot;%s\t&quot;, v2)</span><br><span class="line">        &#125;</span><br><span class="line">        fmt.Println()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">北京    上海    </span><br><span class="line">广州    深圳    </span><br><span class="line">成都    重庆    </span><br></pre></td></tr></table></figure>
+<p><code>注意</code>： 多维数组<code>只有第一层</code>可以使用<code>...</code>来让编译器推导数组长度。例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;支持的写法</span><br><span class="line">a :&#x3D; [...][2]string&#123;</span><br><span class="line">    &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">    &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">    &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;不支持多维数组的内层使用...</span><br><span class="line">b :&#x3D; [3][...]string&#123;</span><br><span class="line">    &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">    &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">    &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="数组拷贝和传参"><a href="#数组拷贝和传参" class="headerlink" title="数组拷贝和传参"></a>数组拷贝和传参</h2><p>数组是值类型，赋值和传参会复制整个数组。因此改变副本的值，不会改变本身的值。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func modifyArray(x [3]int) &#123;</span><br><span class="line">    x[0] &#x3D; 100</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func modifyArray2(x [3][2]int) &#123;</span><br><span class="line">    x[2][0] &#x3D; 100</span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [3]int&#123;10, 20, 30&#125;</span><br><span class="line">    modifyArray(a) &#x2F;&#x2F;在modify中修改的是a的副本x</span><br><span class="line">    fmt.Println(a) &#x2F;&#x2F;[10 20 30]</span><br><span class="line">    b :&#x3D; [3][2]int&#123;</span><br><span class="line">        &#123;1, 1&#125;,</span><br><span class="line">        &#123;1, 1&#125;,</span><br><span class="line">        &#123;1, 1&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    modifyArray2(b) &#x2F;&#x2F;在modify中修改的是b的副本x</span><br><span class="line">    fmt.Println(b)  &#x2F;&#x2F;[[1 1] [1 1] [1 1]]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong></p>
+<ol>
+<li>数组支持 “==“、”!=” 操作符，因为内存总是被初始化过的。</li>
+<li>[n]*T表示指针数组，*[n]T表示数组指针 。</li>
+</ol>
+<h2 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h2><p>求数组[1, 3, 5, 7, 8]所有元素的和<br>找出数组中和为指定值的两个元素的下标，比如从数组[1, 3, 5, 7, 8]中找出和为8的两个元素的下标分别为(0,3)和(1,2)。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>go语言基础</tag>
+        <tag>array</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>go基础之函数</title>
     <url>/2020/05/07/go_base_func/</url>
     <content><![CDATA[<h1 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h1><p>函数是组织好的、可重复使用的、用于执行指定任务的代码块。Go语言中支持函数、匿名函数和闭包</p>
@@ -698,48 +740,6 @@ timezone: 时区
       <tags>
         <tag>go语言基础</tag>
         <tag>函数</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>go基础之数组</title>
-    <url>/2020/04/09/go_base_array/</url>
-    <content><![CDATA[<h1 id="Array-数组"><a href="#Array-数组" class="headerlink" title="Array(数组)"></a>Array(数组)</h1><p>数组：是同一种数据类型的固定长度的序列。 在Go语言中，数组从声明时就确定，使用时可以修改数组成员，但是数组大小不可变化。 基本语法：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 定义一个长度为3元素类型为int的数组a</span><br><span class="line">var a [3]int</span><br></pre></td></tr></table></figure>
-<h2 id="数组定义"><a href="#数组定义" class="headerlink" title="数组定义"></a>数组定义</h2><p><code>var 数组变量名 [元素数量]Type</code><br>比如：<code>var a [5]int</code>， 数组的长度必须是常量，并且长度是数组类型的一部分。一旦定义，长度不能变。<code>[5]int和[10]int</code>是不同的类型。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var a [3]int</span><br><span class="line">var b [4]int</span><br><span class="line">a &#x3D; b &#x2F;&#x2F;不可以这样做，因为此时a和b是不同的类型</span><br></pre></td></tr></table></figure>
-<p>数组可以通过下标进行访问，下标是从0开始，最后一个元素下标是：<code>len-1</code>，访问越界（下标在合法范围之外），则触发访问越界，会panic。</p>
-<h2 id="数组的初始化"><a href="#数组的初始化" class="headerlink" title="数组的初始化"></a>数组的初始化</h2><p><strong><em>一维数组</em></strong></p>
-<h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h3><p>初始化数组时可以使用初始化列表来设置数组元素的值。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var testArray [3]int                        &#x2F;&#x2F;数组会初始化为int类型的零值</span><br><span class="line">    var numArray &#x3D; [3]int&#123;1, 2&#125;                 &#x2F;&#x2F;使用指定的初始值完成初始化</span><br><span class="line">    var cityArray &#x3D; [3]string&#123;&quot;北京&quot;, &quot;上海&quot;, &quot;深圳&quot;&#125; &#x2F;&#x2F;使用指定的初始值完成初始化</span><br><span class="line">    fmt.Println(testArray)                      &#x2F;&#x2F;[0 0 0]</span><br><span class="line">    fmt.Println(numArray)                       &#x2F;&#x2F;[1 2 0]</span><br><span class="line">    fmt.Println(cityArray)                      &#x2F;&#x2F;[北京 上海 深圳]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>按照上面的方法每次都要确保提供的初始值和数组长度一致，一般情况下我们可以让编译器根据初始值的个数自行推断数组的长度，例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var testArray [3]int</span><br><span class="line">    var numArray &#x3D; [...]int&#123;1, 2&#125;</span><br><span class="line">    var cityArray &#x3D; [...]string&#123;&quot;北京&quot;, &quot;上海&quot;, &quot;深圳&quot;&#125;</span><br><span class="line">    fmt.Println(testArray)                          &#x2F;&#x2F;[0 0 0]</span><br><span class="line">    fmt.Println(numArray)                           &#x2F;&#x2F;[1 2]</span><br><span class="line">    fmt.Printf(&quot;type of numArray:%T\n&quot;, numArray)   &#x2F;&#x2F;type of numArray:[2]int</span><br><span class="line">    fmt.Println(cityArray)                          &#x2F;&#x2F;[北京 上海 深圳]</span><br><span class="line">    fmt.Printf(&quot;type of cityArray:%T\n&quot;, cityArray) &#x2F;&#x2F;type of cityArray:[3]string</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a>方法三</h3><p>我们还可以使用指定索引值的方式来初始化数组，例如:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [...]int&#123;1: 1, 3: 5&#125;</span><br><span class="line">    fmt.Println(a)                  &#x2F;&#x2F; [0 1 0 5]</span><br><span class="line">    fmt.Printf(&quot;type of a:%T\n&quot;, a) &#x2F;&#x2F;type of a:[4]int</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="数组的遍历"><a href="#数组的遍历" class="headerlink" title="数组的遍历"></a>数组的遍历</h2><p><strong><em>一维数组</em></strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 遍历数组a有以下两种方法：</span><br><span class="line">func main() &#123;</span><br><span class="line">    var a &#x3D; [...]string&#123;&quot;北京&quot;, &quot;上海&quot;, &quot;深圳&quot;&#125;</span><br><span class="line">    &#x2F;&#x2F; 方法1：for循环遍历</span><br><span class="line">    for i :&#x3D; 0; i &lt; len(a); i++ &#123;</span><br><span class="line">        fmt.Println(a[i])</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 方法2：for range遍历</span><br><span class="line">    for index, value :&#x3D; range a &#123;</span><br><span class="line">        fmt.Println(index, value)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="多维数组"><a href="#多维数组" class="headerlink" title="多维数组"></a>多维数组</h2><h3 id="二维数组的定义"><a href="#二维数组的定义" class="headerlink" title="二维数组的定义"></a>二维数组的定义</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [3][2]string&#123;</span><br><span class="line">        &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">        &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">        &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(a) &#x2F;&#x2F;[[北京 上海] [广州 深圳] [成都 重庆]]</span><br><span class="line">    fmt.Println(a[2][1]) &#x2F;&#x2F;支持索引取值:重庆</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="二维数组的遍历"><a href="#二维数组的遍历" class="headerlink" title="二维数组的遍历"></a>二维数组的遍历</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [3][2]string&#123;</span><br><span class="line">        &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">        &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">        &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    for _, v1 :&#x3D; range a &#123;</span><br><span class="line">        for _, v2 :&#x3D; range v1 &#123;</span><br><span class="line">            fmt.Printf(&quot;%s\t&quot;, v2)</span><br><span class="line">        &#125;</span><br><span class="line">        fmt.Println()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">北京    上海    </span><br><span class="line">广州    深圳    </span><br><span class="line">成都    重庆    </span><br></pre></td></tr></table></figure>
-<p><code>注意</code>： 多维数组<code>只有第一层</code>可以使用<code>...</code>来让编译器推导数组长度。例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;支持的写法</span><br><span class="line">a :&#x3D; [...][2]string&#123;</span><br><span class="line">    &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">    &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">    &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;不支持多维数组的内层使用...</span><br><span class="line">b :&#x3D; [3][...]string&#123;</span><br><span class="line">    &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">    &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">    &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="数组拷贝和传参"><a href="#数组拷贝和传参" class="headerlink" title="数组拷贝和传参"></a>数组拷贝和传参</h2><p>数组是值类型，赋值和传参会复制整个数组。因此改变副本的值，不会改变本身的值。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func modifyArray(x [3]int) &#123;</span><br><span class="line">    x[0] &#x3D; 100</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func modifyArray2(x [3][2]int) &#123;</span><br><span class="line">    x[2][0] &#x3D; 100</span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [3]int&#123;10, 20, 30&#125;</span><br><span class="line">    modifyArray(a) &#x2F;&#x2F;在modify中修改的是a的副本x</span><br><span class="line">    fmt.Println(a) &#x2F;&#x2F;[10 20 30]</span><br><span class="line">    b :&#x3D; [3][2]int&#123;</span><br><span class="line">        &#123;1, 1&#125;,</span><br><span class="line">        &#123;1, 1&#125;,</span><br><span class="line">        &#123;1, 1&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    modifyArray2(b) &#x2F;&#x2F;在modify中修改的是b的副本x</span><br><span class="line">    fmt.Println(b)  &#x2F;&#x2F;[[1 1] [1 1] [1 1]]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>注意：</strong></p>
-<ol>
-<li>数组支持 “==“、”!=” 操作符，因为内存总是被初始化过的。</li>
-<li>[n]*T表示指针数组，*[n]T表示数组指针 。</li>
-</ol>
-<h2 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h2><p>求数组[1, 3, 5, 7, 8]所有元素的和<br>找出数组中和为指定值的两个元素的下标，比如从数组[1, 3, 5, 7, 8]中找出和为8的两个元素的下标分别为(0,3)和(1,2)。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>Go</category>
-      </categories>
-      <tags>
-        <tag>go语言基础</tag>
-        <tag>array</tag>
       </tags>
   </entry>
   <entry>
@@ -1404,26 +1404,6 @@ bin：相关bin文件
       </tags>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/1992/06/21/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-      <categories>
-        <category>吃喝玩乐</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Go依赖管理—从godep到go mod</title>
     <url>/2020/01/31/go%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E2%80%94_godep_gomod/</url>
     <content><![CDATA[<h2 id="1-1-为什么需要依赖管理"><a href="#1-1-为什么需要依赖管理" class="headerlink" title="1.1 为什么需要依赖管理"></a>1.1 为什么需要依赖管理</h2><p>最早的时候，Go所依赖的所有的第三方库都放在GOPATH这个目录下面。这就导致了同一个库只能保存一个版本的代码。如果不同的项目依赖同一个第三方的库的不同版本，应该怎么解决？</p>
@@ -1493,6 +1473,76 @@ bin：相关bin文件
 
 
 
+]]></content>
+      <categories>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>env</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/1992/06/21/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>吃喝玩乐</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用Go module导入本地包</title>
+    <url>/2020/01/31/%E4%BD%BF%E7%94%A8Go_module%E5%AF%BC%E5%85%A5%E6%9C%AC%E5%9C%B0%E5%8C%85/</url>
+    <content><![CDATA[<p>go module是<code>Go1.11版本之后</code>官方推出的版本管理工具，并且从<code>Go1.13</code>版本开始，go module将是Go语言默认的依赖管理工具。到今天<code>Go1.14</code>版本推出之后<code>Go modules</code>功能已经被正式推荐在生产环境下使用了。</p>
+<h2 id="1-1-前提"><a href="#1-1-前提" class="headerlink" title="1.1 前提"></a>1.1 前提</h2><p>假设我们现在有<code>moduledemo</code>和<code>mypackage</code>两个包，其中<code>moduledemo</code>包中会导入<code>mypackage</code>包并使用它的<code>New</code>方法。<br>mypackage/mypackage.go内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package mypackage</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">func New()&#123;</span><br><span class="line">    fmt.Println(&quot;mypackage.New&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们现在分两种情况讨论：</p>
+<h2 id="1-2-在同一个项目下"><a href="#1-2-在同一个项目下" class="headerlink" title="1.2 在同一个项目下"></a>1.2 在同一个项目下</h2><p><code>注意</code>：在一个项目（project）下我们是可以定义多个包（package）的。</p>
+<h3 id="1-2-1-目录结构"><a href="#1-2-1-目录结构" class="headerlink" title="1.2.1 目录结构"></a>1.2.1 目录结构</h3><p>现在的情况是，我们在<code>moduledemo/main.go</code>中调用了<code>mypackage</code>这个包。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">moduledemo</span><br><span class="line">├── go.mod</span><br><span class="line">├── main.go</span><br><span class="line">└── mypackage</span><br><span class="line">    └── mypackage.go</span><br></pre></td></tr></table></figure>
+<h3 id="1-2-2-导入包"><a href="#1-2-2-导入包" class="headerlink" title="1.2.2 导入包"></a>1.2.2 导入包</h3><p>这个时候，我们需要在<code>moduledemo/go.mod</code>中按如下定义：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module moduledemo</span><br><span class="line"></span><br><span class="line">go 1.14</span><br></pre></td></tr></table></figure>
+<p>然后在<code>moduledemo/main.go</code>中按如下方式导入<code>mypackage</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">    &quot;moduledemo&#x2F;mypackage&quot;  &#x2F;&#x2F; 导入同一项目下的mypackage包</span><br><span class="line">)</span><br><span class="line">func main() &#123;</span><br><span class="line">    mypackage.New()</span><br><span class="line">    fmt.Println(&quot;main&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="1-2-3-栗子"><a href="#1-2-3-栗子" class="headerlink" title="1.2.3 栗子"></a>1.2.3 栗子</h3><p>举一反三，假设我们现在有文件目录结构如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">└── bubble</span><br><span class="line">    ├── dao</span><br><span class="line">    │   └── mysql.go</span><br><span class="line">    ├── go.mod</span><br><span class="line">    └── main.go</span><br></pre></td></tr></table></figure>
+<p>其中<code>bubble/go.mod</code>内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module github.com&#x2F;q1mi&#x2F;bubble</span><br><span class="line"></span><br><span class="line">go 1.14</span><br></pre></td></tr></table></figure>
+<p><code>bubble/dao/mysql.go</code>内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package dao</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">func New()&#123;</span><br><span class="line">    fmt.Println(&quot;mypackage.New&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>bubble/main.go</code>内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">    &quot;github.com&#x2F;q1mi&#x2F;bubble&#x2F;dao&quot;</span><br><span class="line">)</span><br><span class="line">func main() &#123;</span><br><span class="line">    dao.New()</span><br><span class="line">    fmt.Println(&quot;main&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="1-3-不在同一个项目下"><a href="#1-3-不在同一个项目下" class="headerlink" title="1.3 不在同一个项目下"></a>1.3 不在同一个项目下</h2><h3 id="1-3-1-目录结构"><a href="#1-3-1-目录结构" class="headerlink" title="1.3.1 目录结构"></a>1.3.1 目录结构</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">├── moduledemo</span><br><span class="line">│   ├── go.mod</span><br><span class="line">│   └── main.go</span><br><span class="line">└── mypackage</span><br><span class="line">    ├── go.mod</span><br><span class="line">    └── mypackage.go</span><br></pre></td></tr></table></figure>
+<h3 id="1-3-2-导入包"><a href="#1-3-2-导入包" class="headerlink" title="1.3.2 导入包"></a>1.3.2 导入包</h3><p>这个时候，<code>mypackage</code>也需要进行module初始化，即拥有一个属于自己的<code>go.mod</code>文件，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module mypackage</span><br><span class="line"></span><br><span class="line">go 1.14</span><br></pre></td></tr></table></figure>
+<p>然后我们在<code>moduledemo/main.go</code>中按如下方式导入：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">    &quot;mypackage&quot;</span><br><span class="line">)</span><br><span class="line">func main() &#123;</span><br><span class="line">    mypackage.New()</span><br><span class="line">    fmt.Println(&quot;main&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为这两个包不在同一个项目路径下，你想要导入本地包，并且这些包也没有发布到远程的github或其他代码仓库地址。这个时候我们就需要在<code>go.mod</code>文件中使用<code>replace</code>指令。</p>
+<p>在调用方也就是<code>moduledemo/go.mod</code>中按如下方式指定使用相对路径来寻找<code>mypackage</code>这个包。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module moduledemo</span><br><span class="line"></span><br><span class="line">go 1.14</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">require &quot;mypackage&quot; v0.0.0</span><br><span class="line">replace &quot;mypackage&quot; &#x3D;&gt; &quot;..&#x2F;mypackage&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="1-3-3-举个例子"><a href="#1-3-3-举个例子" class="headerlink" title="1.3.3 举个例子"></a>1.3.3 举个例子</h3><p>最后我们再举个例子巩固下上面的内容。</p>
+<p>我们现在有文件目录结构如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">├── p1</span><br><span class="line">│   ├── go.mod</span><br><span class="line">│   └── main.go</span><br><span class="line">└── p2</span><br><span class="line">    ├── go.mod</span><br><span class="line">    └── p2.go</span><br></pre></td></tr></table></figure>
+<p><code>p1/main.go</code>中想要导入p2.go中定义的函数。</p>
+<p><code>p2/go.mod</code>内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module liwenzhou.com&#x2F;q1mi&#x2F;p2</span><br><span class="line"></span><br><span class="line">go 1.14</span><br></pre></td></tr></table></figure>
+<p><code>p1/main.go</code>中按如下方式导入</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">    &quot;liwenzhou.com&#x2F;q1mi&#x2F;p2&quot;</span><br><span class="line">)</span><br><span class="line">func main() &#123;</span><br><span class="line">    p2.New()</span><br><span class="line">    fmt.Println(&quot;main&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为我并没有把<code>liwenzhou.com/q1mi/p2</code>这个包上传到<code>liwenzhou.com</code>这个网站，我们只是想导入本地的包，这个时候就需要用到<code>replace</code>这个指令了。</p>
+<p><code>p1/go.mod</code>内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module github.com&#x2F;q1mi&#x2F;p1</span><br><span class="line"></span><br><span class="line">go 1.14</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">require &quot;liwenzhou.com&#x2F;q1mi&#x2F;p2&quot; v0.0.0</span><br><span class="line">replace &quot;liwenzhou.com&#x2F;q1mi&#x2F;p2&quot; &#x3D;&gt; &quot;..&#x2F;p2&quot;</span><br></pre></td></tr></table></figure>
+<p>此时，我们就可以正常编译p1这个项目了。</p>
 ]]></content>
       <categories>
         <category>Go</category>
@@ -1771,53 +1821,127 @@ fff | ggg| hhh | iii | 000|
       </tags>
   </entry>
   <entry>
-    <title>使用Go module导入本地包</title>
-    <url>/2020/01/31/%E4%BD%BF%E7%94%A8Go_module%E5%AF%BC%E5%85%A5%E6%9C%AC%E5%9C%B0%E5%8C%85/</url>
-    <content><![CDATA[<p>go module是<code>Go1.11版本之后</code>官方推出的版本管理工具，并且从<code>Go1.13</code>版本开始，go module将是Go语言默认的依赖管理工具。到今天<code>Go1.14</code>版本推出之后<code>Go modules</code>功能已经被正式推荐在生产环境下使用了。</p>
-<h2 id="1-1-前提"><a href="#1-1-前提" class="headerlink" title="1.1 前提"></a>1.1 前提</h2><p>假设我们现在有<code>moduledemo</code>和<code>mypackage</code>两个包，其中<code>moduledemo</code>包中会导入<code>mypackage</code>包并使用它的<code>New</code>方法。<br>mypackage/mypackage.go内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package mypackage</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">func New()&#123;</span><br><span class="line">    fmt.Println(&quot;mypackage.New&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>我们现在分两种情况讨论：</p>
-<h2 id="1-2-在同一个项目下"><a href="#1-2-在同一个项目下" class="headerlink" title="1.2 在同一个项目下"></a>1.2 在同一个项目下</h2><p><code>注意</code>：在一个项目（project）下我们是可以定义多个包（package）的。</p>
-<h3 id="1-2-1-目录结构"><a href="#1-2-1-目录结构" class="headerlink" title="1.2.1 目录结构"></a>1.2.1 目录结构</h3><p>现在的情况是，我们在<code>moduledemo/main.go</code>中调用了<code>mypackage</code>这个包。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">moduledemo</span><br><span class="line">├── go.mod</span><br><span class="line">├── main.go</span><br><span class="line">└── mypackage</span><br><span class="line">    └── mypackage.go</span><br></pre></td></tr></table></figure>
-<h3 id="1-2-2-导入包"><a href="#1-2-2-导入包" class="headerlink" title="1.2.2 导入包"></a>1.2.2 导入包</h3><p>这个时候，我们需要在<code>moduledemo/go.mod</code>中按如下定义：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module moduledemo</span><br><span class="line"></span><br><span class="line">go 1.14</span><br></pre></td></tr></table></figure>
-<p>然后在<code>moduledemo/main.go</code>中按如下方式导入<code>mypackage</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">    &quot;moduledemo&#x2F;mypackage&quot;  &#x2F;&#x2F; 导入同一项目下的mypackage包</span><br><span class="line">)</span><br><span class="line">func main() &#123;</span><br><span class="line">    mypackage.New()</span><br><span class="line">    fmt.Println(&quot;main&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="1-2-3-栗子"><a href="#1-2-3-栗子" class="headerlink" title="1.2.3 栗子"></a>1.2.3 栗子</h3><p>举一反三，假设我们现在有文件目录结构如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">└── bubble</span><br><span class="line">    ├── dao</span><br><span class="line">    │   └── mysql.go</span><br><span class="line">    ├── go.mod</span><br><span class="line">    └── main.go</span><br></pre></td></tr></table></figure>
-<p>其中<code>bubble/go.mod</code>内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module github.com&#x2F;q1mi&#x2F;bubble</span><br><span class="line"></span><br><span class="line">go 1.14</span><br></pre></td></tr></table></figure>
-<p><code>bubble/dao/mysql.go</code>内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package dao</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">func New()&#123;</span><br><span class="line">    fmt.Println(&quot;mypackage.New&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>bubble/main.go</code>内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">    &quot;github.com&#x2F;q1mi&#x2F;bubble&#x2F;dao&quot;</span><br><span class="line">)</span><br><span class="line">func main() &#123;</span><br><span class="line">    dao.New()</span><br><span class="line">    fmt.Println(&quot;main&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="1-3-不在同一个项目下"><a href="#1-3-不在同一个项目下" class="headerlink" title="1.3 不在同一个项目下"></a>1.3 不在同一个项目下</h2><h3 id="1-3-1-目录结构"><a href="#1-3-1-目录结构" class="headerlink" title="1.3.1 目录结构"></a>1.3.1 目录结构</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">├── moduledemo</span><br><span class="line">│   ├── go.mod</span><br><span class="line">│   └── main.go</span><br><span class="line">└── mypackage</span><br><span class="line">    ├── go.mod</span><br><span class="line">    └── mypackage.go</span><br></pre></td></tr></table></figure>
-<h3 id="1-3-2-导入包"><a href="#1-3-2-导入包" class="headerlink" title="1.3.2 导入包"></a>1.3.2 导入包</h3><p>这个时候，<code>mypackage</code>也需要进行module初始化，即拥有一个属于自己的<code>go.mod</code>文件，内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module mypackage</span><br><span class="line"></span><br><span class="line">go 1.14</span><br></pre></td></tr></table></figure>
-<p>然后我们在<code>moduledemo/main.go</code>中按如下方式导入：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">    &quot;mypackage&quot;</span><br><span class="line">)</span><br><span class="line">func main() &#123;</span><br><span class="line">    mypackage.New()</span><br><span class="line">    fmt.Println(&quot;main&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>因为这两个包不在同一个项目路径下，你想要导入本地包，并且这些包也没有发布到远程的github或其他代码仓库地址。这个时候我们就需要在<code>go.mod</code>文件中使用<code>replace</code>指令。</p>
-<p>在调用方也就是<code>moduledemo/go.mod</code>中按如下方式指定使用相对路径来寻找<code>mypackage</code>这个包。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module moduledemo</span><br><span class="line"></span><br><span class="line">go 1.14</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">require &quot;mypackage&quot; v0.0.0</span><br><span class="line">replace &quot;mypackage&quot; &#x3D;&gt; &quot;..&#x2F;mypackage&quot;</span><br></pre></td></tr></table></figure>
-<h3 id="1-3-3-举个例子"><a href="#1-3-3-举个例子" class="headerlink" title="1.3.3 举个例子"></a>1.3.3 举个例子</h3><p>最后我们再举个例子巩固下上面的内容。</p>
-<p>我们现在有文件目录结构如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">├── p1</span><br><span class="line">│   ├── go.mod</span><br><span class="line">│   └── main.go</span><br><span class="line">└── p2</span><br><span class="line">    ├── go.mod</span><br><span class="line">    └── p2.go</span><br></pre></td></tr></table></figure>
-<p><code>p1/main.go</code>中想要导入p2.go中定义的函数。</p>
-<p><code>p2/go.mod</code>内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module liwenzhou.com&#x2F;q1mi&#x2F;p2</span><br><span class="line"></span><br><span class="line">go 1.14</span><br></pre></td></tr></table></figure>
-<p><code>p1/main.go</code>中按如下方式导入</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">    &quot;liwenzhou.com&#x2F;q1mi&#x2F;p2&quot;</span><br><span class="line">)</span><br><span class="line">func main() &#123;</span><br><span class="line">    p2.New()</span><br><span class="line">    fmt.Println(&quot;main&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>因为我并没有把<code>liwenzhou.com/q1mi/p2</code>这个包上传到<code>liwenzhou.com</code>这个网站，我们只是想导入本地的包，这个时候就需要用到<code>replace</code>这个指令了。</p>
-<p><code>p1/go.mod</code>内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module github.com&#x2F;q1mi&#x2F;p1</span><br><span class="line"></span><br><span class="line">go 1.14</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">require &quot;liwenzhou.com&#x2F;q1mi&#x2F;p2&quot; v0.0.0</span><br><span class="line">replace &quot;liwenzhou.com&#x2F;q1mi&#x2F;p2&quot; &#x3D;&gt; &quot;..&#x2F;p2&quot;</span><br></pre></td></tr></table></figure>
-<p>此时，我们就可以正常编译p1这个项目了。</p>
+    <title>Ansible免密登录和账号登录</title>
+    <url>/2020/06/09/ansible_login_nopasswd/</url>
+    <content><![CDATA[<p>Ansible默认是通过<code>SSH key</code>和远程被控制主机进行通信,当然我们可以<code>SSH password</code>来和远程主机进行通信。 如果使用SSH KEY,则要将控制主机上的公钥放到被监控主机的<code>/root/.ssh/authorized_keys</code>文件中，这种方式也是官方提倡的。毕竟直接使用密码存在一定的风险。</p>
+<blockquote>
+<p>密钥认证原理</p>
+</blockquote>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/ansible/1545976-20190903164007168-245635235.png?x-oss-process=style/original_format"></p>
+<h1 id="一、通过ssh密钥免密登录"><a href="#一、通过ssh密钥免密登录" class="headerlink" title="一、通过ssh密钥免密登录"></a>一、通过ssh密钥免密登录</h1><h2 id="创建密钥对-ssh-keygen-more"><a href="#创建密钥对-ssh-keygen-more" class="headerlink" title="创建密钥对 ssh-keygen(more)"></a>创建密钥对 ssh-keygen<a href="https://wangchujiang.com/linux-command/c/ssh-keygen.html">(more)</a></h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 解决创建秘钥对需要进行交互的问题</span><br><span class="line">ssh-keygen -t dsa -f ~&#x2F;.ssh&#x2F;id_dsa -P &quot;&quot; -q</span><br></pre></td></tr></table></figure>
+<h2 id="分发公钥文件"><a href="#分发公钥文件" class="headerlink" title="分发公钥文件"></a>分发公钥文件</h2><h3 id="ssh-copy-id-手动分发公钥文件"><a href="#ssh-copy-id-手动分发公钥文件" class="headerlink" title="ssh-copy-id 手动分发公钥文件"></a>ssh-copy-id 手动分发公钥文件</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@sltkp3cbpch ~]# ssh-copy-id -i &#x2F;root&#x2F;.ssh&#x2F;id_dsa.pub -p 22 root@10.122.60.68</span><br><span class="line">&#x2F;bin&#x2F;ssh-copy-id: INFO: Source of key(s) to be installed: &quot;&#x2F;root&#x2F;.ssh&#x2F;id_dsa.pub&quot;</span><br><span class="line">The authenticity of host &#39;10.122.60.68 (10.122.60.68)&#39; can&#39;t be established.</span><br><span class="line">ECDSA key fingerprint is SHA256:RHy25keGgWs+&#x2F;k9ETi13P8KLjvaFS0P0kV1W9DLQgW8.</span><br><span class="line">ECDSA key fingerprint is MD5:25:c5:04:8e:5f:16:21:f1:53:9d:b2:bb:00:36:0e:08.</span><br><span class="line">Are you sure you want to continue connecting (yes&#x2F;no)? yes # 可通过ansible.cfg配置&quot;host_key_checking &#x3D; False&quot;跳过 ssh 首次连接提示验证部分</span><br><span class="line">&#x2F;bin&#x2F;ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed</span><br><span class="line">&#x2F;bin&#x2F;ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys</span><br><span class="line">root@10.122.60.68&#39;s password: # 远程被管理端密码</span><br><span class="line"></span><br><span class="line">Number of key(s) added: 1</span><br><span class="line"></span><br><span class="line">Now try logging into the machine, with: &quot;ssh -p &#39;22&#39; &#39;root@10.122.60.68&#39;&quot;</span><br><span class="line">and check to make sure that only the key(s) you wanted were added.</span><br><span class="line"></span><br><span class="line">[root@sltkp3cbpch ~]#</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>基于ssh key的登录验证：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@sltkp3cbpch ~]# ssh root@10.122.60.68 &quot;hostname -i&quot;</span><br><span class="line">fe80::f816:3eff:fe4b:25a1%eth0 10.122.60.68 172.17.0.1 172.18.0.1</span><br></pre></td></tr></table></figure>
+<h3 id="sshpass-批量分发公钥"><a href="#sshpass-批量分发公钥" class="headerlink" title="sshpass 批量分发公钥"></a>sshpass 批量分发公钥</h3><h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><ol>
+<li>创建秘钥对需要进行交互<ul>
+<li>需要确认秘钥保存路径</li>
+<li>需要确认密码信息</li>
+</ul>
+</li>
+<li>分发公钥时需要进行交互<ul>
+<li>首次ssh连接时需要进行确认yes|no</li>
+<li>第一次分发公钥需要进行密码认证</li>
+</ul>
+</li>
+</ol>
+<h4 id="解决-创建秘钥-时需要进行的交互"><a href="#解决-创建秘钥-时需要进行的交互" class="headerlink" title="解决 创建秘钥 时需要进行的交互"></a>解决 创建秘钥 时需要进行的交互</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t dsa -f ~&#x2F;.ssh&#x2F;id_dsa -P &quot;&quot; -q</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>参数说明：</p>
+</blockquote>
+<pre><code>-f：filename Specifies the filename of the key file.
+    指定密钥文件保存的路径信息（免交互）
+-N：提供一个新密语；
+-P：提供（旧）密语；
+-q：安静的 不输出信息，减少信息输出
+</code></pre>
+<h4 id="解决-第一次分发公钥-时需要进行的交互-sshpass"><a href="#解决-第一次分发公钥-时需要进行的交互-sshpass" class="headerlink" title="解决 第一次分发公钥 时需要进行的交互(sshpass)"></a>解决 第一次分发公钥 时需要进行的交互(sshpass)</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sshpass -p $clientpasswd ssh-copy-id -p22 -i &#x2F;root&#x2F;.ssh&#x2F;id_dsa.pub root@$ip -o StrictHostKeyChecking&#x3D;no</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>参数说明：</p>
+</blockquote>
+<pre><code>-o option 选择 （man 手册中可以查到有很多选项）
+StrictHostKeyChecking=no 对询问的回应（不进行对密钥检查）
+</code></pre>
+<p>要实现免密码，需要一款软件 sshpass 该软件就是为ssh提供密码使用的</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install sshpass -y</span><br></pre></td></tr></table></figure>
+<h4 id="分发脚本"><a href="#分发脚本" class="headerlink" title="分发脚本"></a>分发脚本</h4><p>非交互式创建/分发密钥：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;bash</span><br><span class="line"># check key pair</span><br><span class="line">ID_DSA&#x3D;&#39;&#x2F;root&#x2F;.ssh&#x2F;id_dsa&#39;</span><br><span class="line">ID_PUB&#x3D;&#39;&#x2F;root&#x2F;.ssh&#x2F;id_dsa.pub&#39;</span><br><span class="line"></span><br><span class="line"># distribute public key</span><br><span class="line">function Distribute_pubkey ()&#123;</span><br><span class="line">    for ip in 83 68</span><br><span class="line">    do</span><br><span class="line">        #sshpass -p $clientpasswd ssh-copy-id -p22 -i &#x2F;root&#x2F;.ssh&#x2F;id_dsa.pub root@$ip -o StrictHostKeyChecking&#x3D;no</span><br><span class="line">        sshpass -p&quot;$GKLPASSWD&quot; ssh-copy-id -p22 -i &#x2F;root&#x2F;.ssh&#x2F;id_dsa.pub root@10.122.60.&quot;$ip&quot; -o StrictHostKeyChecking&#x3D;no &gt;&#x2F;dev&#x2F;null 2&gt;&amp;1</span><br><span class="line">        if [ $? -ne 0 ];then</span><br><span class="line">            echo -e &quot;distribute public key to ip-$ip is false&quot;</span><br><span class="line">        else</span><br><span class="line">            echo -e &quot;distribute public key to ip-$ip is true&quot;</span><br><span class="line">        fi</span><br><span class="line">    done</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if [ -f &quot;$ID_DSA&quot; ] &amp;&amp; [ -f &quot;$ID_PUB&quot; ];then</span><br><span class="line">    echo &quot;key pair is already exists, Start distributing pub files&quot;</span><br><span class="line">    Distribute_pubkey</span><br><span class="line">else</span><br><span class="line">    # make key pair</span><br><span class="line">    ssh-keygen -t dsa -f ~&#x2F;.ssh&#x2F;id_dsa -P &quot;&quot; -q</span><br><span class="line">    Distribute_pubkey</span><br><span class="line">fi</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="ansible免密登录验证"><a href="#ansible免密登录验证" class="headerlink" title="ansible免密登录验证"></a>ansible免密登录验证</h2><p>添加ansible hosts，<code>编辑 /etc/ansible/hosts</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[nginx-servers]</span><br><span class="line">10.122.60.68</span><br><span class="line">10.122.60.83</span><br></pre></td></tr></table></figure>
+<p>验证：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@sltkp3cbpch ansible]# ansible all -m &quot;ping&quot;</span><br><span class="line">[DEPRECATION WARNING]: The TRANSFORM_INVALID_GROUP_CHARS settings is set to allow bad characters in group names by default,</span><br><span class="line">this will change, but still be user configurable on deprecation. This feature will be removed in version 2.10. Deprecation</span><br><span class="line">warnings can be disabled by setting deprecation_warnings&#x3D;False in ansible.cfg.</span><br><span class="line">[WARNING]: Invalid characters were found in group names but not replaced, use -vvvv to see details</span><br><span class="line">10.122.60.68 | SUCCESS &#x3D;&gt; &#123;</span><br><span class="line">    &quot;ansible_facts&quot;: &#123;</span><br><span class="line">        &quot;discovered_interpreter_python&quot;: &quot;&#x2F;usr&#x2F;bin&#x2F;python&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;changed&quot;: false,</span><br><span class="line">    &quot;ping&quot;: &quot;pong&quot;</span><br><span class="line">&#125;</span><br><span class="line">10.122.60.83 | SUCCESS &#x3D;&gt; &#123;</span><br><span class="line">    &quot;ansible_facts&quot;: &#123;</span><br><span class="line">        &quot;discovered_interpreter_python&quot;: &quot;&#x2F;usr&#x2F;bin&#x2F;python&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;changed&quot;: false,</span><br><span class="line">    &quot;ping&quot;: &quot;pong&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="二、ansible-账号密码登录-more"><a href="#二、ansible-账号密码登录-more" class="headerlink" title="二、ansible 账号密码登录(more)"></a>二、ansible 账号密码登录<a href="https://blog.csdn.net/liumiaocn/article/details/82354158">(more)</a></h1><p>上一章中，我们利用<code>sshpass命令</code>完成了批量推送公钥的操作，使ansible可以通过<code>SSH key</code>进行免密登录来管理远程主机。</p>
+<p>本章将学习ansible通过<code>SSH password</code>来和远程主机进行通信。<br>需要用到的hosts文件内部支持的俩个特定指令(inventory参数)：</p>
+<ul>
+<li>ansible_ssh_user：连接到该主机的ssh用户</li>
+<li>ansible_ssh_pass：连接到该主机的ssh密码（连-k选项都省了），安全考虑还是建议使用私钥或在命令行指定-k选项输入</li>
+</ul>
+<p><strong>准备工作：</strong><br>首先，为了不影响实验效果，请<code>将推送完成的公钥信息从远程被控制主机</code>authorized_keys<code>中删除</code>并验证环境：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@sltkp3cbpch ansible]# ansible all -m &quot;ping&quot;</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">10.122.60.83 | UNREACHABLE! &#x3D;&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: false,</span><br><span class="line">    &quot;msg&quot;: &quot;Failed to connect to the host via ssh: Permission denied (publickey,gssapi-keyex,gssapi-with-mic,password).&quot;,</span><br><span class="line">    &quot;unreachable&quot;: true</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h2 id="添加ansible-hosts"><a href="#添加ansible-hosts" class="headerlink" title="添加ansible hosts"></a>添加ansible hosts</h2><p><code>$vim /etc/ansible/hosts</code></p>
+<blockquote>
+<p>格式：【主机名】 【主机地址】 【主机密码】 默认是root用户来进行的</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[nginx-servers]</span><br><span class="line">1 ansible_ssh_user&#x3D;&quot;root&quot; ansible_ssh_host&#x3D;10.122.60.68 ansible_ssh_pass&#x3D;&quot;houjue1992***&quot;</span><br><span class="line">2 ansible_ssh_user&#x3D;&quot;root&quot; ansible_ssh_host&#x3D;10.122.60.83 ansible_ssh_pass&#x3D;&quot;houjue1992***&quot;</span><br></pre></td></tr></table></figure>
+<p>新版的ansible(2.4+) hosts有更新， 用以下方式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[nginx-servers]</span><br><span class="line">10.122.60.68 ansible_user&#x3D;root ansible_ssh_pass&#x3D;&quot;houjue1992***&quot;</span><br><span class="line">10.122.60.83 ansible_user&#x3D;root ansible_ssh_pass&#x3D;&quot;houjue1992***&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="ansible账号密码登录验证"><a href="#ansible账号密码登录验证" class="headerlink" title="ansible账号密码登录验证"></a>ansible账号密码登录验证</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@sltkp3cbpch ansible]# ansible all -m &quot;ping&quot;</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">10.122.60.68 | SUCCESS &#x3D;&gt; &#123;</span><br><span class="line">    &quot;ansible_facts&quot;: &#123;</span><br><span class="line">        &quot;discovered_interpreter_python&quot;: &quot;&#x2F;usr&#x2F;bin&#x2F;python&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;changed&quot;: false,</span><br><span class="line">    &quot;ping&quot;: &quot;pong&quot;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><blockquote>
+<p>参考文章：<a href="https://blog.csdn.net/liumiaocn/article/details/82354158">https://blog.csdn.net/liumiaocn/article/details/82354158</a></p>
+</blockquote>
+<p>ansible在执行的时候实际还是使用了ssh，可以不必打通ssh通道，但是实际在执行的时候需要输入用户名和密码，而这两个信息，可以通过<code>/etc/ansible/hosts</code>中的选项进行设定：<code>ansible_ssh_user</code>和<code>ansible_ssh_pass</code>。<br>另外，没有打通ssh通道的时候，ansible使用了sshpass , 而sshpass则正是免去交互式输入用户名密码的ssh命令。</p>
+<blockquote>
+<p>ansible 在执行时使用sshpass的过程：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Parsed &#x2F;etc&#x2F;ansible&#x2F;hosts inventory source with ini plugin</span><br><span class="line">META: ran handlers</span><br><span class="line">&lt;10.122.60.68&gt; ESTABLISH SSH CONNECTION FOR USER: root</span><br><span class="line">&lt;10.122.60.68&gt; SSH: EXEC sshpass -d10 ssh -C -o ControlMaster&#x3D;auto -o ControlPersist&#x3D;60s -o &#39;User&#x3D;&quot;root&quot;&#39; -o ConnectTimeout&#x3D;10 -o ControlPath&#x3D;&#x2F;root&#x2F;.ansible&#x2F;cp&#x2F;2611c79bbc 10.122.60.68 &#39;&#x2F;bin&#x2F;sh -c &#39;&quot;&#39;&quot;&#39;echo ~root &amp;&amp; sleep 0&#39;&quot;&#39;&quot;&#39;&#39;</span><br><span class="line">&lt;10.122.60.68&gt; (0, &#39;&#x2F;root\n&#39;, &#39;&#39;)</span><br><span class="line">&lt;10.122.60.68&gt; ESTABLISH SSH CONNECTION FOR USER: root</span><br><span class="line">&lt;10.122.60.68&gt; SSH: EXEC sshpass -d10 ssh -C -o ControlMaster&#x3D;auto -o ControlPersist&#x3D;60s -o &#39;User&#x3D;&quot;root&quot;&#39; -o ConnectTimeout&#x3D;10 -o ControlPath&#x3D;&#x2F;root&#x2F;.ansible&#x2F;cp&#x2F;2611c79bbc 10.122.60.68 &#39;&#x2F;bin&#x2F;sh -c &#39;&quot;&#39;&quot;&#39;( umask 77 &amp;&amp; mkdir -p &quot;&#96; echo &#x2F;root&#x2F;.ansible&#x2F;tmp &#96;&quot;&amp;&amp; mkdir &#x2F;root&#x2F;.ansible&#x2F;tmp&#x2F;ansible-tmp-1588928466.74-17075-281433475095247 &amp;&amp; echo ansible-tmp-1588928466.74-17075-281433475095247&#x3D;&quot;&#96; echo &#x2F;root&#x2F;.ansible&#x2F;tmp&#x2F;ansible-tmp-1588928466.74-17075-281433475095247 &#96;&quot; ) &amp;&amp; sleep 0&#39;&quot;&#39;&quot;&#39;&#39;</span><br><span class="line">&lt;10.122.60.68&gt; (0, &#39;ansible-tmp-1588928466.74-17075-281433475095247&#x3D;&#x2F;root&#x2F;.ansible&#x2F;tmp&#x2F;ansible-tmp-1588928466.74-17075-281433475095247\n&#39;, &#39;&#39;)</span><br><span class="line">&lt;10.122.60.68&gt; Attempting python interpreter discovery</span><br><span class="line">&lt;10.122.60.68&gt; ESTABLISH SSH CONNECTION FOR USER: root</span><br><span class="line">&lt;10.122.60.68&gt; SSH: EXEC sshpass -d10 ssh -C -o ControlMaster&#x3D;auto -o ControlPersist&#x3D;60s -o &#39;User&#x3D;&quot;root&quot;&#39; -o ConnectTimeout&#x3D;10 -o ControlPath&#x3D;&#x2F;root&#x2F;.ansible&#x2F;cp&#x2F;2611c79bbc 10.122.60.68 &#39;&#x2F;bin&#x2F;sh -c &#39;&quot;&#39;&quot;&#39;echo PLATFORM; uname; echo FOUND; command -v &#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&#x2F;usr&#x2F;bin&#x2F;python&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;; command -v &#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;python3.7&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;; command -v &#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;python3.6&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;; command -v &#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;python3.5&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;; command -v &#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;python2.7&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;; command -v &#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;python2.6&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;; command -v &#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&#x2F;usr&#x2F;libexec&#x2F;platform-python&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;; command -v &#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&#x2F;usr&#x2F;bin&#x2F;python3&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;; command -v &#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;python&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;&quot;&#39;; echo ENDFOUND &amp;&amp; sleep 0&#39;&quot;&#39;&quot;&#39;&#39;</span><br><span class="line">&lt;10.122.60.68&gt; (0, &#39;PLATFORM\nLinux\nFOUND\n&#x2F;usr&#x2F;bin&#x2F;python\n&#x2F;usr&#x2F;bin&#x2F;python3.6\n&#x2F;usr&#x2F;bin&#x2F;python2.7\n&#x2F;usr&#x2F;libexec&#x2F;platform-python\n&#x2F;usr&#x2F;bin&#x2F;python3\n&#x2F;usr&#x2F;bin&#x2F;python\nENDFOUND\n&#39;, &#39;&#39;)</span><br><span class="line">&lt;10.122.60.68&gt; ESTABLISH SSH CONNECTION FOR USER: root</span><br><span class="line">&lt;10.122.60.68&gt; SSH: EXEC sshpass -d10 ssh -C -o ControlMaster&#x3D;auto -o ControlPersist&#x3D;60s -o &#39;User&#x3D;&quot;root&quot;&#39; -o ConnectTimeout&#x3D;10 -o ControlPath&#x3D;&#x2F;root&#x2F;.ansible&#x2F;cp&#x2F;2611c79bbc 10.122.60.68 &#39;&#x2F;bin&#x2F;sh -c &#39;&quot;&#39;&quot;&#39;&#x2F;usr&#x2F;bin&#x2F;python &amp;&amp; sleep 0&#39;&quot;&#39;&quot;&#39;&#39;</span><br><span class="line">&lt;10.122.60.68&gt; (0, &#39;&#123;&quot;osrelease_content&quot;: &quot;NAME&#x3D;\\&quot;CentOS Linux\\&quot;\\nVERSION&#x3D;\\&quot;7 (Core)\\&quot;\\nID&#x3D;\\&quot;centos\\&quot;\\nID_LIKE&#x3D;\\&quot;rhel fedora\\&quot;\\nVERSION_ID&#x3D;\\&quot;7\\&quot;\\nPRETTY_NAME&#x3D;\\&quot;CentOS Linux 7 (Core)\\&quot;\\nANSI_COLOR&#x3D;\\&quot;0;31\\&quot;\\nCPE_NAME&#x3D;\\&quot;cpe:&#x2F;o:centos:centos:7\\&quot;\\nHOME_URL&#x3D;\\&quot;https:&#x2F;&#x2F;www.centos.org&#x2F;\\&quot;\\nBUG_REPORT_URL&#x3D;\\&quot;https:&#x2F;&#x2F;bugs.centos.org&#x2F;\\&quot;\\n\\nCENTOS_MANTISBT_PROJECT&#x3D;\\&quot;CentOS-7\\&quot;\\nCENTOS_MANTISBT_PROJECT_VERSION&#x3D;\\&quot;7\\&quot;\\nREDHAT_SUPPORT_PRODUCT&#x3D;\\&quot;centos\\&quot;\\nREDHAT_SUPPORT_PRODUCT_VERSION&#x3D;\\&quot;7\\&quot;\\n\\n&quot;, &quot;platform_dist_result&quot;: [&quot;centos&quot;, &quot;7.5.1804&quot;, &quot;Core&quot;]&#125;\n&#39;, &#39;&#39;)</span><br><span class="line">Using module file &#x2F;usr&#x2F;lib&#x2F;python2.7&#x2F;site-packages&#x2F;ansible&#x2F;modules&#x2F;system&#x2F;ping.py</span><br><span class="line">&lt;10.122.60.68&gt; PUT &#x2F;root&#x2F;.ansible&#x2F;tmp&#x2F;ansible-local-17067x6om3y&#x2F;tmp1Exf0H TO &#x2F;root&#x2F;.ansible&#x2F;tmp&#x2F;ansible-tmp-1588928466.74-17075-281433475095247&#x2F;AnsiballZ_ping.py</span><br><span class="line">&lt;10.122.60.68&gt; SSH: EXEC sshpass -d10 sftp -o BatchMode&#x3D;no -b - -C -o ControlMaster&#x3D;auto -o ControlPersist&#x3D;60s -o &#39;User&#x3D;&quot;root&quot;&#39; -o ConnectTimeout&#x3D;10 -o ControlPath&#x3D;&#x2F;root&#x2F;.ansible&#x2F;cp&#x2F;2611c79bbc &#39;[10.122.60.68]&#39;</span><br><span class="line">&lt;10.122.60.68&gt; (0, &#39;sftp&gt; put &#x2F;root&#x2F;.ansible&#x2F;tmp&#x2F;ansible-local-17067x6om3y&#x2F;tmp1Exf0H &#x2F;root&#x2F;.ansible&#x2F;tmp&#x2F;ansible-tmp-1588928466.74-17075-281433475095247&#x2F;AnsiballZ_ping.py\n&#39;, &#39;&#39;)</span><br><span class="line">&lt;10.122.60.68&gt; ESTABLISH SSH CONNECTION FOR USER: root</span><br><span class="line">&lt;10.122.60.68&gt; SSH: EXEC sshpass -d10 ssh -C -o ControlMaster&#x3D;auto -o ControlPersist&#x3D;60s -o &#39;User&#x3D;&quot;root&quot;&#39; -o ConnectTimeout&#x3D;10 -o ControlPath&#x3D;&#x2F;root&#x2F;.ansible&#x2F;cp&#x2F;2611c79bbc 10.122.60.68 &#39;&#x2F;bin&#x2F;sh -c &#39;&quot;&#39;&quot;&#39;chmod u+x &#x2F;root&#x2F;.ansible&#x2F;tmp&#x2F;ansible-tmp-1588928466.74-17075-281433475095247&#x2F; &#x2F;root&#x2F;.ansible&#x2F;tmp&#x2F;ansible-tmp-1588928466.74-17075-281433475095247&#x2F;AnsiballZ_ping.py &amp;&amp; sleep 0&#39;&quot;&#39;&quot;&#39;&#39;</span><br><span class="line">&lt;10.122.60.68&gt; (0, &#39;&#39;, &#39;&#39;)</span><br><span class="line">&lt;10.122.60.68&gt; ESTABLISH SSH CONNECTION FOR USER: root</span><br><span class="line">&lt;10.122.60.68&gt; SSH: EXEC sshpass -d10 ssh -C -o ControlMaster&#x3D;auto -o ControlPersist&#x3D;60s -o &#39;User&#x3D;&quot;root&quot;&#39; -o ConnectTimeout&#x3D;10 -o ControlPath&#x3D;&#x2F;root&#x2F;.ansible&#x2F;cp&#x2F;2611c79bbc -tt 10.122.60.68 &#39;&#x2F;bin&#x2F;sh -c &#39;&quot;&#39;&quot;&#39;&#x2F;usr&#x2F;bin&#x2F;python &#x2F;root&#x2F;.ansible&#x2F;tmp&#x2F;ansible-tmp-1588928466.74-17075-281433475095247&#x2F;AnsiballZ_ping.py &amp;&amp; sleep 0&#39;&quot;&#39;&quot;&#39;&#39;</span><br><span class="line">&lt;10.122.60.68&gt; (0, &#39;\r\n&#123;&quot;invocation&quot;: &#123;&quot;module_args&quot;: &#123;&quot;data&quot;: &quot;pong&quot;&#125;&#125;, &quot;ping&quot;: &quot;pong&quot;&#125;\r\n&#39;, &#39;Shared connection to 10.122.60.68 closed.\r\n&#39;)</span><br><span class="line">&lt;10.122.60.68&gt; ESTABLISH SSH CONNECTION FOR USER: root</span><br><span class="line">&lt;10.122.60.68&gt; SSH: EXEC sshpass -d10 ssh -C -o ControlMaster&#x3D;auto -o ControlPersist&#x3D;60s -o &#39;User&#x3D;&quot;root&quot;&#39; -o ConnectTimeout&#x3D;10 -o ControlPath&#x3D;&#x2F;root&#x2F;.ansible&#x2F;cp&#x2F;2611c79bbc 10.122.60.68 &#39;&#x2F;bin&#x2F;sh -c &#39;&quot;&#39;&quot;&#39;rm -f -r &#x2F;root&#x2F;.ansible&#x2F;tmp&#x2F;ansible-tmp-1588928466.74-17075-281433475095247&#x2F; &gt; &#x2F;dev&#x2F;null 2&gt;&amp;1 &amp;&amp; sleep 0&#39;&quot;&#39;&quot;&#39;&#39;</span><br><span class="line">&lt;10.122.60.68&gt; (0, &#39;&#39;, &#39;&#39;)</span><br><span class="line">10.122.60.68 | SUCCESS &#x3D;&gt; &#123;</span><br><span class="line">    &quot;ansible_facts&quot;: &#123;</span><br><span class="line">        &quot;discovered_interpreter_python&quot;: &quot;&#x2F;usr&#x2F;bin&#x2F;python&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;changed&quot;: false,</span><br><span class="line">    &quot;invocation&quot;: &#123;</span><br><span class="line">        &quot;module_args&quot;: &#123;</span><br><span class="line">            &quot;data&quot;: &quot;pong&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;ping&quot;: &quot;pong&quot;</span><br><span class="line">&#125;</span><br><span class="line">META: ran handlers</span><br><span class="line">META: ran handlers</span><br></pre></td></tr></table></figure>
+<h1 id="三、使用authorized-key模块推送公钥-more"><a href="#三、使用authorized-key模块推送公钥-more" class="headerlink" title="三、使用authorized_key模块推送公钥(more)"></a>三、使用authorized_key模块推送公钥<a href="https://docs.ansible.com/ansible/2.8/modules/authorized_key_module.html#">(more)</a></h1><p>结合上面学习的内容，我们对比ansible管理远程主机的两种手段：</p>
+<ol>
+<li><code>SSH key</code>：将控制主机上的公钥放到被监控主机的<code>/root/.ssh/authorized_keys</code>文件中，这种方式安全并且是官方提倡的。</li>
+<li><code>SSH password</code>：ansible使用ssh通过读取<code>hosts</code>中配置的账号密码来登录并控制远程主机，这种方法存在账号密码泄漏的风险。</li>
+</ol>
+<p>由此可见，<code>SSH key</code> 安全且一本万利，但是前提是需要进行公钥推送的操作，而通过<code>sshpass</code>命令完成这个任务就需要进行脚本编写，无疑增加了工作量。此时，authorized_key模块就显得格外方便。</p>
+<hr>
+<p><strong>两个重要命令：</strong></p>
+<ul>
+<li>ssh-keygen ：这个命令是用来生成本机的公钥和私钥的</li>
+<li>ssh-keyscan ： 这条命令是用来把远程服务器的公钥来获取到本地的</li>
+</ul>
+<h2 id="首先关闭公钥认证"><a href="#首先关闭公钥认证" class="headerlink" title="首先关闭公钥认证"></a>首先关闭公钥认证</h2><p>如果说不想关闭公钥认证的话，可以用ssh-keycan 命令将公钥添加到本地的known_hosts文件里面去<br>具体命令是<code>ssh-keyscan IP1 (IP2 ...) &gt;&gt; /root/.ssh/known_hosts</code> 可以添加多个</p>
+<p>Ansible1.2.1及其之后的版本都会默认启用公钥认证.</p>
+<p>公钥认证就是如果之后的某一台客户端和之前登录过的某一台主机IP相同，那么在“known_hosts”中有了不同的key，这时会提示一个错误信息直到被纠正为止。<br>在使用Ansible时，可能不想遇到那样的情况，如果有个主机没有在“known_hosts”中被初始化将会导致在交互使用Ansible或定时执行Ansible时对key信息的确认提示。如果想要禁用这个行为的话，可以关闭公钥认证，而且公钥认证会比较慢，也是提高效率的一个方法</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 认证提示：</span><br><span class="line">&quot;msg&quot;: &quot;Using a SSH password instead of a key is not possible because Host Key checking is enabled and sshpass does not support this. Please add this host&#39;s fingerprint to your known_hosts file to manage this host.&quot;</span><br></pre></td></tr></table></figure>
+<p>关闭公钥认证，编辑<code>ansible.cfg</code>配置文件：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 用来禁止ssh的指纹key字串检查</span><br><span class="line">host_key_checking &#x3D; False</span><br></pre></td></tr></table></figure>
+<p>或者直接设置环境变量：<code>export ANSIBLE_HOST_KEY_CHECKING=False</code></p>
+<h2 id="使用ssh-key产生公钥和私钥"><a href="#使用ssh-key产生公钥和私钥" class="headerlink" title="使用ssh-key产生公钥和私钥"></a>使用ssh-key产生公钥和私钥</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 可参考第一章节内容</span><br><span class="line">ssh-keygen -t dsa -f ~&#x2F;.ssh&#x2F;id_dsa -P &#39;&#39;</span><br></pre></td></tr></table></figure>
+<h2 id="添加ansible-hosts-1"><a href="#添加ansible-hosts-1" class="headerlink" title="添加ansible hosts"></a>添加ansible hosts</h2><p><code>$vim /etc/ansible/hosts</code></p>
+<blockquote>
+<p>格式：【主机名】 【主机地址】 【主机密码】 默认是root用户来进行的</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[nginx-servers]</span><br><span class="line">1 ansible_ssh_user&#x3D;&quot;root&quot; ansible_ssh_host&#x3D;10.122.60.68 ansible_ssh_pass&#x3D;&quot;houjue1992***&quot;</span><br><span class="line">2 ansible_ssh_user&#x3D;&quot;root&quot; ansible_ssh_host&#x3D;10.122.60.83 ansible_ssh_pass&#x3D;&quot;houjue1992***&quot;</span><br></pre></td></tr></table></figure>
+<p>新版的ansible(2.4+) hosts有更新， 用以下方式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[nginx-servers]</span><br><span class="line">10.122.60.68 ansible_user&#x3D;root ansible_ssh_pass&#x3D;&quot;houjue1992***&quot;</span><br><span class="line">10.122.60.83 ansible_user&#x3D;root ansible_ssh_pass&#x3D;&quot;houjue1992***&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="批量推送公钥到远程机器"><a href="#批量推送公钥到远程机器" class="headerlink" title="批量推送公钥到远程机器"></a>批量推送公钥到远程机器</h2><h3 id="方法1：编写Playbook剧本文件"><a href="#方法1：编写Playbook剧本文件" class="headerlink" title="方法1：编写Playbook剧本文件"></a>方法1：编写Playbook剧本文件</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># put_ssh_pub_key.yml  是基于YAML语言编写的</span><br><span class="line"></span><br><span class="line">- hosts: all</span><br><span class="line">  #gather_facts: no</span><br><span class="line">  remote_user: root</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">    - name: install ssh key</span><br><span class="line">      authorized_key:</span><br><span class="line">        user: root</span><br><span class="line">        key: &quot;&#123;&#123; lookup(&#39;file&#39;, &#39;&#x2F;root&#x2F;.ssh&#x2F;id_dsa.pub&#39;) &#125;&#125;&quot;</span><br><span class="line">        state: present</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ansible-playbook -i hosts put_ssh_pub_key.yml</span><br></pre></td></tr></table></figure>
+<h3 id="方法2：ansible命令行调用authorized-key模块"><a href="#方法2：ansible命令行调用authorized-key模块" class="headerlink" title="方法2：ansible命令行调用authorized_key模块"></a>方法2：ansible命令行调用authorized_key模块</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ansible nginx-server -m authorized_key -a &quot;user&#x3D;root state&#x3D;present key&#x3D;&#39;&#123;&#123; lookup(&#39;file&#39;, &#39;&#x2F;root&#x2F;.ssh&#x2F;id_dsa.pub&#39;) &#125;&#125;&#39;&quot;</span><br></pre></td></tr></table></figure>
+<hr>
+<p>通过上面的方法，我们将ansible管理端的公钥批量推送后，就建立了ssh通道、实现了免密登录，这时<code>hosts</code>文件中配置的<code>ansible_user</code>和<code>ansible_ssh_pass</code>参数就没有用途了，我们需要进行安全优化操作，类似如下效果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[nginx-servers]</span><br><span class="line">10.122.60.68</span><br><span class="line">10.122.60.83</span><br></pre></td></tr></table></figure>
+<p>如果，ansible管理所有远程主机使用的账号密码是统一的一个，那么<code>hosts</code>文件中可以不进行账号信息的配置并保障了信息安全，而是执行ansible命令指定authorized_key模块时，通过<code>-k</code>选项，输入远程主机的统一密码，即可实现批量推送ssh公钥。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ansible nginx-server -m authorized_key -a &quot;user&#x3D;root state&#x3D;present key&#x3D;&#39;&#123;&#123; lookup(&#39;file&#39;, &#39;&#x2F;root&#x2F;.ssh&#x2F;id_dsa.pub&#39;) &#125;&#125;&#39;&quot; -k</span><br></pre></td></tr></table></figure>
+<h2 id="5-ansible-playbook-免密登录优化"><a href="#5-ansible-playbook-免密登录优化" class="headerlink" title="5. ansible-playbook 免密登录优化"></a>5. ansible-playbook 免密登录优化</h2><p>占位符</p>
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!--  https://zhuanlan.zhihu.com/p/133998700  -->  
+<!--  https://www.bookstack.cn/read/ansible-first-book/advance-inventory-zhi_ding_lian_jie_de_can_shu.md  -->
+<!--  https://blog.51cto.com/13812615/2475306  -->
+<!-- https://docs.ansible.com/ansible/2.8/modules/list_of_system_modules.html -->
 ]]></content>
       <categories>
-        <category>Go</category>
+        <category>Ansible</category>
       </categories>
       <tags>
-        <tag>env</tag>
+        <tag>ansible基础</tag>
       </tags>
   </entry>
 </search>
