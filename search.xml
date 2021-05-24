@@ -1,6 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Go语言开发环境</title>
+    <url>/2020/01/31/Go%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
+    <content><![CDATA[<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><blockquote>
+<p>下载地址：</p>
+</blockquote>
+<p>Go官网下载地址：<a href="https://golang.org/dl/">https://golang.org/dl/</a><br>Go官方镜像站（推荐）：<a href="https://golang.google.cn/dl/">https://golang.google.cn/dl/</a></p>
+<blockquote>
+<p>版本的选择：</p>
+</blockquote>
+<p>Windows平台和Mac平台推荐下载可执行文件版，Linux平台下载压缩文件版。<br>Go语言更新迭代比较快，推荐使用较新版本，体验最新特性。</p>
+<h3 id="Linux下安装"><a href="#Linux下安装" class="headerlink" title="Linux下安装"></a>Linux下安装</h3><blockquote>
+<p>下载地址：</p>
+</blockquote>
+<p>Go官网下载地址：<a href="https://golang.org/dl/">https://golang.org/dl/</a><br>Go官方镜像站（推荐）：<a href="https://golang.google.cn/dl/">https://golang.google.cn/dl/</a></p>
+<p>如果不是要在Linux平台敲go代码就不需要在Linux平台安装Go，我们开发机上写好的go代码只需要跨平台编译（详见文章末尾的跨平台编译）好之后就可以拷贝到Linux服务器上运行了，这也是go程序跨平台易部署的优势。</p>
+<p>我们在版本选择页面选择并下载好<code>go1.14.1.linux-amd64.tar.gz</code>文件：</p>
+<p><code>wget https://dl.google.com/go/go1.14.1.linux-amd64.tar.gz</code><br>将下载好的文件解压到/usr/local目录下：</p>
+<p><code>tar -zxvf go1.14.1.linux-amd64.tar.gz -C /usr/local  # 解压</code><br>如果提示没有权限，加上sudo以root用户的身份再运行。执行完就可以在/usr/local/下看到go目录了。</p>
+<p>配置环境变量： Linux下有两个文件可以配置环境变量，其中/etc/profile是对所有用户生效的；$HOME/.profile是对当前用户生效的，根据自己的情况自行选择一个文件打开，添加如下两行代码，保存退出。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export GOROOT&#x3D;&#x2F;usr&#x2F;local&#x2F;go</span><br><span class="line">export PATH&#x3D;$PATH:$GOROOT&#x2F;bin</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在开发 Go 项目时，你还需要一个环境变量来保存你的工作目录。<br><code>export GOPATH=$HOME/Applications/Go</code><br><code>$GOPATH</code> 可以包含多个工作目录，取决于你的个人情况。如果你设置了多个工作目录，那么当你在之后使用 <code>go get</code>（远程包安装命令）时远程包将会被安装在第一个目录下。</p>
+</blockquote>
+<p>修改/etc/profile后要重启生效，修改$HOME/.profile后使用source命令加载$HOME/.profile文件即可生效。 检查：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">~ go version</span><br><span class="line">go version go1.14.1 linux&#x2F;amd64</span><br></pre></td></tr></table></figure>
+<p><strong>GOPROXY</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ export GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ echo &quot;export GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn&quot; &gt;&gt; ~&#x2F;.profile &amp;&amp; source ~&#x2F;.profile</span><br></pre></td></tr></table></figure>
+<h2 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h2><h3 id="GOROOT和GOPATH"><a href="#GOROOT和GOPATH" class="headerlink" title="GOROOT和GOPATH"></a>GOROOT和GOPATH</h3><p><code>GOROOT</code>和<code>GOPATH</code>都是环境变量，其中<code>GOROOT</code>是我们安装go开发包的路径，而从Go 1.8版本开始，Go开发包在安装完成后会为<code>GOPATH</code>设置一个默认目录，参见下表。<br><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/golang/gopath_20200915161111.png?x-oss-process=style/original_format"></p>
+<p>我们只需要记住默认的<code>GOPATH</code>路径在哪里就可以了，并且默认情况下 <code>GOROOT</code>下的bin目录及<code>GOPATH</code>下的bin目录都已经添加到环境变量中了，我们也不需要额外配置了。</p>
+<hr>
+<p>Go<code>1.14版本之后</code>，都推荐使用<code>go mod</code>模式来管理依赖环境了，也不再强制我们把代码必须写在<code>GOPATH</code>下面的src目录了；<code>GOPATH</code>下可以包含多个包含 Go 语言源码文件、包文件和可执行文件的路径，而这些路径下又必须分别包含三个规定的目录：<code>src、pkg 和 bin</code>，这三个目录分别用于存放源码文件、包文件和可执行文件。你可以在你电脑的任意位置编写go代码。（网上有些教程适用于1.11版本之前。）</p>
+<blockquote>
+<p>在<code>老版本1.11之前</code>，Go语言开发的时候，我们的代码总是会保存在<code>$GOPATH/src</code>目录下。在工程经过<code>go build、go install</code>或<code>go get</code>等指令后，会将下载的第三方包源代码文件放在<code>$GOPATH/src</code>目录下， 产生的二进制可执行文件放在 <code>$GOPATH/bin</code>目录下，生成的中间缓存文件会被保存在<code>$GOPATH/pkg</code> 下。<br>如果我们使用版本管理工具（Version Control System，VCS。常用如Git）来管理我们的项目代码时，我们只需要添加$GOPATH/src目录的源代码即可。bin 和 pkg 目录的内容无需版本控制。</p>
+</blockquote>
+<h3 id="GOPROXY"><a href="#GOPROXY" class="headerlink" title="GOPROXY"></a>GOPROXY</h3><p>默认GoPROXY配置是：<code>GOPROXY=https://proxy.golang.org,direct</code>，由于国内访问不到<code>https://proxy.golang.org</code>，所以我们需要换一个PROXY，这里推荐使用<code>https://goproxy.io</code>或<code>https://goproxy.cn</code>。</p>
+<p>可以执行下面的命令修改GOPROXY：<br><code>go env -w GOPROXY=https://goproxy.cn,direct</code></p>
+<h3 id="企业开发者的go项目结构"><a href="#企业开发者的go项目结构" class="headerlink" title="企业开发者的go项目结构"></a>企业开发者的go项目结构</h3><blockquote>
+<p>参考文档：<a href="%5Bhttp://www.topgoer.com/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/%E9%85%8D%E7%BD%AEgopath.html%5D(http://www.topgoer.com/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/%E9%85%8D%E7%BD%AEgopath.html)">go语言中文文档</a></p>
+</blockquote>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/golang/gopath-qy.png?x-oss-process=style/original_format"></p>
+<h2 id="编辑器"><a href="#编辑器" class="headerlink" title="编辑器"></a>编辑器</h2><h3 id="vs-code"><a href="#vs-code" class="headerlink" title="vs code"></a>vs code</h3><p><code>Visual Studio Code</code>，简称<code>VS Code</code>，它是目前使用人数最多的编辑器。尽管它由微软发布于2015年，与其他热门编辑器相比显得有些年轻，但它在过去几年中一直在不停的更新，它在最新的<code>Stack Overflow</code>调查中被选为<code>Web</code>开发人员中最受欢迎的文本编辑器。</p>
+<p><code>VS Code</code>不仅仅是一个基本的代码编辑器。有人说它更像是<code>IDE</code>而不是代码编辑器，因为它提供了许多通常只在<code>IDE</code>中才有的功能。主要功能包括内置调试工具，智能代码提示，集成终端以及对简易的<code>Git</code>操作（微软刚收购了GitHub）。作为初学者，您可以利用这些功能大大提高编程效率。</p>
+<blockquote>
+<p>下载地址：</p>
+</blockquote>
+<p><a href="https://code.visualstudio.com/">https://code.visualstudio.com/</a></p>
+<h4 id="配置中文"><a href="#配置中文" class="headerlink" title="配置中文"></a>配置中文</h4><p>点击左侧菜单栏最后一项<code>管理扩展</code>，在搜索框中输入<code>chinese</code>，选中结果列表第一项，点击<code>install</code>安装。<br><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/03/install_cn_language.gif?x-oss-process=style/gif_format"></p>
+<h4 id="安装go插件"><a href="#安装go插件" class="headerlink" title="安装go插件"></a>安装go插件</h4><p>启动<code>vscode</code>选择插件-&gt;搜<code>go</code>选择<code>Go for Visual Studio Code</code>插件点击安装即可</p>
+<h4 id="安装Go语言开发工具包"><a href="#安装Go语言开发工具包" class="headerlink" title="安装Go语言开发工具包"></a>安装Go语言开发工具包</h4><p>在Go语言开发的时候为我们提供诸如代码提示、代码自动补全等功能。</p>
+<p>Windows平台按下<code>Ctrl+Shift+P</code>，Mac平台按<code>Command+Shift+P</code>，这个时候<code>VS Code</code>界面会弹出一个输入框；</p>
+<p>我们在这个输入框中输入&gt;<code>go:install</code>，下面会自动搜索相关命令，我们选择<code>Go:Install/Update Tools</code>这个命令，选中并会回车执行该命令（或者使用鼠标点击该命令）<br><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/03/16tools.png?x-oss-process=style/original_format"></p>
+<p>VS Code此时会下载并安装上图列出来的16个工具，但是由于国内的网络环境基本上都会出现安装失败</p>
+<p><strong>两种方法解决这个问题：</strong></p>
+<blockquote>
+<p>方法一：使用git下载源代码再安装</p>
+</blockquote>
+<p>我们可以手动从github上下载工具，(执行此步骤前提需要你的电脑上已经安装了git)<br>第一步：现在自己的<code>GOPATH</code>的<code>src</code>目录下创建<code>golang.org/x</code>目录<br>第二步：在终端/cmd中cd到<code>GOPATH/src/golang.org/x</code>目录下<br>第三步：执行<code>git clone https://github.com/golang/tools.git tools</code>命令<br>第四步：执行<code>git clone https://github.com/golang/lint.git</code>命令<br>第五步：按下<code>Ctrl/Command+Shift+P</code>再次执行<code>Go:Install/Update Tools</code>命令，在弹出的窗口全选并点击确定，这一次的安装都会SUCCESSED了。<br>经过上面的步骤就可以安装成功了。 这个时候创建一个Go文件，就能正常使用代码提示、代码格式化等工具了。</p>
+<blockquote>
+<p>方法二：下载已经编译好的可执行文件</p>
+</blockquote>
+<p>如果上面的步骤执行失败了或者懒得一步一步执行，可以直接下载我已经编译好的可执行文件，拷贝到自己电脑上的 <code>go/bin</code>(GO的安装包目录不是代码包啊) 目录下。 </p>
+<blockquote>
+<blockquote>
+<p>链接: <a href="https://pan.baidu.com/s/1kxXsoSXmqwloTKsvRGZbpQ">https://pan.baidu.com/s/1kxXsoSXmqwloTKsvRGZbpQ</a><br>提取码: cucu</p>
+</blockquote>
+</blockquote>
+<p>注意：特别是Mac下需要给拷贝的这些文件赋予可执行的权限。</p>
+<h2 id="第一个Go程序"><a href="#第一个Go程序" class="headerlink" title="第一个Go程序"></a>第一个Go程序</h2><h3 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h3><p>现在我们来创建第一个Go项目——<code>hello</code>。在我们桌面创建一个<code>hello</code>目录。<br>在该目录中创建一个main.go文件：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package main &#x2F;&#x2F; 声明 main 包，表明当前是一个可执行程序</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot; &#x2F;&#x2F; 导入内置 fmt 包</span><br><span class="line"></span><br><span class="line">func main()&#123; &#x2F;&#x2F; main函数，是程序执行的入口</span><br><span class="line">    fmt.Println(&quot;Hello World!&quot;) &#x2F;&#x2F; 在终端打印 Hello World!</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="go-build"><a href="#go-build" class="headerlink" title="go build"></a>go build</h3><p><code>go build</code>表示将源代码编译成可执行文件，或者在其他目录执行以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go build hello</span><br></pre></td></tr></table></figure>
+<p>go编译器会去 <code>GOPATH</code>的src目录下查找你要编译的<code>hello</code>项目</p>
+<blockquote>
+<p>如果报错<code>go: cannot find main module; see &#39;go help modules&#39;</code>，可能是变量<code>GO111MODULE</code>导致，试试设置为<code>GO111MODULE=off</code></p>
+</blockquote>
+<p>编译得到的可执行文件会保存在执行编译命令的当前目录下，如果是windows平台会在当前目录下找到hello.exe可执行文件。</p>
+<p>可在终端直接执行该hello.exe文件：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">c:\desktop\hello&gt;hello.exe</span><br><span class="line">Hello World!</span><br></pre></td></tr></table></figure>
+<p>我们还可以使用<code>-o</code>参数来指定编译后得到的可执行文件的名字。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go build -o heiheihei.exe</span><br></pre></td></tr></table></figure>
+<h3 id="go-install"><a href="#go-install" class="headerlink" title="go install"></a>go install</h3><p><code>go install</code>表示安装的意思，它先编译源代码得到可执行文件，然后将可执行文件移动到<code>GOPATH</code>的bin目录下。因为我们的环境变量中配置了<code>GOPATH</code>下的bin目录，所以我们就可以在任意地方直接执行可执行文件了。</p>
+<h4 id="go-install与go-build-的区别"><a href="#go-install与go-build-的区别" class="headerlink" title="go install与go build 的区别"></a>go install与go build 的区别</h4><p><code>go install</code>与<code>go build</code>都可生成执行文件</p>
+<p><code>go build</code>会生成可实行文件放在当前目录中。<br><code>go install</code>则会把它放到<code>$GOPATH/bin</code>中。</p>
+<p><code>go install</code>还会把导入的依赖包编译到<code>$GOPATH/pkg</code>，并缓存，如果包未做更改，下次编译则直接使用缓存。<code>go build</code>命令加参数<code>-i</code>也能达到<code>go install</code>的效果。</p>
+<p>如果项目很大，每次编译都要花很长时间，则建议使用<code>go install</code>来编译，充分利用它对依赖包的缓存功能。</p>
+<h3 id="go-run"><a href="#go-run" class="headerlink" title="go run"></a>go run</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 直接执行go文件，不用编译</span><br><span class="line">go run main.go</span><br></pre></td></tr></table></figure>
+<h3 id="跨平台编译-more"><a href="#跨平台编译-more" class="headerlink" title="跨平台编译(more)"></a>跨平台编译(<a href="%5Bhttps://www.liwenzhou.com/posts/Go/install_go_dev/#autoid-1-5-4%5D(https://www.liwenzhou.com/posts/Go/install_go_dev/#autoid-1-5-4)">more</a>)</h3><p>默认我们go build的可执行文件都是当前操作系统可执行的文件，如果我想在windows下编译一个linux下可执行文件，那需要怎么做呢？</p>
+<p>只需要指定目标操作系统的平台和处理器架构即可：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SET CGO_ENABLED&#x3D;0  &#x2F;&#x2F; 禁用CGO</span><br><span class="line">SET GOOS&#x3D;linux  &#x2F;&#x2F; 目标平台是linux</span><br><span class="line">SET GOARCH&#x3D;amd64  &#x2F;&#x2F; 目标处理器架构是amd64</span><br></pre></td></tr></table></figure>
+<p>使用了cgo的代码是不支持跨平台编译的</p>
+<p>然后再执行go build命令，得到的就是能够在Linux平台运行的可执行文件了。</p>
+<p>Mac 下编译 Linux 和 Windows平台 64位 可执行程序：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;linux GOARCH&#x3D;amd64 go build</span><br><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;windows GOARCH&#x3D;amd64 go build</span><br></pre></td></tr></table></figure>
+<p>Linux 下编译 Mac 和 Windows 平台64位可执行程序：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;darwin GOARCH&#x3D;amd64 go build</span><br><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;windows GOARCH&#x3D;amd64 go build</span><br></pre></td></tr></table></figure>
+<p>Windows下编译Mac平台64位可执行程序：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SET CGO_ENABLED&#x3D;0</span><br><span class="line">SET GOOS&#x3D;darwin</span><br><span class="line">SET GOARCH&#x3D;amd64</span><br><span class="line">go build</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!--  https://www.liwenzhou.com/posts/Go/install_go_dev/  -->
+<!--  path https://learnku.com/docs/the-way-to-go/go-environment-variable/3565  -->
+<!--  mod https://blog.csdn.net/weixin_39003229/article/details/97638573  -->
+]]></content>
+      <categories>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>env</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo 食用说明</title>
     <url>/1992/06/21/Github-Pages_Hexo/</url>
     <content><![CDATA[<h1 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h1><p><strong>部署环境</strong>：</p>
@@ -128,119 +243,45 @@ timezone: 时区
       </tags>
   </entry>
   <entry>
-    <title>Go语言开发环境</title>
-    <url>/2020/01/31/Go%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
-    <content><![CDATA[<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><blockquote>
-<p>下载地址：</p>
+    <title>Go语言介绍</title>
+    <url>/2020/01/31/Go%E8%AF%AD%E8%A8%80%E7%AE%80%E4%BB%8B/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>知识文档</strong>：</p>
 </blockquote>
-<p>Go官网下载地址：<a href="https://golang.org/dl/">https://golang.org/dl/</a><br>Go官方镜像站（推荐）：<a href="https://golang.google.cn/dl/">https://golang.google.cn/dl/</a></p>
-<blockquote>
-<p>版本的选择：</p>
-</blockquote>
-<p>Windows平台和Mac平台推荐下载可执行文件版，Linux平台下载压缩文件版。<br>Go语言更新迭代比较快，推荐使用较新版本，体验最新特性。</p>
-<h3 id="Linux下安装"><a href="#Linux下安装" class="headerlink" title="Linux下安装"></a>Linux下安装</h3><blockquote>
-<p>下载地址：</p>
-</blockquote>
-<p>Go官网下载地址：<a href="https://golang.org/dl/">https://golang.org/dl/</a><br>Go官方镜像站（推荐）：<a href="https://golang.google.cn/dl/">https://golang.google.cn/dl/</a></p>
-<p>如果不是要在Linux平台敲go代码就不需要在Linux平台安装Go，我们开发机上写好的go代码只需要跨平台编译（详见文章末尾的跨平台编译）好之后就可以拷贝到Linux服务器上运行了，这也是go程序跨平台易部署的优势。</p>
-<p>我们在版本选择页面选择并下载好<code>go1.14.1.linux-amd64.tar.gz</code>文件：</p>
-<p><code>wget https://dl.google.com/go/go1.14.1.linux-amd64.tar.gz</code><br>将下载好的文件解压到/usr/local目录下：</p>
-<p><code>tar -zxvf go1.14.1.linux-amd64.tar.gz -C /usr/local  # 解压</code><br>如果提示没有权限，加上sudo以root用户的身份再运行。执行完就可以在/usr/local/下看到go目录了。</p>
-<p>配置环境变量： Linux下有两个文件可以配置环境变量，其中/etc/profile是对所有用户生效的；$HOME/.profile是对当前用户生效的，根据自己的情况自行选择一个文件打开，添加如下两行代码，保存退出。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export GOROOT&#x3D;&#x2F;usr&#x2F;local&#x2F;go</span><br><span class="line">export PATH&#x3D;$PATH:$GOROOT&#x2F;bin</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>在开发 Go 项目时，你还需要一个环境变量来保存你的工作目录。<br><code>export GOPATH=$HOME/Applications/Go</code><br><code>$GOPATH</code> 可以包含多个工作目录，取决于你的个人情况。如果你设置了多个工作目录，那么当你在之后使用 <code>go get</code>（远程包安装命令）时远程包将会被安装在第一个目录下。</p>
-</blockquote>
-<p>修改/etc/profile后要重启生效，修改$HOME/.profile后使用source命令加载$HOME/.profile文件即可生效。 检查：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">~ go version</span><br><span class="line">go version go1.14.1 linux&#x2F;amd64</span><br></pre></td></tr></table></figure>
-<p><strong>GOPROXY</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ export GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn</span><br></pre></td></tr></table></figure>
-<p>或者</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ echo &quot;export GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn&quot; &gt;&gt; ~&#x2F;.profile &amp;&amp; source ~&#x2F;.profile</span><br></pre></td></tr></table></figure>
-<h2 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h2><h3 id="GOROOT和GOPATH"><a href="#GOROOT和GOPATH" class="headerlink" title="GOROOT和GOPATH"></a>GOROOT和GOPATH</h3><p><code>GOROOT</code>和<code>GOPATH</code>都是环境变量，其中<code>GOROOT</code>是我们安装go开发包的路径，而从Go 1.8版本开始，Go开发包在安装完成后会为<code>GOPATH</code>设置一个默认目录，参见下表。<br><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/golang/gopath_20200915161111.png?x-oss-process=style/original_format"></p>
-<p>我们只需要记住默认的<code>GOPATH</code>路径在哪里就可以了，并且默认情况下 <code>GOROOT</code>下的bin目录及<code>GOPATH</code>下的bin目录都已经添加到环境变量中了，我们也不需要额外配置了。</p>
+<ul>
+<li><a href="http://wen.topgoer.com/docs/golang/golang-1ccjbpfstsfi1">go语言中文文档</a></li>
+<li><a href="https://www.liwenzhou.com/posts/Go/about_golang/">李文周的博客</a></li>
+</ul>
 <hr>
-<p>Go<code>1.14版本之后</code>，都推荐使用<code>go mod</code>模式来管理依赖环境了，也不再强制我们把代码必须写在<code>GOPATH</code>下面的src目录了；<code>GOPATH</code>下可以包含多个包含 Go 语言源码文件、包文件和可执行文件的路径，而这些路径下又必须分别包含三个规定的目录：<code>src、pkg 和 bin</code>，这三个目录分别用于存放源码文件、包文件和可执行文件。你可以在你电脑的任意位置编写go代码。（网上有些教程适用于1.11版本之前。）</p>
-<blockquote>
-<p>在<code>老版本1.11之前</code>，Go语言开发的时候，我们的代码总是会保存在<code>$GOPATH/src</code>目录下。在工程经过<code>go build、go install</code>或<code>go get</code>等指令后，会将下载的第三方包源代码文件放在<code>$GOPATH/src</code>目录下， 产生的二进制可执行文件放在 <code>$GOPATH/bin</code>目录下，生成的中间缓存文件会被保存在<code>$GOPATH/pkg</code> 下。<br>如果我们使用版本管理工具（Version Control System，VCS。常用如Git）来管理我们的项目代码时，我们只需要添加$GOPATH/src目录的源代码即可。bin 和 pkg 目录的内容无需版本控制。</p>
-</blockquote>
-<h3 id="GOPROXY"><a href="#GOPROXY" class="headerlink" title="GOPROXY"></a>GOPROXY</h3><p>默认GoPROXY配置是：<code>GOPROXY=https://proxy.golang.org,direct</code>，由于国内访问不到<code>https://proxy.golang.org</code>，所以我们需要换一个PROXY，这里推荐使用<code>https://goproxy.io</code>或<code>https://goproxy.cn</code>。</p>
-<p>可以执行下面的命令修改GOPROXY：<br><code>go env -w GOPROXY=https://goproxy.cn,direct</code></p>
-<h3 id="企业开发者的go项目结构"><a href="#企业开发者的go项目结构" class="headerlink" title="企业开发者的go项目结构"></a>企业开发者的go项目结构</h3><blockquote>
-<p>参考文档：<a href="%5Bhttp://www.topgoer.com/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/%E9%85%8D%E7%BD%AEgopath.html%5D(http://www.topgoer.com/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/%E9%85%8D%E7%BD%AEgopath.html)">go语言中文文档</a></p>
-</blockquote>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/golang/gopath-qy.png?x-oss-process=style/original_format"></p>
-<h2 id="编辑器"><a href="#编辑器" class="headerlink" title="编辑器"></a>编辑器</h2><h3 id="vs-code"><a href="#vs-code" class="headerlink" title="vs code"></a>vs code</h3><p><code>Visual Studio Code</code>，简称<code>VS Code</code>，它是目前使用人数最多的编辑器。尽管它由微软发布于2015年，与其他热门编辑器相比显得有些年轻，但它在过去几年中一直在不停的更新，它在最新的<code>Stack Overflow</code>调查中被选为<code>Web</code>开发人员中最受欢迎的文本编辑器。</p>
-<p><code>VS Code</code>不仅仅是一个基本的代码编辑器。有人说它更像是<code>IDE</code>而不是代码编辑器，因为它提供了许多通常只在<code>IDE</code>中才有的功能。主要功能包括内置调试工具，智能代码提示，集成终端以及对简易的<code>Git</code>操作（微软刚收购了GitHub）。作为初学者，您可以利用这些功能大大提高编程效率。</p>
-<blockquote>
-<p>下载地址：</p>
-</blockquote>
-<p><a href="https://code.visualstudio.com/">https://code.visualstudio.com/</a></p>
-<h4 id="配置中文"><a href="#配置中文" class="headerlink" title="配置中文"></a>配置中文</h4><p>点击左侧菜单栏最后一项<code>管理扩展</code>，在搜索框中输入<code>chinese</code>，选中结果列表第一项，点击<code>install</code>安装。<br><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/03/install_cn_language.gif?x-oss-process=style/gif_format"></p>
-<h4 id="安装go插件"><a href="#安装go插件" class="headerlink" title="安装go插件"></a>安装go插件</h4><p>启动<code>vscode</code>选择插件-&gt;搜<code>go</code>选择<code>Go for Visual Studio Code</code>插件点击安装即可</p>
-<h4 id="安装Go语言开发工具包"><a href="#安装Go语言开发工具包" class="headerlink" title="安装Go语言开发工具包"></a>安装Go语言开发工具包</h4><p>在Go语言开发的时候为我们提供诸如代码提示、代码自动补全等功能。</p>
-<p>Windows平台按下<code>Ctrl+Shift+P</code>，Mac平台按<code>Command+Shift+P</code>，这个时候<code>VS Code</code>界面会弹出一个输入框；</p>
-<p>我们在这个输入框中输入&gt;<code>go:install</code>，下面会自动搜索相关命令，我们选择<code>Go:Install/Update Tools</code>这个命令，选中并会回车执行该命令（或者使用鼠标点击该命令）<br><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/03/16tools.png?x-oss-process=style/original_format"></p>
-<p>VS Code此时会下载并安装上图列出来的16个工具，但是由于国内的网络环境基本上都会出现安装失败</p>
-<p><strong>两种方法解决这个问题：</strong></p>
-<blockquote>
-<p>方法一：使用git下载源代码再安装</p>
-</blockquote>
-<p>我们可以手动从github上下载工具，(执行此步骤前提需要你的电脑上已经安装了git)<br>第一步：现在自己的<code>GOPATH</code>的<code>src</code>目录下创建<code>golang.org/x</code>目录<br>第二步：在终端/cmd中cd到<code>GOPATH/src/golang.org/x</code>目录下<br>第三步：执行<code>git clone https://github.com/golang/tools.git tools</code>命令<br>第四步：执行<code>git clone https://github.com/golang/lint.git</code>命令<br>第五步：按下<code>Ctrl/Command+Shift+P</code>再次执行<code>Go:Install/Update Tools</code>命令，在弹出的窗口全选并点击确定，这一次的安装都会SUCCESSED了。<br>经过上面的步骤就可以安装成功了。 这个时候创建一个Go文件，就能正常使用代码提示、代码格式化等工具了。</p>
-<blockquote>
-<p>方法二：下载已经编译好的可执行文件</p>
-</blockquote>
-<p>如果上面的步骤执行失败了或者懒得一步一步执行，可以直接下载我已经编译好的可执行文件，拷贝到自己电脑上的 <code>go/bin</code>(GO的安装包目录不是代码包啊) 目录下。 </p>
-<blockquote>
-<blockquote>
-<p>链接: <a href="https://pan.baidu.com/s/1kxXsoSXmqwloTKsvRGZbpQ">https://pan.baidu.com/s/1kxXsoSXmqwloTKsvRGZbpQ</a><br>提取码: cucu</p>
-</blockquote>
-</blockquote>
-<p>注意：特别是Mac下需要给拷贝的这些文件赋予可执行的权限。</p>
-<h2 id="第一个Go程序"><a href="#第一个Go程序" class="headerlink" title="第一个Go程序"></a>第一个Go程序</h2><h3 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h3><p>现在我们来创建第一个Go项目——<code>hello</code>。在我们桌面创建一个<code>hello</code>目录。<br>在该目录中创建一个main.go文件：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package main &#x2F;&#x2F; 声明 main 包，表明当前是一个可执行程序</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot; &#x2F;&#x2F; 导入内置 fmt 包</span><br><span class="line"></span><br><span class="line">func main()&#123; &#x2F;&#x2F; main函数，是程序执行的入口</span><br><span class="line">    fmt.Println(&quot;Hello World!&quot;) &#x2F;&#x2F; 在终端打印 Hello World!</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="go-build"><a href="#go-build" class="headerlink" title="go build"></a>go build</h3><p><code>go build</code>表示将源代码编译成可执行文件，或者在其他目录执行以下命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go build hello</span><br></pre></td></tr></table></figure>
-<p>go编译器会去 <code>GOPATH</code>的src目录下查找你要编译的<code>hello</code>项目</p>
-<blockquote>
-<p>如果报错<code>go: cannot find main module; see &#39;go help modules&#39;</code>，可能是变量<code>GO111MODULE</code>导致，试试设置为<code>GO111MODULE=off</code></p>
-</blockquote>
-<p>编译得到的可执行文件会保存在执行编译命令的当前目录下，如果是windows平台会在当前目录下找到hello.exe可执行文件。</p>
-<p>可在终端直接执行该hello.exe文件：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">c:\desktop\hello&gt;hello.exe</span><br><span class="line">Hello World!</span><br></pre></td></tr></table></figure>
-<p>我们还可以使用<code>-o</code>参数来指定编译后得到的可执行文件的名字。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go build -o heiheihei.exe</span><br></pre></td></tr></table></figure>
-<h3 id="go-install"><a href="#go-install" class="headerlink" title="go install"></a>go install</h3><p><code>go install</code>表示安装的意思，它先编译源代码得到可执行文件，然后将可执行文件移动到<code>GOPATH</code>的bin目录下。因为我们的环境变量中配置了<code>GOPATH</code>下的bin目录，所以我们就可以在任意地方直接执行可执行文件了。</p>
-<h4 id="go-install与go-build-的区别"><a href="#go-install与go-build-的区别" class="headerlink" title="go install与go build 的区别"></a>go install与go build 的区别</h4><p><code>go install</code>与<code>go build</code>都可生成执行文件</p>
-<p><code>go build</code>会生成可实行文件放在当前目录中。<br><code>go install</code>则会把它放到<code>$GOPATH/bin</code>中。</p>
-<p><code>go install</code>还会把导入的依赖包编译到<code>$GOPATH/pkg</code>，并缓存，如果包未做更改，下次编译则直接使用缓存。<code>go build</code>命令加参数<code>-i</code>也能达到<code>go install</code>的效果。</p>
-<p>如果项目很大，每次编译都要花很长时间，则建议使用<code>go install</code>来编译，充分利用它对依赖包的缓存功能。</p>
-<h3 id="go-run"><a href="#go-run" class="headerlink" title="go run"></a>go run</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 直接执行go文件，不用编译</span><br><span class="line">go run main.go</span><br></pre></td></tr></table></figure>
-<h3 id="跨平台编译-more"><a href="#跨平台编译-more" class="headerlink" title="跨平台编译(more)"></a>跨平台编译(<a href="%5Bhttps://www.liwenzhou.com/posts/Go/install_go_dev/#autoid-1-5-4%5D(https://www.liwenzhou.com/posts/Go/install_go_dev/#autoid-1-5-4)">more</a>)</h3><p>默认我们go build的可执行文件都是当前操作系统可执行的文件，如果我想在windows下编译一个linux下可执行文件，那需要怎么做呢？</p>
-<p>只需要指定目标操作系统的平台和处理器架构即可：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SET CGO_ENABLED&#x3D;0  &#x2F;&#x2F; 禁用CGO</span><br><span class="line">SET GOOS&#x3D;linux  &#x2F;&#x2F; 目标平台是linux</span><br><span class="line">SET GOARCH&#x3D;amd64  &#x2F;&#x2F; 目标处理器架构是amd64</span><br></pre></td></tr></table></figure>
-<p>使用了cgo的代码是不支持跨平台编译的</p>
-<p>然后再执行go build命令，得到的就是能够在Linux平台运行的可执行文件了。</p>
-<p>Mac 下编译 Linux 和 Windows平台 64位 可执行程序：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;linux GOARCH&#x3D;amd64 go build</span><br><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;windows GOARCH&#x3D;amd64 go build</span><br></pre></td></tr></table></figure>
-<p>Linux 下编译 Mac 和 Windows 平台64位可执行程序：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;darwin GOARCH&#x3D;amd64 go build</span><br><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;windows GOARCH&#x3D;amd64 go build</span><br></pre></td></tr></table></figure>
-<p>Windows下编译Mac平台64位可执行程序：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SET CGO_ENABLED&#x3D;0</span><br><span class="line">SET GOOS&#x3D;darwin</span><br><span class="line">SET GOARCH&#x3D;amd64</span><br><span class="line">go build</span><br></pre></td></tr></table></figure>
-
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><strong><code>Google开发的开源编程语言</code></strong><br>诞生于2006年1月2日下午15点4分5秒，于2009年11月开源，2012年发布go稳定版。Go语言在多核并发上拥有原生的设计优势，Go语言从底层原生支持并发，<code>无须第三方库</code>、开发者的编程技巧和开发经验。<br>它的主要目标是“兼具Python 等动态语言的开发速度和C/C++等编译型语言的性能与安全性”</p>
+<p><strong><code>Go语言为并发而生</code></strong> ——21世纪的C语言<br>硬件制造商正在为处理器添加越来越多的内核以提高性能。所有数据中心都在这些处理器上运行，更重要的是，今天的应用程序使用多个微服务来维护数据库连接，消息队列和维护缓存。因此，开发的软件和编程语言应该可以轻松地支持并发性，并且应该能够随着CPU核心数量的增加而可扩展。</p>
+<p>但是，大多数现代编程语言（如Java，Python等）都来自90年代的单线程环境。虽然一些编程语言的框架在不断地提高多核资源使用效率，例如 Java 的 Netty 等，但仍然需要开发人员花费大量的时间和精力搞懂这些框架的运行原理后才能熟练掌握。</p>
+<p>Go于2009年发布，当时多核处理器已经上市。Go语言在多核并发上拥有原生的设计优势，Go语言从底层原生支持并发，无须第三方库、开发者的编程技巧和开发经验。</p>
+<p>很多公司，特别是中国的互联网公司，即将或者已经完成了使用 Go 语言改造旧系统的过程。经过 Go 语言重构的系统能使用更少的硬件资源获得更高的并发和I/O吞吐表现。充分挖掘硬件设备的潜力也满足当前精细化运营的市场大环境。</p>
+<p>Go语言的并发是基于 <code>goroutine</code> 的，<code>goroutine</code> 类似于线程，但并非线程。可以将 <code>goroutine</code> 理解为一种虚拟线程。Go 语言运行时会参与调度 <code>goroutine</code>，并将 <code>goroutine</code> 合理地分配到每个 CPU 中，最大限度地使用CPU性能。开启一个<code>goroutine</code>的消耗非常小（大约2KB的内存），你可以轻松创建数百万个<code>goroutine</code>。</p>
+<p><code>goroutine</code>的特点：</p>
+<ol>
+<li><code>goroutine</code>具有可增长的分段堆栈。这意味着它们只在需要时才会使用更多内存。</li>
+<li><code>goroutine</code>的启动时间比线程快。</li>
+<li><code>goroutine</code>原生支持利用channel安全地进行通信。</li>
+<li><code>goroutine</code>共享数据结构时无需使用互斥锁。</li>
+</ol>
+<p><strong><code>编译型语言</code></strong><br>与其他现代高级语言（如Java/Python）相比，使用C，C++的最大好处是它们的性能。因为C/ C++是编译型语言而不是解释的语言。 处理器只能理解二进制文件，Java和Python这种高级语言在运行的时候需要先将人类可读的代码翻译成字节码，然后由专门的解释器再转变成处理器可以理解的二进制文件。<br><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/03/15511649241043.jpg?x-oss-process=style/original_format"></p>
+<p>同C,C++一样，Go语言也是编译型的语言，它直接将人类可读的代码编译成了处理器可以直接运行的二进制文件，执行效率更高，性能更好。</p>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><p><strong>语法简洁</strong><br>Go 语言简单易学，学习曲线平缓，不需要像 C/C++ 语言动辄需要两到三年的学习期。Go 语言被称为“互联网时代的C语言”。Go 语言的风格类似于C语言。其语法在C语言的基础上进行了大幅的简化，去掉了不需要的表达式括号，循环也只有 for 一种表示方法，就可以实现数值、键值等各种遍历。</p>
+<p><strong>代码风格统一</strong><br>Go 语言提供了一套格式化工具——go fmt。一些 Go 语言的开发环境或者编辑器在保存时，都会使用格式化工具进行修改代码的格式化，这样就保证了不同开发者提交的代码都是统一的格式。(吐槽下：再也不用担心那些看不懂的黑魔法了…)</p>
+<p><strong>开发效率高</strong><br>Go语言实现了开发效率与执行效率的完美结合，让你像写Python代码（效率）一样编写C代码（性能）。</p>
+<h2 id="Go的使用场景"><a href="#Go的使用场景" class="headerlink" title="Go的使用场景"></a>Go的使用场景</h2><p>目前Go语言已经⼴泛应用于人工智能、云计算开发、容器虚拟化、⼤数据开发、数据分析及科学计算、运维开发、爬虫开发、游戏开发等领域。</p>
 <hr>
 <p>&nbsp;  </p>
 <!--**参考文章**：-->  
-<!--  https://www.liwenzhou.com/posts/Go/install_go_dev/  -->
-<!--  path https://learnku.com/docs/the-way-to-go/go-environment-variable/3565  -->
-<!--  mod https://blog.csdn.net/weixin_39003229/article/details/97638573  -->
+<!---->  
+<!---->  
+
 ]]></content>
       <categories>
         <category>Go</category>
       </categories>
-      <tags>
-        <tag>env</tag>
-      </tags>
   </entry>
   <entry>
     <title>Ansible的配置文件</title>
@@ -301,47 +342,6 @@ timezone: 时区
       </tags>
   </entry>
   <entry>
-    <title>Go语言介绍</title>
-    <url>/2020/01/31/Go%E8%AF%AD%E8%A8%80%E7%AE%80%E4%BB%8B/</url>
-    <content><![CDATA[<blockquote>
-<p><strong>知识文档</strong>：</p>
-</blockquote>
-<ul>
-<li><a href="http://wen.topgoer.com/docs/golang/golang-1ccjbpfstsfi1">go语言中文文档</a></li>
-<li><a href="https://www.liwenzhou.com/posts/Go/about_golang/">李文周的博客</a></li>
-</ul>
-<hr>
-<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><strong><code>Google开发的开源编程语言</code></strong><br>诞生于2006年1月2日下午15点4分5秒，于2009年11月开源，2012年发布go稳定版。Go语言在多核并发上拥有原生的设计优势，Go语言从底层原生支持并发，<code>无须第三方库</code>、开发者的编程技巧和开发经验。<br>它的主要目标是“兼具Python 等动态语言的开发速度和C/C++等编译型语言的性能与安全性”</p>
-<p><strong><code>Go语言为并发而生</code></strong> ——21世纪的C语言<br>硬件制造商正在为处理器添加越来越多的内核以提高性能。所有数据中心都在这些处理器上运行，更重要的是，今天的应用程序使用多个微服务来维护数据库连接，消息队列和维护缓存。因此，开发的软件和编程语言应该可以轻松地支持并发性，并且应该能够随着CPU核心数量的增加而可扩展。</p>
-<p>但是，大多数现代编程语言（如Java，Python等）都来自90年代的单线程环境。虽然一些编程语言的框架在不断地提高多核资源使用效率，例如 Java 的 Netty 等，但仍然需要开发人员花费大量的时间和精力搞懂这些框架的运行原理后才能熟练掌握。</p>
-<p>Go于2009年发布，当时多核处理器已经上市。Go语言在多核并发上拥有原生的设计优势，Go语言从底层原生支持并发，无须第三方库、开发者的编程技巧和开发经验。</p>
-<p>很多公司，特别是中国的互联网公司，即将或者已经完成了使用 Go 语言改造旧系统的过程。经过 Go 语言重构的系统能使用更少的硬件资源获得更高的并发和I/O吞吐表现。充分挖掘硬件设备的潜力也满足当前精细化运营的市场大环境。</p>
-<p>Go语言的并发是基于 <code>goroutine</code> 的，<code>goroutine</code> 类似于线程，但并非线程。可以将 <code>goroutine</code> 理解为一种虚拟线程。Go 语言运行时会参与调度 <code>goroutine</code>，并将 <code>goroutine</code> 合理地分配到每个 CPU 中，最大限度地使用CPU性能。开启一个<code>goroutine</code>的消耗非常小（大约2KB的内存），你可以轻松创建数百万个<code>goroutine</code>。</p>
-<p><code>goroutine</code>的特点：</p>
-<ol>
-<li><code>goroutine</code>具有可增长的分段堆栈。这意味着它们只在需要时才会使用更多内存。</li>
-<li><code>goroutine</code>的启动时间比线程快。</li>
-<li><code>goroutine</code>原生支持利用channel安全地进行通信。</li>
-<li><code>goroutine</code>共享数据结构时无需使用互斥锁。</li>
-</ol>
-<p><strong><code>编译型语言</code></strong><br>与其他现代高级语言（如Java/Python）相比，使用C，C++的最大好处是它们的性能。因为C/ C++是编译型语言而不是解释的语言。 处理器只能理解二进制文件，Java和Python这种高级语言在运行的时候需要先将人类可读的代码翻译成字节码，然后由专门的解释器再转变成处理器可以理解的二进制文件。<br><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/03/15511649241043.jpg?x-oss-process=style/original_format"></p>
-<p>同C,C++一样，Go语言也是编译型的语言，它直接将人类可读的代码编译成了处理器可以直接运行的二进制文件，执行效率更高，性能更好。</p>
-<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><p><strong>语法简洁</strong><br>Go 语言简单易学，学习曲线平缓，不需要像 C/C++ 语言动辄需要两到三年的学习期。Go 语言被称为“互联网时代的C语言”。Go 语言的风格类似于C语言。其语法在C语言的基础上进行了大幅的简化，去掉了不需要的表达式括号，循环也只有 for 一种表示方法，就可以实现数值、键值等各种遍历。</p>
-<p><strong>代码风格统一</strong><br>Go 语言提供了一套格式化工具——go fmt。一些 Go 语言的开发环境或者编辑器在保存时，都会使用格式化工具进行修改代码的格式化，这样就保证了不同开发者提交的代码都是统一的格式。(吐槽下：再也不用担心那些看不懂的黑魔法了…)</p>
-<p><strong>开发效率高</strong><br>Go语言实现了开发效率与执行效率的完美结合，让你像写Python代码（效率）一样编写C代码（性能）。</p>
-<h2 id="Go的使用场景"><a href="#Go的使用场景" class="headerlink" title="Go的使用场景"></a>Go的使用场景</h2><p>目前Go语言已经⼴泛应用于人工智能、云计算开发、容器虚拟化、⼤数据开发、数据分析及科学计算、运维开发、爬虫开发、游戏开发等领域。</p>
-<hr>
-<p>&nbsp;  </p>
-<!--**参考文章**：-->  
-<!---->  
-<!---->  
-
-]]></content>
-      <categories>
-        <category>Go</category>
-      </categories>
-  </entry>
-  <entry>
     <title>好用的Markdown编辑器 —— Pad2 和 Typora</title>
     <url>/2018/04/21/Pad2%E5%92%8CTypora/</url>
     <content><![CDATA[<blockquote>
@@ -376,41 +376,6 @@ timezone: 时区
       </categories>
       <tags>
         <tag>markdown</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ansible中的幂等性</title>
-    <url>/2019/07/06/ansible_Idempotency/</url>
-    <content><![CDATA[<blockquote>
-<p>幂等性（Idempotency）</p>
-</blockquote>
-<p>幂等性是数学和计算机科学上一个常见的概念，多次执行产生的结果不会发生改变，这样的特性就被成为幂等性。幂等性是Idempotency的中文翻译，幂在数学上表示乘方结果，乘方的结果相等可以简洁地描述多次执行后得到相同结果这一概念的意思。</p>
-<h2 id="ansible中的幂等性"><a href="#ansible中的幂等性" class="headerlink" title="ansible中的幂等性"></a>ansible中的幂等性</h2><p>ansible中绝大多数的模块都具有幂等特性，意味着执行一次或多次不会产生副作用。但是<code>shell、command、script、raw</code>这四个模块时不满足幂等性，所有操作会重复执行，但是有些操作不允许重复执行，比如MySQL的初始化命令mysql_install_db，逻辑上它只在第一次配置的过程中初始化一次，其他任何时候都不应该再执行。所有，每当使用这四个模块的时候，都要想一想，重复执行这个命令会不会产生负面影响。</p>
-<p>当然，在上面的四个模块中，除了raw模块外，都提供了实现幂等特性的参数，就是creates和removes：</p>
-<ul>
-<li><strong><code>creates参数</code>：</strong>当指定的文件或目录存在时，则不执行命令；</li>
-<li><strong><code>removes参数</code>：</strong>定的文件或目录不存在时，则不执行命令；</li>
-</ul>
-<blockquote>
-<p>示例如下：</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">- name: use some module</span><br><span class="line">  hosts: node</span><br><span class="line">  gather_facts: false</span><br><span class="line">  tasks:</span><br><span class="line">  # 网卡配置文件不存在时则不执行</span><br><span class="line">  - name: use command module</span><br><span class="line">    command: ifup ens33</span><br><span class="line">    args:</span><br><span class="line">      removes: &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33</span><br><span class="line"></span><br><span class="line">  # mysql配置文件已存在时则不执行，避免覆盖</span><br><span class="line">  - name: use shell module</span><br><span class="line">    shell: cp &#x2F;tmp&#x2F;my.cnf &#x2F;etc&#x2F;my.cnf</span><br><span class="line">    args:</span><br><span class="line">      creates: &#x2F;etc&#x2F;my.cnf</span><br></pre></td></tr></table></figure>
-<p>经过测试可以证明，使用removes或creates参数之后，就可以实现幂等性，保证命令不会重复执行。</p>
-<p>这四个模块都不限于执行shell命令或shell脚本，可以通过executable参数指定其他解释器，如expec执行expect脚本、perl解释器执行perl脚本等等。如下：</p>
-<p><strong><code>change_when 和 faild_when</code></strong><br>使用change_when 和 faild_when来改变task是changed还是faild的认定，也可以实现幂等性</p>
-<hr>
-<p>&nbsp;  </p>
-<!--**参考文章**：-->  
-<!--  https://www.jianshu.com/p/af4eb9caa216  -->  
-
-
-]]></content>
-      <categories>
-        <category>Ansible</category>
-      </categories>
-      <tags>
-        <tag>ansible基础</tag>
-        <tag>实践总结</tag>
       </tags>
   </entry>
   <entry>
@@ -496,6 +461,41 @@ timezone: 时区
       </tags>
   </entry>
   <entry>
+    <title>ansible中的幂等性</title>
+    <url>/2019/07/06/ansible_Idempotency/</url>
+    <content><![CDATA[<blockquote>
+<p>幂等性（Idempotency）</p>
+</blockquote>
+<p>幂等性是数学和计算机科学上一个常见的概念，多次执行产生的结果不会发生改变，这样的特性就被成为幂等性。幂等性是Idempotency的中文翻译，幂在数学上表示乘方结果，乘方的结果相等可以简洁地描述多次执行后得到相同结果这一概念的意思。</p>
+<h2 id="ansible中的幂等性"><a href="#ansible中的幂等性" class="headerlink" title="ansible中的幂等性"></a>ansible中的幂等性</h2><p>ansible中绝大多数的模块都具有幂等特性，意味着执行一次或多次不会产生副作用。但是<code>shell、command、script、raw</code>这四个模块时不满足幂等性，所有操作会重复执行，但是有些操作不允许重复执行，比如MySQL的初始化命令mysql_install_db，逻辑上它只在第一次配置的过程中初始化一次，其他任何时候都不应该再执行。所有，每当使用这四个模块的时候，都要想一想，重复执行这个命令会不会产生负面影响。</p>
+<p>当然，在上面的四个模块中，除了raw模块外，都提供了实现幂等特性的参数，就是creates和removes：</p>
+<ul>
+<li><strong><code>creates参数</code>：</strong>当指定的文件或目录存在时，则不执行命令；</li>
+<li><strong><code>removes参数</code>：</strong>定的文件或目录不存在时，则不执行命令；</li>
+</ul>
+<blockquote>
+<p>示例如下：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">- name: use some module</span><br><span class="line">  hosts: node</span><br><span class="line">  gather_facts: false</span><br><span class="line">  tasks:</span><br><span class="line">  # 网卡配置文件不存在时则不执行</span><br><span class="line">  - name: use command module</span><br><span class="line">    command: ifup ens33</span><br><span class="line">    args:</span><br><span class="line">      removes: &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33</span><br><span class="line"></span><br><span class="line">  # mysql配置文件已存在时则不执行，避免覆盖</span><br><span class="line">  - name: use shell module</span><br><span class="line">    shell: cp &#x2F;tmp&#x2F;my.cnf &#x2F;etc&#x2F;my.cnf</span><br><span class="line">    args:</span><br><span class="line">      creates: &#x2F;etc&#x2F;my.cnf</span><br></pre></td></tr></table></figure>
+<p>经过测试可以证明，使用removes或creates参数之后，就可以实现幂等性，保证命令不会重复执行。</p>
+<p>这四个模块都不限于执行shell命令或shell脚本，可以通过executable参数指定其他解释器，如expec执行expect脚本、perl解释器执行perl脚本等等。如下：</p>
+<p><strong><code>change_when 和 faild_when</code></strong><br>使用change_when 和 faild_when来改变task是changed还是faild的认定，也可以实现幂等性</p>
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!--  https://www.jianshu.com/p/af4eb9caa216  -->  
+
+
+]]></content>
+      <categories>
+        <category>Ansible</category>
+      </categories>
+      <tags>
+        <tag>ansible基础</tag>
+        <tag>实践总结</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>playbook中的条件判断与错误处理</title>
     <url>/2019/07/22/ansible_change_failed_when/</url>
     <content><![CDATA[<h1 id="failed-when-和-changed-when"><a href="#failed-when-和-changed-when" class="headerlink" title="failed_when 和 changed_when"></a>failed_when 和 changed_when</h1><p><code>failed_when</code>关键字的作用是在条件成立时，将对应任务的执行状态设置为<code>Failed</code></p>
@@ -576,6 +576,53 @@ timezone: 时区
       </tags>
   </entry>
   <entry>
+    <title>Ansible简介与安装</title>
+    <url>/2019/05/09/ansible_env_install/</url>
+    <content><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Ansible是一个开源配置管理工具，可以使用它来自动化任务，部署应用程序实现IT基础架构。</p>
+<p>Ansible可以用来自动化日常任务，比如：</p>
+<ul>
+<li>服务器的初始化配置</li>
+<li>安全基线配置</li>
+<li>更新系统和打补丁</li>
+<li>安装软件包等</li>
+</ul>
+<p>Ansible架构相对比较简单，仅需通过SSH连接客户机执行任务即可：</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/ansible/d0c8a786c9177f3ef2e7a557829ef2c29e3d5674.jpeg?x-oss-process=style/original_format"></p>
+<p><strong><code>工作机制</code>：</strong>Ansible 在管理节点将 Ansible 模块通过 SSH 协议（或者 Kerberos、LDAP）推送到被管理端执行，执行完之后自动删除，可以使用版本控制系统（git/svn）来管理自定义模块及playbooks。</p>
+<h2 id="概念术语"><a href="#概念术语" class="headerlink" title="概念术语"></a>概念术语</h2><p>Ansible使用过程中会用到一些概念术语，<strong>与节点有关的重要术语包括</strong><code>控制节点，受管节点，清单和主机文件</code>：<br><strong>控制节点（Control node）</strong>：指安装了Ansible的主机，也叫Ansible服务器端,管理机。 Ansible控制节点主要用于发布运行任务，执行控制命令。Ansible的程序都安装在控制节点上，控制节点需要安装Python和Ansible所需的各种依赖库。注意：目前Ansible还不能安装在Windows下。</p>
+<p><strong>受控节点（Managed nodes）</strong>：也叫客户机，就是想用Ansible执行任务的客户服务器。</p>
+<p><strong>清单（<code>Inventory</code>）</strong>：Ansible 可同时操作属于一个组的多台主机,组和主机之间的关系通过 inventory 文件配置，默认的文件路径为 /etc/ansible/hosts</p>
+<pre><code>清单（Inventory）列表通常保存在一个名为hosts的主机文件中。在hosts文件中，可以使用IP地址或者主机名来表示具体的管理主机和认证信息，并可以根据主机的用户进行分组。缺省文件：/etc/ansible/hosts，可以通过-i指定自定义的hosts文件。
+</code></pre>
+<p><strong>模块（<code>Modules</code>）</strong>：模块是Ansible执行特定任务的代码块。比如：添加用户，上传文件和对客户机执行ping操作等。Ansible现在默认自带450多个模块，，Ansible Galaxy公共存储库则包含大约1600个模块。</p>
+<p><strong>任务（<code>Task</code>）</strong>：是Ansible客户机上执行的操作。可以使用”ad-hoc”单行命令执行一个任务，例：<code>$ansible all -a &quot;/bin/echo hello&quot;</code>。</p>
+<p><strong>剧本（<code>Playbook</code>）</strong>：是利用YAML标记语言编写的可重复执行的任务的列表，playbook实现任务的更便捷的读写和贡献。比如，在Github上有大量的Ansible playbooks共享，你要你有一双善于发现的眼睛你就能找到大量的宝藏。</p>
+<p><strong>角色（<code>roles</code>）</strong>：角色是Ansible 1.2版本引入的新特性，用于层次性、结构化地组织playbook。roles能够根据层次型结构自动装载变量文件、tasks以及handlers等。</p>
+<p><strong>连接插件（<code>Connectior Plugins</code>）</strong>：ansible基于连接插件连接到各个主机上，虽然ansible是使用ssh连接到各个主机的，但是它还支持其他的连接方法，所以需要有连接插件</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/ansible/7c1ed21b0ef41bd512788660a38b48ce38db3dd6.jpeg?x-oss-process=style/original_format"></p>
+<h2 id="Ansible的优势"><a href="#Ansible的优势" class="headerlink" title="Ansible的优势"></a>Ansible的优势</h2><p><strong>无需客户端</strong></p>
+<p>与Chef、Puppet以及Saltstack（现在也支持Agentless方式salt-ssh）不同，Ansible是无客户端Agent的，所以无需在客户机上安装或配置任何程序，就可以运行Ansible任务。由于Ansible不会在客户机上安装任何软件或运行监听程序，因此消除了许多管理开销，我们可以在即可上手使用Ansible管理服务器，同时Ansible的更新也不会影响任何客户机。</p>
+<p><strong>使用SSH进行通讯</strong></p>
+<p>默认情况下，Ansible使用SSH协议在管理机和客户机之间进行通信。可以使用SFTP与客户机进行安全的文件传输。</p>
+<p><strong>并行执行</strong></p>
+<p>Ansible与客户机并行通信，可以更快地运行自动化任务。默认情况下，forks值为5，可以按需，在配置文件中增大该值。</p>
+<h2 id="安装-more"><a href="#安装-more" class="headerlink" title="安装(more)"></a>安装(<a href="https://ansible-tran.readthedocs.io/en/latest/docs/intro_installation.html">more</a>)</h2><p><strong>YUM安装</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install -y http:&#x2F;&#x2F;dl.fedoraproject.org&#x2F;pub&#x2F;epel&#x2F;epel-release-latest-7.noarch.rpm</span><br><span class="line">yum info ansible</span><br><span class="line">yum install ansible</span><br><span class="line">ansible --version</span><br></pre></td></tr></table></figure>
+<p><strong>pip3安装指定版本</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip3 install ansible&#x3D;&#x3D;2.8.10 --trusted-host mirrors.aliyun.com --index-url&#x3D;http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;pypi&#x2F;simple&#x2F;</span><br></pre></td></tr></table></figure>
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!--https://baijiahao.baidu.com/s?id=1650879841344431164&wfr=spider&for=pc-->  
+]]></content>
+      <categories>
+        <category>Ansible</category>
+      </categories>
+      <tags>
+        <tag>env</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>handler响应事件</title>
     <url>/2019/07/10/ansible_handler/</url>
     <content><![CDATA[<h2 id="什么是handler"><a href="#什么是handler" class="headerlink" title="什么是handler?"></a>什么是handler?</h2><p>每个主流的编程语言都会有event机制，那么handler就是playbook的event。<br>Handlers里面的每一个handler，也是对module的一次调用。而handlers与tasks不同，tasks会默认的按定义顺序执行每一个task，handlers则不会，它需要在tasks中被调用，才有可能被执行。<br>Tasks中的任务都是有状态的，changed或者ok。 在Ansible中，只在task的执行状态为changed的时候，才会执行该task调用的handler，这也是handler与普通的event机制不同的地方。</p>
@@ -606,6 +653,29 @@ timezone: 时区
       <tags>
         <tag>ansible基础</tag>
         <tag>playbook</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ansible关闭ssh首次连接(公钥认证)提示</title>
+    <url>/2019/06/09/ansible_host_key_ckeck/</url>
+    <content><![CDATA[<p>Ansible1.2.1及其之后的版本都会默认启用公钥认证.</p>
+<p>公钥认证就是如果之后的某一台客户端和之前登录过的某一台主机IP相同，那么在“known_hosts”中有了不同的key，这时会提示一个错误信息直到被纠正为止。</p>
+<p>在使用Ansible时，可能不想遇到那样的情况，如果有个主机没有在“known_hosts”中被初始化将会导致在交互使用Ansible或定时执行Ansible时对key信息的确认提示。如果想要禁用这个行为的话，可以关闭公钥认证，而且公钥认证会比较慢，也是提高效率的一个方法</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 认证提示：</span><br><span class="line">&quot;msg&quot;: &quot;Using a SSH password instead of a key is not possible because Host Key checking is enabled and sshpass does not support this. Please add this host&#39;s fingerprint to your known_hosts file to manage this host.&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="关闭ssh首次连接的公钥认证提示"><a href="#关闭ssh首次连接的公钥认证提示" class="headerlink" title="关闭ssh首次连接的公钥认证提示"></a>关闭ssh首次连接的公钥认证提示</h2><p><strong>方法1</strong>：<br>编辑<code>ansible.cfg</code>配置文件：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 用来禁止ssh的指纹key字串检查</span><br><span class="line">host_key_checking &#x3D; False</span><br></pre></td></tr></table></figure>
+<p>或者直接设置环境变量：<code>export ANSIBLE_HOST_KEY_CHECKING=False</code></p>
+<p><strong>方法2</strong>：<br>可以使用-o参数将StrictHostKeyChecking设置为no，使用ssh连接时避免首次连接时让输入yes/no部分的提示。通过查看ansible.cfg配置文件，发现如下行：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[ssh_connection]</span><br><span class="line"># ssh arguments to use</span><br><span class="line"># Leaving off ControlPersist will result in poor performance, so use</span><br><span class="line"># paramiko on older platforms rather than removing it</span><br><span class="line">#ssh_args &#x3D; -o ControlMaster&#x3D;auto -o ControlPersist&#x3D;60s</span><br></pre></td></tr></table></figure>
+<p>修改配置文件：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ssh_args &#x3D; -o ControlMaster&#x3D;auto -o ControlPersist&#x3D;60s -o StrictHostKeyChecking＝no</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Ansible</category>
+      </categories>
+      <tags>
+        <tag>ansible基础</tag>
+        <tag>实践总结</tag>
       </tags>
   </entry>
   <entry>
@@ -721,76 +791,6 @@ timezone: 时区
       </tags>
   </entry>
   <entry>
-    <title>Ansible关闭ssh首次连接(公钥认证)提示</title>
-    <url>/2019/06/09/ansible_host_key_ckeck/</url>
-    <content><![CDATA[<p>Ansible1.2.1及其之后的版本都会默认启用公钥认证.</p>
-<p>公钥认证就是如果之后的某一台客户端和之前登录过的某一台主机IP相同，那么在“known_hosts”中有了不同的key，这时会提示一个错误信息直到被纠正为止。</p>
-<p>在使用Ansible时，可能不想遇到那样的情况，如果有个主机没有在“known_hosts”中被初始化将会导致在交互使用Ansible或定时执行Ansible时对key信息的确认提示。如果想要禁用这个行为的话，可以关闭公钥认证，而且公钥认证会比较慢，也是提高效率的一个方法</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 认证提示：</span><br><span class="line">&quot;msg&quot;: &quot;Using a SSH password instead of a key is not possible because Host Key checking is enabled and sshpass does not support this. Please add this host&#39;s fingerprint to your known_hosts file to manage this host.&quot;</span><br></pre></td></tr></table></figure>
-<h2 id="关闭ssh首次连接的公钥认证提示"><a href="#关闭ssh首次连接的公钥认证提示" class="headerlink" title="关闭ssh首次连接的公钥认证提示"></a>关闭ssh首次连接的公钥认证提示</h2><p><strong>方法1</strong>：<br>编辑<code>ansible.cfg</code>配置文件：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 用来禁止ssh的指纹key字串检查</span><br><span class="line">host_key_checking &#x3D; False</span><br></pre></td></tr></table></figure>
-<p>或者直接设置环境变量：<code>export ANSIBLE_HOST_KEY_CHECKING=False</code></p>
-<p><strong>方法2</strong>：<br>可以使用-o参数将StrictHostKeyChecking设置为no，使用ssh连接时避免首次连接时让输入yes/no部分的提示。通过查看ansible.cfg配置文件，发现如下行：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[ssh_connection]</span><br><span class="line"># ssh arguments to use</span><br><span class="line"># Leaving off ControlPersist will result in poor performance, so use</span><br><span class="line"># paramiko on older platforms rather than removing it</span><br><span class="line">#ssh_args &#x3D; -o ControlMaster&#x3D;auto -o ControlPersist&#x3D;60s</span><br></pre></td></tr></table></figure>
-<p>修改配置文件：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ssh_args &#x3D; -o ControlMaster&#x3D;auto -o ControlPersist&#x3D;60s -o StrictHostKeyChecking＝no</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Ansible</category>
-      </categories>
-      <tags>
-        <tag>ansible基础</tag>
-        <tag>实践总结</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ansible简介与安装</title>
-    <url>/2019/05/09/ansible_env_install/</url>
-    <content><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Ansible是一个开源配置管理工具，可以使用它来自动化任务，部署应用程序实现IT基础架构。</p>
-<p>Ansible可以用来自动化日常任务，比如：</p>
-<ul>
-<li>服务器的初始化配置</li>
-<li>安全基线配置</li>
-<li>更新系统和打补丁</li>
-<li>安装软件包等</li>
-</ul>
-<p>Ansible架构相对比较简单，仅需通过SSH连接客户机执行任务即可：</p>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/ansible/d0c8a786c9177f3ef2e7a557829ef2c29e3d5674.jpeg?x-oss-process=style/original_format"></p>
-<p><strong><code>工作机制</code>：</strong>Ansible 在管理节点将 Ansible 模块通过 SSH 协议（或者 Kerberos、LDAP）推送到被管理端执行，执行完之后自动删除，可以使用版本控制系统（git/svn）来管理自定义模块及playbooks。</p>
-<h2 id="概念术语"><a href="#概念术语" class="headerlink" title="概念术语"></a>概念术语</h2><p>Ansible使用过程中会用到一些概念术语，<strong>与节点有关的重要术语包括</strong><code>控制节点，受管节点，清单和主机文件</code>：<br><strong>控制节点（Control node）</strong>：指安装了Ansible的主机，也叫Ansible服务器端,管理机。 Ansible控制节点主要用于发布运行任务，执行控制命令。Ansible的程序都安装在控制节点上，控制节点需要安装Python和Ansible所需的各种依赖库。注意：目前Ansible还不能安装在Windows下。</p>
-<p><strong>受控节点（Managed nodes）</strong>：也叫客户机，就是想用Ansible执行任务的客户服务器。</p>
-<p><strong>清单（<code>Inventory</code>）</strong>：Ansible 可同时操作属于一个组的多台主机,组和主机之间的关系通过 inventory 文件配置，默认的文件路径为 /etc/ansible/hosts</p>
-<pre><code>清单（Inventory）列表通常保存在一个名为hosts的主机文件中。在hosts文件中，可以使用IP地址或者主机名来表示具体的管理主机和认证信息，并可以根据主机的用户进行分组。缺省文件：/etc/ansible/hosts，可以通过-i指定自定义的hosts文件。
-</code></pre>
-<p><strong>模块（<code>Modules</code>）</strong>：模块是Ansible执行特定任务的代码块。比如：添加用户，上传文件和对客户机执行ping操作等。Ansible现在默认自带450多个模块，，Ansible Galaxy公共存储库则包含大约1600个模块。</p>
-<p><strong>任务（<code>Task</code>）</strong>：是Ansible客户机上执行的操作。可以使用”ad-hoc”单行命令执行一个任务，例：<code>$ansible all -a &quot;/bin/echo hello&quot;</code>。</p>
-<p><strong>剧本（<code>Playbook</code>）</strong>：是利用YAML标记语言编写的可重复执行的任务的列表，playbook实现任务的更便捷的读写和贡献。比如，在Github上有大量的Ansible playbooks共享，你要你有一双善于发现的眼睛你就能找到大量的宝藏。</p>
-<p><strong>角色（<code>roles</code>）</strong>：角色是Ansible 1.2版本引入的新特性，用于层次性、结构化地组织playbook。roles能够根据层次型结构自动装载变量文件、tasks以及handlers等。</p>
-<p><strong>连接插件（<code>Connectior Plugins</code>）</strong>：ansible基于连接插件连接到各个主机上，虽然ansible是使用ssh连接到各个主机的，但是它还支持其他的连接方法，所以需要有连接插件</p>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/ansible/7c1ed21b0ef41bd512788660a38b48ce38db3dd6.jpeg?x-oss-process=style/original_format"></p>
-<h2 id="Ansible的优势"><a href="#Ansible的优势" class="headerlink" title="Ansible的优势"></a>Ansible的优势</h2><p><strong>无需客户端</strong></p>
-<p>与Chef、Puppet以及Saltstack（现在也支持Agentless方式salt-ssh）不同，Ansible是无客户端Agent的，所以无需在客户机上安装或配置任何程序，就可以运行Ansible任务。由于Ansible不会在客户机上安装任何软件或运行监听程序，因此消除了许多管理开销，我们可以在即可上手使用Ansible管理服务器，同时Ansible的更新也不会影响任何客户机。</p>
-<p><strong>使用SSH进行通讯</strong></p>
-<p>默认情况下，Ansible使用SSH协议在管理机和客户机之间进行通信。可以使用SFTP与客户机进行安全的文件传输。</p>
-<p><strong>并行执行</strong></p>
-<p>Ansible与客户机并行通信，可以更快地运行自动化任务。默认情况下，forks值为5，可以按需，在配置文件中增大该值。</p>
-<h2 id="安装-more"><a href="#安装-more" class="headerlink" title="安装(more)"></a>安装(<a href="https://ansible-tran.readthedocs.io/en/latest/docs/intro_installation.html">more</a>)</h2><p><strong>YUM安装</strong>：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install -y http:&#x2F;&#x2F;dl.fedoraproject.org&#x2F;pub&#x2F;epel&#x2F;epel-release-latest-7.noarch.rpm</span><br><span class="line">yum info ansible</span><br><span class="line">yum install ansible</span><br><span class="line">ansible --version</span><br></pre></td></tr></table></figure>
-<p><strong>pip3安装指定版本</strong>：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip3 install ansible&#x3D;&#x3D;2.8.10 --trusted-host mirrors.aliyun.com --index-url&#x3D;http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;pypi&#x2F;simple&#x2F;</span><br></pre></td></tr></table></figure>
-<hr>
-<p>&nbsp;  </p>
-<!--**参考文章**：-->  
-<!--https://baijiahao.baidu.com/s?id=1650879841344431164&wfr=spider&for=pc-->  
-]]></content>
-      <categories>
-        <category>Ansible</category>
-      </categories>
-      <tags>
-        <tag>env</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Ansible Playbook 标准构建</title>
     <url>/2019/07/12/ansible_play_example/</url>
     <content><![CDATA[<p>playbooks是 一个不同于使用Ansible命令行执行方式的模式，其功能更强大灵活。简单来说，playbook是一个非常简单的配置管理和多主机部署系统，不同于任何已经存在的模式，可作为一个适合部署复杂应用程序的基础。Playbook可以定制配置，可以按照指定的操作步骤有序执行，支持同步和异步方式。值得注意的是playbook是通过YAML格式来进行描述定义的。</p>
@@ -806,6 +806,206 @@ timezone: 时区
 <hr>
 <!--  https://blog.csdn.net/dick633/article/details/110220279  -->  
 <!--  http://gitlab.xpaas.lenovo.com/CBP-Application/ansiblerepos/roles  -->  
+]]></content>
+      <categories>
+        <category>Ansible</category>
+      </categories>
+      <tags>
+        <tag>ansible基础</tag>
+        <tag>playbook</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>playbook常见的变量的使用方法</title>
+    <url>/2019/07/11/ansible_play_var_use/</url>
+    <content><![CDATA[<h1 id="一、Playbook中vars关键字定义的变量"><a href="#一、Playbook中vars关键字定义的变量" class="headerlink" title="一、Playbook中vars关键字定义的变量"></a>一、Playbook中vars关键字定义的变量</h1><h2 id="Playbook中定义和使用的变量的方法"><a href="#Playbook中定义和使用的变量的方法" class="headerlink" title="Playbook中定义和使用的变量的方法"></a>Playbook中定义和使用的变量的方法</h2><p>用户可以在Playbook中，通过vars关键字自定义变量，使用时用<code>&#123;&#123; &#125;&#125;</code>引用以来即可。</p>
+<p>下面的例子中，用户定义变量名为http_port，其值为为80。在tasks firewalld中，通过<code>&#123;&#123; &#125;&#125;</code>引用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">- hosts: web</span><br><span class="line">  vars:</span><br><span class="line">    http_port: 80</span><br><span class="line">  remote_user: root</span><br><span class="line">  tasks:</span><br><span class="line">  - name: insert firewalld rule for httpd</span><br><span class="line">    firewalld: port&#x3D;&#123;&#123; http_port &#125;&#125;&#x2F;tcp permanent&#x3D;true state&#x3D;enabled immediate&#x3D;yes</span><br></pre></td></tr></table></figure>
+<h2 id="把变量放在单独的文件中"><a href="#把变量放在单独的文件中" class="headerlink" title="把变量放在单独的文件中"></a>把变量放在单独的文件中</h2><p>当变量比较多的时候，或者变量需要在多个playbook中重用的时候，可以把变量放到一个单独的文件中。通过关键字<code>var_files</code>把文件中定义的变量引入playbook中，使用变量的方法和在本文件中定义的变量相同。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">- hosts: web</span><br><span class="line">  remote_user: root</span><br><span class="line">  vars_files:</span><br><span class="line">    - vars&#x2F;server_vars.yml</span><br><span class="line">  tasks:</span><br><span class="line">  - name: insert firewalld rule for httpd</span><br><span class="line">    firewalld: port&#x3D;&#123;&#123; http_port &#125;&#125;&#x2F;tcp permanent&#x3D;true state&#x3D;enabled immediate&#x3D;yes</span><br></pre></td></tr></table></figure>
+<p>变量文件vars/server_vars.yml的内容为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http_port: 80</span><br></pre></td></tr></table></figure>
+<h2 id="定义和使用复杂变量"><a href="#定义和使用复杂变量" class="headerlink" title="定义和使用复杂变量"></a>定义和使用复杂变量</h2><p>有时候我们需要使用的变量的值不是简单的字符串或者数字，而是一个对象。这时候定义的语法如下，格式为YAML的字典格式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">foo:</span><br><span class="line">  field1: one</span><br><span class="line">  field2: two</span><br></pre></td></tr></table></figure>
+<p>访问复杂变量中的子属性，可以利用中括号或者点号：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">foo[&#39;field1&#39;]</span><br><span class="line">foo.field1</span><br></pre></td></tr></table></figure>
+<h2 id="YAML的陷阱"><a href="#YAML的陷阱" class="headerlink" title="YAML的陷阱"></a>YAML的陷阱</h2><p>YAML的陷阱是某些时候YAML和Ansible Playbook的变量语法不能在一起好好工作了。这里仅发生在指冒号后面的值不能以{开头的时候，如果有必要以{开头，必须加上引号。总之在YAML值的定义中，如果提示YMAL语法错误，都可以尝试下加入引号来解决。<br>下面的代码会报错:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">- hosts: app_servers</span><br><span class="line">  vars:</span><br><span class="line">    app_path: &#123;&#123; base_path &#125;&#125;&#x2F;22</span><br></pre></td></tr></table></figure>
+<p>解决办法：要在”{ “开始的值<strong>加上引号</strong>:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">- hosts: app_servers</span><br><span class="line">  vars:</span><br><span class="line">     app_path: &quot;&#123;&#123; base_path &#125;&#125;&#x2F;22&quot;</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="二、主机的系统变量-gather-facts"><a href="#二、主机的系统变量-gather-facts" class="headerlink" title="二、主机的系统变量(gather_facts)"></a>二、主机的系统变量(gather_facts)</h1><p>ansible会通过<code>module setup</code>来收集主机的系统信息，这些收集到的系统信息叫做<code>facts</code>，这些<code>facts</code>信息可以直接以变量的形式使用。<br>哪些<code>facts</code>变量可以引用呢？在命令行上通过调用<code>setup module</code>命令可以查看</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ ansible all -m setup -u root</span><br></pre></td></tr></table></figure>
+<p>怎样在playbook中使用facts变量呢，答案是直接使用：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: all</span><br><span class="line">  user: root</span><br><span class="line">  tasks:</span><br><span class="line">  - name: echo system</span><br><span class="line">    shell: echo &#123;&#123; ansible_os_family &#125;&#125;</span><br><span class="line">  - name install ntp on Debian linux</span><br><span class="line">    apt: name&#x3D;git state&#x3D;installed</span><br><span class="line">    when: ansible_os_family &#x3D;&#x3D; &quot;Debian&quot;</span><br><span class="line">  - name install ntp on redhat linux</span><br><span class="line">    yum: name&#x3D;git state&#x3D;present</span><br><span class="line">    when: ansible_os_family &#x3D;&#x3D; &quot;RedHat&quot;</span><br></pre></td></tr></table></figure>
+<p>使用复杂facts变量<br>一般在系统中收集到如下的信息，复杂的、多层级的facts变量如何使用呢？</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">        &quot;ansible_ens3&quot;: &#123;</span><br><span class="line">            &quot;active&quot;: true, </span><br><span class="line">            &quot;device&quot;: &quot;ens3&quot;, </span><br><span class="line">            &quot;ipv4&quot;: &#123;</span><br><span class="line">                &quot;address&quot;: &quot;10.66.192.234&quot;, </span><br><span class="line">                &quot;netmask&quot;: &quot;255.255.254.0&quot;, </span><br><span class="line">                &quot;network&quot;: &quot;10.66.192.0&quot;</span><br><span class="line">            &#125;, </span><br><span class="line">            &quot;ipv6&quot;: [</span><br><span class="line">                &#123;</span><br><span class="line">                    &quot;address&quot;: &quot;2620:52:0:42c0:5054:ff:fef2:e2a3&quot;, </span><br><span class="line">                    &quot;prefix&quot;: &quot;64&quot;, </span><br><span class="line">                    &quot;scope&quot;: &quot;global&quot;</span><br><span class="line">                &#125;, </span><br><span class="line">                &#123;</span><br><span class="line">                    &quot;address&quot;: &quot;fe80::5054:ff:fef2:e2a3&quot;, </span><br><span class="line">                    &quot;prefix&quot;: &quot;64&quot;, </span><br><span class="line">                    &quot;scope&quot;: &quot;link&quot;</span><br><span class="line">                &#125;</span><br><span class="line">            ], </span><br><span class="line">            &quot;macaddress&quot;: &quot;52:54:00:f2:e2:a3&quot;, </span><br><span class="line">            &quot;module&quot;: &quot;8139cp&quot;, </span><br><span class="line">            &quot;mtu&quot;: 1500, </span><br><span class="line">            &quot;promisc&quot;: false, </span><br><span class="line">            &quot;type&quot;: &quot;ether&quot;</span><br><span class="line">        &#125;, </span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>那么可以通过下面的两种方式访问复杂的变量中的子属性:<br>中括号：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;&#123; ansible_ens3[&quot;ipv4&quot;][&quot;address&quot;] &#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>点号：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;&#123; ansible_ens3.ipv4.address &#125;&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="关闭facts"><a href="#关闭facts" class="headerlink" title="关闭facts"></a>关闭facts</h2><p>在Playbook中,如果写gather_facts来控制是否收集远程系统的信息.如果不收集系统信息,那么上面的变量就不能在该playybook中使用了.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">- hosts: whatever</span><br><span class="line">  gather_facts: no</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="三、template文件模板中使用的变量"><a href="#三、template文件模板中使用的变量" class="headerlink" title="三、template文件模板中使用的变量"></a>三、template文件模板中使用的变量</h1><h2 id="template变量的定义-more"><a href="#template变量的定义-more" class="headerlink" title="template变量的定义(more)"></a>template变量的定义<a href="https://ansible-book.gitbooks.io/ansible-first-book/advance/playbook/tamplatezhong_shi_yong_bian_liang.html">(more)</a></h2><p>在playbook中定义的变量，可以直接在template中使用，同时facts变量也可以直接在template中使用，当然也包含在inventory里面定义的host和group变量。只要是在playbook中可以访问的变量，都可以在template文件中使用。</p>
+<hr>
+<h1 id="四、把task运行结果进行注册变量"><a href="#四、把task运行结果进行注册变量" class="headerlink" title="四、把task运行结果进行注册变量"></a>四、把task运行结果进行注册变量</h1><p>把task的执行结果也可以作为一个变量值。这个时候就需要用到<code>register</code>关键字实现<code>注册变量</code>，将执行结果注册到一个变量中，待后面的action使用：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: web</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">     - shell: ls</span><br><span class="line">       register: result</span><br><span class="line">       ignore_errors: True</span><br><span class="line"></span><br><span class="line">     - shell: echo &quot;&#123;&#123; result.stdout &#125;&#125;&quot;</span><br><span class="line">       when: result.rc &#x3D;&#x3D; 5</span><br><span class="line"></span><br><span class="line">     - debug: msg&#x3D;&quot;&#123;&#123; result.stdout &#125;&#125;&quot;</span><br></pre></td></tr></table></figure>
+<p><code>注册变量</code>经常和<code>debug module</code>一起使用，这样可以得到更多action的输出信息，帮助用户调试。</p>
+<hr>
+<h1 id="五、playbook-命令行变量传值"><a href="#五、playbook-命令行变量传值" class="headerlink" title="五、playbook 命令行变量传值"></a>五、playbook 命令行变量传值</h1><p>为了使Playbook更灵活、通用性更强，允许用户在执行的时候传入变量的值，这个时候就需要用到“额外变量”。</p>
+<h2 id="定义命令行变量"><a href="#定义命令行变量" class="headerlink" title="定义命令行变量"></a>定义命令行变量</h2><p>在release.yml文件里，<code>hosts和user</code>都定义为变量，需要从命令行传递变量值。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: &#39;&#123;&#123; hosts &#125;&#125;&#39;</span><br><span class="line">  remote_user: &#39;&#123;&#123; user &#125;&#125;&#39;</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">     - ...</span><br></pre></td></tr></table></figure>
+<h2 id="使用命令行变量"><a href="#使用命令行变量" class="headerlink" title="使用命令行变量"></a>使用命令行变量</h2><p>在命令行里面传值得的方法：<br><code>ansible-playbook e33_var_in_command.yml --extra-vars &quot;hosts=web user=root&quot;</code><br>还可以用json格式传递参数：<br><code>ansible-playbook e33_var_in_command.yml --extra-vars &quot;&#123;&#39;hosts&#39;:&#39;vm-rhel7-1&#39;, &#39;user&#39;:&#39;root&#39;&#125;&quot;</code><br>还可以将参数放在文件里面：<br><code>ansible-playbook e33_var_in_command.yml --extra-vars &quot;@vars.json&quot;</code></p>
+<hr>
+]]></content>
+      <categories>
+        <category>Ansible</category>
+      </categories>
+      <tags>
+        <tag>ansible基础</tag>
+        <tag>playbook</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Role - Playbook的“Package”</title>
+    <url>/2019/07/12/ansible_play_role_care/</url>
+    <content><![CDATA[<h1 id="Role-Playbook的“Package”"><a href="#Role-Playbook的“Package”" class="headerlink" title="Role - Playbook的“Package”"></a><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html#role-directory-structure">Role</a> - Playbook的“Package”</h1><p>Role是比include更强大灵活的代码重用和分享机制。Include类似于编程语言中的include，是重用单个文件的，功能有限。</p>
+<p>而Role类似于编程语言中的“Package”，可以重用一组文件形成完整的功能。例如安装和配置apache，需要tasks实现安装包和拷贝模版等，httpd.conf和index.html的模版文件，和handler文件实现重起功能。这些文件都可以放在一个role里面，供不同的playbook文件重用。</p>
+<p>Ansible非常提倡在playbook中使用role，并且提供了一个分享role的平台Ansible Galaxy, <a href="https://galaxy.ansible.com/">https://galaxy.ansible.com/</a>, 在galaxy上可以找到别人写好的role。在后面的章节中，我们再详细介绍如何使用它。</p>
+<h2 id="定义role完整的目录结构"><a href="#定义role完整的目录结构" class="headerlink" title="定义role完整的目录结构"></a>定义role完整的目录结构</h2><p><strong>在ansible中,通过遵循特定的目录结构,就可以实现对role的定义。</strong>。具体遵循的目录结构是什么呢？看下面的例子：</p>
+<p>下面的目录结构定义了一个role：名字为myrole。在site.yml，调用了这个role。</p>
+<table>
+    <tr>
+        <td>
+            role的目录结构
+        </td>
+        <td>
+            site.yml中调用role
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <pre>
+<code class='lang-yml'>
+site.yml
+roles/
+├── myrole
+    ├── tasks
+    │ └── main.yml
+    ├── handlers
+    │ └── main.yml
+    ├── defaults
+    │ └── main.yml
+    ├── vars
+    │ └── main.yml
+    ├── files
+    ├── templates
+    ├── README.md
+    ├── meta
+    │ └── main.yml
+    └── tests
+        ├── inventory
+        └── test.yml
+
+
+</code>
+</pre>
+        </td>
+        <td>
+            <pre>
+<code>
+---
+- hosts: webservers
+  roles:
+     - myrole
+</code>
+</pre>
+        </td>
+    </tr>
+</table>
+
+<p>ansible并不要求role包含上述所有的目录及文件，根据role的功能需要加入对应的目录和文件。下面是每个目录和文件的功能。</p>
+<ul>
+<li>如果 roles/x/tasks/main.yml 存在, 其中列出的 tasks 将被添加到 play 中，所以这个文件也可以视作role的入口文件，想看role做了什么操作，可以从此文件看起。</li>
+<li>如果 roles/x/handlers/main.yml 存在, 其中列出的 handlers 将被添加到 play 中</li>
+<li>如果 roles/x/vars/main.yml 存在, 其中列出的 variables 将被添加到 play 中</li>
+<li>如果 roles/x/meta/main.yml 存在, 其中列出的 “角色依赖” 将被添加到 roles 列表中</li>
+<li>roles/x/tasks/main.yml中所有tasks，可以引用 roles/x/{files,templates,tasks}中的文件，不需要指明文件的路径。</li>
+</ul>
+<p>你自己在写role的时候，一般都要包含role入口文件roles/x/tasks/main.yml，其它的文件和目录，可以根据需求选择加入。</p>
+<p>学会写一个功能完整的role是一个相对复杂的过程，也是ansible中较高级的使用方法。在本小节，我们重点介绍如何使用别人已经写好的role。在后面的章节中，我们会通过具体的示例来逐步介绍写role的所需的知识。</p>
+<h2 id="带参数的Role"><a href="#带参数的Role" class="headerlink" title="带参数的Role"></a>带参数的Role</h2><h3 id="参数在role中是如何定义的呢"><a href="#参数在role中是如何定义的呢" class="headerlink" title="参数在role中是如何定义的呢"></a>参数在role中是如何定义的呢</h3><p> 定义一个带参数的role,名字是myrole,那么目录结构为</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">main.yml</span><br><span class="line">roles</span><br><span class="line">  role_with_var</span><br><span class="line">    tasks</span><br><span class="line">      main.yml</span><br></pre></td></tr></table></figure>
+<p> 在roles/myrole/tasks/main.yml中,使用<code>&#123;&#123; &#125;&#125;</code>定义的变量就可以了</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">- name: use param</span><br><span class="line">  debug: msg&#x3D;&quot;&#123;&#123; param &#125;&#125;&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="使用带参数的role"><a href="#使用带参数的role" class="headerlink" title="使用带参数的role"></a>使用带参数的role</h3><p>那么在main.yml就可以用如下的方法使用myrole</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: webservers</span><br><span class="line">  roles:</span><br><span class="line">    - &#123; role: myrole, param: &#39;Call some_role for the 1st time&#39; &#125;</span><br><span class="line">    - &#123; role: myrole, param: &#39;Call some_role for the 2nd time&#39; &#125;</span><br></pre></td></tr></table></figure>
+<p>或者写成YAML字典格式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: webservers</span><br><span class="line">  roles:</span><br><span class="line">    - role: myrole</span><br><span class="line">      param: &#39;Call some_role for the 1st time&#39;</span><br><span class="line">    - role: myrole</span><br><span class="line">      param: &#39;Call some_role for the 2nd time&#39;</span><br></pre></td></tr></table></figure>
+<h3 id="role指定默认的参数"><a href="#role指定默认的参数" class="headerlink" title="role指定默认的参数"></a>role指定默认的参数</h3><p>指定默认参数后,如果在调用时传参数了,那么就使用传入的参数值.如果调用的时候没有传参数,那么就使用默认的参数值.</p>
+<p>指定默认参数很简单,以上面的role_with_var为例</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">main.yml</span><br><span class="line">roles:</span><br><span class="line">  myrole</span><br><span class="line">    tasks</span><br><span class="line">      main.yml</span><br><span class="line">    defaults</span><br><span class="line">      main.yml</span><br></pre></td></tr></table></figure>
+<p>在roles/myrole/defaults/main.yml中,使用yml的字典定义语法定义param的值,如下:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">param: &quot;I am the default value&quot;</span><br></pre></td></tr></table></figure>
+<p>这样在main.yml中,下面两种调用方法都可以</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: webservers</span><br><span class="line">  roles:</span><br><span class="line">    - role_with_var</span><br><span class="line">    - &#123; role: role_with_var, param: &#39;I am the value from external&#39; &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>更多的例子在<a href="https://github.com/shijingjing1221/ansible-first-book-examples/blob/master/role_vars.yml">https://github.com/shijingjing1221/ansible-first-book-examples/blob/master/role_vars.yml</a> 中</p>
+<h2 id="role与条件语句when一起执行"><a href="#role与条件语句when一起执行" class="headerlink" title="role与条件语句when一起执行"></a>role与条件语句when一起执行</h2><p>下面的例子中,my_role只有在RedHat系列的server上才执行。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: webservers</span><br><span class="line">  roles:</span><br><span class="line">    - &#123; role: my_role, when: &quot;ansible_os_family &#x3D;&#x3D; &#39;RedHat&#39;&quot; &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>同样也可以写成YAML字典格式</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: webservers</span><br><span class="line">  roles:</span><br><span class="line">    - role: my_role</span><br><span class="line">      when: &quot;ansible_os_family &#x3D;&#x3D; &#39;RedHat&#39;&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="roles和tasks的执行顺序"><a href="#roles和tasks的执行顺序" class="headerlink" title="roles和tasks的执行顺序"></a>roles和tasks的执行顺序</h2><p>如果一个playbook同时出现role和tasks，他们的调用顺序是什么样的呢？</p>
+<p>先揭晓答案，再根据实例来验证：</p>
+<p><strong>pre_tasks &gt; role &gt; tasks &gt; post_tasks</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: lb</span><br><span class="line">  user: root</span><br><span class="line"></span><br><span class="line">  pre_tasks:</span><br><span class="line">    - name: pre</span><br><span class="line">      shell: echo &#39;hello&#39;</span><br><span class="line"></span><br><span class="line">  roles:</span><br><span class="line">    - &#123; role: some_role &#125;</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">    - name: task</span><br><span class="line">      shell: echo &#39;still busy&#39;</span><br><span class="line"></span><br><span class="line">  post_tasks:</span><br><span class="line">    - name: post</span><br><span class="line">      shell: echo &#39;goodbye&#39;</span><br></pre></td></tr></table></figure>
+<p>执行的结果为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PLAY [lb] **********************************************************************</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">TASK [setup] *******************************************************************</span><br><span class="line">ok: [rhel7u3]</span><br><span class="line"></span><br><span class="line">TASK [pre] *********************************************************************</span><br><span class="line">changed: [rhel7u3]</span><br><span class="line"></span><br><span class="line">TASK [some_role : some role] ***************************************************</span><br><span class="line">ok: [rhel7u3] &#x3D;&gt; &#123;</span><br><span class="line">    &quot;msg&quot;: &quot;Im some role&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">TASK [task] ********************************************************************</span><br><span class="line">changed: [rhel7u3]</span><br><span class="line"></span><br><span class="line">TASK [post] ********************************************************************</span><br><span class="line">changed: [rhel7u3]</span><br><span class="line"></span><br><span class="line">PLAY RECAP *********************************************************************</span><br><span class="line">rhel7u3 : ok&#x3D;5 changed&#x3D;3 unreachable&#x3D;0 failed&#x3D;0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Ansible</category>
+      </categories>
+      <tags>
+        <tag>ansible基础</tag>
+        <tag>playbook</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Playbook基本语法</title>
+    <url>/2019/07/10/ansible_py_basic_grammar/</url>
+    <content><![CDATA[<h2 id="ansible-playbook命令行-more"><a href="#ansible-playbook命令行-more" class="headerlink" title="ansible-playbook命令行(more)"></a>ansible-playbook命令行<a href="https://docs.ansible.com/ansible/latest/cli/ansible-playbook.html">(more)</a></h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">usage: ansible-playbook [-h] [--version] [-v] [-k]</span><br></pre></td></tr></table></figure>
+<h3 id="常用命令行关键字"><a href="#常用命令行关键字" class="headerlink" title="常用命令行关键字"></a>常用命令行关键字</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">--ask-vault-password, --ask-vault-pass</span><br><span class="line">要求提供保管库密码</span><br><span class="line"></span><br><span class="line">--become-method &lt;BECOME_METHOD&gt;</span><br><span class="line">要使用的特权升级方法（默认&#x3D; sudo），请使用ansible-doc -t成为-l列出有效的选择。</span><br><span class="line"></span><br><span class="line">--become-user &lt;BECOME_USER&gt;</span><br><span class="line">以该用户身份运行操作（默认&#x3D; root）</span><br><span class="line"></span><br><span class="line">--flush-cache</span><br><span class="line">清除清单中每个主机的事实缓存</span><br><span class="line"></span><br><span class="line">--force-handlers</span><br><span class="line">即使任务失败也运行处理程序</span><br><span class="line"></span><br><span class="line">--list-hosts</span><br><span class="line">输出匹配主机列表；不执行其他任何操作</span><br><span class="line"></span><br><span class="line">--list-tags</span><br><span class="line">列出所有可用标签</span><br><span class="line"></span><br><span class="line">--list-tasks</span><br><span class="line">列出将要执行的所有任务</span><br><span class="line"></span><br><span class="line">--private-key &lt;PRIVATE_KEY_FILE&gt;, --key-file &lt;PRIVATE_KEY_FILE&gt;</span><br><span class="line">使用此文件来验证连接</span><br><span class="line"></span><br><span class="line">--scp-extra-args &lt;SCP_EXTRA_ARGS&gt;</span><br><span class="line">指定额外的参数以仅传递给scp（例如-l）</span><br><span class="line"></span><br><span class="line">--sftp-extra-args &lt;SFTP_EXTRA_ARGS&gt;</span><br><span class="line">指定额外的参数以仅传递给sftp（例如-f，-l）</span><br><span class="line"></span><br><span class="line">--skip-tags</span><br><span class="line">仅运行标签与这些值不匹配的剧本和任务</span><br><span class="line"></span><br><span class="line">--ssh-common-args &lt;SSH_COMMON_ARGS&gt;</span><br><span class="line">指定要传递给sftp &#x2F; scp &#x2F; ssh的通用参数（例如ProxyCommand）</span><br><span class="line"></span><br><span class="line">--ssh-extra-args &lt;SSH_EXTRA_ARGS&gt;</span><br><span class="line">指定额外的参数以仅传递给ssh（例如-R）</span><br><span class="line"></span><br><span class="line">--start-at-task &lt;START_AT_TASK&gt;</span><br><span class="line">在与此名称匹配的任务处启动剧本</span><br><span class="line"></span><br><span class="line">--step</span><br><span class="line">一步一步：在运行之前确认每个任务</span><br><span class="line"></span><br><span class="line">--syntax-check</span><br><span class="line">在剧本上执行语法检查，但不执行</span><br><span class="line"></span><br><span class="line">--vault-id</span><br><span class="line">要使用的库身份</span><br><span class="line"></span><br><span class="line">--vault-password-file, --vault-pass-file</span><br><span class="line">保险库密码文件</span><br><span class="line"></span><br><span class="line">--version</span><br><span class="line">显示程序的版本号，配置文件位置，配置的模块搜索路径，模块位置，可执行文件位置和退出</span><br><span class="line"></span><br><span class="line">-C, --check</span><br><span class="line">不要做任何改变；相反，尝试预测可能发生的某些变化</span><br><span class="line"></span><br><span class="line">-D, --diff</span><br><span class="line">更改（小的）文件和模板时，请显示这些文件中的差异；与–check一起使用效果很好</span><br><span class="line"></span><br><span class="line">-K, --ask-become-pass</span><br><span class="line">要求特权升级密码</span><br><span class="line"></span><br><span class="line">-M, --module-path</span><br><span class="line">将冒号分隔的路径添加到模块库（默认&#x3D;〜&#x2F; .ansible &#x2F; plugins &#x2F; modules：&#x2F; usr &#x2F; share &#x2F; ansible &#x2F; plugins &#x2F; modules）</span><br><span class="line"></span><br><span class="line">-T &lt;TIMEOUT&gt;, --timeout &lt;TIMEOUT&gt;</span><br><span class="line">覆盖连接超时（以秒为单位）（默认为10）</span><br><span class="line"></span><br><span class="line">-b, --become</span><br><span class="line">使用变为运行操作（不表示提示输入密码）</span><br><span class="line"></span><br><span class="line">-c &lt;CONNECTION&gt;, --connection &lt;CONNECTION&gt;</span><br><span class="line">要使用的连接类型（默认&#x3D;智能）</span><br><span class="line"></span><br><span class="line">-e, --extra-vars</span><br><span class="line">如果文件名以@开头，则将其他变量设置为key &#x3D; value或YAML &#x2F; JSON</span><br><span class="line"></span><br><span class="line">-f &lt;FORKS&gt;, --forks &lt;FORKS&gt;</span><br><span class="line">指定要使用的并行进程数（默认&#x3D; 5）</span><br><span class="line"></span><br><span class="line">-h, --help</span><br><span class="line">显示此帮助消息并退出</span><br><span class="line"></span><br><span class="line">-i, --inventory, --inventory-file</span><br><span class="line">指定清单主机路径或逗号分隔的主机列表。–不推荐使用库存文件</span><br><span class="line"></span><br><span class="line">-k, --ask-pass</span><br><span class="line">询问连接密码</span><br><span class="line"></span><br><span class="line">-l &lt;SUBSET&gt;, --limit &lt;SUBSET&gt;</span><br><span class="line">将所选主机进一步限制为其他模式</span><br><span class="line"></span><br><span class="line">-t, --tags</span><br><span class="line">只运行带有这些值标记的剧本和任务</span><br><span class="line"></span><br><span class="line">-u &lt;REMOTE_USER&gt;, --user &lt;REMOTE_USER&gt;</span><br><span class="line">以该用户身份连接（默认&#x3D;无）</span><br><span class="line"></span><br><span class="line">-v, --verbose</span><br><span class="line">详细模式（-vvv用于更多，-vvvv用于启用连接调试）</span><br></pre></td></tr></table></figure>
+<h3 id="执行Playbook的语法"><a href="#执行Playbook的语法" class="headerlink" title="执行Playbook的语法"></a>执行Playbook的语法</h3><p><code>$ ansible-playbook deploy.yml</code><br>查看输出的细节<br><code>ansible-playbook playbook.yml --verbose</code><br>查看该脚本影响哪些hosts<br><code>ansible-playbook playbook.yml --list-hosts</code><br>并行执行脚本<br><code>ansible-playbook playbook.yml -f 10</code></p>
+<h2 id="完整的playbook脚本示例"><a href="#完整的playbook脚本示例" class="headerlink" title="完整的playbook脚本示例"></a>完整的playbook脚本示例</h2><p>最基本的playbook脚本分为三个部分:</p>
+<ol>
+<li>在什么机器上以什么身份执行</li>
+</ol>
+<ul>
+<li>hosts</li>
+<li>users</li>
+</ul>
+<ol start="2">
+<li>执行的任务是都有什么</li>
+</ol>
+<ul>
+<li>tasks</li>
+</ul>
+<ol start="3">
+<li>善后的任务都有什么</li>
+</ol>
+<ul>
+<li>handlers</li>
+</ul>
+<blockquote>
+<p>deploy.yml文件</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: webservers</span><br><span class="line">  vars:</span><br><span class="line">    http_port: 80</span><br><span class="line">    max_clients: 200</span><br><span class="line">  user: root</span><br><span class="line">  tasks:</span><br><span class="line">    - name: ensure apache is at the latest version</span><br><span class="line">      yum: pkg&#x3D;httpd state&#x3D;latest</span><br><span class="line">    - name: write the apache config file</span><br><span class="line">      template: src&#x3D;&#x2F;srv&#x2F;httpd.j2 dest&#x3D;&#x2F;etc&#x2F;httpd.conf</span><br><span class="line">      notify:</span><br><span class="line">        - restart apache</span><br><span class="line">    - name: ensure apache is running</span><br><span class="line">      service: name&#x3D;httpd state&#x3D;started</span><br><span class="line">  handlers:</span><br><span class="line">    - name: restart apache</span><br><span class="line">      service: name&#x3D;httpd state&#x3D;restarted</span><br></pre></td></tr></table></figure>
+<h2 id="playbook语法特性"><a href="#playbook语法特性" class="headerlink" title="playbook语法特性"></a>playbook语法特性</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1. 以 --- (三个减号)开始，必须顶行写；</span><br><span class="line">2. 次行开始写Playbook的内容，但是一般要求写明该playbook的功能；</span><br><span class="line">3. 严格缩进，并且不能用Tab键缩进；</span><br><span class="line">4. 缩进级别必须是一致的，同样的缩进代表同样的级别，程序判别配置的级别是通过缩进结合换行来实现的；</span><br><span class="line">5. K&#x2F;V的值可同行写，也可换行写。同行使用 :分隔，换行写需要以 - 分隔；</span><br></pre></td></tr></table></figure>
+<hr>
+<p>&nbsp;  </p>
+<!--  https://www.cnblogs.com/yanjieli/p/10969299.html  -->  
+<!--  https://ansible-tran.readthedocs.io/en/latest/docs/playbooks.html  -->  
 ]]></content>
       <categories>
         <category>Ansible</category>
@@ -941,202 +1141,24 @@ Identifier. Can be used for documentation, in or tasks/handlers.
       </tags>
   </entry>
   <entry>
-    <title>Role - Playbook的“Package”</title>
-    <url>/2019/07/12/ansible_play_role_care/</url>
-    <content><![CDATA[<h1 id="Role-Playbook的“Package”"><a href="#Role-Playbook的“Package”" class="headerlink" title="Role - Playbook的“Package”"></a><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html#role-directory-structure">Role</a> - Playbook的“Package”</h1><p>Role是比include更强大灵活的代码重用和分享机制。Include类似于编程语言中的include，是重用单个文件的，功能有限。</p>
-<p>而Role类似于编程语言中的“Package”，可以重用一组文件形成完整的功能。例如安装和配置apache，需要tasks实现安装包和拷贝模版等，httpd.conf和index.html的模版文件，和handler文件实现重起功能。这些文件都可以放在一个role里面，供不同的playbook文件重用。</p>
-<p>Ansible非常提倡在playbook中使用role，并且提供了一个分享role的平台Ansible Galaxy, <a href="https://galaxy.ansible.com/">https://galaxy.ansible.com/</a>, 在galaxy上可以找到别人写好的role。在后面的章节中，我们再详细介绍如何使用它。</p>
-<h2 id="定义role完整的目录结构"><a href="#定义role完整的目录结构" class="headerlink" title="定义role完整的目录结构"></a>定义role完整的目录结构</h2><p><strong>在ansible中,通过遵循特定的目录结构,就可以实现对role的定义。</strong>。具体遵循的目录结构是什么呢？看下面的例子：</p>
-<p>下面的目录结构定义了一个role：名字为myrole。在site.yml，调用了这个role。</p>
-<table>
-    <tr>
-        <td>
-            role的目录结构
-        </td>
-        <td>
-            site.yml中调用role
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <pre>
-<code class='lang-yml'>
-site.yml
-roles/
-├── myrole
-    ├── tasks
-    │ └── main.yml
-    ├── handlers
-    │ └── main.yml
-    ├── defaults
-    │ └── main.yml
-    ├── vars
-    │ └── main.yml
-    ├── files
-    ├── templates
-    ├── README.md
-    ├── meta
-    │ └── main.yml
-    └── tests
-        ├── inventory
-        └── test.yml
-
-
-</code>
-</pre>
-        </td>
-        <td>
-            <pre>
-<code>
----
-- hosts: webservers
-  roles:
-     - myrole
-</code>
-</pre>
-        </td>
-    </tr>
-</table>
-
-<p>ansible并不要求role包含上述所有的目录及文件，根据role的功能需要加入对应的目录和文件。下面是每个目录和文件的功能。</p>
-<ul>
-<li>如果 roles/x/tasks/main.yml 存在, 其中列出的 tasks 将被添加到 play 中，所以这个文件也可以视作role的入口文件，想看role做了什么操作，可以从此文件看起。</li>
-<li>如果 roles/x/handlers/main.yml 存在, 其中列出的 handlers 将被添加到 play 中</li>
-<li>如果 roles/x/vars/main.yml 存在, 其中列出的 variables 将被添加到 play 中</li>
-<li>如果 roles/x/meta/main.yml 存在, 其中列出的 “角色依赖” 将被添加到 roles 列表中</li>
-<li>roles/x/tasks/main.yml中所有tasks，可以引用 roles/x/{files,templates,tasks}中的文件，不需要指明文件的路径。</li>
-</ul>
-<p>你自己在写role的时候，一般都要包含role入口文件roles/x/tasks/main.yml，其它的文件和目录，可以根据需求选择加入。</p>
-<p>学会写一个功能完整的role是一个相对复杂的过程，也是ansible中较高级的使用方法。在本小节，我们重点介绍如何使用别人已经写好的role。在后面的章节中，我们会通过具体的示例来逐步介绍写role的所需的知识。</p>
-<h2 id="带参数的Role"><a href="#带参数的Role" class="headerlink" title="带参数的Role"></a>带参数的Role</h2><h3 id="参数在role中是如何定义的呢"><a href="#参数在role中是如何定义的呢" class="headerlink" title="参数在role中是如何定义的呢"></a>参数在role中是如何定义的呢</h3><p> 定义一个带参数的role,名字是myrole,那么目录结构为</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">main.yml</span><br><span class="line">roles</span><br><span class="line">  role_with_var</span><br><span class="line">    tasks</span><br><span class="line">      main.yml</span><br></pre></td></tr></table></figure>
-<p> 在roles/myrole/tasks/main.yml中,使用<code>&#123;&#123; &#125;&#125;</code>定义的变量就可以了</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">- name: use param</span><br><span class="line">  debug: msg&#x3D;&quot;&#123;&#123; param &#125;&#125;&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="使用带参数的role"><a href="#使用带参数的role" class="headerlink" title="使用带参数的role"></a>使用带参数的role</h3><p>那么在main.yml就可以用如下的方法使用myrole</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: webservers</span><br><span class="line">  roles:</span><br><span class="line">    - &#123; role: myrole, param: &#39;Call some_role for the 1st time&#39; &#125;</span><br><span class="line">    - &#123; role: myrole, param: &#39;Call some_role for the 2nd time&#39; &#125;</span><br></pre></td></tr></table></figure>
-<p>或者写成YAML字典格式：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: webservers</span><br><span class="line">  roles:</span><br><span class="line">    - role: myrole</span><br><span class="line">      param: &#39;Call some_role for the 1st time&#39;</span><br><span class="line">    - role: myrole</span><br><span class="line">      param: &#39;Call some_role for the 2nd time&#39;</span><br></pre></td></tr></table></figure>
-<h3 id="role指定默认的参数"><a href="#role指定默认的参数" class="headerlink" title="role指定默认的参数"></a>role指定默认的参数</h3><p>指定默认参数后,如果在调用时传参数了,那么就使用传入的参数值.如果调用的时候没有传参数,那么就使用默认的参数值.</p>
-<p>指定默认参数很简单,以上面的role_with_var为例</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">main.yml</span><br><span class="line">roles:</span><br><span class="line">  myrole</span><br><span class="line">    tasks</span><br><span class="line">      main.yml</span><br><span class="line">    defaults</span><br><span class="line">      main.yml</span><br></pre></td></tr></table></figure>
-<p>在roles/myrole/defaults/main.yml中,使用yml的字典定义语法定义param的值,如下:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">param: &quot;I am the default value&quot;</span><br></pre></td></tr></table></figure>
-<p>这样在main.yml中,下面两种调用方法都可以</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: webservers</span><br><span class="line">  roles:</span><br><span class="line">    - role_with_var</span><br><span class="line">    - &#123; role: role_with_var, param: &#39;I am the value from external&#39; &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>更多的例子在<a href="https://github.com/shijingjing1221/ansible-first-book-examples/blob/master/role_vars.yml">https://github.com/shijingjing1221/ansible-first-book-examples/blob/master/role_vars.yml</a> 中</p>
-<h2 id="role与条件语句when一起执行"><a href="#role与条件语句when一起执行" class="headerlink" title="role与条件语句when一起执行"></a>role与条件语句when一起执行</h2><p>下面的例子中,my_role只有在RedHat系列的server上才执行。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: webservers</span><br><span class="line">  roles:</span><br><span class="line">    - &#123; role: my_role, when: &quot;ansible_os_family &#x3D;&#x3D; &#39;RedHat&#39;&quot; &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>同样也可以写成YAML字典格式</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: webservers</span><br><span class="line">  roles:</span><br><span class="line">    - role: my_role</span><br><span class="line">      when: &quot;ansible_os_family &#x3D;&#x3D; &#39;RedHat&#39;&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="roles和tasks的执行顺序"><a href="#roles和tasks的执行顺序" class="headerlink" title="roles和tasks的执行顺序"></a>roles和tasks的执行顺序</h2><p>如果一个playbook同时出现role和tasks，他们的调用顺序是什么样的呢？</p>
-<p>先揭晓答案，再根据实例来验证：</p>
-<p><strong>pre_tasks &gt; role &gt; tasks &gt; post_tasks</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: lb</span><br><span class="line">  user: root</span><br><span class="line"></span><br><span class="line">  pre_tasks:</span><br><span class="line">    - name: pre</span><br><span class="line">      shell: echo &#39;hello&#39;</span><br><span class="line"></span><br><span class="line">  roles:</span><br><span class="line">    - &#123; role: some_role &#125;</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">    - name: task</span><br><span class="line">      shell: echo &#39;still busy&#39;</span><br><span class="line"></span><br><span class="line">  post_tasks:</span><br><span class="line">    - name: post</span><br><span class="line">      shell: echo &#39;goodbye&#39;</span><br></pre></td></tr></table></figure>
-<p>执行的结果为：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PLAY [lb] **********************************************************************</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">TASK [setup] *******************************************************************</span><br><span class="line">ok: [rhel7u3]</span><br><span class="line"></span><br><span class="line">TASK [pre] *********************************************************************</span><br><span class="line">changed: [rhel7u3]</span><br><span class="line"></span><br><span class="line">TASK [some_role : some role] ***************************************************</span><br><span class="line">ok: [rhel7u3] &#x3D;&gt; &#123;</span><br><span class="line">    &quot;msg&quot;: &quot;Im some role&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">TASK [task] ********************************************************************</span><br><span class="line">changed: [rhel7u3]</span><br><span class="line"></span><br><span class="line">TASK [post] ********************************************************************</span><br><span class="line">changed: [rhel7u3]</span><br><span class="line"></span><br><span class="line">PLAY RECAP *********************************************************************</span><br><span class="line">rhel7u3 : ok&#x3D;5 changed&#x3D;3 unreachable&#x3D;0 failed&#x3D;0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Ansible</category>
-      </categories>
-      <tags>
-        <tag>ansible基础</tag>
-        <tag>playbook</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>playbook常见的变量的使用方法</title>
-    <url>/2019/07/11/ansible_play_var_use/</url>
-    <content><![CDATA[<h1 id="一、Playbook中vars关键字定义的变量"><a href="#一、Playbook中vars关键字定义的变量" class="headerlink" title="一、Playbook中vars关键字定义的变量"></a>一、Playbook中vars关键字定义的变量</h1><h2 id="Playbook中定义和使用的变量的方法"><a href="#Playbook中定义和使用的变量的方法" class="headerlink" title="Playbook中定义和使用的变量的方法"></a>Playbook中定义和使用的变量的方法</h2><p>用户可以在Playbook中，通过vars关键字自定义变量，使用时用<code>&#123;&#123; &#125;&#125;</code>引用以来即可。</p>
-<p>下面的例子中，用户定义变量名为http_port，其值为为80。在tasks firewalld中，通过<code>&#123;&#123; &#125;&#125;</code>引用</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">- hosts: web</span><br><span class="line">  vars:</span><br><span class="line">    http_port: 80</span><br><span class="line">  remote_user: root</span><br><span class="line">  tasks:</span><br><span class="line">  - name: insert firewalld rule for httpd</span><br><span class="line">    firewalld: port&#x3D;&#123;&#123; http_port &#125;&#125;&#x2F;tcp permanent&#x3D;true state&#x3D;enabled immediate&#x3D;yes</span><br></pre></td></tr></table></figure>
-<h2 id="把变量放在单独的文件中"><a href="#把变量放在单独的文件中" class="headerlink" title="把变量放在单独的文件中"></a>把变量放在单独的文件中</h2><p>当变量比较多的时候，或者变量需要在多个playbook中重用的时候，可以把变量放到一个单独的文件中。通过关键字<code>var_files</code>把文件中定义的变量引入playbook中，使用变量的方法和在本文件中定义的变量相同。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">- hosts: web</span><br><span class="line">  remote_user: root</span><br><span class="line">  vars_files:</span><br><span class="line">    - vars&#x2F;server_vars.yml</span><br><span class="line">  tasks:</span><br><span class="line">  - name: insert firewalld rule for httpd</span><br><span class="line">    firewalld: port&#x3D;&#123;&#123; http_port &#125;&#125;&#x2F;tcp permanent&#x3D;true state&#x3D;enabled immediate&#x3D;yes</span><br></pre></td></tr></table></figure>
-<p>变量文件vars/server_vars.yml的内容为：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http_port: 80</span><br></pre></td></tr></table></figure>
-<h2 id="定义和使用复杂变量"><a href="#定义和使用复杂变量" class="headerlink" title="定义和使用复杂变量"></a>定义和使用复杂变量</h2><p>有时候我们需要使用的变量的值不是简单的字符串或者数字，而是一个对象。这时候定义的语法如下，格式为YAML的字典格式：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">foo:</span><br><span class="line">  field1: one</span><br><span class="line">  field2: two</span><br></pre></td></tr></table></figure>
-<p>访问复杂变量中的子属性，可以利用中括号或者点号：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">foo[&#39;field1&#39;]</span><br><span class="line">foo.field1</span><br></pre></td></tr></table></figure>
-<h2 id="YAML的陷阱"><a href="#YAML的陷阱" class="headerlink" title="YAML的陷阱"></a>YAML的陷阱</h2><p>YAML的陷阱是某些时候YAML和Ansible Playbook的变量语法不能在一起好好工作了。这里仅发生在指冒号后面的值不能以{开头的时候，如果有必要以{开头，必须加上引号。总之在YAML值的定义中，如果提示YMAL语法错误，都可以尝试下加入引号来解决。<br>下面的代码会报错:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">- hosts: app_servers</span><br><span class="line">  vars:</span><br><span class="line">    app_path: &#123;&#123; base_path &#125;&#125;&#x2F;22</span><br></pre></td></tr></table></figure>
-<p>解决办法：要在”{ “开始的值<strong>加上引号</strong>:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">- hosts: app_servers</span><br><span class="line">  vars:</span><br><span class="line">     app_path: &quot;&#123;&#123; base_path &#125;&#125;&#x2F;22&quot;</span><br></pre></td></tr></table></figure>
-<hr>
-<h1 id="二、主机的系统变量-gather-facts"><a href="#二、主机的系统变量-gather-facts" class="headerlink" title="二、主机的系统变量(gather_facts)"></a>二、主机的系统变量(gather_facts)</h1><p>ansible会通过<code>module setup</code>来收集主机的系统信息，这些收集到的系统信息叫做<code>facts</code>，这些<code>facts</code>信息可以直接以变量的形式使用。<br>哪些<code>facts</code>变量可以引用呢？在命令行上通过调用<code>setup module</code>命令可以查看</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ ansible all -m setup -u root</span><br></pre></td></tr></table></figure>
-<p>怎样在playbook中使用facts变量呢，答案是直接使用：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: all</span><br><span class="line">  user: root</span><br><span class="line">  tasks:</span><br><span class="line">  - name: echo system</span><br><span class="line">    shell: echo &#123;&#123; ansible_os_family &#125;&#125;</span><br><span class="line">  - name install ntp on Debian linux</span><br><span class="line">    apt: name&#x3D;git state&#x3D;installed</span><br><span class="line">    when: ansible_os_family &#x3D;&#x3D; &quot;Debian&quot;</span><br><span class="line">  - name install ntp on redhat linux</span><br><span class="line">    yum: name&#x3D;git state&#x3D;present</span><br><span class="line">    when: ansible_os_family &#x3D;&#x3D; &quot;RedHat&quot;</span><br></pre></td></tr></table></figure>
-<p>使用复杂facts变量<br>一般在系统中收集到如下的信息，复杂的、多层级的facts变量如何使用呢？</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">        &quot;ansible_ens3&quot;: &#123;</span><br><span class="line">            &quot;active&quot;: true, </span><br><span class="line">            &quot;device&quot;: &quot;ens3&quot;, </span><br><span class="line">            &quot;ipv4&quot;: &#123;</span><br><span class="line">                &quot;address&quot;: &quot;10.66.192.234&quot;, </span><br><span class="line">                &quot;netmask&quot;: &quot;255.255.254.0&quot;, </span><br><span class="line">                &quot;network&quot;: &quot;10.66.192.0&quot;</span><br><span class="line">            &#125;, </span><br><span class="line">            &quot;ipv6&quot;: [</span><br><span class="line">                &#123;</span><br><span class="line">                    &quot;address&quot;: &quot;2620:52:0:42c0:5054:ff:fef2:e2a3&quot;, </span><br><span class="line">                    &quot;prefix&quot;: &quot;64&quot;, </span><br><span class="line">                    &quot;scope&quot;: &quot;global&quot;</span><br><span class="line">                &#125;, </span><br><span class="line">                &#123;</span><br><span class="line">                    &quot;address&quot;: &quot;fe80::5054:ff:fef2:e2a3&quot;, </span><br><span class="line">                    &quot;prefix&quot;: &quot;64&quot;, </span><br><span class="line">                    &quot;scope&quot;: &quot;link&quot;</span><br><span class="line">                &#125;</span><br><span class="line">            ], </span><br><span class="line">            &quot;macaddress&quot;: &quot;52:54:00:f2:e2:a3&quot;, </span><br><span class="line">            &quot;module&quot;: &quot;8139cp&quot;, </span><br><span class="line">            &quot;mtu&quot;: 1500, </span><br><span class="line">            &quot;promisc&quot;: false, </span><br><span class="line">            &quot;type&quot;: &quot;ether&quot;</span><br><span class="line">        &#125;, </span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<p>那么可以通过下面的两种方式访问复杂的变量中的子属性:<br>中括号：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;&#123; ansible_ens3[&quot;ipv4&quot;][&quot;address&quot;] &#125;&#125;</span><br></pre></td></tr></table></figure>
-<p>点号：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;&#123; ansible_ens3.ipv4.address &#125;&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="关闭facts"><a href="#关闭facts" class="headerlink" title="关闭facts"></a>关闭facts</h2><p>在Playbook中,如果写gather_facts来控制是否收集远程系统的信息.如果不收集系统信息,那么上面的变量就不能在该playybook中使用了.</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">- hosts: whatever</span><br><span class="line">  gather_facts: no</span><br></pre></td></tr></table></figure>
-<hr>
-<h1 id="三、template文件模板中使用的变量"><a href="#三、template文件模板中使用的变量" class="headerlink" title="三、template文件模板中使用的变量"></a>三、template文件模板中使用的变量</h1><h2 id="template变量的定义-more"><a href="#template变量的定义-more" class="headerlink" title="template变量的定义(more)"></a>template变量的定义<a href="https://ansible-book.gitbooks.io/ansible-first-book/advance/playbook/tamplatezhong_shi_yong_bian_liang.html">(more)</a></h2><p>在playbook中定义的变量，可以直接在template中使用，同时facts变量也可以直接在template中使用，当然也包含在inventory里面定义的host和group变量。只要是在playbook中可以访问的变量，都可以在template文件中使用。</p>
-<hr>
-<h1 id="四、把task运行结果进行注册变量"><a href="#四、把task运行结果进行注册变量" class="headerlink" title="四、把task运行结果进行注册变量"></a>四、把task运行结果进行注册变量</h1><p>把task的执行结果也可以作为一个变量值。这个时候就需要用到<code>register</code>关键字实现<code>注册变量</code>，将执行结果注册到一个变量中，待后面的action使用：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: web</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">     - shell: ls</span><br><span class="line">       register: result</span><br><span class="line">       ignore_errors: True</span><br><span class="line"></span><br><span class="line">     - shell: echo &quot;&#123;&#123; result.stdout &#125;&#125;&quot;</span><br><span class="line">       when: result.rc &#x3D;&#x3D; 5</span><br><span class="line"></span><br><span class="line">     - debug: msg&#x3D;&quot;&#123;&#123; result.stdout &#125;&#125;&quot;</span><br></pre></td></tr></table></figure>
-<p><code>注册变量</code>经常和<code>debug module</code>一起使用，这样可以得到更多action的输出信息，帮助用户调试。</p>
-<hr>
-<h1 id="五、playbook-命令行变量传值"><a href="#五、playbook-命令行变量传值" class="headerlink" title="五、playbook 命令行变量传值"></a>五、playbook 命令行变量传值</h1><p>为了使Playbook更灵活、通用性更强，允许用户在执行的时候传入变量的值，这个时候就需要用到“额外变量”。</p>
-<h2 id="定义命令行变量"><a href="#定义命令行变量" class="headerlink" title="定义命令行变量"></a>定义命令行变量</h2><p>在release.yml文件里，<code>hosts和user</code>都定义为变量，需要从命令行传递变量值。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: &#39;&#123;&#123; hosts &#125;&#125;&#39;</span><br><span class="line">  remote_user: &#39;&#123;&#123; user &#125;&#125;&#39;</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">     - ...</span><br></pre></td></tr></table></figure>
-<h2 id="使用命令行变量"><a href="#使用命令行变量" class="headerlink" title="使用命令行变量"></a>使用命令行变量</h2><p>在命令行里面传值得的方法：<br><code>ansible-playbook e33_var_in_command.yml --extra-vars &quot;hosts=web user=root&quot;</code><br>还可以用json格式传递参数：<br><code>ansible-playbook e33_var_in_command.yml --extra-vars &quot;&#123;&#39;hosts&#39;:&#39;vm-rhel7-1&#39;, &#39;user&#39;:&#39;root&#39;&#125;&quot;</code><br>还可以将参数放在文件里面：<br><code>ansible-playbook e33_var_in_command.yml --extra-vars &quot;@vars.json&quot;</code></p>
-<hr>
-]]></content>
-      <categories>
-        <category>Ansible</category>
-      </categories>
-      <tags>
-        <tag>ansible基础</tag>
-        <tag>playbook</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Playbook基本语法</title>
-    <url>/2019/07/10/ansible_py_basic_grammar/</url>
-    <content><![CDATA[<h2 id="ansible-playbook命令行-more"><a href="#ansible-playbook命令行-more" class="headerlink" title="ansible-playbook命令行(more)"></a>ansible-playbook命令行<a href="https://docs.ansible.com/ansible/latest/cli/ansible-playbook.html">(more)</a></h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">usage: ansible-playbook [-h] [--version] [-v] [-k]</span><br></pre></td></tr></table></figure>
-<h3 id="常用命令行关键字"><a href="#常用命令行关键字" class="headerlink" title="常用命令行关键字"></a>常用命令行关键字</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">--ask-vault-password, --ask-vault-pass</span><br><span class="line">要求提供保管库密码</span><br><span class="line"></span><br><span class="line">--become-method &lt;BECOME_METHOD&gt;</span><br><span class="line">要使用的特权升级方法（默认&#x3D; sudo），请使用ansible-doc -t成为-l列出有效的选择。</span><br><span class="line"></span><br><span class="line">--become-user &lt;BECOME_USER&gt;</span><br><span class="line">以该用户身份运行操作（默认&#x3D; root）</span><br><span class="line"></span><br><span class="line">--flush-cache</span><br><span class="line">清除清单中每个主机的事实缓存</span><br><span class="line"></span><br><span class="line">--force-handlers</span><br><span class="line">即使任务失败也运行处理程序</span><br><span class="line"></span><br><span class="line">--list-hosts</span><br><span class="line">输出匹配主机列表；不执行其他任何操作</span><br><span class="line"></span><br><span class="line">--list-tags</span><br><span class="line">列出所有可用标签</span><br><span class="line"></span><br><span class="line">--list-tasks</span><br><span class="line">列出将要执行的所有任务</span><br><span class="line"></span><br><span class="line">--private-key &lt;PRIVATE_KEY_FILE&gt;, --key-file &lt;PRIVATE_KEY_FILE&gt;</span><br><span class="line">使用此文件来验证连接</span><br><span class="line"></span><br><span class="line">--scp-extra-args &lt;SCP_EXTRA_ARGS&gt;</span><br><span class="line">指定额外的参数以仅传递给scp（例如-l）</span><br><span class="line"></span><br><span class="line">--sftp-extra-args &lt;SFTP_EXTRA_ARGS&gt;</span><br><span class="line">指定额外的参数以仅传递给sftp（例如-f，-l）</span><br><span class="line"></span><br><span class="line">--skip-tags</span><br><span class="line">仅运行标签与这些值不匹配的剧本和任务</span><br><span class="line"></span><br><span class="line">--ssh-common-args &lt;SSH_COMMON_ARGS&gt;</span><br><span class="line">指定要传递给sftp &#x2F; scp &#x2F; ssh的通用参数（例如ProxyCommand）</span><br><span class="line"></span><br><span class="line">--ssh-extra-args &lt;SSH_EXTRA_ARGS&gt;</span><br><span class="line">指定额外的参数以仅传递给ssh（例如-R）</span><br><span class="line"></span><br><span class="line">--start-at-task &lt;START_AT_TASK&gt;</span><br><span class="line">在与此名称匹配的任务处启动剧本</span><br><span class="line"></span><br><span class="line">--step</span><br><span class="line">一步一步：在运行之前确认每个任务</span><br><span class="line"></span><br><span class="line">--syntax-check</span><br><span class="line">在剧本上执行语法检查，但不执行</span><br><span class="line"></span><br><span class="line">--vault-id</span><br><span class="line">要使用的库身份</span><br><span class="line"></span><br><span class="line">--vault-password-file, --vault-pass-file</span><br><span class="line">保险库密码文件</span><br><span class="line"></span><br><span class="line">--version</span><br><span class="line">显示程序的版本号，配置文件位置，配置的模块搜索路径，模块位置，可执行文件位置和退出</span><br><span class="line"></span><br><span class="line">-C, --check</span><br><span class="line">不要做任何改变；相反，尝试预测可能发生的某些变化</span><br><span class="line"></span><br><span class="line">-D, --diff</span><br><span class="line">更改（小的）文件和模板时，请显示这些文件中的差异；与–check一起使用效果很好</span><br><span class="line"></span><br><span class="line">-K, --ask-become-pass</span><br><span class="line">要求特权升级密码</span><br><span class="line"></span><br><span class="line">-M, --module-path</span><br><span class="line">将冒号分隔的路径添加到模块库（默认&#x3D;〜&#x2F; .ansible &#x2F; plugins &#x2F; modules：&#x2F; usr &#x2F; share &#x2F; ansible &#x2F; plugins &#x2F; modules）</span><br><span class="line"></span><br><span class="line">-T &lt;TIMEOUT&gt;, --timeout &lt;TIMEOUT&gt;</span><br><span class="line">覆盖连接超时（以秒为单位）（默认为10）</span><br><span class="line"></span><br><span class="line">-b, --become</span><br><span class="line">使用变为运行操作（不表示提示输入密码）</span><br><span class="line"></span><br><span class="line">-c &lt;CONNECTION&gt;, --connection &lt;CONNECTION&gt;</span><br><span class="line">要使用的连接类型（默认&#x3D;智能）</span><br><span class="line"></span><br><span class="line">-e, --extra-vars</span><br><span class="line">如果文件名以@开头，则将其他变量设置为key &#x3D; value或YAML &#x2F; JSON</span><br><span class="line"></span><br><span class="line">-f &lt;FORKS&gt;, --forks &lt;FORKS&gt;</span><br><span class="line">指定要使用的并行进程数（默认&#x3D; 5）</span><br><span class="line"></span><br><span class="line">-h, --help</span><br><span class="line">显示此帮助消息并退出</span><br><span class="line"></span><br><span class="line">-i, --inventory, --inventory-file</span><br><span class="line">指定清单主机路径或逗号分隔的主机列表。–不推荐使用库存文件</span><br><span class="line"></span><br><span class="line">-k, --ask-pass</span><br><span class="line">询问连接密码</span><br><span class="line"></span><br><span class="line">-l &lt;SUBSET&gt;, --limit &lt;SUBSET&gt;</span><br><span class="line">将所选主机进一步限制为其他模式</span><br><span class="line"></span><br><span class="line">-t, --tags</span><br><span class="line">只运行带有这些值标记的剧本和任务</span><br><span class="line"></span><br><span class="line">-u &lt;REMOTE_USER&gt;, --user &lt;REMOTE_USER&gt;</span><br><span class="line">以该用户身份连接（默认&#x3D;无）</span><br><span class="line"></span><br><span class="line">-v, --verbose</span><br><span class="line">详细模式（-vvv用于更多，-vvvv用于启用连接调试）</span><br></pre></td></tr></table></figure>
-<h3 id="执行Playbook的语法"><a href="#执行Playbook的语法" class="headerlink" title="执行Playbook的语法"></a>执行Playbook的语法</h3><p><code>$ ansible-playbook deploy.yml</code><br>查看输出的细节<br><code>ansible-playbook playbook.yml --verbose</code><br>查看该脚本影响哪些hosts<br><code>ansible-playbook playbook.yml --list-hosts</code><br>并行执行脚本<br><code>ansible-playbook playbook.yml -f 10</code></p>
-<h2 id="完整的playbook脚本示例"><a href="#完整的playbook脚本示例" class="headerlink" title="完整的playbook脚本示例"></a>完整的playbook脚本示例</h2><p>最基本的playbook脚本分为三个部分:</p>
+    <title>playbook常见的变量分类与变量优先级</title>
+    <url>/2019/07/10/ansible_var_categores/</url>
+    <content><![CDATA[<h2 id="playbook常见的变量分类"><a href="#playbook常见的变量分类" class="headerlink" title="playbook常见的变量分类"></a>playbook常见的变量分类</h2><p>在Playbook中常用的几种变量包含一下几种情况：</p>
 <ol>
-<li>在什么机器上以什么身份执行</li>
+<li>在Playbook中用户<code>自定义的变量</code>。—var*|other</li>
+<li>用户无需自定义，Ansible会在执行Playbook之前去全程主机上搜集的关于远程节点<code>系统信息的变量</code>。—ansible setup模块</li>
+<li>在文件模版中，可以直接使用上述两种变量</li>
+<li>把task的运行结果作为一个变量来使用，这个变量叫做<code>注册变量</code>。—register</li>
+<li>为了使Playbook更灵活、通用性更强，允许用户在执行的时候传入变量的值，这个时候就需要用到<code>额外变量</code>。</li>
 </ol>
-<ul>
-<li>hosts</li>
-<li>users</li>
-</ul>
-<ol start="2">
-<li>执行的任务是都有什么</li>
-</ol>
-<ul>
-<li>tasks</li>
-</ul>
-<ol start="3">
-<li>善后的任务都有什么</li>
-</ol>
-<ul>
-<li>handlers</li>
-</ul>
-<blockquote>
-<p>deploy.yml文件</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: webservers</span><br><span class="line">  vars:</span><br><span class="line">    http_port: 80</span><br><span class="line">    max_clients: 200</span><br><span class="line">  user: root</span><br><span class="line">  tasks:</span><br><span class="line">    - name: ensure apache is at the latest version</span><br><span class="line">      yum: pkg&#x3D;httpd state&#x3D;latest</span><br><span class="line">    - name: write the apache config file</span><br><span class="line">      template: src&#x3D;&#x2F;srv&#x2F;httpd.j2 dest&#x3D;&#x2F;etc&#x2F;httpd.conf</span><br><span class="line">      notify:</span><br><span class="line">        - restart apache</span><br><span class="line">    - name: ensure apache is running</span><br><span class="line">      service: name&#x3D;httpd state&#x3D;started</span><br><span class="line">  handlers:</span><br><span class="line">    - name: restart apache</span><br><span class="line">      service: name&#x3D;httpd state&#x3D;restarted</span><br></pre></td></tr></table></figure>
-<h2 id="playbook语法特性"><a href="#playbook语法特性" class="headerlink" title="playbook语法特性"></a>playbook语法特性</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1. 以 --- (三个减号)开始，必须顶行写；</span><br><span class="line">2. 次行开始写Playbook的内容，但是一般要求写明该playbook的功能；</span><br><span class="line">3. 严格缩进，并且不能用Tab键缩进；</span><br><span class="line">4. 缩进级别必须是一致的，同样的缩进代表同样的级别，程序判别配置的级别是通过缩进结合换行来实现的；</span><br><span class="line">5. K&#x2F;V的值可同行写，也可换行写。同行使用 :分隔，换行写需要以 - 分隔；</span><br></pre></td></tr></table></figure>
+<h2 id="Ansible变量优先级（由高到低）"><a href="#Ansible变量优先级（由高到低）" class="headerlink" title="Ansible变量优先级（由高到低）"></a>Ansible变量优先级（由高到低）</h2><p>extra vars (在命令行中使用 -e)优先级最高：ansible-playbook -e var=value<br>task变量<br>block变量<br>role中定义的变量和include变量<br>set_fact<br>registered变量<br>vars_files<br>var_prompt<br>play变量<br>host facts<br>playbook中设置的host_vars<br>playbook中设置的group_vars<br>inventory中设置的host_vars<br>inventory中设置的group_vars<br>inventory变量<br>role中defaults/main.yml中定义的变量</p>
 <hr>
-<p>&nbsp;  </p>
-<!--  https://www.cnblogs.com/yanjieli/p/10969299.html  -->  
-<!--  https://ansible-tran.readthedocs.io/en/latest/docs/playbooks.html  -->  
 ]]></content>
       <categories>
         <category>Ansible</category>
       </categories>
       <tags>
-        <tag>ansible基础</tag>
+        <tag>env</tag>
         <tag>playbook</tag>
       </tags>
   </entry>
@@ -1198,70 +1220,6 @@ roles/
       </tags>
   </entry>
   <entry>
-    <title>playbook常见的变量分类与变量优先级</title>
-    <url>/2019/07/10/ansible_var_categores/</url>
-    <content><![CDATA[<h2 id="playbook常见的变量分类"><a href="#playbook常见的变量分类" class="headerlink" title="playbook常见的变量分类"></a>playbook常见的变量分类</h2><p>在Playbook中常用的几种变量包含一下几种情况：</p>
-<ol>
-<li>在Playbook中用户<code>自定义的变量</code>。—var*|other</li>
-<li>用户无需自定义，Ansible会在执行Playbook之前去全程主机上搜集的关于远程节点<code>系统信息的变量</code>。—ansible setup模块</li>
-<li>在文件模版中，可以直接使用上述两种变量</li>
-<li>把task的运行结果作为一个变量来使用，这个变量叫做<code>注册变量</code>。—register</li>
-<li>为了使Playbook更灵活、通用性更强，允许用户在执行的时候传入变量的值，这个时候就需要用到<code>额外变量</code>。</li>
-</ol>
-<h2 id="Ansible变量优先级（由高到低）"><a href="#Ansible变量优先级（由高到低）" class="headerlink" title="Ansible变量优先级（由高到低）"></a>Ansible变量优先级（由高到低）</h2><p>extra vars (在命令行中使用 -e)优先级最高：ansible-playbook -e var=value<br>task变量<br>block变量<br>role中定义的变量和include变量<br>set_fact<br>registered变量<br>vars_files<br>var_prompt<br>play变量<br>host facts<br>playbook中设置的host_vars<br>playbook中设置的group_vars<br>inventory中设置的host_vars<br>inventory中设置的group_vars<br>inventory变量<br>role中defaults/main.yml中定义的变量</p>
-<hr>
-]]></content>
-      <categories>
-        <category>Ansible</category>
-      </categories>
-      <tags>
-        <tag>env</tag>
-        <tag>playbook</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>go基础之数组</title>
-    <url>/2020/04/09/go_base_array/</url>
-    <content><![CDATA[<h1 id="Array-数组"><a href="#Array-数组" class="headerlink" title="Array(数组)"></a>Array(数组)</h1><p>数组：是同一种数据类型的固定长度的序列。 在Go语言中，数组从声明时就确定，使用时可以修改数组成员，但是数组大小不可变化。 基本语法：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 定义一个长度为3元素类型为int的数组a</span><br><span class="line">var a [3]int</span><br></pre></td></tr></table></figure>
-<h2 id="数组定义"><a href="#数组定义" class="headerlink" title="数组定义"></a>数组定义</h2><p><code>var 数组变量名 [元素数量]Type</code><br>比如：<code>var a [5]int</code>， 数组的长度必须是常量，并且长度是数组类型的一部分。一旦定义，长度不能变。<code>[5]int和[10]int</code>是不同的类型。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var a [3]int</span><br><span class="line">var b [4]int</span><br><span class="line">a &#x3D; b &#x2F;&#x2F;不可以这样做，因为此时a和b是不同的类型</span><br></pre></td></tr></table></figure>
-<p>数组可以通过下标进行访问，下标是从0开始，最后一个元素下标是：<code>len-1</code>，访问越界（下标在合法范围之外），则触发访问越界，会panic。</p>
-<h2 id="数组的初始化"><a href="#数组的初始化" class="headerlink" title="数组的初始化"></a>数组的初始化</h2><p><strong><em>一维数组</em></strong></p>
-<h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h3><p>初始化数组时可以使用初始化列表来设置数组元素的值。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var testArray [3]int                        &#x2F;&#x2F;数组会初始化为int类型的零值</span><br><span class="line">    var numArray &#x3D; [3]int&#123;1, 2&#125;                 &#x2F;&#x2F;使用指定的初始值完成初始化</span><br><span class="line">    var cityArray &#x3D; [3]string&#123;&quot;北京&quot;, &quot;上海&quot;, &quot;深圳&quot;&#125; &#x2F;&#x2F;使用指定的初始值完成初始化</span><br><span class="line">    fmt.Println(testArray)                      &#x2F;&#x2F;[0 0 0]</span><br><span class="line">    fmt.Println(numArray)                       &#x2F;&#x2F;[1 2 0]</span><br><span class="line">    fmt.Println(cityArray)                      &#x2F;&#x2F;[北京 上海 深圳]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>按照上面的方法每次都要确保提供的初始值和数组长度一致，一般情况下我们可以让编译器根据初始值的个数自行推断数组的长度，例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var testArray [3]int</span><br><span class="line">    var numArray &#x3D; [...]int&#123;1, 2&#125;</span><br><span class="line">    var cityArray &#x3D; [...]string&#123;&quot;北京&quot;, &quot;上海&quot;, &quot;深圳&quot;&#125;</span><br><span class="line">    fmt.Println(testArray)                          &#x2F;&#x2F;[0 0 0]</span><br><span class="line">    fmt.Println(numArray)                           &#x2F;&#x2F;[1 2]</span><br><span class="line">    fmt.Printf(&quot;type of numArray:%T\n&quot;, numArray)   &#x2F;&#x2F;type of numArray:[2]int</span><br><span class="line">    fmt.Println(cityArray)                          &#x2F;&#x2F;[北京 上海 深圳]</span><br><span class="line">    fmt.Printf(&quot;type of cityArray:%T\n&quot;, cityArray) &#x2F;&#x2F;type of cityArray:[3]string</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a>方法三</h3><p>我们还可以使用指定索引值的方式来初始化数组，例如:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [...]int&#123;1: 1, 3: 5&#125;</span><br><span class="line">    fmt.Println(a)                  &#x2F;&#x2F; [0 1 0 5]</span><br><span class="line">    fmt.Printf(&quot;type of a:%T\n&quot;, a) &#x2F;&#x2F;type of a:[4]int</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="数组的遍历"><a href="#数组的遍历" class="headerlink" title="数组的遍历"></a>数组的遍历</h2><p><strong><em>一维数组</em></strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 遍历数组a有以下两种方法：</span><br><span class="line">func main() &#123;</span><br><span class="line">    var a &#x3D; [...]string&#123;&quot;北京&quot;, &quot;上海&quot;, &quot;深圳&quot;&#125;</span><br><span class="line">    &#x2F;&#x2F; 方法1：for循环遍历</span><br><span class="line">    for i :&#x3D; 0; i &lt; len(a); i++ &#123;</span><br><span class="line">        fmt.Println(a[i])</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 方法2：for range遍历</span><br><span class="line">    for index, value :&#x3D; range a &#123;</span><br><span class="line">        fmt.Println(index, value)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="多维数组"><a href="#多维数组" class="headerlink" title="多维数组"></a>多维数组</h2><h3 id="二维数组的定义"><a href="#二维数组的定义" class="headerlink" title="二维数组的定义"></a>二维数组的定义</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [3][2]string&#123;</span><br><span class="line">        &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">        &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">        &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(a) &#x2F;&#x2F;[[北京 上海] [广州 深圳] [成都 重庆]]</span><br><span class="line">    fmt.Println(a[2][1]) &#x2F;&#x2F;支持索引取值:重庆</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="二维数组的遍历"><a href="#二维数组的遍历" class="headerlink" title="二维数组的遍历"></a>二维数组的遍历</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [3][2]string&#123;</span><br><span class="line">        &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">        &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">        &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    for _, v1 :&#x3D; range a &#123;</span><br><span class="line">        for _, v2 :&#x3D; range v1 &#123;</span><br><span class="line">            fmt.Printf(&quot;%s\t&quot;, v2)</span><br><span class="line">        &#125;</span><br><span class="line">        fmt.Println()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">北京    上海    </span><br><span class="line">广州    深圳    </span><br><span class="line">成都    重庆    </span><br></pre></td></tr></table></figure>
-<p><code>注意</code>： 多维数组<code>只有第一层</code>可以使用<code>...</code>来让编译器推导数组长度。例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;支持的写法</span><br><span class="line">a :&#x3D; [...][2]string&#123;</span><br><span class="line">    &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">    &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">    &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;不支持多维数组的内层使用...</span><br><span class="line">b :&#x3D; [3][...]string&#123;</span><br><span class="line">    &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">    &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">    &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="数组拷贝和传参"><a href="#数组拷贝和传参" class="headerlink" title="数组拷贝和传参"></a>数组拷贝和传参</h2><p>数组是值类型，赋值和传参会复制整个数组。因此改变副本的值，不会改变本身的值。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func modifyArray(x [3]int) &#123;</span><br><span class="line">    x[0] &#x3D; 100</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func modifyArray2(x [3][2]int) &#123;</span><br><span class="line">    x[2][0] &#x3D; 100</span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [3]int&#123;10, 20, 30&#125;</span><br><span class="line">    modifyArray(a) &#x2F;&#x2F;在modify中修改的是a的副本x</span><br><span class="line">    fmt.Println(a) &#x2F;&#x2F;[10 20 30]</span><br><span class="line">    b :&#x3D; [3][2]int&#123;</span><br><span class="line">        &#123;1, 1&#125;,</span><br><span class="line">        &#123;1, 1&#125;,</span><br><span class="line">        &#123;1, 1&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    modifyArray2(b) &#x2F;&#x2F;在modify中修改的是b的副本x</span><br><span class="line">    fmt.Println(b)  &#x2F;&#x2F;[[1 1] [1 1] [1 1]]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>注意：</strong></p>
-<ol>
-<li>数组支持 “==“、”!=” 操作符，因为内存总是被初始化过的。</li>
-<li>[n]*T表示指针数组，*[n]T表示数组指针 。</li>
-</ol>
-<h2 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h2><p>求数组[1, 3, 5, 7, 8]所有元素的和<br>找出数组中和为指定值的两个元素的下标，比如从数组[1, 3, 5, 7, 8]中找出和为8的两个元素的下标分别为(0,3)和(1,2)。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>Go</category>
-      </categories>
-      <tags>
-        <tag>go语言基础</tag>
-        <tag>array</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>go基础之函数</title>
     <url>/2020/05/07/go_base_func/</url>
     <content><![CDATA[<h1 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h1><p>函数是组织好的、可重复使用的、用于执行指定任务的代码块。Go语言中支持函数、匿名函数和闭包</p>
@@ -1312,69 +1270,45 @@ roles/
       </tags>
   </entry>
   <entry>
-    <title>go基础之map</title>
-    <url>/2020/04/30/go_base_map/</url>
-    <content><![CDATA[<blockquote>
-<p><a href="http://wen.topgoer.com/docs/golang/chapter03-13">map</a> 是Go语言中提供的<code>映射关系容器</code>，其内部使用散列表（hash）实现。</p>
-</blockquote>
-<h1 id="map"><a href="#map" class="headerlink" title="map"></a>map</h1><p>map是一种无序的基于key-value的数据结构，Go语言中的map是引用类型，必须初始化才能使用。</p>
-<h2 id="map的定义语法"><a href="#map的定义语法" class="headerlink" title="map的定义语法"></a>map的定义语法</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">map[KeyType]ValueType</span><br></pre></td></tr></table></figure>
-<p>其中，</p>
-<ul>
-<li>KeyType:表示键的类型。</li>
-<li>ValueType:表示键对应的值的类型。</li>
-</ul>
-<p>map类型的变量默认初始值为nil，需要使用make()函数来分配内存。语法为：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">make(map[KeyType]ValueType, [cap])</span><br></pre></td></tr></table></figure>
-<p>其中cap表示map的容量，该参数虽然不是必须的，但是我们应该在初始化map的时候就为其指定一个合适的容量。</p>
-<h2 id="map的使用"><a href="#map的使用" class="headerlink" title="map的使用"></a>map的使用</h2><p>map中的数据都是成对出现的，map的基本使用示例代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int, 8)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    fmt.Println(scoreMap)                  &#x2F;&#x2F; map[小明:100 张三:90]</span><br><span class="line">    fmt.Println(scoreMap[&quot;小明&quot;])          &#x2F;&#x2F; 100</span><br><span class="line">    fmt.Printf(&quot;type of a:%T\n&quot;, scoreMap) &#x2F;&#x2F;type of a:map[string]int</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]string, 8)</span><br><span class="line">    scoreMap[&quot;射手&quot;] &#x3D; &quot;小鲁蛋&quot;</span><br><span class="line">    scoreMap[&quot;打野&quot;] &#x3D; &quot;赵云&quot;</span><br><span class="line">    scoreMap[&quot;辅助&quot;] &#x3D; &quot;廉颇&quot;</span><br><span class="line">    fmt.Println(scoreMap)</span><br><span class="line">    fmt.Printf(&quot;type of scoreMap is: %T\n&quot;, scoreMap)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 输出：</span><br><span class="line">&#x2F;&#x2F; map[坦边:吕布 射手:小鲁蛋 打野:赵云 辅助:廉颇]</span><br><span class="line">&#x2F;&#x2F; type of scoreMap is: map[string]string</span><br></pre></td></tr></table></figure>
-<p>map也支持在声明的时候填充元素，例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    userLogin :&#x3D; map[string]string&#123;</span><br><span class="line">        &quot;username&quot;: &quot;xyxxb&quot;,</span><br><span class="line">        &quot;password&quot;: &quot;123123&quot;,</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(userLogin) &#x2F;&#x2F; map[password:123123 username:xyxxb]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="判断某个键是否存在"><a href="#判断某个键是否存在" class="headerlink" title="判断某个键是否存在"></a>判断某个键是否存在</h2><p>Go语言中判断map中键是否存在的特殊写法，格式如下:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">value, ok :&#x3D; map[key]</span><br></pre></td></tr></table></figure>
-<p>举个例子：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    &#x2F;&#x2F; 如果key存在ok为true,v为对应的值；不存在ok为false,v为值类型的零值</span><br><span class="line">    v, ok :&#x3D; scoreMap[&quot;张三&quot;]</span><br><span class="line">    if ok &#123;</span><br><span class="line">        fmt.Println(v)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        fmt.Println(&quot;查无此人&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h2><p>使用for range遍历map</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    scoreMap[&quot;娜扎&quot;] &#x3D; 60</span><br><span class="line">    for k, v :&#x3D; range scoreMap &#123;</span><br><span class="line">        fmt.Println(k, v)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>仅遍历key的时候，可以按下面的写法：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    scoreMap[&quot;娜扎&quot;] &#x3D; 60</span><br><span class="line">    for k :&#x3D; range scoreMap &#123;</span><br><span class="line">        scoreMap[&quot;小明&quot;] &#x3D; 120</span><br><span class="line">        fmt.Println(k) &#x2F;&#x2F; 取value：fmt.Println(scoreMap[k])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>**<code>注意</code>**： 遍历map时的元素顺序与添加键值对的顺序无关。</p>
-<h2 id="使用delete-函数删除键值对"><a href="#使用delete-函数删除键值对" class="headerlink" title="使用delete()函数删除键值对"></a>使用delete()函数删除键值对</h2><p>使用delete()内建函数从map中删除一组键值对，delete()函数的格式如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">delete(map, key)</span><br></pre></td></tr></table></figure>
-<p>其中，</p>
-<ul>
-<li>map:表示要删除键值对的map</li>
-<li>key:表示要删除的键值对的键</li>
-</ul>
-<p>示例代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main()&#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    scoreMap[&quot;娜扎&quot;] &#x3D; 60</span><br><span class="line">    delete(scoreMap, &quot;小明&quot;)&#x2F;&#x2F;将小明:100从map中删除</span><br><span class="line">    for k,v :&#x3D; range scoreMap&#123;</span><br><span class="line">        fmt.Println(k, v)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="按照指定顺序遍历map"><a href="#按照指定顺序遍历map" class="headerlink" title="按照指定顺序遍历map"></a>按照指定顺序遍历map</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    rand.Seed(time.Now().UnixNano()) &#x2F;&#x2F;初始化随机数种子</span><br><span class="line"></span><br><span class="line">    var scoreMap &#x3D; make(map[string]int, 200)</span><br><span class="line"></span><br><span class="line">    for i :&#x3D; 0; i &lt; 100; i++ &#123;</span><br><span class="line">        key :&#x3D; fmt.Sprintf(&quot;stu%02d&quot;, i) &#x2F;&#x2F; 生成stu开头的字符串</span><br><span class="line">        value :&#x3D; rand.Intn(100)          &#x2F;&#x2F; 生成0~99的随机整数</span><br><span class="line">        scoreMap[key] &#x3D; value</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 取出map中的所有key存入切片keys</span><br><span class="line">    var keys &#x3D; make([]string, 0, 200)</span><br><span class="line">    for key :&#x3D; range scoreMap &#123;</span><br><span class="line">        keys &#x3D; append(keys, key)</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 对切片进行排序</span><br><span class="line">    sort.Strings(keys)</span><br><span class="line">    &#x2F;&#x2F; 按照排序后的key遍历map</span><br><span class="line">    for _, key :&#x3D; range keys &#123;</span><br><span class="line">        fmt.Println(key, scoreMap[key])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="元素为map类型的切片"><a href="#元素为map类型的切片" class="headerlink" title="元素为map类型的切片"></a>元素为map类型的切片</h2><p>下面的代码演示了切片中的元素为map类型时的操作：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var mapSlice &#x3D; make([]map[string]string, 3)</span><br><span class="line">    for index, value :&#x3D; range mapSlice &#123;</span><br><span class="line">        fmt.Printf(&quot;index:%d value:%v\n&quot;, index, value)</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(&quot;after init&quot;)</span><br><span class="line">    &#x2F;&#x2F; 对切片中的map元素进行初始化</span><br><span class="line">    mapSlice[0] &#x3D; make(map[string]string, 10)</span><br><span class="line">    mapSlice[0][&quot;name&quot;] &#x3D; &quot;小王子&quot;</span><br><span class="line">    mapSlice[0][&quot;password&quot;] &#x3D; &quot;123456&quot;</span><br><span class="line">    mapSlice[0][&quot;address&quot;] &#x3D; &quot;沙河&quot;</span><br><span class="line">    for index, value :&#x3D; range mapSlice &#123;</span><br><span class="line">        fmt.Printf(&quot;index:%d value:%v\n&quot;, index, value)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    <title>go基础之数组</title>
+    <url>/2020/04/09/go_base_array/</url>
+    <content><![CDATA[<h1 id="Array-数组"><a href="#Array-数组" class="headerlink" title="Array(数组)"></a>Array(数组)</h1><p>数组：是同一种数据类型的固定长度的序列。 在Go语言中，数组从声明时就确定，使用时可以修改数组成员，但是数组大小不可变化。 基本语法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 定义一个长度为3元素类型为int的数组a</span><br><span class="line">var a [3]int</span><br></pre></td></tr></table></figure>
+<h2 id="数组定义"><a href="#数组定义" class="headerlink" title="数组定义"></a>数组定义</h2><p><code>var 数组变量名 [元素数量]Type</code><br>比如：<code>var a [5]int</code>， 数组的长度必须是常量，并且长度是数组类型的一部分。一旦定义，长度不能变。<code>[5]int和[10]int</code>是不同的类型。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var a [3]int</span><br><span class="line">var b [4]int</span><br><span class="line">a &#x3D; b &#x2F;&#x2F;不可以这样做，因为此时a和b是不同的类型</span><br></pre></td></tr></table></figure>
+<p>数组可以通过下标进行访问，下标是从0开始，最后一个元素下标是：<code>len-1</code>，访问越界（下标在合法范围之外），则触发访问越界，会panic。</p>
+<h2 id="数组的初始化"><a href="#数组的初始化" class="headerlink" title="数组的初始化"></a>数组的初始化</h2><p><strong><em>一维数组</em></strong></p>
+<h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h3><p>初始化数组时可以使用初始化列表来设置数组元素的值。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var testArray [3]int                        &#x2F;&#x2F;数组会初始化为int类型的零值</span><br><span class="line">    var numArray &#x3D; [3]int&#123;1, 2&#125;                 &#x2F;&#x2F;使用指定的初始值完成初始化</span><br><span class="line">    var cityArray &#x3D; [3]string&#123;&quot;北京&quot;, &quot;上海&quot;, &quot;深圳&quot;&#125; &#x2F;&#x2F;使用指定的初始值完成初始化</span><br><span class="line">    fmt.Println(testArray)                      &#x2F;&#x2F;[0 0 0]</span><br><span class="line">    fmt.Println(numArray)                       &#x2F;&#x2F;[1 2 0]</span><br><span class="line">    fmt.Println(cityArray)                      &#x2F;&#x2F;[北京 上海 深圳]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>按照上面的方法每次都要确保提供的初始值和数组长度一致，一般情况下我们可以让编译器根据初始值的个数自行推断数组的长度，例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var testArray [3]int</span><br><span class="line">    var numArray &#x3D; [...]int&#123;1, 2&#125;</span><br><span class="line">    var cityArray &#x3D; [...]string&#123;&quot;北京&quot;, &quot;上海&quot;, &quot;深圳&quot;&#125;</span><br><span class="line">    fmt.Println(testArray)                          &#x2F;&#x2F;[0 0 0]</span><br><span class="line">    fmt.Println(numArray)                           &#x2F;&#x2F;[1 2]</span><br><span class="line">    fmt.Printf(&quot;type of numArray:%T\n&quot;, numArray)   &#x2F;&#x2F;type of numArray:[2]int</span><br><span class="line">    fmt.Println(cityArray)                          &#x2F;&#x2F;[北京 上海 深圳]</span><br><span class="line">    fmt.Printf(&quot;type of cityArray:%T\n&quot;, cityArray) &#x2F;&#x2F;type of cityArray:[3]string</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a>方法三</h3><p>我们还可以使用指定索引值的方式来初始化数组，例如:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [...]int&#123;1: 1, 3: 5&#125;</span><br><span class="line">    fmt.Println(a)                  &#x2F;&#x2F; [0 1 0 5]</span><br><span class="line">    fmt.Printf(&quot;type of a:%T\n&quot;, a) &#x2F;&#x2F;type of a:[4]int</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="数组的遍历"><a href="#数组的遍历" class="headerlink" title="数组的遍历"></a>数组的遍历</h2><p><strong><em>一维数组</em></strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 遍历数组a有以下两种方法：</span><br><span class="line">func main() &#123;</span><br><span class="line">    var a &#x3D; [...]string&#123;&quot;北京&quot;, &quot;上海&quot;, &quot;深圳&quot;&#125;</span><br><span class="line">    &#x2F;&#x2F; 方法1：for循环遍历</span><br><span class="line">    for i :&#x3D; 0; i &lt; len(a); i++ &#123;</span><br><span class="line">        fmt.Println(a[i])</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 方法2：for range遍历</span><br><span class="line">    for index, value :&#x3D; range a &#123;</span><br><span class="line">        fmt.Println(index, value)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="多维数组"><a href="#多维数组" class="headerlink" title="多维数组"></a>多维数组</h2><h3 id="二维数组的定义"><a href="#二维数组的定义" class="headerlink" title="二维数组的定义"></a>二维数组的定义</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [3][2]string&#123;</span><br><span class="line">        &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">        &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">        &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(a) &#x2F;&#x2F;[[北京 上海] [广州 深圳] [成都 重庆]]</span><br><span class="line">    fmt.Println(a[2][1]) &#x2F;&#x2F;支持索引取值:重庆</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="二维数组的遍历"><a href="#二维数组的遍历" class="headerlink" title="二维数组的遍历"></a>二维数组的遍历</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [3][2]string&#123;</span><br><span class="line">        &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">        &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">        &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    for _, v1 :&#x3D; range a &#123;</span><br><span class="line">        for _, v2 :&#x3D; range v1 &#123;</span><br><span class="line">            fmt.Printf(&quot;%s\t&quot;, v2)</span><br><span class="line">        &#125;</span><br><span class="line">        fmt.Println()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>输出：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">index:0 value:map[]</span><br><span class="line">index:1 value:map[]</span><br><span class="line">index:2 value:map[]</span><br><span class="line">after init</span><br><span class="line">index:0 value:map[address:沙河 name:小王子 password:123456]</span><br><span class="line">index:1 value:map[]</span><br><span class="line">index:2 value:map[]</span><br></pre></td></tr></table></figure>
-<h2 id="值为切片类型的map"><a href="#值为切片类型的map" class="headerlink" title="值为切片类型的map"></a>值为切片类型的map</h2><p>下面的代码演示了map中值为切片类型的操作：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var sliceMap &#x3D; make(map[string][]string, 3)</span><br><span class="line">    fmt.Println(sliceMap)</span><br><span class="line">    fmt.Println(&quot;after init&quot;)</span><br><span class="line">    key :&#x3D; &quot;中国&quot;</span><br><span class="line">    value, ok :&#x3D; sliceMap[key]</span><br><span class="line">    if !ok &#123;</span><br><span class="line">        value &#x3D; make([]string, 0, 2)</span><br><span class="line">    &#125;</span><br><span class="line">    value &#x3D; append(value, &quot;北京&quot;, &quot;上海&quot;)</span><br><span class="line">    sliceMap[key] &#x3D; value</span><br><span class="line">    fmt.Println(sliceMap)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">map[]</span><br><span class="line">after init</span><br><span class="line">map[中国:[北京 上海]]</span><br></pre></td></tr></table></figure>
-<h2 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h2><p>写一个程序，统计一个字符串中每个单词出现的次数。比如：”how do you do”中how=1 do=2 you=1。<br>观察下面代码，写出最终的打印结果。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    type Map map[string][]int</span><br><span class="line">    m :&#x3D; make(Map)</span><br><span class="line">    s :&#x3D; []int&#123;1, 2&#125;</span><br><span class="line">    s &#x3D; append(s, 3)</span><br><span class="line">    fmt.Printf(&quot;%+v\n&quot;, s)</span><br><span class="line">    m[&quot;q1mi&quot;] &#x3D; s</span><br><span class="line">    s &#x3D; append(s[:1], s[2:]...)</span><br><span class="line">    fmt.Printf(&quot;%+v\n&quot;, s)</span><br><span class="line">    fmt.Printf(&quot;%+v\n&quot;, m[&quot;q1mi&quot;])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>解答：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">北京    上海    </span><br><span class="line">广州    深圳    </span><br><span class="line">成都    重庆    </span><br></pre></td></tr></table></figure>
+<p><code>注意</code>： 多维数组<code>只有第一层</code>可以使用<code>...</code>来让编译器推导数组长度。例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;支持的写法</span><br><span class="line">a :&#x3D; [...][2]string&#123;</span><br><span class="line">    &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">    &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">    &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;不支持多维数组的内层使用...</span><br><span class="line">b :&#x3D; [3][...]string&#123;</span><br><span class="line">    &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">    &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">    &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="数组拷贝和传参"><a href="#数组拷贝和传参" class="headerlink" title="数组拷贝和传参"></a>数组拷贝和传参</h2><p>数组是值类型，赋值和传参会复制整个数组。因此改变副本的值，不会改变本身的值。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func modifyArray(x [3]int) &#123;</span><br><span class="line">    x[0] &#x3D; 100</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func modifyArray2(x [3][2]int) &#123;</span><br><span class="line">    x[2][0] &#x3D; 100</span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [3]int&#123;10, 20, 30&#125;</span><br><span class="line">    modifyArray(a) &#x2F;&#x2F;在modify中修改的是a的副本x</span><br><span class="line">    fmt.Println(a) &#x2F;&#x2F;[10 20 30]</span><br><span class="line">    b :&#x3D; [3][2]int&#123;</span><br><span class="line">        &#123;1, 1&#125;,</span><br><span class="line">        &#123;1, 1&#125;,</span><br><span class="line">        &#123;1, 1&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    modifyArray2(b) &#x2F;&#x2F;在modify中修改的是b的副本x</span><br><span class="line">    fmt.Println(b)  &#x2F;&#x2F;[[1 1] [1 1] [1 1]]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong></p>
+<ol>
+<li>数组支持 “==“、”!=” 操作符，因为内存总是被初始化过的。</li>
+<li>[n]*T表示指针数组，*[n]T表示数组指针 。</li>
+</ol>
+<h2 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h2><p>求数组[1, 3, 5, 7, 8]所有元素的和<br>找出数组中和为指定值的两个元素的下标，比如从数组[1, 3, 5, 7, 8]中找出和为8的两个元素的下标分别为(0,3)和(1,2)。</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
 
-<hr>
-<p>&nbsp;  </p>
-<!--**参考文章**：-->  
-<!---->  
-<!---->  
 ]]></content>
       <categories>
         <category>Go</category>
       </categories>
       <tags>
         <tag>go语言基础</tag>
-        <tag>map</tag>
+        <tag>array</tag>
       </tags>
   </entry>
   <entry>
@@ -1484,6 +1418,72 @@ roles/
       <tags>
         <tag>go语言基础</tag>
         <tag>函数</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>go基础之map</title>
+    <url>/2020/04/30/go_base_map/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="http://wen.topgoer.com/docs/golang/chapter03-13">map</a> 是Go语言中提供的<code>映射关系容器</code>，其内部使用散列表（hash）实现。</p>
+</blockquote>
+<h1 id="map"><a href="#map" class="headerlink" title="map"></a>map</h1><p>map是一种无序的基于key-value的数据结构，Go语言中的map是引用类型，必须初始化才能使用。</p>
+<h2 id="map的定义语法"><a href="#map的定义语法" class="headerlink" title="map的定义语法"></a>map的定义语法</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">map[KeyType]ValueType</span><br></pre></td></tr></table></figure>
+<p>其中，</p>
+<ul>
+<li>KeyType:表示键的类型。</li>
+<li>ValueType:表示键对应的值的类型。</li>
+</ul>
+<p>map类型的变量默认初始值为nil，需要使用make()函数来分配内存。语法为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">make(map[KeyType]ValueType, [cap])</span><br></pre></td></tr></table></figure>
+<p>其中cap表示map的容量，该参数虽然不是必须的，但是我们应该在初始化map的时候就为其指定一个合适的容量。</p>
+<h2 id="map的使用"><a href="#map的使用" class="headerlink" title="map的使用"></a>map的使用</h2><p>map中的数据都是成对出现的，map的基本使用示例代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int, 8)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    fmt.Println(scoreMap)                  &#x2F;&#x2F; map[小明:100 张三:90]</span><br><span class="line">    fmt.Println(scoreMap[&quot;小明&quot;])          &#x2F;&#x2F; 100</span><br><span class="line">    fmt.Printf(&quot;type of a:%T\n&quot;, scoreMap) &#x2F;&#x2F;type of a:map[string]int</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]string, 8)</span><br><span class="line">    scoreMap[&quot;射手&quot;] &#x3D; &quot;小鲁蛋&quot;</span><br><span class="line">    scoreMap[&quot;打野&quot;] &#x3D; &quot;赵云&quot;</span><br><span class="line">    scoreMap[&quot;辅助&quot;] &#x3D; &quot;廉颇&quot;</span><br><span class="line">    fmt.Println(scoreMap)</span><br><span class="line">    fmt.Printf(&quot;type of scoreMap is: %T\n&quot;, scoreMap)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 输出：</span><br><span class="line">&#x2F;&#x2F; map[坦边:吕布 射手:小鲁蛋 打野:赵云 辅助:廉颇]</span><br><span class="line">&#x2F;&#x2F; type of scoreMap is: map[string]string</span><br></pre></td></tr></table></figure>
+<p>map也支持在声明的时候填充元素，例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    userLogin :&#x3D; map[string]string&#123;</span><br><span class="line">        &quot;username&quot;: &quot;xyxxb&quot;,</span><br><span class="line">        &quot;password&quot;: &quot;123123&quot;,</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(userLogin) &#x2F;&#x2F; map[password:123123 username:xyxxb]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="判断某个键是否存在"><a href="#判断某个键是否存在" class="headerlink" title="判断某个键是否存在"></a>判断某个键是否存在</h2><p>Go语言中判断map中键是否存在的特殊写法，格式如下:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">value, ok :&#x3D; map[key]</span><br></pre></td></tr></table></figure>
+<p>举个例子：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    &#x2F;&#x2F; 如果key存在ok为true,v为对应的值；不存在ok为false,v为值类型的零值</span><br><span class="line">    v, ok :&#x3D; scoreMap[&quot;张三&quot;]</span><br><span class="line">    if ok &#123;</span><br><span class="line">        fmt.Println(v)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        fmt.Println(&quot;查无此人&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h2><p>使用for range遍历map</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    scoreMap[&quot;娜扎&quot;] &#x3D; 60</span><br><span class="line">    for k, v :&#x3D; range scoreMap &#123;</span><br><span class="line">        fmt.Println(k, v)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>仅遍历key的时候，可以按下面的写法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    scoreMap[&quot;娜扎&quot;] &#x3D; 60</span><br><span class="line">    for k :&#x3D; range scoreMap &#123;</span><br><span class="line">        scoreMap[&quot;小明&quot;] &#x3D; 120</span><br><span class="line">        fmt.Println(k) &#x2F;&#x2F; 取value：fmt.Println(scoreMap[k])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>**<code>注意</code>**： 遍历map时的元素顺序与添加键值对的顺序无关。</p>
+<h2 id="使用delete-函数删除键值对"><a href="#使用delete-函数删除键值对" class="headerlink" title="使用delete()函数删除键值对"></a>使用delete()函数删除键值对</h2><p>使用delete()内建函数从map中删除一组键值对，delete()函数的格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">delete(map, key)</span><br></pre></td></tr></table></figure>
+<p>其中，</p>
+<ul>
+<li>map:表示要删除键值对的map</li>
+<li>key:表示要删除的键值对的键</li>
+</ul>
+<p>示例代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main()&#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    scoreMap[&quot;娜扎&quot;] &#x3D; 60</span><br><span class="line">    delete(scoreMap, &quot;小明&quot;)&#x2F;&#x2F;将小明:100从map中删除</span><br><span class="line">    for k,v :&#x3D; range scoreMap&#123;</span><br><span class="line">        fmt.Println(k, v)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="按照指定顺序遍历map"><a href="#按照指定顺序遍历map" class="headerlink" title="按照指定顺序遍历map"></a>按照指定顺序遍历map</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    rand.Seed(time.Now().UnixNano()) &#x2F;&#x2F;初始化随机数种子</span><br><span class="line"></span><br><span class="line">    var scoreMap &#x3D; make(map[string]int, 200)</span><br><span class="line"></span><br><span class="line">    for i :&#x3D; 0; i &lt; 100; i++ &#123;</span><br><span class="line">        key :&#x3D; fmt.Sprintf(&quot;stu%02d&quot;, i) &#x2F;&#x2F; 生成stu开头的字符串</span><br><span class="line">        value :&#x3D; rand.Intn(100)          &#x2F;&#x2F; 生成0~99的随机整数</span><br><span class="line">        scoreMap[key] &#x3D; value</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 取出map中的所有key存入切片keys</span><br><span class="line">    var keys &#x3D; make([]string, 0, 200)</span><br><span class="line">    for key :&#x3D; range scoreMap &#123;</span><br><span class="line">        keys &#x3D; append(keys, key)</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 对切片进行排序</span><br><span class="line">    sort.Strings(keys)</span><br><span class="line">    &#x2F;&#x2F; 按照排序后的key遍历map</span><br><span class="line">    for _, key :&#x3D; range keys &#123;</span><br><span class="line">        fmt.Println(key, scoreMap[key])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="元素为map类型的切片"><a href="#元素为map类型的切片" class="headerlink" title="元素为map类型的切片"></a>元素为map类型的切片</h2><p>下面的代码演示了切片中的元素为map类型时的操作：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var mapSlice &#x3D; make([]map[string]string, 3)</span><br><span class="line">    for index, value :&#x3D; range mapSlice &#123;</span><br><span class="line">        fmt.Printf(&quot;index:%d value:%v\n&quot;, index, value)</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(&quot;after init&quot;)</span><br><span class="line">    &#x2F;&#x2F; 对切片中的map元素进行初始化</span><br><span class="line">    mapSlice[0] &#x3D; make(map[string]string, 10)</span><br><span class="line">    mapSlice[0][&quot;name&quot;] &#x3D; &quot;小王子&quot;</span><br><span class="line">    mapSlice[0][&quot;password&quot;] &#x3D; &quot;123456&quot;</span><br><span class="line">    mapSlice[0][&quot;address&quot;] &#x3D; &quot;沙河&quot;</span><br><span class="line">    for index, value :&#x3D; range mapSlice &#123;</span><br><span class="line">        fmt.Printf(&quot;index:%d value:%v\n&quot;, index, value)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">index:0 value:map[]</span><br><span class="line">index:1 value:map[]</span><br><span class="line">index:2 value:map[]</span><br><span class="line">after init</span><br><span class="line">index:0 value:map[address:沙河 name:小王子 password:123456]</span><br><span class="line">index:1 value:map[]</span><br><span class="line">index:2 value:map[]</span><br></pre></td></tr></table></figure>
+<h2 id="值为切片类型的map"><a href="#值为切片类型的map" class="headerlink" title="值为切片类型的map"></a>值为切片类型的map</h2><p>下面的代码演示了map中值为切片类型的操作：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var sliceMap &#x3D; make(map[string][]string, 3)</span><br><span class="line">    fmt.Println(sliceMap)</span><br><span class="line">    fmt.Println(&quot;after init&quot;)</span><br><span class="line">    key :&#x3D; &quot;中国&quot;</span><br><span class="line">    value, ok :&#x3D; sliceMap[key]</span><br><span class="line">    if !ok &#123;</span><br><span class="line">        value &#x3D; make([]string, 0, 2)</span><br><span class="line">    &#125;</span><br><span class="line">    value &#x3D; append(value, &quot;北京&quot;, &quot;上海&quot;)</span><br><span class="line">    sliceMap[key] &#x3D; value</span><br><span class="line">    fmt.Println(sliceMap)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">map[]</span><br><span class="line">after init</span><br><span class="line">map[中国:[北京 上海]]</span><br></pre></td></tr></table></figure>
+<h2 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h2><p>写一个程序，统计一个字符串中每个单词出现的次数。比如：”how do you do”中how=1 do=2 you=1。<br>观察下面代码，写出最终的打印结果。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    type Map map[string][]int</span><br><span class="line">    m :&#x3D; make(Map)</span><br><span class="line">    s :&#x3D; []int&#123;1, 2&#125;</span><br><span class="line">    s &#x3D; append(s, 3)</span><br><span class="line">    fmt.Printf(&quot;%+v\n&quot;, s)</span><br><span class="line">    m[&quot;q1mi&quot;] &#x3D; s</span><br><span class="line">    s &#x3D; append(s[:1], s[2:]...)</span><br><span class="line">    fmt.Printf(&quot;%+v\n&quot;, s)</span><br><span class="line">    fmt.Printf(&quot;%+v\n&quot;, m[&quot;q1mi&quot;])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>解答：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!---->  
+<!---->  
+]]></content>
+      <categories>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>go语言基础</tag>
+        <tag>map</tag>
       </tags>
   </entry>
   <entry>
@@ -1812,43 +1812,6 @@ roles/
       </tags>
   </entry>
   <entry>
-    <title>golang 格式化符号%说明</title>
-    <url>/2020/04/08/go_format_description/</url>
-    <content><![CDATA[<h2 id="普通占位符"><a href="#普通占位符" class="headerlink" title="普通占位符"></a>普通占位符</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">占位符     说明                           举例                   输出</span><br><span class="line">%v      相应值的默认格式。            Printf(&quot;%v&quot;, people)   &#123;zhangsan&#125;，</span><br><span class="line">%+v     打印结构体时，会添加字段名     Printf(&quot;%+v&quot;, people)  &#123;Name:zhangsan&#125;</span><br><span class="line">%#v     相应值的Go语法表示            Printf(&quot;#v&quot;, people)   main.Human&#123;Name:&quot;zhangsan&quot;&#125;</span><br><span class="line">%T      相应值的类型的Go语法表示       Printf(&quot;%T&quot;, people)   main.Human</span><br><span class="line">%%      字面上的百分号，并非值的占位符  Printf(&quot;%%&quot;)            %</span><br></pre></td></tr></table></figure>
-<h2 id="布尔占位符"><a href="#布尔占位符" class="headerlink" title="布尔占位符"></a>布尔占位符</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">占位符       说明                举例                     输出</span><br><span class="line">%t          true 或 false。     Printf(&quot;%t&quot;, true)       true</span><br></pre></td></tr></table></figure>
-<h2 id="整数占位符"><a href="#整数占位符" class="headerlink" title="整数占位符"></a>整数占位符</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">占位符     说明                                  举例                       输出</span><br><span class="line">%b      二进制表示                             Printf(&quot;%b&quot;, 5)             101</span><br><span class="line">%c      相应Unicode码点所表示的字符              Printf(&quot;%c&quot;, 0x4E2D)        中</span><br><span class="line">%d      十进制表示                             Printf(&quot;%d&quot;, 0x12)          18</span><br><span class="line">%o      八进制表示                             Printf(&quot;%d&quot;, 10)            12</span><br><span class="line">%q      单引号围绕的字符字面值，由Go语法安全地转义 Printf(&quot;%q&quot;, 0x4E2D)        &#39;中&#39;</span><br><span class="line">%x      十六进制表示，字母形式为小写 a-f         Printf(&quot;%x&quot;, 13)             d</span><br><span class="line">%X      十六进制表示，字母形式为大写 A-F         Printf(&quot;%x&quot;, 13)             D</span><br><span class="line">%U      Unicode格式：U+1234，等同于 &quot;U+%04X&quot;   Printf(&quot;%U&quot;, 0x4E2D)         U+4E2D</span><br></pre></td></tr></table></figure>
-<h2 id="浮点数和复数的组成部分（实部和虚部）"><a href="#浮点数和复数的组成部分（实部和虚部）" class="headerlink" title="浮点数和复数的组成部分（实部和虚部）"></a>浮点数和复数的组成部分（实部和虚部）</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">占位符     说明                              举例            输出</span><br><span class="line">%b      无小数部分的，指数为二的幂的科学计数法，</span><br><span class="line">        与 strconv.FormatFloat 的 &#39;b&#39; 转换格式一致。例如 -123456p-78</span><br><span class="line">%e      科学计数法，例如 -1234.456e+78        Printf(&quot;%e&quot;, 10.2)     1.020000e+01</span><br><span class="line">%E      科学计数法，例如 -1234.456E+78        Printf(&quot;%e&quot;, 10.2)     1.020000E+01</span><br><span class="line">%f      有小数点而无指数，例如 123.456        Printf(&quot;%f&quot;, 10.2)     10.200000</span><br><span class="line">%g      根据情况选择 %e 或 %f 以产生更紧凑的（无末尾的0）输出 Printf(&quot;%g&quot;, 10.20)   10.2</span><br><span class="line">%G      根据情况选择 %E 或 %f 以产生更紧凑的（无末尾的0）输出 Printf(&quot;%G&quot;, 10.20+2i) (10.2+2i)</span><br></pre></td></tr></table></figure>
-<h2 id="字符串与字节切片"><a href="#字符串与字节切片" class="headerlink" title="字符串与字节切片"></a>字符串与字节切片</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">占位符     说明                              举例                           输出</span><br><span class="line">%s      输出字符串表示（string类型或[]byte)   Printf(&quot;%s&quot;, []byte(&quot;Go语言&quot;))  Go语言</span><br><span class="line">%q      双引号围绕的字符串，由Go语法安全地转义  Printf(&quot;%q&quot;, &quot;Go语言&quot;)         &quot;Go语言&quot;</span><br><span class="line">%x      十六进制，小写字母，每字节两个字符      Printf(&quot;%x&quot;, &quot;golang&quot;)         676f6c616e67</span><br><span class="line">%X      十六进制，大写字母，每字节两个字符      Printf(&quot;%X&quot;, &quot;golang&quot;)         676F6C616E67</span><br></pre></td></tr></table></figure>
-<h2 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">占位符         说明                      举例                             输出</span><br><span class="line">%p      十六进制表示，前缀 0x          Printf(&quot;%p&quot;, &amp;people)             0x4f57f0</span><br></pre></td></tr></table></figure>
-<h2 id="其它标记"><a href="#其它标记" class="headerlink" title="其它标记"></a>其它标记</h2><pre><code>占位符      说明                             举例          输出
-+      总打印数值的正负号；对于%q（%+q）保证只输出ASCII编码的字符。 
-                                           Printf(&quot;%+q&quot;, &quot;中文&quot;)  &quot;\u4e2d\u6587&quot;
--      在右侧而非左侧填充空格（左对齐该区域）
-#      备用格式：为八进制添加前导 0（%#o）      Printf(&quot;%#U&quot;, &#39;中&#39;)      U+4E2D
-       为十六进制添加前导 0x（%#x）或 0X（%#X），为 %p（%#p）去掉前导 0x；
-       如果可能的话，%q（%#q）会打印原始 （即反引号围绕的）字符串；
-       如果是可打印字符，%U（%#U）会写出该字符的
-       Unicode 编码形式（如字符 x 会被打印成 U+0078 &#39;x&#39;）。
-&#39; &#39;    (空格)为数值中省略的正负号留出空白（% d）；
-       以十六进制（% x, % X）打印字符串或切片时，在字节之间用空格隔开
-0      填充前导的0而非空格；对于数字，这会将填充移到正负号之后
-</code></pre>
-<p>golang没有 ‘%u’ 点位符，若整数为无符号类型，默认就会被打印成无符号的。</p>
-<p>宽度与精度的控制格式以Unicode码点为单位。宽度为该数值占用区域的最小宽度；精度为小数点之后的位数。<br>操作数的类型为int时，宽度与精度都可用字符 ‘*’ 表示。</p>
-<p>对于 %g/%G 而言，精度为所有数字的总数，例如：123.45，%.4g 会打印123.5，（而 %6.2f 会打印123.45）。</p>
-<p>%e 和 %f 的默认精度为6</p>
-<p>对大多数的数值类型而言，宽度为输出的最小字符数，如果必要的话会为已格式化的形式填充空格。</p>
-<p>而以字符串类型，精度为输出的最大字符数，如果必要的话会直接截断。</p>
-]]></content>
-      <categories>
-        <category>Go</category>
-      </categories>
-      <tags>
-        <tag>go语言基础</tag>
-        <tag>%占位符</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>go基础之变量和常量</title>
     <url>/2020/04/08/go_var_constant/</url>
     <content><![CDATA[<h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><h2 id="变量类型"><a href="#变量类型" class="headerlink" title="变量类型"></a>变量类型</h2><p>变量（Variable）的功能是存储数据。不同的变量保存的数据类型可能会不一样。经过半个多世纪的发展，编程语言已经基本形成了一套固定的类型，常见变量的数据类型有：<code>整型、浮点型、布尔型</code>等。</p>
@@ -1907,6 +1870,121 @@ roles/
       <tags>
         <tag>go语言基础</tag>
         <tag>variable</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>golang 格式化符号%说明</title>
+    <url>/2020/04/08/go_format_description/</url>
+    <content><![CDATA[<h2 id="普通占位符"><a href="#普通占位符" class="headerlink" title="普通占位符"></a>普通占位符</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">占位符     说明                           举例                   输出</span><br><span class="line">%v      相应值的默认格式。            Printf(&quot;%v&quot;, people)   &#123;zhangsan&#125;，</span><br><span class="line">%+v     打印结构体时，会添加字段名     Printf(&quot;%+v&quot;, people)  &#123;Name:zhangsan&#125;</span><br><span class="line">%#v     相应值的Go语法表示            Printf(&quot;#v&quot;, people)   main.Human&#123;Name:&quot;zhangsan&quot;&#125;</span><br><span class="line">%T      相应值的类型的Go语法表示       Printf(&quot;%T&quot;, people)   main.Human</span><br><span class="line">%%      字面上的百分号，并非值的占位符  Printf(&quot;%%&quot;)            %</span><br></pre></td></tr></table></figure>
+<h2 id="布尔占位符"><a href="#布尔占位符" class="headerlink" title="布尔占位符"></a>布尔占位符</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">占位符       说明                举例                     输出</span><br><span class="line">%t          true 或 false。     Printf(&quot;%t&quot;, true)       true</span><br></pre></td></tr></table></figure>
+<h2 id="整数占位符"><a href="#整数占位符" class="headerlink" title="整数占位符"></a>整数占位符</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">占位符     说明                                  举例                       输出</span><br><span class="line">%b      二进制表示                             Printf(&quot;%b&quot;, 5)             101</span><br><span class="line">%c      相应Unicode码点所表示的字符              Printf(&quot;%c&quot;, 0x4E2D)        中</span><br><span class="line">%d      十进制表示                             Printf(&quot;%d&quot;, 0x12)          18</span><br><span class="line">%o      八进制表示                             Printf(&quot;%d&quot;, 10)            12</span><br><span class="line">%q      单引号围绕的字符字面值，由Go语法安全地转义 Printf(&quot;%q&quot;, 0x4E2D)        &#39;中&#39;</span><br><span class="line">%x      十六进制表示，字母形式为小写 a-f         Printf(&quot;%x&quot;, 13)             d</span><br><span class="line">%X      十六进制表示，字母形式为大写 A-F         Printf(&quot;%x&quot;, 13)             D</span><br><span class="line">%U      Unicode格式：U+1234，等同于 &quot;U+%04X&quot;   Printf(&quot;%U&quot;, 0x4E2D)         U+4E2D</span><br></pre></td></tr></table></figure>
+<h2 id="浮点数和复数的组成部分（实部和虚部）"><a href="#浮点数和复数的组成部分（实部和虚部）" class="headerlink" title="浮点数和复数的组成部分（实部和虚部）"></a>浮点数和复数的组成部分（实部和虚部）</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">占位符     说明                              举例            输出</span><br><span class="line">%b      无小数部分的，指数为二的幂的科学计数法，</span><br><span class="line">        与 strconv.FormatFloat 的 &#39;b&#39; 转换格式一致。例如 -123456p-78</span><br><span class="line">%e      科学计数法，例如 -1234.456e+78        Printf(&quot;%e&quot;, 10.2)     1.020000e+01</span><br><span class="line">%E      科学计数法，例如 -1234.456E+78        Printf(&quot;%e&quot;, 10.2)     1.020000E+01</span><br><span class="line">%f      有小数点而无指数，例如 123.456        Printf(&quot;%f&quot;, 10.2)     10.200000</span><br><span class="line">%g      根据情况选择 %e 或 %f 以产生更紧凑的（无末尾的0）输出 Printf(&quot;%g&quot;, 10.20)   10.2</span><br><span class="line">%G      根据情况选择 %E 或 %f 以产生更紧凑的（无末尾的0）输出 Printf(&quot;%G&quot;, 10.20+2i) (10.2+2i)</span><br></pre></td></tr></table></figure>
+<h2 id="字符串与字节切片"><a href="#字符串与字节切片" class="headerlink" title="字符串与字节切片"></a>字符串与字节切片</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">占位符     说明                              举例                           输出</span><br><span class="line">%s      输出字符串表示（string类型或[]byte)   Printf(&quot;%s&quot;, []byte(&quot;Go语言&quot;))  Go语言</span><br><span class="line">%q      双引号围绕的字符串，由Go语法安全地转义  Printf(&quot;%q&quot;, &quot;Go语言&quot;)         &quot;Go语言&quot;</span><br><span class="line">%x      十六进制，小写字母，每字节两个字符      Printf(&quot;%x&quot;, &quot;golang&quot;)         676f6c616e67</span><br><span class="line">%X      十六进制，大写字母，每字节两个字符      Printf(&quot;%X&quot;, &quot;golang&quot;)         676F6C616E67</span><br></pre></td></tr></table></figure>
+<h2 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">占位符         说明                      举例                             输出</span><br><span class="line">%p      十六进制表示，前缀 0x          Printf(&quot;%p&quot;, &amp;people)             0x4f57f0</span><br></pre></td></tr></table></figure>
+<h2 id="其它标记"><a href="#其它标记" class="headerlink" title="其它标记"></a>其它标记</h2><pre><code>占位符      说明                             举例          输出
++      总打印数值的正负号；对于%q（%+q）保证只输出ASCII编码的字符。 
+                                           Printf(&quot;%+q&quot;, &quot;中文&quot;)  &quot;\u4e2d\u6587&quot;
+-      在右侧而非左侧填充空格（左对齐该区域）
+#      备用格式：为八进制添加前导 0（%#o）      Printf(&quot;%#U&quot;, &#39;中&#39;)      U+4E2D
+       为十六进制添加前导 0x（%#x）或 0X（%#X），为 %p（%#p）去掉前导 0x；
+       如果可能的话，%q（%#q）会打印原始 （即反引号围绕的）字符串；
+       如果是可打印字符，%U（%#U）会写出该字符的
+       Unicode 编码形式（如字符 x 会被打印成 U+0078 &#39;x&#39;）。
+&#39; &#39;    (空格)为数值中省略的正负号留出空白（% d）；
+       以十六进制（% x, % X）打印字符串或切片时，在字节之间用空格隔开
+0      填充前导的0而非空格；对于数字，这会将填充移到正负号之后
+</code></pre>
+<p>golang没有 ‘%u’ 点位符，若整数为无符号类型，默认就会被打印成无符号的。</p>
+<p>宽度与精度的控制格式以Unicode码点为单位。宽度为该数值占用区域的最小宽度；精度为小数点之后的位数。<br>操作数的类型为int时，宽度与精度都可用字符 ‘*’ 表示。</p>
+<p>对于 %g/%G 而言，精度为所有数字的总数，例如：123.45，%.4g 会打印123.5，（而 %6.2f 会打印123.45）。</p>
+<p>%e 和 %f 的默认精度为6</p>
+<p>对大多数的数值类型而言，宽度为输出的最小字符数，如果必要的话会为已格式化的形式填充空格。</p>
+<p>而以字符串类型，精度为输出的最大字符数，如果必要的话会直接截断。</p>
+]]></content>
+      <categories>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>go语言基础</tag>
+        <tag>%占位符</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Go依赖管理—从godep到go mod</title>
+    <url>/2020/01/31/go%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E2%80%94_godep_gomod/</url>
+    <content><![CDATA[<h2 id="1-1-为什么需要依赖管理"><a href="#1-1-为什么需要依赖管理" class="headerlink" title="1.1 为什么需要依赖管理"></a>1.1 为什么需要依赖管理</h2><p>最早的时候，Go所依赖的所有的第三方库都放在GOPATH这个目录下面。这就导致了同一个库只能保存一个版本的代码。如果不同的项目依赖同一个第三方的库的不同版本，应该怎么解决？</p>
+<h2 id="1-2-godep"><a href="#1-2-godep" class="headerlink" title="1.2 godep"></a>1.2 godep</h2><p>Go语言从<code>v1.5</code>开始开始引入<code>vendor</code>模式，如果项目目录下有vendor目录，那么go工具链会优先使用<code>vendor</code>内的包进行编译、测试等。</p>
+<p><code>godep</code>是一个通过vender模式实现的Go语言的第三方依赖管理工具，类似的还有由社区维护准官方包管理工具<code>dep</code>。</p>
+<blockquote>
+<p>注意：在<code>Go1.11</code>之后，建议<a href="https://learnku.com/articles/33241">将 dep 更换为 go mod</a>进行项目管理，更方便</p>
+</blockquote>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>执行以下命令安装godep工具。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go get github.com&#x2F;tools&#x2F;godep</span><br></pre></td></tr></table></figure>
+<h3 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h3><p>安装好godep之后，在终端输入godep查看支持的所有命令。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">godep save     将依赖项输出并复制到Godeps.json文件中</span><br><span class="line">godep go       使用保存的依赖项运行go工具</span><br><span class="line">godep get      下载并安装具有指定依赖项的包</span><br><span class="line">godep path     打印依赖的GOPATH路径</span><br><span class="line">godep restore  在GOPATH中拉取依赖的版本</span><br><span class="line">godep update   更新选定的包或go版本</span><br><span class="line">godep diff     显示当前和以前保存的依赖项集之间的差异</span><br><span class="line">godep version  查看版本信息</span><br></pre></td></tr></table></figure>
+<p>使用godep help [command]可以看看具体命令的帮助信息</p>
+<h3 id="使用godep"><a href="#使用godep" class="headerlink" title="使用godep"></a>使用godep</h3><p>在项目目录下执行godep save命令，会在当前项目中创建Godeps和vender两个文件夹。</p>
+<p>其中Godeps文件夹下有一个Godeps.json的文件，里面记录了项目所依赖的包信息。 vender文件夹下是项目依赖的包的源代码文件。</p>
+<h3 id="vender机制"><a href="#vender机制" class="headerlink" title="vender机制"></a>vender机制</h3><p>Go1.5版本之后开始支持，能够控制Go语言程序编译时依赖包搜索路径的优先级。</p>
+<p>例如查找项目的某个依赖包，首先会在项目根目录下的<code>vender</code>文件夹中查找，如果没有找到就会去<code>$GOAPTH/src</code>目录下查找。</p>
+<h3 id="godep开发流程"><a href="#godep开发流程" class="headerlink" title="godep开发流程"></a>godep开发流程</h3><p>保证程序能够正常编译<br>执行godep save保存当前项目的所有第三方依赖的版本信息和代码<br>提交Godeps目录和vender目录到代码库。<br>如果要更新依赖的版本，可以直接修改Godeps.json文件中的对应项</p>
+<h2 id="1-3-go-module"><a href="#1-3-go-module" class="headerlink" title="1.3 go module"></a>1.3 go module</h2><p><code>go module</code>是Go1.11版本之后官方推出的版本管理工具，并且从Go1.13版本开始，<code>go module</code>将是Go语言默认的依赖管理工具。</p>
+<h3 id="GO111MODULE"><a href="#GO111MODULE" class="headerlink" title="GO111MODULE"></a>GO111MODULE</h3><p>要启用<code>go module</code>支持首先要设置环境变量<code>GO111MODULE</code>，通过它可以开启或关闭模块支持，它有三个可选值：<code>off、on、auto</code>，默认值是<code>auto</code>。</p>
+<ol>
+<li>GO111MODULE=off禁用模块支持，编译时会从GOPATH和vendor文件夹中查找包。</li>
+<li>GO111MODULE=on启用模块支持，编译时会忽略GOPATH和vendor文件夹，只根据 go.mod下载依赖。</li>
+<li>GO111MODULE=auto，当项目在$GOPATH/src外且项目根目录有go.mod文件时，开启模块支持。<br>简单来说，设置<code>GO111MODULE=on</code>之后就可以使用<code>go module</code>了，以后就没有必要在GOPATH中创建项目了，并且还能够很好的管理项目依赖的第三方包信息。<br>使用 go module 管理依赖后会在项目根目录下生成两个文件<code>go.mod</code>和<code>go.sum</code>。</li>
+</ol>
+<h3 id="GOPROXY"><a href="#GOPROXY" class="headerlink" title="GOPROXY"></a>GOPROXY</h3><p>Go1.11之后设置GOPROXY命令为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn</span><br></pre></td></tr></table></figure>
+<p>Go1.13之后<code>GOPROXY</code>默认值为<code>https://proxy.golang.org</code>，在国内是无法访问的，所以十分建议大家设置<code>GOPROXY=https://goproxy.cn</code>。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go env -w GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn,direct</span><br></pre></td></tr></table></figure>
+<h3 id="go-mod命令"><a href="#go-mod命令" class="headerlink" title="go mod命令"></a>go mod命令</h3><p>常用的go mod命令如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go mod download    下载依赖的module到本地cache（默认为$GOPATH&#x2F;pkg&#x2F;mod目录）</span><br><span class="line">go mod edit        编辑go.mod文件</span><br><span class="line">go mod graph       打印模块依赖图</span><br><span class="line">go mod init        初始化当前文件夹, 创建go.mod文件</span><br><span class="line">go mod tidy        增加缺少的module，删除无用的module</span><br><span class="line">go mod vendor      将依赖复制到vendor下</span><br><span class="line">go mod verify      校验依赖</span><br><span class="line">go mod why         解释为什么需要依赖</span><br></pre></td></tr></table></figure>
+<p><strong>go.mod</strong><br>go.mod文件记录了项目所有的依赖信息，其结构大致如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module github.com&#x2F;Q1mi&#x2F;studygo&#x2F;blogger</span><br><span class="line"></span><br><span class="line">go 1.12</span><br><span class="line"></span><br><span class="line">require (</span><br><span class="line">    github.com&#x2F;DeanThompson&#x2F;ginpprof v0.0.0-20190408063150-3be636683586</span><br><span class="line">    github.com&#x2F;gin-gonic&#x2F;gin v1.4.0</span><br><span class="line">    github.com&#x2F;go-sql-driver&#x2F;mysql v1.4.1</span><br><span class="line">    github.com&#x2F;jmoiron&#x2F;sqlx v1.2.0</span><br><span class="line">    github.com&#x2F;satori&#x2F;go.uuid v1.2.0</span><br><span class="line">    google.golang.org&#x2F;appengine v1.6.1 &#x2F;&#x2F; indirect</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>其中，</p>
+<ul>
+<li>module用来定义包名</li>
+<li>require用来定义依赖包及版本</li>
+<li>indirect表示间接引用</li>
+</ul>
+<p><strong><code>依赖的版本</code></strong><br>go mod支持语义化版本号，比如<code>go get foo@v1.2.3</code>，也可以跟git的分支或tag，比如<code>go get foo@master</code>，当然也可以跟git提交哈希，比如<code>go get foo@e3702bed2</code>。关于依赖的版本支持以下几种格式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">gopkg.in&#x2F;tomb.v1 v1.0.0-20141024135613-dd632973f1e7</span><br><span class="line">gopkg.in&#x2F;vmihailenco&#x2F;msgpack.v2 v2.9.1</span><br><span class="line">gopkg.in&#x2F;yaml.v2 &lt;&#x3D;v2.2.1</span><br><span class="line">github.com&#x2F;tatsushid&#x2F;go-fastping v0.0.0-20160109021039-d7bb493dee3e</span><br><span class="line">latest</span><br></pre></td></tr></table></figure>
+<p><strong><code>replace</code></strong><br>在国内访问golang.org/x的各个包都需要翻墙，你可以在go.mod中使用replace替换成github上对应的库。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">replace (</span><br><span class="line">    golang.org&#x2F;x&#x2F;crypto v0.0.0-20180820150726-614d502a4dac &#x3D;&gt; github.com&#x2F;golang&#x2F;crypto v0.0.0-20180820150726-614d502a4dac</span><br><span class="line">    golang.org&#x2F;x&#x2F;net v0.0.0-20180821023952-922f4815f713 &#x3D;&gt; github.com&#x2F;golang&#x2F;net v0.0.0-20180826012351-8a410e7b638d</span><br><span class="line">    golang.org&#x2F;x&#x2F;text v0.3.0 &#x3D;&gt; github.com&#x2F;golang&#x2F;text v0.3.0</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h3 id="go-get"><a href="#go-get" class="headerlink" title="go get"></a>go get</h3><p>在项目中执行<code>go get</code>命令可以下载依赖包，并且还可以指定下载的版本。</p>
+<ol>
+<li>运行go get -u将会升级到最新的次要版本或者修订版本(x.y.z, z是修订版本号， y是次要版本号)</li>
+<li>运行go get -u=patch将会升级到最新的修订版本</li>
+<li>运行go get package@version将会升级到指定的版本号version<br>如果下载所有依赖可以使用<code>go mod download</code>命令。</li>
+</ol>
+<h3 id="go-mod-edit"><a href="#go-mod-edit" class="headerlink" title="go mod edit"></a>go mod edit</h3><p><strong><code>格式化</code></strong><br>因为我们可以手动修改go.mod文件，所以有些时候需要格式化该文件。Go提供了一下命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go mod edit -fmt</span><br></pre></td></tr></table></figure>
+<p><strong><code>添加依赖项</code></strong><br>go mod edit -require=golang.org/x/text<br><strong><code>移除依赖项</code></strong><br>如果只是想修改go.mod文件中的内容，那么可以运行<code>go mod edit -droprequire=package path</code>，比如要在<code>go.mod</code>中移除<code>golang.org/x/tex</code>t包，可以使用如下命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go mod edit -droprequire&#x3D;golang.org&#x2F;x&#x2F;text</span><br></pre></td></tr></table></figure>
+<p>关于<code>go mod edit</code>的更多用法可以通过<code>go help mod edit</code>查看。</p>
+<h2 id="1-4在项目中使用go-module"><a href="#1-4在项目中使用go-module" class="headerlink" title="1.4在项目中使用go module"></a>1.4在项目中使用go module</h2><h3 id="既有项目"><a href="#既有项目" class="headerlink" title="既有项目"></a>既有项目</h3><p>如果需要对一个已经存在的项目启用<code>go module</code>，可以按照以下步骤操作：</p>
+<p>在项目目录下执行go mod init，生成一个go.mod文件。<br>执行go get，查找并记录当前项目的依赖，同时生成一个go.sum记录每个依赖库的版本和哈希值。</p>
+<h3 id="新项目"><a href="#新项目" class="headerlink" title="新项目"></a>新项目</h3><p>对于一个新创建的项目，我们可以在项目文件夹下按照以下步骤操作：</p>
+<ul>
+<li>执行go mod init 项目名命令，在当前项目文件夹下创建一个go.mod文件。</li>
+<li>手动编辑go.mod中的require依赖项或执行go get自动发现、维护依赖。</li>
+</ul>
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!---->  
+<!---->  
+
+
+
+]]></content>
+      <categories>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>env</tag>
       </tags>
   </entry>
   <entry>
@@ -1970,6 +2048,26 @@ bin：相关bin文件
       </categories>
       <tags>
         <tag>env</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/1992/06/21/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>吃喝玩乐</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -2239,104 +2337,6 @@ fff | ggg| hhh | iii | 000|
       </categories>
       <tags>
         <tag>markdown</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Go依赖管理—从godep到go mod</title>
-    <url>/2020/01/31/go%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E2%80%94_godep_gomod/</url>
-    <content><![CDATA[<h2 id="1-1-为什么需要依赖管理"><a href="#1-1-为什么需要依赖管理" class="headerlink" title="1.1 为什么需要依赖管理"></a>1.1 为什么需要依赖管理</h2><p>最早的时候，Go所依赖的所有的第三方库都放在GOPATH这个目录下面。这就导致了同一个库只能保存一个版本的代码。如果不同的项目依赖同一个第三方的库的不同版本，应该怎么解决？</p>
-<h2 id="1-2-godep"><a href="#1-2-godep" class="headerlink" title="1.2 godep"></a>1.2 godep</h2><p>Go语言从<code>v1.5</code>开始开始引入<code>vendor</code>模式，如果项目目录下有vendor目录，那么go工具链会优先使用<code>vendor</code>内的包进行编译、测试等。</p>
-<p><code>godep</code>是一个通过vender模式实现的Go语言的第三方依赖管理工具，类似的还有由社区维护准官方包管理工具<code>dep</code>。</p>
-<blockquote>
-<p>注意：在<code>Go1.11</code>之后，建议<a href="https://learnku.com/articles/33241">将 dep 更换为 go mod</a>进行项目管理，更方便</p>
-</blockquote>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>执行以下命令安装godep工具。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go get github.com&#x2F;tools&#x2F;godep</span><br></pre></td></tr></table></figure>
-<h3 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h3><p>安装好godep之后，在终端输入godep查看支持的所有命令。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">godep save     将依赖项输出并复制到Godeps.json文件中</span><br><span class="line">godep go       使用保存的依赖项运行go工具</span><br><span class="line">godep get      下载并安装具有指定依赖项的包</span><br><span class="line">godep path     打印依赖的GOPATH路径</span><br><span class="line">godep restore  在GOPATH中拉取依赖的版本</span><br><span class="line">godep update   更新选定的包或go版本</span><br><span class="line">godep diff     显示当前和以前保存的依赖项集之间的差异</span><br><span class="line">godep version  查看版本信息</span><br></pre></td></tr></table></figure>
-<p>使用godep help [command]可以看看具体命令的帮助信息</p>
-<h3 id="使用godep"><a href="#使用godep" class="headerlink" title="使用godep"></a>使用godep</h3><p>在项目目录下执行godep save命令，会在当前项目中创建Godeps和vender两个文件夹。</p>
-<p>其中Godeps文件夹下有一个Godeps.json的文件，里面记录了项目所依赖的包信息。 vender文件夹下是项目依赖的包的源代码文件。</p>
-<h3 id="vender机制"><a href="#vender机制" class="headerlink" title="vender机制"></a>vender机制</h3><p>Go1.5版本之后开始支持，能够控制Go语言程序编译时依赖包搜索路径的优先级。</p>
-<p>例如查找项目的某个依赖包，首先会在项目根目录下的<code>vender</code>文件夹中查找，如果没有找到就会去<code>$GOAPTH/src</code>目录下查找。</p>
-<h3 id="godep开发流程"><a href="#godep开发流程" class="headerlink" title="godep开发流程"></a>godep开发流程</h3><p>保证程序能够正常编译<br>执行godep save保存当前项目的所有第三方依赖的版本信息和代码<br>提交Godeps目录和vender目录到代码库。<br>如果要更新依赖的版本，可以直接修改Godeps.json文件中的对应项</p>
-<h2 id="1-3-go-module"><a href="#1-3-go-module" class="headerlink" title="1.3 go module"></a>1.3 go module</h2><p><code>go module</code>是Go1.11版本之后官方推出的版本管理工具，并且从Go1.13版本开始，<code>go module</code>将是Go语言默认的依赖管理工具。</p>
-<h3 id="GO111MODULE"><a href="#GO111MODULE" class="headerlink" title="GO111MODULE"></a>GO111MODULE</h3><p>要启用<code>go module</code>支持首先要设置环境变量<code>GO111MODULE</code>，通过它可以开启或关闭模块支持，它有三个可选值：<code>off、on、auto</code>，默认值是<code>auto</code>。</p>
-<ol>
-<li>GO111MODULE=off禁用模块支持，编译时会从GOPATH和vendor文件夹中查找包。</li>
-<li>GO111MODULE=on启用模块支持，编译时会忽略GOPATH和vendor文件夹，只根据 go.mod下载依赖。</li>
-<li>GO111MODULE=auto，当项目在$GOPATH/src外且项目根目录有go.mod文件时，开启模块支持。<br>简单来说，设置<code>GO111MODULE=on</code>之后就可以使用<code>go module</code>了，以后就没有必要在GOPATH中创建项目了，并且还能够很好的管理项目依赖的第三方包信息。<br>使用 go module 管理依赖后会在项目根目录下生成两个文件<code>go.mod</code>和<code>go.sum</code>。</li>
-</ol>
-<h3 id="GOPROXY"><a href="#GOPROXY" class="headerlink" title="GOPROXY"></a>GOPROXY</h3><p>Go1.11之后设置GOPROXY命令为：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn</span><br></pre></td></tr></table></figure>
-<p>Go1.13之后<code>GOPROXY</code>默认值为<code>https://proxy.golang.org</code>，在国内是无法访问的，所以十分建议大家设置<code>GOPROXY=https://goproxy.cn</code>。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go env -w GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn,direct</span><br></pre></td></tr></table></figure>
-<h3 id="go-mod命令"><a href="#go-mod命令" class="headerlink" title="go mod命令"></a>go mod命令</h3><p>常用的go mod命令如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go mod download    下载依赖的module到本地cache（默认为$GOPATH&#x2F;pkg&#x2F;mod目录）</span><br><span class="line">go mod edit        编辑go.mod文件</span><br><span class="line">go mod graph       打印模块依赖图</span><br><span class="line">go mod init        初始化当前文件夹, 创建go.mod文件</span><br><span class="line">go mod tidy        增加缺少的module，删除无用的module</span><br><span class="line">go mod vendor      将依赖复制到vendor下</span><br><span class="line">go mod verify      校验依赖</span><br><span class="line">go mod why         解释为什么需要依赖</span><br></pre></td></tr></table></figure>
-<p><strong>go.mod</strong><br>go.mod文件记录了项目所有的依赖信息，其结构大致如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module github.com&#x2F;Q1mi&#x2F;studygo&#x2F;blogger</span><br><span class="line"></span><br><span class="line">go 1.12</span><br><span class="line"></span><br><span class="line">require (</span><br><span class="line">    github.com&#x2F;DeanThompson&#x2F;ginpprof v0.0.0-20190408063150-3be636683586</span><br><span class="line">    github.com&#x2F;gin-gonic&#x2F;gin v1.4.0</span><br><span class="line">    github.com&#x2F;go-sql-driver&#x2F;mysql v1.4.1</span><br><span class="line">    github.com&#x2F;jmoiron&#x2F;sqlx v1.2.0</span><br><span class="line">    github.com&#x2F;satori&#x2F;go.uuid v1.2.0</span><br><span class="line">    google.golang.org&#x2F;appengine v1.6.1 &#x2F;&#x2F; indirect</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p>其中，</p>
-<ul>
-<li>module用来定义包名</li>
-<li>require用来定义依赖包及版本</li>
-<li>indirect表示间接引用</li>
-</ul>
-<p><strong><code>依赖的版本</code></strong><br>go mod支持语义化版本号，比如<code>go get foo@v1.2.3</code>，也可以跟git的分支或tag，比如<code>go get foo@master</code>，当然也可以跟git提交哈希，比如<code>go get foo@e3702bed2</code>。关于依赖的版本支持以下几种格式：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">gopkg.in&#x2F;tomb.v1 v1.0.0-20141024135613-dd632973f1e7</span><br><span class="line">gopkg.in&#x2F;vmihailenco&#x2F;msgpack.v2 v2.9.1</span><br><span class="line">gopkg.in&#x2F;yaml.v2 &lt;&#x3D;v2.2.1</span><br><span class="line">github.com&#x2F;tatsushid&#x2F;go-fastping v0.0.0-20160109021039-d7bb493dee3e</span><br><span class="line">latest</span><br></pre></td></tr></table></figure>
-<p><strong><code>replace</code></strong><br>在国内访问golang.org/x的各个包都需要翻墙，你可以在go.mod中使用replace替换成github上对应的库。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">replace (</span><br><span class="line">    golang.org&#x2F;x&#x2F;crypto v0.0.0-20180820150726-614d502a4dac &#x3D;&gt; github.com&#x2F;golang&#x2F;crypto v0.0.0-20180820150726-614d502a4dac</span><br><span class="line">    golang.org&#x2F;x&#x2F;net v0.0.0-20180821023952-922f4815f713 &#x3D;&gt; github.com&#x2F;golang&#x2F;net v0.0.0-20180826012351-8a410e7b638d</span><br><span class="line">    golang.org&#x2F;x&#x2F;text v0.3.0 &#x3D;&gt; github.com&#x2F;golang&#x2F;text v0.3.0</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<h3 id="go-get"><a href="#go-get" class="headerlink" title="go get"></a>go get</h3><p>在项目中执行<code>go get</code>命令可以下载依赖包，并且还可以指定下载的版本。</p>
-<ol>
-<li>运行go get -u将会升级到最新的次要版本或者修订版本(x.y.z, z是修订版本号， y是次要版本号)</li>
-<li>运行go get -u=patch将会升级到最新的修订版本</li>
-<li>运行go get package@version将会升级到指定的版本号version<br>如果下载所有依赖可以使用<code>go mod download</code>命令。</li>
-</ol>
-<h3 id="go-mod-edit"><a href="#go-mod-edit" class="headerlink" title="go mod edit"></a>go mod edit</h3><p><strong><code>格式化</code></strong><br>因为我们可以手动修改go.mod文件，所以有些时候需要格式化该文件。Go提供了一下命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go mod edit -fmt</span><br></pre></td></tr></table></figure>
-<p><strong><code>添加依赖项</code></strong><br>go mod edit -require=golang.org/x/text<br><strong><code>移除依赖项</code></strong><br>如果只是想修改go.mod文件中的内容，那么可以运行<code>go mod edit -droprequire=package path</code>，比如要在<code>go.mod</code>中移除<code>golang.org/x/tex</code>t包，可以使用如下命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go mod edit -droprequire&#x3D;golang.org&#x2F;x&#x2F;text</span><br></pre></td></tr></table></figure>
-<p>关于<code>go mod edit</code>的更多用法可以通过<code>go help mod edit</code>查看。</p>
-<h2 id="1-4在项目中使用go-module"><a href="#1-4在项目中使用go-module" class="headerlink" title="1.4在项目中使用go module"></a>1.4在项目中使用go module</h2><h3 id="既有项目"><a href="#既有项目" class="headerlink" title="既有项目"></a>既有项目</h3><p>如果需要对一个已经存在的项目启用<code>go module</code>，可以按照以下步骤操作：</p>
-<p>在项目目录下执行go mod init，生成一个go.mod文件。<br>执行go get，查找并记录当前项目的依赖，同时生成一个go.sum记录每个依赖库的版本和哈希值。</p>
-<h3 id="新项目"><a href="#新项目" class="headerlink" title="新项目"></a>新项目</h3><p>对于一个新创建的项目，我们可以在项目文件夹下按照以下步骤操作：</p>
-<ul>
-<li>执行go mod init 项目名命令，在当前项目文件夹下创建一个go.mod文件。</li>
-<li>手动编辑go.mod中的require依赖项或执行go get自动发现、维护依赖。</li>
-</ul>
-<hr>
-<p>&nbsp;  </p>
-<!--**参考文章**：-->  
-<!---->  
-<!---->  
-
-
-
-]]></content>
-      <categories>
-        <category>Go</category>
-      </categories>
-      <tags>
-        <tag>env</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/1992/06/21/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-      <categories>
-        <category>吃喝玩乐</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
       </tags>
   </entry>
   <entry>
