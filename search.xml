@@ -950,7 +950,7 @@ roles/
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">param: &quot;I am the default value&quot;</span><br></pre></td></tr></table></figure>
 <p>这样在main.yml中,下面两种调用方法都可以</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: webservers</span><br><span class="line">  roles:</span><br><span class="line">    - role_with_var</span><br><span class="line">    - &#123; role: role_with_var, param: &#39;I am the value from external&#39; &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>更多的例子在<a href="https://github.com/shijingjing1221/ansible-first-book-examples/blob/master/role_vars.yml">https://github.com/shijingjing1221/ansible-first-book-examples/blob/master/role_vars.yml</a> 中</p>
+<p>更多的例子在<a href="https://github.com/shijingjing1221/ansible-first-book-examples/blob/master/role_vars.yml">ansible-first-book</a>中</p>
 <h2 id="role与条件语句when一起执行"><a href="#role与条件语句when一起执行" class="headerlink" title="role与条件语句when一起执行"></a>role与条件语句when一起执行</h2><p>下面的例子中,my_role只有在RedHat系列的server上才执行。</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: webservers</span><br><span class="line">  roles:</span><br><span class="line">    - &#123; role: my_role, when: &quot;ansible_os_family &#x3D;&#x3D; &#39;RedHat&#39;&quot; &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>同样也可以写成YAML字典格式</p>
