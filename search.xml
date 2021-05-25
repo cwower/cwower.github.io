@@ -2697,4 +2697,191 @@ StrictHostKeyChecking=no 对询问的回应（不进行对密钥检查）
         <tag>实践总结</tag>
       </tags>
   </entry>
+  <entry>
+    <title>go基础之运算符</title>
+    <url>/2020/04/08/go_base_operator/</url>
+    <content><![CDATA[<p>运算符用于在程序运行时执行数学或逻辑运算。</p>
+<h1 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h1><p>Go 语言内置的运算符有：</p>
+<ul>
+<li>算术运算符</li>
+<li>关系运算符</li>
+<li>逻辑运算符</li>
+<li>位运算符</li>
+<li>赋值运算符</li>
+</ul>
+<h2 id="算术运算符"><a href="#算术运算符" class="headerlink" title="算术运算符"></a>算术运算符</h2><table>
+<thead>
+<tr>
+<th align="left">运算符</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">+</td>
+<td align="left">相加</td>
+</tr>
+<tr>
+<td align="left">-</td>
+<td align="left">相减</td>
+</tr>
+<tr>
+<td align="left">*</td>
+<td align="left">相乘</td>
+</tr>
+<tr>
+<td align="left">/</td>
+<td align="left">相除</td>
+</tr>
+<tr>
+<td align="left">%</td>
+<td align="left">求余</td>
+</tr>
+</tbody></table>
+<p>注意： <code>++</code>（自增）和<code>--</code>（自减）在Go语言中是单独的语句，并不是运算符。</p>
+<h2 id="关系运算符"><a href="#关系运算符" class="headerlink" title="关系运算符"></a>关系运算符</h2><table>
+<thead>
+<tr>
+<th align="left">运算符</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">==</td>
+<td align="left">检查两个值是否相等，如果相等返回 True 否则返回 False。</td>
+</tr>
+<tr>
+<td align="left">!=</td>
+<td align="left">检查两个值是否不相等，如果不相等返回 True 否则返回 False。</td>
+</tr>
+<tr>
+<td align="left">&gt;</td>
+<td align="left">检查左边值是否大于右边值，如果是返回 True 否则返回 False。</td>
+</tr>
+<tr>
+<td align="left">&gt;=</td>
+<td align="left">检查左边值是否大于等于右边值，如果是返回 True 否则返回 False。</td>
+</tr>
+<tr>
+<td align="left">&lt;</td>
+<td align="left">检查左边值是否小于右边值，如果是返回 True 否则返回 False。</td>
+</tr>
+<tr>
+<td align="left">&lt;=</td>
+<td align="left">检查左边值是否小于等于右边值，如果是返回 True 否则返回 False。</td>
+</tr>
+</tbody></table>
+<h2 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h2><table>
+<thead>
+<tr>
+<th align="left">运算符</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">&amp;&amp;</td>
+<td align="left">逻辑 AND 运算符。 如果两边的操作数都是 True，则为 True，否则为 False。</td>
+</tr>
+<tr>
+<td align="left">||</td>
+<td align="left">逻辑 OR 运算符。 如果两边的操作数有一个 True，则为 True，否则为 False。</td>
+</tr>
+<tr>
+<td align="left">!</td>
+<td align="left">逻辑 NOT 运算符。 如果条件为 True，则为 False，否则为 True。</td>
+</tr>
+</tbody></table>
+<h2 id="位运算符"><a href="#位运算符" class="headerlink" title="位运算符"></a>位运算符</h2><p>位运算符对整数在内存中的二进制位进行操作。</p>
+<table>
+<thead>
+<tr>
+<th align="left">运算符</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">&amp;</td>
+<td align="left">参与运算的两数各对应的二进位相与。（两位均为1才为1）</td>
+</tr>
+<tr>
+<td align="left">|</td>
+<td align="left">参与运算的两数各对应的二进位相或。（两位有一个为1就为1）</td>
+</tr>
+<tr>
+<td align="left">^</td>
+<td align="left">参与运算的两数各对应的二进位相异或，当两对应的二进位相异时，结果为1。（两位不一样则为1）</td>
+</tr>
+<tr>
+<td align="left">&lt;&lt;</td>
+<td align="left">左移n位就是乘以2的n次方。“a&lt;&lt;b”是把a的各二进位全部左移b位，高位丢弃，低位补0。</td>
+</tr>
+<tr>
+<td align="left">&gt;&gt;</td>
+<td align="left">右移n位就是除以2的n次方。“a&gt;&gt;b”是把a的各二进位全部右移b位。</td>
+</tr>
+</tbody></table>
+<h2 id="赋值运算符"><a href="#赋值运算符" class="headerlink" title="赋值运算符"></a>赋值运算符</h2><table>
+<thead>
+<tr>
+<th align="left">运算符</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">=</td>
+<td align="left">简单的赋值运算符，将一个表达式的值赋给一个左值</td>
+</tr>
+<tr>
+<td align="left">+=</td>
+<td align="left">相加后再赋值</td>
+</tr>
+<tr>
+<td align="left">-=</td>
+<td align="left">相减后再赋值</td>
+</tr>
+<tr>
+<td align="left">*=</td>
+<td align="left">相乘后再赋值</td>
+</tr>
+<tr>
+<td align="left">/=</td>
+<td align="left">相除后再赋值</td>
+</tr>
+<tr>
+<td align="left">%=</td>
+<td align="left">求余后再赋值</td>
+</tr>
+<tr>
+<td align="left">&lt;&lt;=</td>
+<td align="left">左移后赋值</td>
+</tr>
+<tr>
+<td align="left">&gt;&gt;=</td>
+<td align="left">右移后赋值</td>
+</tr>
+<tr>
+<td align="left">&amp;=</td>
+<td align="left">按位与后赋值</td>
+</tr>
+<tr>
+<td align="left">|=</td>
+<td align="left">按位或后赋值</td>
+</tr>
+<tr>
+<td align="left">^=</td>
+<td align="left">按位异或后赋值</td>
+</tr>
+</tbody></table>
+<h2 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h2><ul>
+<li>有一堆数字，如果除了一个数字以外，其他数字都出现了两次，那么如何找到出现一次的数字？<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    &#x2F;&#x2F; 参与运算的两数各对应的二进位相异或，当两对应的二进位相异时，结果为1。</span><br><span class="line">    &#x2F;&#x2F; 相同，为 0</span><br><span class="line">    nums :&#x3D; [...]int&#123;1, 2, 3, 3, 2, 1, 9, 8, 8&#125;</span><br><span class="line"></span><br><span class="line">    n :&#x3D; nums[0]</span><br><span class="line">    for i :&#x3D; 1; i &lt; len(nums); i++ &#123;</span><br><span class="line">        n ^&#x3D; nums[i]</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fmt.Println(n)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>go语言基础</tag>
+      </tags>
+  </entry>
 </search>
