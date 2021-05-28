@@ -1,121 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Go语言开发环境</title>
-    <url>/2020/01/31/Go%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
-    <content><![CDATA[<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><blockquote>
-<p>下载地址：</p>
-</blockquote>
-<p>Go官网下载地址：<a href="https://golang.org/dl/">https://golang.org/dl/</a><br>Go官方镜像站（推荐）：<a href="https://golang.google.cn/dl/">https://golang.google.cn/dl/</a></p>
-<blockquote>
-<p>版本的选择：</p>
-</blockquote>
-<p>Windows平台和Mac平台推荐下载可执行文件版，Linux平台下载压缩文件版。<br>Go语言更新迭代比较快，推荐使用较新版本，体验最新特性。</p>
-<h3 id="Linux下安装"><a href="#Linux下安装" class="headerlink" title="Linux下安装"></a>Linux下安装</h3><blockquote>
-<p>下载地址：</p>
-</blockquote>
-<p>Go官网下载地址：<a href="https://golang.org/dl/">https://golang.org/dl/</a><br>Go官方镜像站（推荐）：<a href="https://golang.google.cn/dl/">https://golang.google.cn/dl/</a></p>
-<p>如果不是要在Linux平台敲go代码就不需要在Linux平台安装Go，我们开发机上写好的go代码只需要跨平台编译（详见文章末尾的跨平台编译）好之后就可以拷贝到Linux服务器上运行了，这也是go程序跨平台易部署的优势。</p>
-<p>我们在版本选择页面选择并下载好<code>go1.14.1.linux-amd64.tar.gz</code>文件：</p>
-<p><code>wget https://dl.google.com/go/go1.14.1.linux-amd64.tar.gz</code><br>将下载好的文件解压到/usr/local目录下：</p>
-<p><code>tar -zxvf go1.14.1.linux-amd64.tar.gz -C /usr/local  # 解压</code><br>如果提示没有权限，加上sudo以root用户的身份再运行。执行完就可以在/usr/local/下看到go目录了。</p>
-<p>配置环境变量： Linux下有两个文件可以配置环境变量，其中/etc/profile是对所有用户生效的；$HOME/.profile是对当前用户生效的，根据自己的情况自行选择一个文件打开，添加如下两行代码，保存退出。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export GOROOT&#x3D;&#x2F;usr&#x2F;local&#x2F;go</span><br><span class="line">export PATH&#x3D;$PATH:$GOROOT&#x2F;bin</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>在开发 Go 项目时，你还需要一个环境变量来保存你的工作目录。<br><code>export GOPATH=$HOME/Applications/Go</code><br><code>$GOPATH</code> 可以包含多个工作目录，取决于你的个人情况。如果你设置了多个工作目录，那么当你在之后使用 <code>go get</code>（远程包安装命令）时远程包将会被安装在第一个目录下。</p>
-</blockquote>
-<p>修改/etc/profile后要重启生效，修改$HOME/.profile后使用source命令加载$HOME/.profile文件即可生效。 检查：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">~ go version</span><br><span class="line">go version go1.14.1 linux&#x2F;amd64</span><br></pre></td></tr></table></figure>
-<p><strong>GOPROXY</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ export GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn</span><br></pre></td></tr></table></figure>
-<p>或者</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ echo &quot;export GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn&quot; &gt;&gt; ~&#x2F;.profile &amp;&amp; source ~&#x2F;.profile</span><br></pre></td></tr></table></figure>
-<h2 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h2><h3 id="GOROOT和GOPATH"><a href="#GOROOT和GOPATH" class="headerlink" title="GOROOT和GOPATH"></a>GOROOT和GOPATH</h3><p><code>GOROOT</code>和<code>GOPATH</code>都是环境变量，其中<code>GOROOT</code>是我们安装go开发包的路径，而从Go 1.8版本开始，Go开发包在安装完成后会为<code>GOPATH</code>设置一个默认目录，参见下表。<br><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/golang/gopath_20200915161111.png?x-oss-process=style/original_format"></p>
-<p>我们只需要记住默认的<code>GOPATH</code>路径在哪里就可以了，并且默认情况下 <code>GOROOT</code>下的bin目录及<code>GOPATH</code>下的bin目录都已经添加到环境变量中了，我们也不需要额外配置了。</p>
-<hr>
-<p>Go<code>1.14版本之后</code>，都推荐使用<code>go mod</code>模式来管理依赖环境了，也不再强制我们把代码必须写在<code>GOPATH</code>下面的src目录了；<code>GOPATH</code>下可以包含多个包含 Go 语言源码文件、包文件和可执行文件的路径，而这些路径下又必须分别包含三个规定的目录：<code>src、pkg 和 bin</code>，这三个目录分别用于存放源码文件、包文件和可执行文件。你可以在你电脑的任意位置编写go代码。（网上有些教程适用于1.11版本之前。）</p>
-<blockquote>
-<p>在<code>老版本1.11之前</code>，Go语言开发的时候，我们的代码总是会保存在<code>$GOPATH/src</code>目录下。在工程经过<code>go build、go install</code>或<code>go get</code>等指令后，会将下载的第三方包源代码文件放在<code>$GOPATH/src</code>目录下， 产生的二进制可执行文件放在 <code>$GOPATH/bin</code>目录下，生成的中间缓存文件会被保存在<code>$GOPATH/pkg</code> 下。<br>如果我们使用版本管理工具（Version Control System，VCS。常用如Git）来管理我们的项目代码时，我们只需要添加$GOPATH/src目录的源代码即可。bin 和 pkg 目录的内容无需版本控制。</p>
-</blockquote>
-<h3 id="GOPROXY"><a href="#GOPROXY" class="headerlink" title="GOPROXY"></a>GOPROXY</h3><p>默认GoPROXY配置是：<code>GOPROXY=https://proxy.golang.org,direct</code>，由于国内访问不到<code>https://proxy.golang.org</code>，所以我们需要换一个PROXY，这里推荐使用<code>https://goproxy.io</code>或<code>https://goproxy.cn</code>。</p>
-<p>可以执行下面的命令修改GOPROXY：<br><code>go env -w GOPROXY=https://goproxy.cn,direct</code></p>
-<h3 id="企业开发者的go项目结构"><a href="#企业开发者的go项目结构" class="headerlink" title="企业开发者的go项目结构"></a>企业开发者的go项目结构</h3><blockquote>
-<p>参考文档：<a href="%5Bhttp://www.topgoer.com/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/%E9%85%8D%E7%BD%AEgopath.html%5D(http://www.topgoer.com/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/%E9%85%8D%E7%BD%AEgopath.html)">go语言中文文档</a></p>
-</blockquote>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/golang/gopath-qy.png?x-oss-process=style/original_format"></p>
-<h2 id="编辑器"><a href="#编辑器" class="headerlink" title="编辑器"></a>编辑器</h2><h3 id="vs-code"><a href="#vs-code" class="headerlink" title="vs code"></a>vs code</h3><p><code>Visual Studio Code</code>，简称<code>VS Code</code>，它是目前使用人数最多的编辑器。尽管它由微软发布于2015年，与其他热门编辑器相比显得有些年轻，但它在过去几年中一直在不停的更新，它在最新的<code>Stack Overflow</code>调查中被选为<code>Web</code>开发人员中最受欢迎的文本编辑器。</p>
-<p><code>VS Code</code>不仅仅是一个基本的代码编辑器。有人说它更像是<code>IDE</code>而不是代码编辑器，因为它提供了许多通常只在<code>IDE</code>中才有的功能。主要功能包括内置调试工具，智能代码提示，集成终端以及对简易的<code>Git</code>操作（微软刚收购了GitHub）。作为初学者，您可以利用这些功能大大提高编程效率。</p>
-<blockquote>
-<p>下载地址：</p>
-</blockquote>
-<p><a href="https://code.visualstudio.com/">https://code.visualstudio.com/</a></p>
-<h4 id="配置中文"><a href="#配置中文" class="headerlink" title="配置中文"></a>配置中文</h4><p>点击左侧菜单栏最后一项<code>管理扩展</code>，在搜索框中输入<code>chinese</code>，选中结果列表第一项，点击<code>install</code>安装。<br><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/03/install_cn_language.gif?x-oss-process=style/gif_format"></p>
-<h4 id="安装go插件"><a href="#安装go插件" class="headerlink" title="安装go插件"></a>安装go插件</h4><p>启动<code>vscode</code>选择插件-&gt;搜<code>go</code>选择<code>Go for Visual Studio Code</code>插件点击安装即可</p>
-<h4 id="安装Go语言开发工具包"><a href="#安装Go语言开发工具包" class="headerlink" title="安装Go语言开发工具包"></a>安装Go语言开发工具包</h4><p>在Go语言开发的时候为我们提供诸如代码提示、代码自动补全等功能。</p>
-<p>Windows平台按下<code>Ctrl+Shift+P</code>，Mac平台按<code>Command+Shift+P</code>，这个时候<code>VS Code</code>界面会弹出一个输入框；</p>
-<p>我们在这个输入框中输入&gt;<code>go:install</code>，下面会自动搜索相关命令，我们选择<code>Go:Install/Update Tools</code>这个命令，选中并会回车执行该命令（或者使用鼠标点击该命令）<br><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/03/16tools.png?x-oss-process=style/original_format"></p>
-<p>VS Code此时会下载并安装上图列出来的16个工具，但是由于国内的网络环境基本上都会出现安装失败</p>
-<p><strong>两种方法解决这个问题：</strong></p>
-<blockquote>
-<p>方法一：使用git下载源代码再安装</p>
-</blockquote>
-<p>我们可以手动从github上下载工具，(执行此步骤前提需要你的电脑上已经安装了git)<br>第一步：现在自己的<code>GOPATH</code>的<code>src</code>目录下创建<code>golang.org/x</code>目录<br>第二步：在终端/cmd中cd到<code>GOPATH/src/golang.org/x</code>目录下<br>第三步：执行<code>git clone https://github.com/golang/tools.git tools</code>命令<br>第四步：执行<code>git clone https://github.com/golang/lint.git</code>命令<br>第五步：按下<code>Ctrl/Command+Shift+P</code>再次执行<code>Go:Install/Update Tools</code>命令，在弹出的窗口全选并点击确定，这一次的安装都会SUCCESSED了。<br>经过上面的步骤就可以安装成功了。 这个时候创建一个Go文件，就能正常使用代码提示、代码格式化等工具了。</p>
-<blockquote>
-<p>方法二：下载已经编译好的可执行文件</p>
-</blockquote>
-<p>如果上面的步骤执行失败了或者懒得一步一步执行，可以直接下载我已经编译好的可执行文件，拷贝到自己电脑上的 <code>go/bin</code>(GO的安装包目录不是代码包啊) 目录下。 </p>
-<blockquote>
-<blockquote>
-<p>链接: <a href="https://pan.baidu.com/s/1kxXsoSXmqwloTKsvRGZbpQ">https://pan.baidu.com/s/1kxXsoSXmqwloTKsvRGZbpQ</a><br>提取码: cucu</p>
-</blockquote>
-</blockquote>
-<p>注意：特别是Mac下需要给拷贝的这些文件赋予可执行的权限。</p>
-<h2 id="第一个Go程序"><a href="#第一个Go程序" class="headerlink" title="第一个Go程序"></a>第一个Go程序</h2><h3 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h3><p>现在我们来创建第一个Go项目——<code>hello</code>。在我们桌面创建一个<code>hello</code>目录。<br>在该目录中创建一个main.go文件：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package main &#x2F;&#x2F; 声明 main 包，表明当前是一个可执行程序</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot; &#x2F;&#x2F; 导入内置 fmt 包</span><br><span class="line"></span><br><span class="line">func main()&#123; &#x2F;&#x2F; main函数，是程序执行的入口</span><br><span class="line">    fmt.Println(&quot;Hello World!&quot;) &#x2F;&#x2F; 在终端打印 Hello World!</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="go-build"><a href="#go-build" class="headerlink" title="go build"></a>go build</h3><p><code>go build</code>表示将源代码编译成可执行文件，或者在其他目录执行以下命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go build hello</span><br></pre></td></tr></table></figure>
-<p>go编译器会去 <code>GOPATH</code>的src目录下查找你要编译的<code>hello</code>项目</p>
-<blockquote>
-<p>如果报错<code>go: cannot find main module; see &#39;go help modules&#39;</code>，可能是变量<code>GO111MODULE</code>导致，试试设置为<code>GO111MODULE=off</code></p>
-</blockquote>
-<p>编译得到的可执行文件会保存在执行编译命令的当前目录下，如果是windows平台会在当前目录下找到hello.exe可执行文件。</p>
-<p>可在终端直接执行该hello.exe文件：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">c:\desktop\hello&gt;hello.exe</span><br><span class="line">Hello World!</span><br></pre></td></tr></table></figure>
-<p>我们还可以使用<code>-o</code>参数来指定编译后得到的可执行文件的名字。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go build -o heiheihei.exe</span><br></pre></td></tr></table></figure>
-<h3 id="go-install"><a href="#go-install" class="headerlink" title="go install"></a>go install</h3><p><code>go install</code>表示安装的意思，它先编译源代码得到可执行文件，然后将可执行文件移动到<code>GOPATH</code>的bin目录下。因为我们的环境变量中配置了<code>GOPATH</code>下的bin目录，所以我们就可以在任意地方直接执行可执行文件了。</p>
-<h4 id="go-install与go-build-的区别"><a href="#go-install与go-build-的区别" class="headerlink" title="go install与go build 的区别"></a>go install与go build 的区别</h4><p><code>go install</code>与<code>go build</code>都可生成执行文件</p>
-<p><code>go build</code>会生成可实行文件放在当前目录中。<br><code>go install</code>则会把它放到<code>$GOPATH/bin</code>中。</p>
-<p><code>go install</code>还会把导入的依赖包编译到<code>$GOPATH/pkg</code>，并缓存，如果包未做更改，下次编译则直接使用缓存。<code>go build</code>命令加参数<code>-i</code>也能达到<code>go install</code>的效果。</p>
-<p>如果项目很大，每次编译都要花很长时间，则建议使用<code>go install</code>来编译，充分利用它对依赖包的缓存功能。</p>
-<h3 id="go-run"><a href="#go-run" class="headerlink" title="go run"></a>go run</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 直接执行go文件，不用编译</span><br><span class="line">go run main.go</span><br></pre></td></tr></table></figure>
-<h3 id="跨平台编译-more"><a href="#跨平台编译-more" class="headerlink" title="跨平台编译(more)"></a>跨平台编译(<a href="%5Bhttps://www.liwenzhou.com/posts/Go/install_go_dev/#autoid-1-5-4%5D(https://www.liwenzhou.com/posts/Go/install_go_dev/#autoid-1-5-4)">more</a>)</h3><p>默认我们go build的可执行文件都是当前操作系统可执行的文件，如果我想在windows下编译一个linux下可执行文件，那需要怎么做呢？</p>
-<p>只需要指定目标操作系统的平台和处理器架构即可：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SET CGO_ENABLED&#x3D;0  &#x2F;&#x2F; 禁用CGO</span><br><span class="line">SET GOOS&#x3D;linux  &#x2F;&#x2F; 目标平台是linux</span><br><span class="line">SET GOARCH&#x3D;amd64  &#x2F;&#x2F; 目标处理器架构是amd64</span><br></pre></td></tr></table></figure>
-<p>使用了cgo的代码是不支持跨平台编译的</p>
-<p>然后再执行go build命令，得到的就是能够在Linux平台运行的可执行文件了。</p>
-<p>Mac 下编译 Linux 和 Windows平台 64位 可执行程序：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;linux GOARCH&#x3D;amd64 go build</span><br><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;windows GOARCH&#x3D;amd64 go build</span><br></pre></td></tr></table></figure>
-<p>Linux 下编译 Mac 和 Windows 平台64位可执行程序：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;darwin GOARCH&#x3D;amd64 go build</span><br><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;windows GOARCH&#x3D;amd64 go build</span><br></pre></td></tr></table></figure>
-<p>Windows下编译Mac平台64位可执行程序：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SET CGO_ENABLED&#x3D;0</span><br><span class="line">SET GOOS&#x3D;darwin</span><br><span class="line">SET GOARCH&#x3D;amd64</span><br><span class="line">go build</span><br></pre></td></tr></table></figure>
-
-<hr>
-<p>&nbsp;  </p>
-<!--**参考文章**：-->  
-<!--  https://www.liwenzhou.com/posts/Go/install_go_dev/  -->
-<!--  path https://learnku.com/docs/the-way-to-go/go-environment-variable/3565  -->
-<!--  mod https://blog.csdn.net/weixin_39003229/article/details/97638573  -->
-]]></content>
-      <categories>
-        <category>Go</category>
-      </categories>
-      <tags>
-        <tag>env</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hexo 食用说明</title>
     <url>/1992/06/21/Github-Pages_Hexo/</url>
     <content><![CDATA[<h1 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h1><p><strong>部署环境</strong>：</p>
@@ -243,6 +128,121 @@ timezone: 时区
       </tags>
   </entry>
   <entry>
+    <title>Go语言开发环境</title>
+    <url>/2020/01/31/Go%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
+    <content><![CDATA[<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><blockquote>
+<p>下载地址：</p>
+</blockquote>
+<p>Go官网下载地址：<a href="https://golang.org/dl/">https://golang.org/dl/</a><br>Go官方镜像站（推荐）：<a href="https://golang.google.cn/dl/">https://golang.google.cn/dl/</a></p>
+<blockquote>
+<p>版本的选择：</p>
+</blockquote>
+<p>Windows平台和Mac平台推荐下载可执行文件版，Linux平台下载压缩文件版。<br>Go语言更新迭代比较快，推荐使用较新版本，体验最新特性。</p>
+<h3 id="Linux下安装"><a href="#Linux下安装" class="headerlink" title="Linux下安装"></a>Linux下安装</h3><blockquote>
+<p>下载地址：</p>
+</blockquote>
+<p>Go官网下载地址：<a href="https://golang.org/dl/">https://golang.org/dl/</a><br>Go官方镜像站（推荐）：<a href="https://golang.google.cn/dl/">https://golang.google.cn/dl/</a></p>
+<p>如果不是要在Linux平台敲go代码就不需要在Linux平台安装Go，我们开发机上写好的go代码只需要跨平台编译（详见文章末尾的跨平台编译）好之后就可以拷贝到Linux服务器上运行了，这也是go程序跨平台易部署的优势。</p>
+<p>我们在版本选择页面选择并下载好<code>go1.14.1.linux-amd64.tar.gz</code>文件：</p>
+<p><code>wget https://dl.google.com/go/go1.14.1.linux-amd64.tar.gz</code><br>将下载好的文件解压到/usr/local目录下：</p>
+<p><code>tar -zxvf go1.14.1.linux-amd64.tar.gz -C /usr/local  # 解压</code><br>如果提示没有权限，加上sudo以root用户的身份再运行。执行完就可以在/usr/local/下看到go目录了。</p>
+<p>配置环境变量： Linux下有两个文件可以配置环境变量，其中/etc/profile是对所有用户生效的；$HOME/.profile是对当前用户生效的，根据自己的情况自行选择一个文件打开，添加如下两行代码，保存退出。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export GOROOT&#x3D;&#x2F;usr&#x2F;local&#x2F;go</span><br><span class="line">export PATH&#x3D;$PATH:$GOROOT&#x2F;bin</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在开发 Go 项目时，你还需要一个环境变量来保存你的工作目录。<br><code>export GOPATH=$HOME/Applications/Go</code><br><code>$GOPATH</code> 可以包含多个工作目录，取决于你的个人情况。如果你设置了多个工作目录，那么当你在之后使用 <code>go get</code>（远程包安装命令）时远程包将会被安装在第一个目录下。</p>
+</blockquote>
+<p>修改/etc/profile后要重启生效，修改$HOME/.profile后使用source命令加载$HOME/.profile文件即可生效。 检查：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">~ go version</span><br><span class="line">go version go1.14.1 linux&#x2F;amd64</span><br></pre></td></tr></table></figure>
+<p><strong>GOPROXY</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ export GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ echo &quot;export GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn&quot; &gt;&gt; ~&#x2F;.profile &amp;&amp; source ~&#x2F;.profile</span><br></pre></td></tr></table></figure>
+<h2 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h2><h3 id="GOROOT和GOPATH"><a href="#GOROOT和GOPATH" class="headerlink" title="GOROOT和GOPATH"></a>GOROOT和GOPATH</h3><p><code>GOROOT</code>和<code>GOPATH</code>都是环境变量，其中<code>GOROOT</code>是我们安装go开发包的路径，而从Go 1.8版本开始，Go开发包在安装完成后会为<code>GOPATH</code>设置一个默认目录，参见下表。<br><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/golang/gopath_20200915161111.png?x-oss-process=style/original_format"></p>
+<p>我们只需要记住默认的<code>GOPATH</code>路径在哪里就可以了，并且默认情况下 <code>GOROOT</code>下的bin目录及<code>GOPATH</code>下的bin目录都已经添加到环境变量中了，我们也不需要额外配置了。</p>
+<hr>
+<p>Go<code>1.14版本之后</code>，都推荐使用<code>go mod</code>模式来管理依赖环境了，也不再强制我们把代码必须写在<code>GOPATH</code>下面的src目录了；<code>GOPATH</code>下可以包含多个包含 Go 语言源码文件、包文件和可执行文件的路径，而这些路径下又必须分别包含三个规定的目录：<code>src、pkg 和 bin</code>，这三个目录分别用于存放源码文件、包文件和可执行文件。你可以在你电脑的任意位置编写go代码。（网上有些教程适用于1.11版本之前。）</p>
+<blockquote>
+<p>在<code>老版本1.11之前</code>，Go语言开发的时候，我们的代码总是会保存在<code>$GOPATH/src</code>目录下。在工程经过<code>go build、go install</code>或<code>go get</code>等指令后，会将下载的第三方包源代码文件放在<code>$GOPATH/src</code>目录下， 产生的二进制可执行文件放在 <code>$GOPATH/bin</code>目录下，生成的中间缓存文件会被保存在<code>$GOPATH/pkg</code> 下。<br>如果我们使用版本管理工具（Version Control System，VCS。常用如Git）来管理我们的项目代码时，我们只需要添加$GOPATH/src目录的源代码即可。bin 和 pkg 目录的内容无需版本控制。</p>
+</blockquote>
+<h3 id="GOPROXY"><a href="#GOPROXY" class="headerlink" title="GOPROXY"></a>GOPROXY</h3><p>默认GoPROXY配置是：<code>GOPROXY=https://proxy.golang.org,direct</code>，由于国内访问不到<code>https://proxy.golang.org</code>，所以我们需要换一个PROXY，这里推荐使用<code>https://goproxy.io</code>或<code>https://goproxy.cn</code>。</p>
+<p>可以执行下面的命令修改GOPROXY：<br><code>go env -w GOPROXY=https://goproxy.cn,direct</code></p>
+<h3 id="企业开发者的go项目结构"><a href="#企业开发者的go项目结构" class="headerlink" title="企业开发者的go项目结构"></a>企业开发者的go项目结构</h3><blockquote>
+<p>参考文档：<a href="%5Bhttp://www.topgoer.com/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/%E9%85%8D%E7%BD%AEgopath.html%5D(http://www.topgoer.com/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/%E9%85%8D%E7%BD%AEgopath.html)">go语言中文文档</a></p>
+</blockquote>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/golang/gopath-qy.png?x-oss-process=style/original_format"></p>
+<h2 id="编辑器"><a href="#编辑器" class="headerlink" title="编辑器"></a>编辑器</h2><h3 id="vs-code"><a href="#vs-code" class="headerlink" title="vs code"></a>vs code</h3><p><code>Visual Studio Code</code>，简称<code>VS Code</code>，它是目前使用人数最多的编辑器。尽管它由微软发布于2015年，与其他热门编辑器相比显得有些年轻，但它在过去几年中一直在不停的更新，它在最新的<code>Stack Overflow</code>调查中被选为<code>Web</code>开发人员中最受欢迎的文本编辑器。</p>
+<p><code>VS Code</code>不仅仅是一个基本的代码编辑器。有人说它更像是<code>IDE</code>而不是代码编辑器，因为它提供了许多通常只在<code>IDE</code>中才有的功能。主要功能包括内置调试工具，智能代码提示，集成终端以及对简易的<code>Git</code>操作（微软刚收购了GitHub）。作为初学者，您可以利用这些功能大大提高编程效率。</p>
+<blockquote>
+<p>下载地址：</p>
+</blockquote>
+<p><a href="https://code.visualstudio.com/">https://code.visualstudio.com/</a></p>
+<h4 id="配置中文"><a href="#配置中文" class="headerlink" title="配置中文"></a>配置中文</h4><p>点击左侧菜单栏最后一项<code>管理扩展</code>，在搜索框中输入<code>chinese</code>，选中结果列表第一项，点击<code>install</code>安装。<br><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/03/install_cn_language.gif?x-oss-process=style/gif_format"></p>
+<h4 id="安装go插件"><a href="#安装go插件" class="headerlink" title="安装go插件"></a>安装go插件</h4><p>启动<code>vscode</code>选择插件-&gt;搜<code>go</code>选择<code>Go for Visual Studio Code</code>插件点击安装即可</p>
+<h4 id="安装Go语言开发工具包"><a href="#安装Go语言开发工具包" class="headerlink" title="安装Go语言开发工具包"></a>安装Go语言开发工具包</h4><p>在Go语言开发的时候为我们提供诸如代码提示、代码自动补全等功能。</p>
+<p>Windows平台按下<code>Ctrl+Shift+P</code>，Mac平台按<code>Command+Shift+P</code>，这个时候<code>VS Code</code>界面会弹出一个输入框；</p>
+<p>我们在这个输入框中输入&gt;<code>go:install</code>，下面会自动搜索相关命令，我们选择<code>Go:Install/Update Tools</code>这个命令，选中并会回车执行该命令（或者使用鼠标点击该命令）<br><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/03/16tools.png?x-oss-process=style/original_format"></p>
+<p>VS Code此时会下载并安装上图列出来的16个工具，但是由于国内的网络环境基本上都会出现安装失败</p>
+<p><strong>两种方法解决这个问题：</strong></p>
+<blockquote>
+<p>方法一：使用git下载源代码再安装</p>
+</blockquote>
+<p>我们可以手动从github上下载工具，(执行此步骤前提需要你的电脑上已经安装了git)<br>第一步：现在自己的<code>GOPATH</code>的<code>src</code>目录下创建<code>golang.org/x</code>目录<br>第二步：在终端/cmd中cd到<code>GOPATH/src/golang.org/x</code>目录下<br>第三步：执行<code>git clone https://github.com/golang/tools.git tools</code>命令<br>第四步：执行<code>git clone https://github.com/golang/lint.git</code>命令<br>第五步：按下<code>Ctrl/Command+Shift+P</code>再次执行<code>Go:Install/Update Tools</code>命令，在弹出的窗口全选并点击确定，这一次的安装都会SUCCESSED了。<br>经过上面的步骤就可以安装成功了。 这个时候创建一个Go文件，就能正常使用代码提示、代码格式化等工具了。</p>
+<blockquote>
+<p>方法二：下载已经编译好的可执行文件</p>
+</blockquote>
+<p>如果上面的步骤执行失败了或者懒得一步一步执行，可以直接下载我已经编译好的可执行文件，拷贝到自己电脑上的 <code>go/bin</code>(GO的安装包目录不是代码包啊) 目录下。 </p>
+<blockquote>
+<blockquote>
+<p>链接: <a href="https://pan.baidu.com/s/1kxXsoSXmqwloTKsvRGZbpQ">https://pan.baidu.com/s/1kxXsoSXmqwloTKsvRGZbpQ</a><br>提取码: cucu</p>
+</blockquote>
+</blockquote>
+<p>注意：特别是Mac下需要给拷贝的这些文件赋予可执行的权限。</p>
+<h2 id="第一个Go程序"><a href="#第一个Go程序" class="headerlink" title="第一个Go程序"></a>第一个Go程序</h2><h3 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h3><p>现在我们来创建第一个Go项目——<code>hello</code>。在我们桌面创建一个<code>hello</code>目录。<br>在该目录中创建一个main.go文件：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package main &#x2F;&#x2F; 声明 main 包，表明当前是一个可执行程序</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot; &#x2F;&#x2F; 导入内置 fmt 包</span><br><span class="line"></span><br><span class="line">func main()&#123; &#x2F;&#x2F; main函数，是程序执行的入口</span><br><span class="line">    fmt.Println(&quot;Hello World!&quot;) &#x2F;&#x2F; 在终端打印 Hello World!</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="go-build"><a href="#go-build" class="headerlink" title="go build"></a>go build</h3><p><code>go build</code>表示将源代码编译成可执行文件，或者在其他目录执行以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go build hello</span><br></pre></td></tr></table></figure>
+<p>go编译器会去 <code>GOPATH</code>的src目录下查找你要编译的<code>hello</code>项目</p>
+<blockquote>
+<p>如果报错<code>go: cannot find main module; see &#39;go help modules&#39;</code>，可能是变量<code>GO111MODULE</code>导致，试试设置为<code>GO111MODULE=off</code></p>
+</blockquote>
+<p>编译得到的可执行文件会保存在执行编译命令的当前目录下，如果是windows平台会在当前目录下找到hello.exe可执行文件。</p>
+<p>可在终端直接执行该hello.exe文件：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">c:\desktop\hello&gt;hello.exe</span><br><span class="line">Hello World!</span><br></pre></td></tr></table></figure>
+<p>我们还可以使用<code>-o</code>参数来指定编译后得到的可执行文件的名字。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go build -o heiheihei.exe</span><br></pre></td></tr></table></figure>
+<h3 id="go-install"><a href="#go-install" class="headerlink" title="go install"></a>go install</h3><p><code>go install</code>表示安装的意思，它先编译源代码得到可执行文件，然后将可执行文件移动到<code>GOPATH</code>的bin目录下。因为我们的环境变量中配置了<code>GOPATH</code>下的bin目录，所以我们就可以在任意地方直接执行可执行文件了。</p>
+<h4 id="go-install与go-build-的区别"><a href="#go-install与go-build-的区别" class="headerlink" title="go install与go build 的区别"></a>go install与go build 的区别</h4><p><code>go install</code>与<code>go build</code>都可生成执行文件</p>
+<p><code>go build</code>会生成可实行文件放在当前目录中。<br><code>go install</code>则会把它放到<code>$GOPATH/bin</code>中。</p>
+<p><code>go install</code>还会把导入的依赖包编译到<code>$GOPATH/pkg</code>，并缓存，如果包未做更改，下次编译则直接使用缓存。<code>go build</code>命令加参数<code>-i</code>也能达到<code>go install</code>的效果。</p>
+<p>如果项目很大，每次编译都要花很长时间，则建议使用<code>go install</code>来编译，充分利用它对依赖包的缓存功能。</p>
+<h3 id="go-run"><a href="#go-run" class="headerlink" title="go run"></a>go run</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 直接执行go文件，不用编译</span><br><span class="line">go run main.go</span><br></pre></td></tr></table></figure>
+<h3 id="跨平台编译-more"><a href="#跨平台编译-more" class="headerlink" title="跨平台编译(more)"></a>跨平台编译(<a href="%5Bhttps://www.liwenzhou.com/posts/Go/install_go_dev/#autoid-1-5-4%5D(https://www.liwenzhou.com/posts/Go/install_go_dev/#autoid-1-5-4)">more</a>)</h3><p>默认我们go build的可执行文件都是当前操作系统可执行的文件，如果我想在windows下编译一个linux下可执行文件，那需要怎么做呢？</p>
+<p>只需要指定目标操作系统的平台和处理器架构即可：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SET CGO_ENABLED&#x3D;0  &#x2F;&#x2F; 禁用CGO</span><br><span class="line">SET GOOS&#x3D;linux  &#x2F;&#x2F; 目标平台是linux</span><br><span class="line">SET GOARCH&#x3D;amd64  &#x2F;&#x2F; 目标处理器架构是amd64</span><br></pre></td></tr></table></figure>
+<p>使用了cgo的代码是不支持跨平台编译的</p>
+<p>然后再执行go build命令，得到的就是能够在Linux平台运行的可执行文件了。</p>
+<p>Mac 下编译 Linux 和 Windows平台 64位 可执行程序：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;linux GOARCH&#x3D;amd64 go build</span><br><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;windows GOARCH&#x3D;amd64 go build</span><br></pre></td></tr></table></figure>
+<p>Linux 下编译 Mac 和 Windows 平台64位可执行程序：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;darwin GOARCH&#x3D;amd64 go build</span><br><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;windows GOARCH&#x3D;amd64 go build</span><br></pre></td></tr></table></figure>
+<p>Windows下编译Mac平台64位可执行程序：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SET CGO_ENABLED&#x3D;0</span><br><span class="line">SET GOOS&#x3D;darwin</span><br><span class="line">SET GOARCH&#x3D;amd64</span><br><span class="line">go build</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!--  https://www.liwenzhou.com/posts/Go/install_go_dev/  -->
+<!--  path https://learnku.com/docs/the-way-to-go/go-environment-variable/3565  -->
+<!--  mod https://blog.csdn.net/weixin_39003229/article/details/97638573  -->
+]]></content>
+      <categories>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>env</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Go语言介绍</title>
     <url>/2020/01/31/Go%E8%AF%AD%E8%A8%80%E7%AE%80%E4%BB%8B/</url>
     <content><![CDATA[<blockquote>
@@ -282,6 +282,153 @@ timezone: 时区
       <categories>
         <category>Go</category>
       </categories>
+  </entry>
+  <entry>
+    <title>好用的Markdown编辑器 —— Pad2 和 Typora</title>
+    <url>/2018/04/21/Pad2%E5%92%8CTypora/</url>
+    <content><![CDATA[<blockquote>
+<p>前言：<br><del>选用“<a href="http://markdownpad.com/">MarkdownPad 2</a>”作为文档编写工具的原因：方便，支持实时预览</del>。<br><strong>[更新]：<code>目前已经由”MarkdownPad 2“转用”Typora“，但本文内容仍然有效</code>。</strong></p>
+</blockquote>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/markdownpad2.png?x-oss-process=style/watermark" alt="md pad 2"></p>
+<hr>
+<h2 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h2><ul>
+<li>MarkdownPad 2 的官网下载地址： <a href="http://markdownpad.com/">http://markdownpad.com/</a></li>
+<li>个人网盘下载（附激活码），点击【<a href="https://pan.baidu.com/s/1Aym5-XRNMuWupvOTIdFHNA">链接</a>】， 提取码：ib02 </li>
+</ul>
+<h2 id="2-破解"><a href="#2-破解" class="headerlink" title="2. 破解"></a>2. 破解</h2><p>安装完毕后，首次启动提示激活，如下图：点击<code>”Enter Key“</code> —&gt; 键入<code>”Email address“</code>和<code>”License key“</code></p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/mdpad2_enterkey.png?x-oss-process=style/watermark" alt="mdpad2_enterkey"></p>
+<h2 id="3-异常"><a href="#3-异常" class="headerlink" title="3. 异常"></a>3. 异常</h2><h3 id="3-1-http渲染"><a href="#3-1-http渲染" class="headerlink" title="3.1 http渲染"></a>3.1 http渲染</h3><p><strong>安装激活后提示</strong>：</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/erro_html_readering.png?x-oss-process=style/watermark" alt="erro_html_readering"></p>
+<p><strong>解决方案</strong>：<br>安装一个SDK的工具包，【<a href="http://markdownpad.com/download/awesomium_v1.6.6_sdk_win.exe">点击获取</a>】，重启pad2即可。</p>
+<h3 id="3-2-PDF格式转换"><a href="#3-2-PDF格式转换" class="headerlink" title="3.2 PDF格式转换"></a>3.2 PDF格式转换</h3><p><strong>问题描述</strong>：<br>”.md“文件中包含”https“的图片链接，通过Mdpad2可以进行预览展示，但使用Mdpad2将其导出为“pdf”文件后，包含”https“的图片链接无法通过”pdf“显示。如果你没有导出需求，可以忽略该问题。</p>
+<p><strong>解决方案</strong>：<br>可以考虑结合使用”<a href="https://www.typora.io/">Typora</a>“进行转换，它也是一款Markdown编辑器，轻便简洁，支持即时渲染技术。</p>
+<p>或者。。。直接放弃”MarkdownPad 2“转而使用”Typora“，这两种MarkDown编辑器都比较亲民。</p>
+<pre><code>”MarkdownPad 2“有左右两个分页窗口，实时预览效果比较好。
+”Typora“刚刚使用，给我的感觉就是简洁，自定义功能较多。
+</code></pre>
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!--  https://blog.csdn.net/xiaojin21cen/article/details/78752561  -->  
+<!--  https://blog.csdn.net/kuangay/article/details/79854665  -->  
+
+]]></content>
+      <categories>
+        <category>Tools</category>
+      </categories>
+      <tags>
+        <tag>markdown</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用oss来存取及优化图片资源</title>
+    <url>/2019/09/08/aliyun_oss_save_img/</url>
+    <content><![CDATA[<blockquote>
+<p>前言：  </p>
+</blockquote>
+<p>在日常开发中，不免会遇到需要实现图片上传与展示的需求。比如一个文章发布系统，我们通常会开发图片上传功能，让用户可以为自己的文章提供配图；而且图片上传后，还需要生成不同尺寸的缩略图，供文章列表等不同场景界面展示用。</p>
+<p>做过类似功能的朋友肯定熟悉传统的做法：</p>
+<ol>
+<li>首先，通过文件上传组件将图片文件通过POST请求发送到服务器端</li>
+<li>然后，当服务器端接受到上传的图片数据后，写入本地磁盘或分布式文件系统，将图片文件保存在特定文件夹中</li>
+<li>接着，服务端在将图片原图保存成文件的同时，调用图片处理服务（例如ImageMagic）对原图进行裁剪、压缩等处理，生成需要的缩略图文件，和原图一并保存</li>
+<li>最后，将原图和缩略图的文件路径信息保存在数据库中，供后续展示之用</li>
+</ol>
+<p>这套典型的图片上传处理流程，是作为一个合格的开发者所必须了解的必备基础知识。但是，在这一系列环节中，我们可能需要自己配置搭建高可用的文件系统，编写各种图片处理代码，还是颇费时间的。在如今讲究开发效率、快速开发产品原型、快速迭代的理念和环境下，如何利用现成服务来实现产品的功能并缩短开发周期，也是一个很有价值的事情，而且选用一个质量比较好的现成服务，可能比你自己开发一个类似功能要来得更加稳定，这也能间接的提升你产品的用户体验。</p>
+<p>针对前面提到的这块图片上传处理功能，其实有很多云平台提供了方便的文件存储和图片处理服务，比如阿里云的OSS、腾讯云的COS、七牛云存储等等。而且这类云存储的价格也比较便宜，可以单独购买使用，也可以搭配云主机等搭建整体服务上云方案。</p>
+<p>下面我就基于我自己使用阿里云OSS的经验，来介绍一下主要的开发使用流程。阿里云OSS（即Object Storage Service，对象存储服务）提供基于网络的数据存取服务，可以通过网络随时存储和调用包括文本、图片、音频和视频等在内的各种非结构化数据文件，它将数据文件以对象的形式上传到存储空间中。我们可以对其进行以下几类操作：</p>
+<ul>
+<li>创建一个或者多个存储空间，向每个存储空间中添加一个或多个文件</li>
+<li>通过获取已上传文件的地址进行文件的分享和下载</li>
+<li>通过修改存储空间或文件的属性或元信息来设置相应的访问权限</li>
+<li>在阿里云管理控制台执行基本和高级OSS任务</li>
+<li>使用阿里云开发工具包或直接在应用程序中进行RESTful API调用执行基本和高级OSS任务</li>
+<li>当然，如果你使用的是别的云存储服务，也可以作为参考，因为它们的理念和使用方法都是非常接近的。</li>
+</ul>
+<hr>
+<h2 id="1-开通阿里云OSS，并创建存储空间"><a href="#1-开通阿里云OSS，并创建存储空间" class="headerlink" title="1. 开通阿里云OSS，并创建存储空间"></a>1. 开通阿里云OSS，并创建存储空间</h2><p>如果你还没阿里云账号的话，可以先去<a href="https://www.aliyun.com/">注册一个账号</a>，然后再从首页的左侧菜单树中找到<code>对象存储OSS</code>服务，点击并根据提示开通服务后，自动跳转到控制台。</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/oss/2a58de9b-d8a3-4a55-b487-c14acf707d90.png?x-oss-process=style/watermark" alt="oss"></p>
+<p>进入OSS管理控制台，你需要先创建一个<code>Bucket</code>，这个存储空间相当于是你在阿里云OSS上的专属磁盘空间。在创建时，指定存储类型为<code>标准存储</code>，读写权限为<code>公共读</code>：</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/oss/b65c0a1d-882c-45f6-bdef-b8c48d508cdc.png?x-oss-process=style/watermark" alt="oss"></p>
+<p>至此，你的第一个存储空间就创建完成了。（此外，根据存储方式的不同，收费也不一样，这需要根据<a href="https://www.aliyun.com/price/product?spm=5176.8465980.0.0.32df1450t4ZWZq&/oss/detail#/oss/detail">收费标准</a>及自身需求做决定。）</p>
+<hr>
+<h2 id="2-图片上传及处理"><a href="#2-图片上传及处理" class="headerlink" title="2. 图片上传及处理"></a>2. 图片上传及处理</h2><h3 id="2-1-图片上传"><a href="#2-1-图片上传" class="headerlink" title="2.1 图片上传"></a>2.1 图片上传</h3><p>选择你的<code>bucket</code> =》点击<code>文件管理</code> =》点击<code>新建目录</code>（自定义创建，便于分类） =》进入目录并点击<code>上传文件</code></p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/oss/be40ba6b-dc70-47ea-98a4-cb30a18990fe.png?x-oss-process=style/watermark" alt="oss"></p>
+<p>如图所示， 我在新建”md/“目录下上传了一个文件-”头像.jpg“</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/oss/e5a2942f-df09-451a-bcc8-874fc0ce3b2d.png?x-oss-process=style/watermark" alt="oss"></p>
+<p>点击文件<code>详情</code>，可以获取到上传的文件的可访问URL路径，在你的网页或app应用中可以直接使用该URL路径来访问这些文件，但是出于安全和其他自定义需求的考虑，最好进行<code>图片处理</code>。</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/oss/64661586-b465-411e-9c03-72832908ce0a.png?x-oss-process=style/watermark" alt="oss"></p>
+<h3 id="2-2-图片处理"><a href="#2-2-图片处理" class="headerlink" title="2.2 图片处理"></a>2.2 图片处理</h3><p>能方便的进行批量图片文件处理，是我们使用云存储服务的一个重要原因。<br>阿里云OSS提供了比较丰富的图片处理功能，比如图像裁剪、缩放、转格式、加水印、调整图片质量等等。</p>
+<p>在OSS管理控制台的<code>图片处理</code>页面，可以按自己的需要来<code>新建样式</code>，其实它就是一套描述图片处理方式的规则配置。</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/oss/2b9a418e-4815-4809-a604-133849bd55ce.png?x-oss-process=style/watermark" alt="oss"></p>
+<p>点击<code>新建样式</code>弹出以下配置界面：</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/oss/ys_20190919171605.png?x-oss-process=style/watermark" alt="oss"></p>
+<p>创建完的这个样式名称为<code>watermark</code>。然后我们怎么来使用它呢？非常简单，只需要在访问原图的URL后面加上特定的参数即可：</p>
+<ul>
+<li><p>原图url<br><a href="https://mrgao.oss-cn-beijing.aliyuncs.com/md/%E5%A4%B4%E5%83%8F.jpg">https://mrgao.oss-cn-beijing.aliyuncs.com/md/%E5%A4%B4%E5%83%8F.jpg</a></p>
+</li>
+<li><p>使用了图片样式<code>watermark</code>的URL：<br><a href="https://mrgao.oss-cn-beijing.aliyuncs.com/md/%E5%A4%B4%E5%83%8F.jpg?x-oss-process=style/watermark">https://mrgao.oss-cn-beijing.aliyuncs.com/md/%E5%A4%B4%E5%83%8F.jpg?x-oss-process=style/watermark</a></p>
+</li>
+</ul>
+<p>如果觉得后缀的参数有点长，则可以点击<code>访问设置</code>再配置一下自定义分隔符，简化url后缀参数（不建议使用此法，可能在一些场景出现图片展示不全的情况）：</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/oss/f1c50c0d-b048-438e-b483-325f0137af72.png?x-oss-process=style/watermark" alt="oss"></p>
+<ul>
+<li>配置<code>访问设置</code>后：<br><a href="https://mrgao.oss-cn-beijing.aliyuncs.com/md/%E5%A4%B4%E5%83%8F.jpg!watermark">https://mrgao.oss-cn-beijing.aliyuncs.com/md/%E5%A4%B4%E5%83%8F.jpg!watermark</a></li>
+</ul>
+<p><strong>原图保护</strong>：  </p>
+<pre><code>开启原图包含后，存储在bucket中的源文件是不能被直接访问的，只能通过传入 stylename 和带签名的方式访问；将禁止直接访问 OSS 原文件或传入图片参数修改图片样式的访问。
+</code></pre>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/oss/cdbfd863-6595-46e9-99b6-71e83da25c03.png?x-oss-process=style/watermark" alt="oss"></p>
+<p><strong>可正常访问的url规则：</strong>  </p>
+<ul>
+<li>默认规则：域名/sample.jpg?x-oss-process=style/stylename</li>
+<li>自定义规则：域名/sample.jpg自定义分隔符stylename</li>
+</ul>
+<hr>
+<!--  https://www.jianshu.com/p/8b19a7416549  -->  
+
+]]></content>
+      <categories>
+        <category>公有云</category>
+      </categories>
+      <tags>
+        <tag>oss</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ansible中的幂等性</title>
+    <url>/2019/07/06/ansible_Idempotency/</url>
+    <content><![CDATA[<blockquote>
+<p>幂等性（Idempotency）</p>
+</blockquote>
+<p>幂等性是数学和计算机科学上一个常见的概念，多次执行产生的结果不会发生改变，这样的特性就被成为幂等性。幂等性是Idempotency的中文翻译，幂在数学上表示乘方结果，乘方的结果相等可以简洁地描述多次执行后得到相同结果这一概念的意思。</p>
+<h2 id="ansible中的幂等性"><a href="#ansible中的幂等性" class="headerlink" title="ansible中的幂等性"></a>ansible中的幂等性</h2><p>ansible中绝大多数的模块都具有幂等特性，意味着执行一次或多次不会产生副作用。但是<code>shell、command、script、raw</code>这四个模块时不满足幂等性，所有操作会重复执行，但是有些操作不允许重复执行，比如MySQL的初始化命令mysql_install_db，逻辑上它只在第一次配置的过程中初始化一次，其他任何时候都不应该再执行。所有，每当使用这四个模块的时候，都要想一想，重复执行这个命令会不会产生负面影响。</p>
+<p>当然，在上面的四个模块中，除了raw模块外，都提供了实现幂等特性的参数，就是creates和removes：</p>
+<ul>
+<li><strong><code>creates参数</code>：</strong>当指定的文件或目录存在时，则不执行命令；</li>
+<li><strong><code>removes参数</code>：</strong>定的文件或目录不存在时，则不执行命令；</li>
+</ul>
+<blockquote>
+<p>示例如下：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">- name: use some module</span><br><span class="line">  hosts: node</span><br><span class="line">  gather_facts: false</span><br><span class="line">  tasks:</span><br><span class="line">  # 网卡配置文件不存在时则不执行</span><br><span class="line">  - name: use command module</span><br><span class="line">    command: ifup ens33</span><br><span class="line">    args:</span><br><span class="line">      removes: &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33</span><br><span class="line"></span><br><span class="line">  # mysql配置文件已存在时则不执行，避免覆盖</span><br><span class="line">  - name: use shell module</span><br><span class="line">    shell: cp &#x2F;tmp&#x2F;my.cnf &#x2F;etc&#x2F;my.cnf</span><br><span class="line">    args:</span><br><span class="line">      creates: &#x2F;etc&#x2F;my.cnf</span><br></pre></td></tr></table></figure>
+<p>经过测试可以证明，使用removes或creates参数之后，就可以实现幂等性，保证命令不会重复执行。</p>
+<p>这四个模块都不限于执行shell命令或shell脚本，可以通过executable参数指定其他解释器，如expec执行expect脚本、perl解释器执行perl脚本等等。如下：</p>
+<p><strong><code>change_when 和 faild_when</code></strong><br>使用change_when 和 faild_when来改变task是changed还是faild的认定，也可以实现幂等性</p>
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!--  https://www.jianshu.com/p/af4eb9caa216  -->  
+
+
+]]></content>
+      <categories>
+        <category>Ansible</category>
+      </categories>
+      <tags>
+        <tag>ansible基础</tag>
+        <tag>实践总结</tag>
+      </tags>
   </entry>
   <entry>
     <title>Ansible的配置文件</title>
@@ -342,43 +489,6 @@ timezone: 时区
       </tags>
   </entry>
   <entry>
-    <title>好用的Markdown编辑器 —— Pad2 和 Typora</title>
-    <url>/2018/04/21/Pad2%E5%92%8CTypora/</url>
-    <content><![CDATA[<blockquote>
-<p>前言：<br><del>选用“<a href="http://markdownpad.com/">MarkdownPad 2</a>”作为文档编写工具的原因：方便，支持实时预览</del>。<br><strong>[更新]：<code>目前已经由”MarkdownPad 2“转用”Typora“，但本文内容仍然有效</code>。</strong></p>
-</blockquote>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/markdownpad2.png?x-oss-process=style/watermark" alt="md pad 2"></p>
-<hr>
-<h2 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h2><ul>
-<li>MarkdownPad 2 的官网下载地址： <a href="http://markdownpad.com/">http://markdownpad.com/</a></li>
-<li>个人网盘下载（附激活码），点击【<a href="https://pan.baidu.com/s/1Aym5-XRNMuWupvOTIdFHNA">链接</a>】， 提取码：ib02 </li>
-</ul>
-<h2 id="2-破解"><a href="#2-破解" class="headerlink" title="2. 破解"></a>2. 破解</h2><p>安装完毕后，首次启动提示激活，如下图：点击<code>”Enter Key“</code> —&gt; 键入<code>”Email address“</code>和<code>”License key“</code></p>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/mdpad2_enterkey.png?x-oss-process=style/watermark" alt="mdpad2_enterkey"></p>
-<h2 id="3-异常"><a href="#3-异常" class="headerlink" title="3. 异常"></a>3. 异常</h2><h3 id="3-1-http渲染"><a href="#3-1-http渲染" class="headerlink" title="3.1 http渲染"></a>3.1 http渲染</h3><p><strong>安装激活后提示</strong>：</p>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/erro_html_readering.png?x-oss-process=style/watermark" alt="erro_html_readering"></p>
-<p><strong>解决方案</strong>：<br>安装一个SDK的工具包，【<a href="http://markdownpad.com/download/awesomium_v1.6.6_sdk_win.exe">点击获取</a>】，重启pad2即可。</p>
-<h3 id="3-2-PDF格式转换"><a href="#3-2-PDF格式转换" class="headerlink" title="3.2 PDF格式转换"></a>3.2 PDF格式转换</h3><p><strong>问题描述</strong>：<br>”.md“文件中包含”https“的图片链接，通过Mdpad2可以进行预览展示，但使用Mdpad2将其导出为“pdf”文件后，包含”https“的图片链接无法通过”pdf“显示。如果你没有导出需求，可以忽略该问题。</p>
-<p><strong>解决方案</strong>：<br>可以考虑结合使用”<a href="https://www.typora.io/">Typora</a>“进行转换，它也是一款Markdown编辑器，轻便简洁，支持即时渲染技术。</p>
-<p>或者。。。直接放弃”MarkdownPad 2“转而使用”Typora“，这两种MarkDown编辑器都比较亲民。</p>
-<pre><code>”MarkdownPad 2“有左右两个分页窗口，实时预览效果比较好。
-”Typora“刚刚使用，给我的感觉就是简洁，自定义功能较多。
-</code></pre>
-<hr>
-<p>&nbsp;  </p>
-<!--**参考文章**：-->  
-<!--  https://blog.csdn.net/xiaojin21cen/article/details/78752561  -->  
-<!--  https://blog.csdn.net/kuangay/article/details/79854665  -->  
-
-]]></content>
-      <categories>
-        <category>Tools</category>
-      </categories>
-      <tags>
-        <tag>markdown</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Ad-Hoc命令——简单任务的执行</title>
     <url>/2019/06/07/ansible_ad_hoc/</url>
     <content><![CDATA[<blockquote>
@@ -386,6 +496,8 @@ timezone: 时区
 </blockquote>
 <ul>
 <li><a href="https://ansible-tran.readthedocs.io/en/latest/docs/intro_adhoc.html#deploying-from-source-control">Introduction To Ad-Hoc Commands</a></li>
+<li><a href="https://docs.ansible.com/ansible/2.8/user_guide/command_line_tools.html">Working with Command Line Tools
+</a></li>
 </ul>
 <hr>
 <h2 id="使用Ad-Hoc命令执行任务"><a href="#使用Ad-Hoc命令执行任务" class="headerlink" title="使用Ad-Hoc命令执行任务"></a>使用Ad-Hoc命令执行任务</h2><p>所谓 ad-hoc 命令是什么呢?<br>(这其实是一个概念性的名字,是相对于写 Ansible playbook 来说的.类似于在命令行敲入shell命令和 写shell scripts两者之间的关系)…</p>
@@ -461,41 +573,6 @@ timezone: 时区
       </tags>
   </entry>
   <entry>
-    <title>ansible中的幂等性</title>
-    <url>/2019/07/06/ansible_Idempotency/</url>
-    <content><![CDATA[<blockquote>
-<p>幂等性（Idempotency）</p>
-</blockquote>
-<p>幂等性是数学和计算机科学上一个常见的概念，多次执行产生的结果不会发生改变，这样的特性就被成为幂等性。幂等性是Idempotency的中文翻译，幂在数学上表示乘方结果，乘方的结果相等可以简洁地描述多次执行后得到相同结果这一概念的意思。</p>
-<h2 id="ansible中的幂等性"><a href="#ansible中的幂等性" class="headerlink" title="ansible中的幂等性"></a>ansible中的幂等性</h2><p>ansible中绝大多数的模块都具有幂等特性，意味着执行一次或多次不会产生副作用。但是<code>shell、command、script、raw</code>这四个模块时不满足幂等性，所有操作会重复执行，但是有些操作不允许重复执行，比如MySQL的初始化命令mysql_install_db，逻辑上它只在第一次配置的过程中初始化一次，其他任何时候都不应该再执行。所有，每当使用这四个模块的时候，都要想一想，重复执行这个命令会不会产生负面影响。</p>
-<p>当然，在上面的四个模块中，除了raw模块外，都提供了实现幂等特性的参数，就是creates和removes：</p>
-<ul>
-<li><strong><code>creates参数</code>：</strong>当指定的文件或目录存在时，则不执行命令；</li>
-<li><strong><code>removes参数</code>：</strong>定的文件或目录不存在时，则不执行命令；</li>
-</ul>
-<blockquote>
-<p>示例如下：</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">- name: use some module</span><br><span class="line">  hosts: node</span><br><span class="line">  gather_facts: false</span><br><span class="line">  tasks:</span><br><span class="line">  # 网卡配置文件不存在时则不执行</span><br><span class="line">  - name: use command module</span><br><span class="line">    command: ifup ens33</span><br><span class="line">    args:</span><br><span class="line">      removes: &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33</span><br><span class="line"></span><br><span class="line">  # mysql配置文件已存在时则不执行，避免覆盖</span><br><span class="line">  - name: use shell module</span><br><span class="line">    shell: cp &#x2F;tmp&#x2F;my.cnf &#x2F;etc&#x2F;my.cnf</span><br><span class="line">    args:</span><br><span class="line">      creates: &#x2F;etc&#x2F;my.cnf</span><br></pre></td></tr></table></figure>
-<p>经过测试可以证明，使用removes或creates参数之后，就可以实现幂等性，保证命令不会重复执行。</p>
-<p>这四个模块都不限于执行shell命令或shell脚本，可以通过executable参数指定其他解释器，如expec执行expect脚本、perl解释器执行perl脚本等等。如下：</p>
-<p><strong><code>change_when 和 faild_when</code></strong><br>使用change_when 和 faild_when来改变task是changed还是faild的认定，也可以实现幂等性</p>
-<hr>
-<p>&nbsp;  </p>
-<!--**参考文章**：-->  
-<!--  https://www.jianshu.com/p/af4eb9caa216  -->  
-
-
-]]></content>
-      <categories>
-        <category>Ansible</category>
-      </categories>
-      <tags>
-        <tag>ansible基础</tag>
-        <tag>实践总结</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>playbook中的条件判断与错误处理</title>
     <url>/2019/07/22/ansible_change_failed_when/</url>
     <content><![CDATA[<h1 id="failed-when-和-changed-when"><a href="#failed-when-和-changed-when" class="headerlink" title="failed_when 和 changed_when"></a>failed_when 和 changed_when</h1><p><code>failed_when</code>关键字的作用是在条件成立时，将对应任务的执行状态设置为<code>Failed</code></p>
@@ -543,39 +620,6 @@ timezone: 时区
       </tags>
   </entry>
   <entry>
-    <title>Ansible目录结构介绍</title>
-    <url>/2019/05/09/ansible_dir_structure/</url>
-    <content><![CDATA[<blockquote>
-<p>引言</p>
-</blockquote>
-<p>Ansible是开源工具，整个开发过程或二次开发均遵循GPL协议，所以所有源码均可见。<br>作为一款日常工作所需的核心软件，我们有必要知道其目录分布及各目录功能。通过如下命令我们可以获取Ansible所有文件存放目录：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rpm -ql ansible </span><br></pre></td></tr></table></figure>
-<p>该命令输出内容较多，大致分为如下几类：</p>
-<ul>
-<li><strong>/etc/ansible</strong>：<code>ansible的配置文件目录，如：主机与组的文件（Inventory）、主配置文件（ansible.cfg）、角色(role)、剧本文件(.yml)等等</code>。所有Ansible的配置均存放在该目录下，运维日常的所有配置类操作也均基于此目录进行。</li>
-<li><strong>/usr/bin</strong>：ansible系列命令默认存放目录。ansible所有的可执行文件均存放在该目录下。</li>
-<li><strong>/usr/lib</strong>：ansible程序的相关模块，模块文件主要放在python相关的目录下面，因为ansible就是用python写的嘛。。</li>
-<li><strong>/usr/share</strong>：ansible程序的相关文档</li>
-<li><strong>Help文档目录</strong>：/usr/share/doc/ansible-X.X.X/</li>
-<li><strong>Man文档目录</strong>：/usr/share/man/man1/</li>
-</ul>
-<p>整体的目录概要可参考如<em>图2-1</em>所示的Ansible目录树结构：</p>
-<p><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/05/wKiom1hmDQXy5-acAABpUhXn-oQ211.jpg?x-oss-process=style/original_format"></p>
-<hr>
-<p>&nbsp;  </p>
-<!--**参考文章**：-->  
-<!--https://book.51cto.com/art/201612/526511.htm-->  
-
-]]></content>
-      <categories>
-        <category>Ansible</category>
-      </categories>
-      <tags>
-        <tag>env</tag>
-        <tag>ansible基础</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Ansible简介与安装</title>
     <url>/2019/05/09/ansible_env_install/</url>
     <content><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Ansible是一个开源配置管理工具，可以使用它来自动化任务，部署应用程序实现IT基础架构。</p>
@@ -620,6 +664,39 @@ timezone: 时区
       </categories>
       <tags>
         <tag>env</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ansible目录结构介绍</title>
+    <url>/2019/05/09/ansible_dir_structure/</url>
+    <content><![CDATA[<blockquote>
+<p>引言</p>
+</blockquote>
+<p>Ansible是开源工具，整个开发过程或二次开发均遵循GPL协议，所以所有源码均可见。<br>作为一款日常工作所需的核心软件，我们有必要知道其目录分布及各目录功能。通过如下命令我们可以获取Ansible所有文件存放目录：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rpm -ql ansible </span><br></pre></td></tr></table></figure>
+<p>该命令输出内容较多，大致分为如下几类：</p>
+<ul>
+<li><strong>/etc/ansible</strong>：<code>ansible的配置文件目录，如：主机与组的文件（Inventory）、主配置文件（ansible.cfg）、角色(role)、剧本文件(.yml)等等</code>。所有Ansible的配置均存放在该目录下，运维日常的所有配置类操作也均基于此目录进行。</li>
+<li><strong>/usr/bin</strong>：ansible系列命令默认存放目录。ansible所有的可执行文件均存放在该目录下。</li>
+<li><strong>/usr/lib</strong>：ansible程序的相关模块，模块文件主要放在python相关的目录下面，因为ansible就是用python写的嘛。。</li>
+<li><strong>/usr/share</strong>：ansible程序的相关文档</li>
+<li><strong>Help文档目录</strong>：/usr/share/doc/ansible-X.X.X/</li>
+<li><strong>Man文档目录</strong>：/usr/share/man/man1/</li>
+</ul>
+<p>整体的目录概要可参考如<em>图2-1</em>所示的Ansible目录树结构：</p>
+<p><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/05/wKiom1hmDQXy5-acAABpUhXn-oQ211.jpg?x-oss-process=style/original_format"></p>
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!--https://book.51cto.com/art/201612/526511.htm-->  
+
+]]></content>
+      <categories>
+        <category>Ansible</category>
+      </categories>
+      <tags>
+        <tag>env</tag>
+        <tag>ansible基础</tag>
       </tags>
   </entry>
   <entry>
@@ -816,206 +893,6 @@ timezone: 时区
       </tags>
   </entry>
   <entry>
-    <title>playbook常见的变量的使用方法</title>
-    <url>/2019/07/11/ansible_play_var_use/</url>
-    <content><![CDATA[<h1 id="一、Playbook中vars关键字定义的变量"><a href="#一、Playbook中vars关键字定义的变量" class="headerlink" title="一、Playbook中vars关键字定义的变量"></a>一、Playbook中vars关键字定义的变量</h1><h2 id="Playbook中定义和使用的变量的方法"><a href="#Playbook中定义和使用的变量的方法" class="headerlink" title="Playbook中定义和使用的变量的方法"></a>Playbook中定义和使用的变量的方法</h2><p>用户可以在Playbook中，通过vars关键字自定义变量，使用时用<code>&#123;&#123; &#125;&#125;</code>引用以来即可。</p>
-<p>下面的例子中，用户定义变量名为http_port，其值为为80。在tasks firewalld中，通过<code>&#123;&#123; &#125;&#125;</code>引用</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">- hosts: web</span><br><span class="line">  vars:</span><br><span class="line">    http_port: 80</span><br><span class="line">  remote_user: root</span><br><span class="line">  tasks:</span><br><span class="line">  - name: insert firewalld rule for httpd</span><br><span class="line">    firewalld: port&#x3D;&#123;&#123; http_port &#125;&#125;&#x2F;tcp permanent&#x3D;true state&#x3D;enabled immediate&#x3D;yes</span><br></pre></td></tr></table></figure>
-<h2 id="把变量放在单独的文件中"><a href="#把变量放在单独的文件中" class="headerlink" title="把变量放在单独的文件中"></a>把变量放在单独的文件中</h2><p>当变量比较多的时候，或者变量需要在多个playbook中重用的时候，可以把变量放到一个单独的文件中。通过关键字<code>var_files</code>把文件中定义的变量引入playbook中，使用变量的方法和在本文件中定义的变量相同。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">- hosts: web</span><br><span class="line">  remote_user: root</span><br><span class="line">  vars_files:</span><br><span class="line">    - vars&#x2F;server_vars.yml</span><br><span class="line">  tasks:</span><br><span class="line">  - name: insert firewalld rule for httpd</span><br><span class="line">    firewalld: port&#x3D;&#123;&#123; http_port &#125;&#125;&#x2F;tcp permanent&#x3D;true state&#x3D;enabled immediate&#x3D;yes</span><br></pre></td></tr></table></figure>
-<p>变量文件vars/server_vars.yml的内容为：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http_port: 80</span><br></pre></td></tr></table></figure>
-<h2 id="定义和使用复杂变量"><a href="#定义和使用复杂变量" class="headerlink" title="定义和使用复杂变量"></a>定义和使用复杂变量</h2><p>有时候我们需要使用的变量的值不是简单的字符串或者数字，而是一个对象。这时候定义的语法如下，格式为YAML的字典格式：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">foo:</span><br><span class="line">  field1: one</span><br><span class="line">  field2: two</span><br></pre></td></tr></table></figure>
-<p>访问复杂变量中的子属性，可以利用中括号或者点号：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">foo[&#39;field1&#39;]</span><br><span class="line">foo.field1</span><br></pre></td></tr></table></figure>
-<h2 id="YAML的陷阱"><a href="#YAML的陷阱" class="headerlink" title="YAML的陷阱"></a>YAML的陷阱</h2><p>YAML的陷阱是某些时候YAML和Ansible Playbook的变量语法不能在一起好好工作了。这里仅发生在指冒号后面的值不能以{开头的时候，如果有必要以{开头，必须加上引号。总之在YAML值的定义中，如果提示YMAL语法错误，都可以尝试下加入引号来解决。<br>下面的代码会报错:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">- hosts: app_servers</span><br><span class="line">  vars:</span><br><span class="line">    app_path: &#123;&#123; base_path &#125;&#125;&#x2F;22</span><br></pre></td></tr></table></figure>
-<p>解决办法：要在”{ “开始的值<strong>加上引号</strong>:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">- hosts: app_servers</span><br><span class="line">  vars:</span><br><span class="line">     app_path: &quot;&#123;&#123; base_path &#125;&#125;&#x2F;22&quot;</span><br></pre></td></tr></table></figure>
-<hr>
-<h1 id="二、主机的系统变量-gather-facts"><a href="#二、主机的系统变量-gather-facts" class="headerlink" title="二、主机的系统变量(gather_facts)"></a>二、主机的系统变量(gather_facts)</h1><p>ansible会通过<code>module setup</code>来收集主机的系统信息，这些收集到的系统信息叫做<code>facts</code>，这些<code>facts</code>信息可以直接以变量的形式使用。<br>哪些<code>facts</code>变量可以引用呢？在命令行上通过调用<code>setup module</code>命令可以查看</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ ansible all -m setup -u root</span><br></pre></td></tr></table></figure>
-<p>怎样在playbook中使用facts变量呢，答案是直接使用：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: all</span><br><span class="line">  user: root</span><br><span class="line">  tasks:</span><br><span class="line">  - name: echo system</span><br><span class="line">    shell: echo &#123;&#123; ansible_os_family &#125;&#125;</span><br><span class="line">  - name install ntp on Debian linux</span><br><span class="line">    apt: name&#x3D;git state&#x3D;installed</span><br><span class="line">    when: ansible_os_family &#x3D;&#x3D; &quot;Debian&quot;</span><br><span class="line">  - name install ntp on redhat linux</span><br><span class="line">    yum: name&#x3D;git state&#x3D;present</span><br><span class="line">    when: ansible_os_family &#x3D;&#x3D; &quot;RedHat&quot;</span><br></pre></td></tr></table></figure>
-<p>使用复杂facts变量<br>一般在系统中收集到如下的信息，复杂的、多层级的facts变量如何使用呢？</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">        &quot;ansible_ens3&quot;: &#123;</span><br><span class="line">            &quot;active&quot;: true, </span><br><span class="line">            &quot;device&quot;: &quot;ens3&quot;, </span><br><span class="line">            &quot;ipv4&quot;: &#123;</span><br><span class="line">                &quot;address&quot;: &quot;10.66.192.234&quot;, </span><br><span class="line">                &quot;netmask&quot;: &quot;255.255.254.0&quot;, </span><br><span class="line">                &quot;network&quot;: &quot;10.66.192.0&quot;</span><br><span class="line">            &#125;, </span><br><span class="line">            &quot;ipv6&quot;: [</span><br><span class="line">                &#123;</span><br><span class="line">                    &quot;address&quot;: &quot;2620:52:0:42c0:5054:ff:fef2:e2a3&quot;, </span><br><span class="line">                    &quot;prefix&quot;: &quot;64&quot;, </span><br><span class="line">                    &quot;scope&quot;: &quot;global&quot;</span><br><span class="line">                &#125;, </span><br><span class="line">                &#123;</span><br><span class="line">                    &quot;address&quot;: &quot;fe80::5054:ff:fef2:e2a3&quot;, </span><br><span class="line">                    &quot;prefix&quot;: &quot;64&quot;, </span><br><span class="line">                    &quot;scope&quot;: &quot;link&quot;</span><br><span class="line">                &#125;</span><br><span class="line">            ], </span><br><span class="line">            &quot;macaddress&quot;: &quot;52:54:00:f2:e2:a3&quot;, </span><br><span class="line">            &quot;module&quot;: &quot;8139cp&quot;, </span><br><span class="line">            &quot;mtu&quot;: 1500, </span><br><span class="line">            &quot;promisc&quot;: false, </span><br><span class="line">            &quot;type&quot;: &quot;ether&quot;</span><br><span class="line">        &#125;, </span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<p>那么可以通过下面的两种方式访问复杂的变量中的子属性:<br>中括号：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;&#123; ansible_ens3[&quot;ipv4&quot;][&quot;address&quot;] &#125;&#125;</span><br></pre></td></tr></table></figure>
-<p>点号：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;&#123; ansible_ens3.ipv4.address &#125;&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="关闭facts"><a href="#关闭facts" class="headerlink" title="关闭facts"></a>关闭facts</h2><p>在Playbook中,如果写gather_facts来控制是否收集远程系统的信息.如果不收集系统信息,那么上面的变量就不能在该playybook中使用了.</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">- hosts: whatever</span><br><span class="line">  gather_facts: no</span><br></pre></td></tr></table></figure>
-<hr>
-<h1 id="三、template文件模板中使用的变量"><a href="#三、template文件模板中使用的变量" class="headerlink" title="三、template文件模板中使用的变量"></a>三、template文件模板中使用的变量</h1><h2 id="template变量的定义-more"><a href="#template变量的定义-more" class="headerlink" title="template变量的定义(more)"></a>template变量的定义<a href="https://ansible-book.gitbooks.io/ansible-first-book/advance/playbook/tamplatezhong_shi_yong_bian_liang.html">(more)</a></h2><p>在playbook中定义的变量，可以直接在template中使用，同时facts变量也可以直接在template中使用，当然也包含在inventory里面定义的host和group变量。只要是在playbook中可以访问的变量，都可以在template文件中使用。</p>
-<hr>
-<h1 id="四、把task运行结果进行注册变量"><a href="#四、把task运行结果进行注册变量" class="headerlink" title="四、把task运行结果进行注册变量"></a>四、把task运行结果进行注册变量</h1><p>把task的执行结果也可以作为一个变量值。这个时候就需要用到<code>register</code>关键字实现<code>注册变量</code>，将执行结果注册到一个变量中，待后面的action使用：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: web</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">     - shell: ls</span><br><span class="line">       register: result</span><br><span class="line">       ignore_errors: True</span><br><span class="line"></span><br><span class="line">     - shell: echo &quot;&#123;&#123; result.stdout &#125;&#125;&quot;</span><br><span class="line">       when: result.rc &#x3D;&#x3D; 5</span><br><span class="line"></span><br><span class="line">     - debug: msg&#x3D;&quot;&#123;&#123; result.stdout &#125;&#125;&quot;</span><br></pre></td></tr></table></figure>
-<p><code>注册变量</code>经常和<code>debug module</code>一起使用，这样可以得到更多action的输出信息，帮助用户调试。</p>
-<hr>
-<h1 id="五、playbook-命令行变量传值"><a href="#五、playbook-命令行变量传值" class="headerlink" title="五、playbook 命令行变量传值"></a>五、playbook 命令行变量传值</h1><p>为了使Playbook更灵活、通用性更强，允许用户在执行的时候传入变量的值，这个时候就需要用到“额外变量”。</p>
-<h2 id="定义命令行变量"><a href="#定义命令行变量" class="headerlink" title="定义命令行变量"></a>定义命令行变量</h2><p>在release.yml文件里，<code>hosts和user</code>都定义为变量，需要从命令行传递变量值。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: &#39;&#123;&#123; hosts &#125;&#125;&#39;</span><br><span class="line">  remote_user: &#39;&#123;&#123; user &#125;&#125;&#39;</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">     - ...</span><br></pre></td></tr></table></figure>
-<h2 id="使用命令行变量"><a href="#使用命令行变量" class="headerlink" title="使用命令行变量"></a>使用命令行变量</h2><p>在命令行里面传值得的方法：<br><code>ansible-playbook e33_var_in_command.yml --extra-vars &quot;hosts=web user=root&quot;</code><br>还可以用json格式传递参数：<br><code>ansible-playbook e33_var_in_command.yml --extra-vars &quot;&#123;&#39;hosts&#39;:&#39;vm-rhel7-1&#39;, &#39;user&#39;:&#39;root&#39;&#125;&quot;</code><br>还可以将参数放在文件里面：<br><code>ansible-playbook e33_var_in_command.yml --extra-vars &quot;@vars.json&quot;</code></p>
-<hr>
-]]></content>
-      <categories>
-        <category>Ansible</category>
-      </categories>
-      <tags>
-        <tag>ansible基础</tag>
-        <tag>playbook</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Role - Playbook的“Package”</title>
-    <url>/2019/07/12/ansible_play_role_care/</url>
-    <content><![CDATA[<h1 id="Role-Playbook的“Package”"><a href="#Role-Playbook的“Package”" class="headerlink" title="Role - Playbook的“Package”"></a><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html#role-directory-structure">Role</a> - Playbook的“Package”</h1><p>Role是比include更强大灵活的代码重用和分享机制。Include类似于编程语言中的include，是重用单个文件的，功能有限。</p>
-<p>而Role类似于编程语言中的“Package”，可以重用一组文件形成完整的功能。例如安装和配置apache，需要tasks实现安装包和拷贝模版等，httpd.conf和index.html的模版文件，和handler文件实现重起功能。这些文件都可以放在一个role里面，供不同的playbook文件重用。</p>
-<p>Ansible非常提倡在playbook中使用role，并且提供了一个分享role的平台Ansible Galaxy, <a href="https://galaxy.ansible.com/">https://galaxy.ansible.com/</a>, 在galaxy上可以找到别人写好的role。在后面的章节中，我们再详细介绍如何使用它。</p>
-<h2 id="定义role完整的目录结构"><a href="#定义role完整的目录结构" class="headerlink" title="定义role完整的目录结构"></a>定义role完整的目录结构</h2><p><strong>在ansible中,通过遵循特定的目录结构,就可以实现对role的定义。</strong>。具体遵循的目录结构是什么呢？看下面的例子：</p>
-<p>下面的目录结构定义了一个role：名字为myrole。在site.yml，调用了这个role。</p>
-<table>
-    <tr>
-        <td>
-            role的目录结构
-        </td>
-        <td>
-            site.yml中调用role
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <pre>
-<code class='lang-yml'>
-site.yml
-roles/
-├── myrole
-    ├── tasks
-    │ └── main.yml
-    ├── handlers
-    │ └── main.yml
-    ├── defaults
-    │ └── main.yml
-    ├── vars
-    │ └── main.yml
-    ├── files
-    ├── templates
-    ├── README.md
-    ├── meta
-    │ └── main.yml
-    └── tests
-        ├── inventory
-        └── test.yml
-
-
-</code>
-</pre>
-        </td>
-        <td>
-            <pre>
-<code>
----
-- hosts: webservers
-  roles:
-     - myrole
-</code>
-</pre>
-        </td>
-    </tr>
-</table>
-
-<p>ansible并不要求role包含上述所有的目录及文件，根据role的功能需要加入对应的目录和文件。下面是每个目录和文件的功能。</p>
-<ul>
-<li>如果 roles/x/tasks/main.yml 存在, 其中列出的 tasks 将被添加到 play 中，所以这个文件也可以视作role的入口文件，想看role做了什么操作，可以从此文件看起。</li>
-<li>如果 roles/x/handlers/main.yml 存在, 其中列出的 handlers 将被添加到 play 中</li>
-<li>如果 roles/x/vars/main.yml 存在, 其中列出的 variables 将被添加到 play 中</li>
-<li>如果 roles/x/meta/main.yml 存在, 其中列出的 “角色依赖” 将被添加到 roles 列表中</li>
-<li>roles/x/tasks/main.yml中所有tasks，可以引用 roles/x/{files,templates,tasks}中的文件，不需要指明文件的路径。</li>
-</ul>
-<p>你自己在写role的时候，一般都要包含role入口文件roles/x/tasks/main.yml，其它的文件和目录，可以根据需求选择加入。</p>
-<p>学会写一个功能完整的role是一个相对复杂的过程，也是ansible中较高级的使用方法。在本小节，我们重点介绍如何使用别人已经写好的role。在后面的章节中，我们会通过具体的示例来逐步介绍写role的所需的知识。</p>
-<h2 id="带参数的Role"><a href="#带参数的Role" class="headerlink" title="带参数的Role"></a>带参数的Role</h2><h3 id="参数在role中是如何定义的呢"><a href="#参数在role中是如何定义的呢" class="headerlink" title="参数在role中是如何定义的呢"></a>参数在role中是如何定义的呢</h3><p> 定义一个带参数的role,名字是myrole,那么目录结构为</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">main.yml</span><br><span class="line">roles</span><br><span class="line">  role_with_var</span><br><span class="line">    tasks</span><br><span class="line">      main.yml</span><br></pre></td></tr></table></figure>
-<p> 在roles/myrole/tasks/main.yml中,使用<code>&#123;&#123; &#125;&#125;</code>定义的变量就可以了</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">- name: use param</span><br><span class="line">  debug: msg&#x3D;&quot;&#123;&#123; param &#125;&#125;&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="使用带参数的role"><a href="#使用带参数的role" class="headerlink" title="使用带参数的role"></a>使用带参数的role</h3><p>那么在main.yml就可以用如下的方法使用myrole</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: webservers</span><br><span class="line">  roles:</span><br><span class="line">    - &#123; role: myrole, param: &#39;Call some_role for the 1st time&#39; &#125;</span><br><span class="line">    - &#123; role: myrole, param: &#39;Call some_role for the 2nd time&#39; &#125;</span><br></pre></td></tr></table></figure>
-<p>或者写成YAML字典格式：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: webservers</span><br><span class="line">  roles:</span><br><span class="line">    - role: myrole</span><br><span class="line">      param: &#39;Call some_role for the 1st time&#39;</span><br><span class="line">    - role: myrole</span><br><span class="line">      param: &#39;Call some_role for the 2nd time&#39;</span><br></pre></td></tr></table></figure>
-<h3 id="role指定默认的参数"><a href="#role指定默认的参数" class="headerlink" title="role指定默认的参数"></a>role指定默认的参数</h3><p>指定默认参数后,如果在调用时传参数了,那么就使用传入的参数值.如果调用的时候没有传参数,那么就使用默认的参数值.</p>
-<p>指定默认参数很简单,以上面的role_with_var为例</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">main.yml</span><br><span class="line">roles:</span><br><span class="line">  myrole</span><br><span class="line">    tasks</span><br><span class="line">      main.yml</span><br><span class="line">    defaults</span><br><span class="line">      main.yml</span><br></pre></td></tr></table></figure>
-<p>在roles/myrole/defaults/main.yml中,使用yml的字典定义语法定义param的值,如下:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">param: &quot;I am the default value&quot;</span><br></pre></td></tr></table></figure>
-<p>这样在main.yml中,下面两种调用方法都可以</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: webservers</span><br><span class="line">  roles:</span><br><span class="line">    - role_with_var</span><br><span class="line">    - &#123; role: role_with_var, param: &#39;I am the value from external&#39; &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>更多的例子在<a href="https://github.com/shijingjing1221/ansible-first-book-examples/blob/master/role_vars.yml">ansible-first-book</a>中</p>
-<h2 id="role与条件语句when一起执行"><a href="#role与条件语句when一起执行" class="headerlink" title="role与条件语句when一起执行"></a>role与条件语句when一起执行</h2><p>下面的例子中,my_role只有在RedHat系列的server上才执行。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: webservers</span><br><span class="line">  roles:</span><br><span class="line">    - &#123; role: my_role, when: &quot;ansible_os_family &#x3D;&#x3D; &#39;RedHat&#39;&quot; &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>同样也可以写成YAML字典格式</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: webservers</span><br><span class="line">  roles:</span><br><span class="line">    - role: my_role</span><br><span class="line">      when: &quot;ansible_os_family &#x3D;&#x3D; &#39;RedHat&#39;&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="roles和tasks的执行顺序"><a href="#roles和tasks的执行顺序" class="headerlink" title="roles和tasks的执行顺序"></a>roles和tasks的执行顺序</h2><p>如果一个playbook同时出现role和tasks，他们的调用顺序是什么样的呢？</p>
-<p>先揭晓答案，再根据实例来验证：</p>
-<p><strong>pre_tasks &gt; role &gt; tasks &gt; post_tasks</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: lb</span><br><span class="line">  user: root</span><br><span class="line"></span><br><span class="line">  pre_tasks:</span><br><span class="line">    - name: pre</span><br><span class="line">      shell: echo &#39;hello&#39;</span><br><span class="line"></span><br><span class="line">  roles:</span><br><span class="line">    - &#123; role: some_role &#125;</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">    - name: task</span><br><span class="line">      shell: echo &#39;still busy&#39;</span><br><span class="line"></span><br><span class="line">  post_tasks:</span><br><span class="line">    - name: post</span><br><span class="line">      shell: echo &#39;goodbye&#39;</span><br></pre></td></tr></table></figure>
-<p>执行的结果为：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PLAY [lb] **********************************************************************</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">TASK [setup] *******************************************************************</span><br><span class="line">ok: [rhel7u3]</span><br><span class="line"></span><br><span class="line">TASK [pre] *********************************************************************</span><br><span class="line">changed: [rhel7u3]</span><br><span class="line"></span><br><span class="line">TASK [some_role : some role] ***************************************************</span><br><span class="line">ok: [rhel7u3] &#x3D;&gt; &#123;</span><br><span class="line">    &quot;msg&quot;: &quot;Im some role&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">TASK [task] ********************************************************************</span><br><span class="line">changed: [rhel7u3]</span><br><span class="line"></span><br><span class="line">TASK [post] ********************************************************************</span><br><span class="line">changed: [rhel7u3]</span><br><span class="line"></span><br><span class="line">PLAY RECAP *********************************************************************</span><br><span class="line">rhel7u3 : ok&#x3D;5 changed&#x3D;3 unreachable&#x3D;0 failed&#x3D;0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Ansible</category>
-      </categories>
-      <tags>
-        <tag>ansible基础</tag>
-        <tag>playbook</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Playbook基本语法</title>
-    <url>/2019/07/10/ansible_py_basic_grammar/</url>
-    <content><![CDATA[<h2 id="ansible-playbook命令行-more"><a href="#ansible-playbook命令行-more" class="headerlink" title="ansible-playbook命令行(more)"></a>ansible-playbook命令行<a href="https://docs.ansible.com/ansible/latest/cli/ansible-playbook.html">(more)</a></h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">usage: ansible-playbook [-h] [--version] [-v] [-k]</span><br></pre></td></tr></table></figure>
-<h3 id="常用命令行关键字"><a href="#常用命令行关键字" class="headerlink" title="常用命令行关键字"></a>常用命令行关键字</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">--ask-vault-password, --ask-vault-pass</span><br><span class="line">要求提供保管库密码</span><br><span class="line"></span><br><span class="line">--become-method &lt;BECOME_METHOD&gt;</span><br><span class="line">要使用的特权升级方法（默认&#x3D; sudo），请使用ansible-doc -t成为-l列出有效的选择。</span><br><span class="line"></span><br><span class="line">--become-user &lt;BECOME_USER&gt;</span><br><span class="line">以该用户身份运行操作（默认&#x3D; root）</span><br><span class="line"></span><br><span class="line">--flush-cache</span><br><span class="line">清除清单中每个主机的事实缓存</span><br><span class="line"></span><br><span class="line">--force-handlers</span><br><span class="line">即使任务失败也运行处理程序</span><br><span class="line"></span><br><span class="line">--list-hosts</span><br><span class="line">输出匹配主机列表；不执行其他任何操作</span><br><span class="line"></span><br><span class="line">--list-tags</span><br><span class="line">列出所有可用标签</span><br><span class="line"></span><br><span class="line">--list-tasks</span><br><span class="line">列出将要执行的所有任务</span><br><span class="line"></span><br><span class="line">--private-key &lt;PRIVATE_KEY_FILE&gt;, --key-file &lt;PRIVATE_KEY_FILE&gt;</span><br><span class="line">使用此文件来验证连接</span><br><span class="line"></span><br><span class="line">--scp-extra-args &lt;SCP_EXTRA_ARGS&gt;</span><br><span class="line">指定额外的参数以仅传递给scp（例如-l）</span><br><span class="line"></span><br><span class="line">--sftp-extra-args &lt;SFTP_EXTRA_ARGS&gt;</span><br><span class="line">指定额外的参数以仅传递给sftp（例如-f，-l）</span><br><span class="line"></span><br><span class="line">--skip-tags</span><br><span class="line">仅运行标签与这些值不匹配的剧本和任务</span><br><span class="line"></span><br><span class="line">--ssh-common-args &lt;SSH_COMMON_ARGS&gt;</span><br><span class="line">指定要传递给sftp &#x2F; scp &#x2F; ssh的通用参数（例如ProxyCommand）</span><br><span class="line"></span><br><span class="line">--ssh-extra-args &lt;SSH_EXTRA_ARGS&gt;</span><br><span class="line">指定额外的参数以仅传递给ssh（例如-R）</span><br><span class="line"></span><br><span class="line">--start-at-task &lt;START_AT_TASK&gt;</span><br><span class="line">在与此名称匹配的任务处启动剧本</span><br><span class="line"></span><br><span class="line">--step</span><br><span class="line">一步一步：在运行之前确认每个任务</span><br><span class="line"></span><br><span class="line">--syntax-check</span><br><span class="line">在剧本上执行语法检查，但不执行</span><br><span class="line"></span><br><span class="line">--vault-id</span><br><span class="line">要使用的库身份</span><br><span class="line"></span><br><span class="line">--vault-password-file, --vault-pass-file</span><br><span class="line">保险库密码文件</span><br><span class="line"></span><br><span class="line">--version</span><br><span class="line">显示程序的版本号，配置文件位置，配置的模块搜索路径，模块位置，可执行文件位置和退出</span><br><span class="line"></span><br><span class="line">-C, --check</span><br><span class="line">不要做任何改变；相反，尝试预测可能发生的某些变化</span><br><span class="line"></span><br><span class="line">-D, --diff</span><br><span class="line">更改（小的）文件和模板时，请显示这些文件中的差异；与–check一起使用效果很好</span><br><span class="line"></span><br><span class="line">-K, --ask-become-pass</span><br><span class="line">要求特权升级密码</span><br><span class="line"></span><br><span class="line">-M, --module-path</span><br><span class="line">将冒号分隔的路径添加到模块库（默认&#x3D;〜&#x2F; .ansible &#x2F; plugins &#x2F; modules：&#x2F; usr &#x2F; share &#x2F; ansible &#x2F; plugins &#x2F; modules）</span><br><span class="line"></span><br><span class="line">-T &lt;TIMEOUT&gt;, --timeout &lt;TIMEOUT&gt;</span><br><span class="line">覆盖连接超时（以秒为单位）（默认为10）</span><br><span class="line"></span><br><span class="line">-b, --become</span><br><span class="line">使用变为运行操作（不表示提示输入密码）</span><br><span class="line"></span><br><span class="line">-c &lt;CONNECTION&gt;, --connection &lt;CONNECTION&gt;</span><br><span class="line">要使用的连接类型（默认&#x3D;智能）</span><br><span class="line"></span><br><span class="line">-e, --extra-vars</span><br><span class="line">如果文件名以@开头，则将其他变量设置为key &#x3D; value或YAML &#x2F; JSON</span><br><span class="line"></span><br><span class="line">-f &lt;FORKS&gt;, --forks &lt;FORKS&gt;</span><br><span class="line">指定要使用的并行进程数（默认&#x3D; 5）</span><br><span class="line"></span><br><span class="line">-h, --help</span><br><span class="line">显示此帮助消息并退出</span><br><span class="line"></span><br><span class="line">-i, --inventory, --inventory-file</span><br><span class="line">指定清单主机路径或逗号分隔的主机列表。–不推荐使用库存文件</span><br><span class="line"></span><br><span class="line">-k, --ask-pass</span><br><span class="line">询问连接密码</span><br><span class="line"></span><br><span class="line">-l &lt;SUBSET&gt;, --limit &lt;SUBSET&gt;</span><br><span class="line">将所选主机进一步限制为其他模式</span><br><span class="line"></span><br><span class="line">-t, --tags</span><br><span class="line">只运行带有这些值标记的剧本和任务</span><br><span class="line"></span><br><span class="line">-u &lt;REMOTE_USER&gt;, --user &lt;REMOTE_USER&gt;</span><br><span class="line">以该用户身份连接（默认&#x3D;无）</span><br><span class="line"></span><br><span class="line">-v, --verbose</span><br><span class="line">详细模式（-vvv用于更多，-vvvv用于启用连接调试）</span><br></pre></td></tr></table></figure>
-<h3 id="执行Playbook的语法"><a href="#执行Playbook的语法" class="headerlink" title="执行Playbook的语法"></a>执行Playbook的语法</h3><p><code>$ ansible-playbook deploy.yml</code><br>查看输出的细节<br><code>ansible-playbook playbook.yml --verbose</code><br>查看该脚本影响哪些hosts<br><code>ansible-playbook playbook.yml --list-hosts</code><br>并行执行脚本<br><code>ansible-playbook playbook.yml -f 10</code></p>
-<h2 id="完整的playbook脚本示例"><a href="#完整的playbook脚本示例" class="headerlink" title="完整的playbook脚本示例"></a>完整的playbook脚本示例</h2><p>最基本的playbook脚本分为三个部分:</p>
-<ol>
-<li>在什么机器上以什么身份执行</li>
-</ol>
-<ul>
-<li>hosts</li>
-<li>users</li>
-</ul>
-<ol start="2">
-<li>执行的任务是都有什么</li>
-</ol>
-<ul>
-<li>tasks</li>
-</ul>
-<ol start="3">
-<li>善后的任务都有什么</li>
-</ol>
-<ul>
-<li>handlers</li>
-</ul>
-<blockquote>
-<p>deploy.yml文件</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: webservers</span><br><span class="line">  vars:</span><br><span class="line">    http_port: 80</span><br><span class="line">    max_clients: 200</span><br><span class="line">  user: root</span><br><span class="line">  tasks:</span><br><span class="line">    - name: ensure apache is at the latest version</span><br><span class="line">      yum: pkg&#x3D;httpd state&#x3D;latest</span><br><span class="line">    - name: write the apache config file</span><br><span class="line">      template: src&#x3D;&#x2F;srv&#x2F;httpd.j2 dest&#x3D;&#x2F;etc&#x2F;httpd.conf</span><br><span class="line">      notify:</span><br><span class="line">        - restart apache</span><br><span class="line">    - name: ensure apache is running</span><br><span class="line">      service: name&#x3D;httpd state&#x3D;started</span><br><span class="line">  handlers:</span><br><span class="line">    - name: restart apache</span><br><span class="line">      service: name&#x3D;httpd state&#x3D;restarted</span><br></pre></td></tr></table></figure>
-<h2 id="playbook语法特性"><a href="#playbook语法特性" class="headerlink" title="playbook语法特性"></a>playbook语法特性</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1. 以 --- (三个减号)开始，必须顶行写；</span><br><span class="line">2. 次行开始写Playbook的内容，但是一般要求写明该playbook的功能；</span><br><span class="line">3. 严格缩进，并且不能用Tab键缩进；</span><br><span class="line">4. 缩进级别必须是一致的，同样的缩进代表同样的级别，程序判别配置的级别是通过缩进结合换行来实现的；</span><br><span class="line">5. K&#x2F;V的值可同行写，也可换行写。同行使用 :分隔，换行写需要以 - 分隔；</span><br></pre></td></tr></table></figure>
-<hr>
-<p>&nbsp;  </p>
-<!--  https://www.cnblogs.com/yanjieli/p/10969299.html  -->  
-<!--  https://ansible-tran.readthedocs.io/en/latest/docs/playbooks.html  -->  
-]]></content>
-      <categories>
-        <category>Ansible</category>
-      </categories>
-      <tags>
-        <tag>ansible基础</tag>
-        <tag>playbook</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Ansible playbook keywords</title>
     <url>/2019/07/05/ansible_play_keyword/</url>
     <content><![CDATA[<h1 id="Playbook-Keywords"><a href="#Playbook-Keywords" class="headerlink" title="Playbook Keywords"></a>Playbook Keywords</h1><p>playbook对象上可用的关键字是配置可执行行为的几个来源之一。有关每个源的相对优先级：</p>
@@ -1137,6 +1014,206 @@ Identifier. Can be used for documentation, in or tasks/handlers.
       </categories>
       <tags>
         <tag>实践总结</tag>
+        <tag>playbook</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Role - Playbook的“Package”</title>
+    <url>/2019/07/12/ansible_play_role_care/</url>
+    <content><![CDATA[<h1 id="Role-Playbook的“Package”"><a href="#Role-Playbook的“Package”" class="headerlink" title="Role - Playbook的“Package”"></a><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html#role-directory-structure">Role</a> - Playbook的“Package”</h1><p>Role是比include更强大灵活的代码重用和分享机制。Include类似于编程语言中的include，是重用单个文件的，功能有限。</p>
+<p>而Role类似于编程语言中的“Package”，可以重用一组文件形成完整的功能。例如安装和配置apache，需要tasks实现安装包和拷贝模版等，httpd.conf和index.html的模版文件，和handler文件实现重起功能。这些文件都可以放在一个role里面，供不同的playbook文件重用。</p>
+<p>Ansible非常提倡在playbook中使用role，并且提供了一个分享role的平台Ansible Galaxy, <a href="https://galaxy.ansible.com/">https://galaxy.ansible.com/</a>, 在galaxy上可以找到别人写好的role。在后面的章节中，我们再详细介绍如何使用它。</p>
+<h2 id="定义role完整的目录结构"><a href="#定义role完整的目录结构" class="headerlink" title="定义role完整的目录结构"></a>定义role完整的目录结构</h2><p><strong>在ansible中,通过遵循特定的目录结构,就可以实现对role的定义。</strong>。具体遵循的目录结构是什么呢？看下面的例子：</p>
+<p>下面的目录结构定义了一个role：名字为myrole。在site.yml，调用了这个role。</p>
+<table>
+    <tr>
+        <td>
+            role的目录结构
+        </td>
+        <td>
+            site.yml中调用role
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <pre>
+<code class='lang-yml'>
+site.yml
+roles/
+├── myrole
+    ├── tasks
+    │ └── main.yml
+    ├── handlers
+    │ └── main.yml
+    ├── defaults
+    │ └── main.yml
+    ├── vars
+    │ └── main.yml
+    ├── files
+    ├── templates
+    ├── README.md
+    ├── meta
+    │ └── main.yml
+    └── tests
+        ├── inventory
+        └── test.yml
+
+
+</code>
+</pre>
+        </td>
+        <td>
+            <pre>
+<code>
+---
+- hosts: webservers
+  roles:
+     - myrole
+</code>
+</pre>
+        </td>
+    </tr>
+</table>
+
+<p>ansible并不要求role包含上述所有的目录及文件，根据role的功能需要加入对应的目录和文件。下面是每个目录和文件的功能。</p>
+<ul>
+<li>如果 roles/x/tasks/main.yml 存在, 其中列出的 tasks 将被添加到 play 中，所以这个文件也可以视作role的入口文件，想看role做了什么操作，可以从此文件看起。</li>
+<li>如果 roles/x/handlers/main.yml 存在, 其中列出的 handlers 将被添加到 play 中</li>
+<li>如果 roles/x/vars/main.yml 存在, 其中列出的 variables 将被添加到 play 中</li>
+<li>如果 roles/x/meta/main.yml 存在, 其中列出的 “角色依赖” 将被添加到 roles 列表中</li>
+<li>roles/x/tasks/main.yml中所有tasks，可以引用 roles/x/{files,templates,tasks}中的文件，不需要指明文件的路径。</li>
+</ul>
+<p>你自己在写role的时候，一般都要包含role入口文件roles/x/tasks/main.yml，其它的文件和目录，可以根据需求选择加入。</p>
+<p>学会写一个功能完整的role是一个相对复杂的过程，也是ansible中较高级的使用方法。在本小节，我们重点介绍如何使用别人已经写好的role。在后面的章节中，我们会通过具体的示例来逐步介绍写role的所需的知识。</p>
+<h2 id="带参数的Role"><a href="#带参数的Role" class="headerlink" title="带参数的Role"></a>带参数的Role</h2><h3 id="参数在role中是如何定义的呢"><a href="#参数在role中是如何定义的呢" class="headerlink" title="参数在role中是如何定义的呢"></a>参数在role中是如何定义的呢</h3><p> 定义一个带参数的role,名字是myrole,那么目录结构为</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">main.yml</span><br><span class="line">roles</span><br><span class="line">  role_with_var</span><br><span class="line">    tasks</span><br><span class="line">      main.yml</span><br></pre></td></tr></table></figure>
+<p> 在roles/myrole/tasks/main.yml中,使用<code>&#123;&#123; &#125;&#125;</code>定义的变量就可以了</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">- name: use param</span><br><span class="line">  debug: msg&#x3D;&quot;&#123;&#123; param &#125;&#125;&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="使用带参数的role"><a href="#使用带参数的role" class="headerlink" title="使用带参数的role"></a>使用带参数的role</h3><p>那么在main.yml就可以用如下的方法使用myrole</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: webservers</span><br><span class="line">  roles:</span><br><span class="line">    - &#123; role: myrole, param: &#39;Call some_role for the 1st time&#39; &#125;</span><br><span class="line">    - &#123; role: myrole, param: &#39;Call some_role for the 2nd time&#39; &#125;</span><br></pre></td></tr></table></figure>
+<p>或者写成YAML字典格式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: webservers</span><br><span class="line">  roles:</span><br><span class="line">    - role: myrole</span><br><span class="line">      param: &#39;Call some_role for the 1st time&#39;</span><br><span class="line">    - role: myrole</span><br><span class="line">      param: &#39;Call some_role for the 2nd time&#39;</span><br></pre></td></tr></table></figure>
+<h3 id="role指定默认的参数"><a href="#role指定默认的参数" class="headerlink" title="role指定默认的参数"></a>role指定默认的参数</h3><p>指定默认参数后,如果在调用时传参数了,那么就使用传入的参数值.如果调用的时候没有传参数,那么就使用默认的参数值.</p>
+<p>指定默认参数很简单,以上面的role_with_var为例</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">main.yml</span><br><span class="line">roles:</span><br><span class="line">  myrole</span><br><span class="line">    tasks</span><br><span class="line">      main.yml</span><br><span class="line">    defaults</span><br><span class="line">      main.yml</span><br></pre></td></tr></table></figure>
+<p>在roles/myrole/defaults/main.yml中,使用yml的字典定义语法定义param的值,如下:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">param: &quot;I am the default value&quot;</span><br></pre></td></tr></table></figure>
+<p>这样在main.yml中,下面两种调用方法都可以</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: webservers</span><br><span class="line">  roles:</span><br><span class="line">    - role_with_var</span><br><span class="line">    - &#123; role: role_with_var, param: &#39;I am the value from external&#39; &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>更多的例子在<a href="https://github.com/shijingjing1221/ansible-first-book-examples/blob/master/role_vars.yml">ansible-first-book</a>中</p>
+<h2 id="role与条件语句when一起执行"><a href="#role与条件语句when一起执行" class="headerlink" title="role与条件语句when一起执行"></a>role与条件语句when一起执行</h2><p>下面的例子中,my_role只有在RedHat系列的server上才执行。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: webservers</span><br><span class="line">  roles:</span><br><span class="line">    - &#123; role: my_role, when: &quot;ansible_os_family &#x3D;&#x3D; &#39;RedHat&#39;&quot; &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>同样也可以写成YAML字典格式</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: webservers</span><br><span class="line">  roles:</span><br><span class="line">    - role: my_role</span><br><span class="line">      when: &quot;ansible_os_family &#x3D;&#x3D; &#39;RedHat&#39;&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="roles和tasks的执行顺序"><a href="#roles和tasks的执行顺序" class="headerlink" title="roles和tasks的执行顺序"></a>roles和tasks的执行顺序</h2><p>如果一个playbook同时出现role和tasks，他们的调用顺序是什么样的呢？</p>
+<p>先揭晓答案，再根据实例来验证：</p>
+<p><strong>pre_tasks &gt; role &gt; tasks &gt; post_tasks</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: lb</span><br><span class="line">  user: root</span><br><span class="line"></span><br><span class="line">  pre_tasks:</span><br><span class="line">    - name: pre</span><br><span class="line">      shell: echo &#39;hello&#39;</span><br><span class="line"></span><br><span class="line">  roles:</span><br><span class="line">    - &#123; role: some_role &#125;</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">    - name: task</span><br><span class="line">      shell: echo &#39;still busy&#39;</span><br><span class="line"></span><br><span class="line">  post_tasks:</span><br><span class="line">    - name: post</span><br><span class="line">      shell: echo &#39;goodbye&#39;</span><br></pre></td></tr></table></figure>
+<p>执行的结果为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PLAY [lb] **********************************************************************</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">TASK [setup] *******************************************************************</span><br><span class="line">ok: [rhel7u3]</span><br><span class="line"></span><br><span class="line">TASK [pre] *********************************************************************</span><br><span class="line">changed: [rhel7u3]</span><br><span class="line"></span><br><span class="line">TASK [some_role : some role] ***************************************************</span><br><span class="line">ok: [rhel7u3] &#x3D;&gt; &#123;</span><br><span class="line">    &quot;msg&quot;: &quot;Im some role&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">TASK [task] ********************************************************************</span><br><span class="line">changed: [rhel7u3]</span><br><span class="line"></span><br><span class="line">TASK [post] ********************************************************************</span><br><span class="line">changed: [rhel7u3]</span><br><span class="line"></span><br><span class="line">PLAY RECAP *********************************************************************</span><br><span class="line">rhel7u3 : ok&#x3D;5 changed&#x3D;3 unreachable&#x3D;0 failed&#x3D;0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Ansible</category>
+      </categories>
+      <tags>
+        <tag>ansible基础</tag>
+        <tag>playbook</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>playbook常见的变量的使用方法</title>
+    <url>/2019/07/11/ansible_play_var_use/</url>
+    <content><![CDATA[<h1 id="一、Playbook中vars关键字定义的变量"><a href="#一、Playbook中vars关键字定义的变量" class="headerlink" title="一、Playbook中vars关键字定义的变量"></a>一、Playbook中vars关键字定义的变量</h1><h2 id="Playbook中定义和使用的变量的方法"><a href="#Playbook中定义和使用的变量的方法" class="headerlink" title="Playbook中定义和使用的变量的方法"></a>Playbook中定义和使用的变量的方法</h2><p>用户可以在Playbook中，通过vars关键字自定义变量，使用时用<code>&#123;&#123; &#125;&#125;</code>引用以来即可。</p>
+<p>下面的例子中，用户定义变量名为http_port，其值为为80。在tasks firewalld中，通过<code>&#123;&#123; &#125;&#125;</code>引用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">- hosts: web</span><br><span class="line">  vars:</span><br><span class="line">    http_port: 80</span><br><span class="line">  remote_user: root</span><br><span class="line">  tasks:</span><br><span class="line">  - name: insert firewalld rule for httpd</span><br><span class="line">    firewalld: port&#x3D;&#123;&#123; http_port &#125;&#125;&#x2F;tcp permanent&#x3D;true state&#x3D;enabled immediate&#x3D;yes</span><br></pre></td></tr></table></figure>
+<h2 id="把变量放在单独的文件中"><a href="#把变量放在单独的文件中" class="headerlink" title="把变量放在单独的文件中"></a>把变量放在单独的文件中</h2><p>当变量比较多的时候，或者变量需要在多个playbook中重用的时候，可以把变量放到一个单独的文件中。通过关键字<code>var_files</code>把文件中定义的变量引入playbook中，使用变量的方法和在本文件中定义的变量相同。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">- hosts: web</span><br><span class="line">  remote_user: root</span><br><span class="line">  vars_files:</span><br><span class="line">    - vars&#x2F;server_vars.yml</span><br><span class="line">  tasks:</span><br><span class="line">  - name: insert firewalld rule for httpd</span><br><span class="line">    firewalld: port&#x3D;&#123;&#123; http_port &#125;&#125;&#x2F;tcp permanent&#x3D;true state&#x3D;enabled immediate&#x3D;yes</span><br></pre></td></tr></table></figure>
+<p>变量文件vars/server_vars.yml的内容为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http_port: 80</span><br></pre></td></tr></table></figure>
+<h2 id="定义和使用复杂变量"><a href="#定义和使用复杂变量" class="headerlink" title="定义和使用复杂变量"></a>定义和使用复杂变量</h2><p>有时候我们需要使用的变量的值不是简单的字符串或者数字，而是一个对象。这时候定义的语法如下，格式为YAML的字典格式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">foo:</span><br><span class="line">  field1: one</span><br><span class="line">  field2: two</span><br></pre></td></tr></table></figure>
+<p>访问复杂变量中的子属性，可以利用中括号或者点号：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">foo[&#39;field1&#39;]</span><br><span class="line">foo.field1</span><br></pre></td></tr></table></figure>
+<h2 id="YAML的陷阱"><a href="#YAML的陷阱" class="headerlink" title="YAML的陷阱"></a>YAML的陷阱</h2><p>YAML的陷阱是某些时候YAML和Ansible Playbook的变量语法不能在一起好好工作了。这里仅发生在指冒号后面的值不能以{开头的时候，如果有必要以{开头，必须加上引号。总之在YAML值的定义中，如果提示YMAL语法错误，都可以尝试下加入引号来解决。<br>下面的代码会报错:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">- hosts: app_servers</span><br><span class="line">  vars:</span><br><span class="line">    app_path: &#123;&#123; base_path &#125;&#125;&#x2F;22</span><br></pre></td></tr></table></figure>
+<p>解决办法：要在”{ “开始的值<strong>加上引号</strong>:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">- hosts: app_servers</span><br><span class="line">  vars:</span><br><span class="line">     app_path: &quot;&#123;&#123; base_path &#125;&#125;&#x2F;22&quot;</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="二、主机的系统变量-gather-facts"><a href="#二、主机的系统变量-gather-facts" class="headerlink" title="二、主机的系统变量(gather_facts)"></a>二、主机的系统变量(gather_facts)</h1><p>ansible会通过<code>module setup</code>来收集主机的系统信息，这些收集到的系统信息叫做<code>facts</code>，这些<code>facts</code>信息可以直接以变量的形式使用。<br>哪些<code>facts</code>变量可以引用呢？在命令行上通过调用<code>setup module</code>命令可以查看</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ ansible all -m setup -u root</span><br></pre></td></tr></table></figure>
+<p>怎样在playbook中使用facts变量呢，答案是直接使用：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: all</span><br><span class="line">  user: root</span><br><span class="line">  tasks:</span><br><span class="line">  - name: echo system</span><br><span class="line">    shell: echo &#123;&#123; ansible_os_family &#125;&#125;</span><br><span class="line">  - name install ntp on Debian linux</span><br><span class="line">    apt: name&#x3D;git state&#x3D;installed</span><br><span class="line">    when: ansible_os_family &#x3D;&#x3D; &quot;Debian&quot;</span><br><span class="line">  - name install ntp on redhat linux</span><br><span class="line">    yum: name&#x3D;git state&#x3D;present</span><br><span class="line">    when: ansible_os_family &#x3D;&#x3D; &quot;RedHat&quot;</span><br></pre></td></tr></table></figure>
+<p>使用复杂facts变量<br>一般在系统中收集到如下的信息，复杂的、多层级的facts变量如何使用呢？</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">        &quot;ansible_ens3&quot;: &#123;</span><br><span class="line">            &quot;active&quot;: true, </span><br><span class="line">            &quot;device&quot;: &quot;ens3&quot;, </span><br><span class="line">            &quot;ipv4&quot;: &#123;</span><br><span class="line">                &quot;address&quot;: &quot;10.66.192.234&quot;, </span><br><span class="line">                &quot;netmask&quot;: &quot;255.255.254.0&quot;, </span><br><span class="line">                &quot;network&quot;: &quot;10.66.192.0&quot;</span><br><span class="line">            &#125;, </span><br><span class="line">            &quot;ipv6&quot;: [</span><br><span class="line">                &#123;</span><br><span class="line">                    &quot;address&quot;: &quot;2620:52:0:42c0:5054:ff:fef2:e2a3&quot;, </span><br><span class="line">                    &quot;prefix&quot;: &quot;64&quot;, </span><br><span class="line">                    &quot;scope&quot;: &quot;global&quot;</span><br><span class="line">                &#125;, </span><br><span class="line">                &#123;</span><br><span class="line">                    &quot;address&quot;: &quot;fe80::5054:ff:fef2:e2a3&quot;, </span><br><span class="line">                    &quot;prefix&quot;: &quot;64&quot;, </span><br><span class="line">                    &quot;scope&quot;: &quot;link&quot;</span><br><span class="line">                &#125;</span><br><span class="line">            ], </span><br><span class="line">            &quot;macaddress&quot;: &quot;52:54:00:f2:e2:a3&quot;, </span><br><span class="line">            &quot;module&quot;: &quot;8139cp&quot;, </span><br><span class="line">            &quot;mtu&quot;: 1500, </span><br><span class="line">            &quot;promisc&quot;: false, </span><br><span class="line">            &quot;type&quot;: &quot;ether&quot;</span><br><span class="line">        &#125;, </span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>那么可以通过下面的两种方式访问复杂的变量中的子属性:<br>中括号：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;&#123; ansible_ens3[&quot;ipv4&quot;][&quot;address&quot;] &#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>点号：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;&#123; ansible_ens3.ipv4.address &#125;&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="关闭facts"><a href="#关闭facts" class="headerlink" title="关闭facts"></a>关闭facts</h2><p>在Playbook中,如果写gather_facts来控制是否收集远程系统的信息.如果不收集系统信息,那么上面的变量就不能在该playybook中使用了.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">- hosts: whatever</span><br><span class="line">  gather_facts: no</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="三、template文件模板中使用的变量"><a href="#三、template文件模板中使用的变量" class="headerlink" title="三、template文件模板中使用的变量"></a>三、template文件模板中使用的变量</h1><h2 id="template变量的定义-more"><a href="#template变量的定义-more" class="headerlink" title="template变量的定义(more)"></a>template变量的定义<a href="https://ansible-book.gitbooks.io/ansible-first-book/advance/playbook/tamplatezhong_shi_yong_bian_liang.html">(more)</a></h2><p>在playbook中定义的变量，可以直接在template中使用，同时facts变量也可以直接在template中使用，当然也包含在inventory里面定义的host和group变量。只要是在playbook中可以访问的变量，都可以在template文件中使用。</p>
+<hr>
+<h1 id="四、把task运行结果进行注册变量"><a href="#四、把task运行结果进行注册变量" class="headerlink" title="四、把task运行结果进行注册变量"></a>四、把task运行结果进行注册变量</h1><p>把task的执行结果也可以作为一个变量值。这个时候就需要用到<code>register</code>关键字实现<code>注册变量</code>，将执行结果注册到一个变量中，待后面的action使用：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: web</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">     - shell: ls</span><br><span class="line">       register: result</span><br><span class="line">       ignore_errors: True</span><br><span class="line"></span><br><span class="line">     - shell: echo &quot;&#123;&#123; result.stdout &#125;&#125;&quot;</span><br><span class="line">       when: result.rc &#x3D;&#x3D; 5</span><br><span class="line"></span><br><span class="line">     - debug: msg&#x3D;&quot;&#123;&#123; result.stdout &#125;&#125;&quot;</span><br></pre></td></tr></table></figure>
+<p><code>注册变量</code>经常和<code>debug module</code>一起使用，这样可以得到更多action的输出信息，帮助用户调试。</p>
+<hr>
+<h1 id="五、playbook-命令行变量传值"><a href="#五、playbook-命令行变量传值" class="headerlink" title="五、playbook 命令行变量传值"></a>五、playbook 命令行变量传值</h1><p>为了使Playbook更灵活、通用性更强，允许用户在执行的时候传入变量的值，这个时候就需要用到“额外变量”。</p>
+<h2 id="定义命令行变量"><a href="#定义命令行变量" class="headerlink" title="定义命令行变量"></a>定义命令行变量</h2><p>在release.yml文件里，<code>hosts和user</code>都定义为变量，需要从命令行传递变量值。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: &#39;&#123;&#123; hosts &#125;&#125;&#39;</span><br><span class="line">  remote_user: &#39;&#123;&#123; user &#125;&#125;&#39;</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">     - ...</span><br></pre></td></tr></table></figure>
+<h2 id="使用命令行变量"><a href="#使用命令行变量" class="headerlink" title="使用命令行变量"></a>使用命令行变量</h2><p>在命令行里面传值得的方法：<br><code>ansible-playbook e33_var_in_command.yml --extra-vars &quot;hosts=web user=root&quot;</code><br>还可以用json格式传递参数：<br><code>ansible-playbook e33_var_in_command.yml --extra-vars &quot;&#123;&#39;hosts&#39;:&#39;vm-rhel7-1&#39;, &#39;user&#39;:&#39;root&#39;&#125;&quot;</code><br>还可以将参数放在文件里面：<br><code>ansible-playbook e33_var_in_command.yml --extra-vars &quot;@vars.json&quot;</code></p>
+<hr>
+]]></content>
+      <categories>
+        <category>Ansible</category>
+      </categories>
+      <tags>
+        <tag>ansible基础</tag>
+        <tag>playbook</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Playbook基本语法</title>
+    <url>/2019/07/10/ansible_py_basic_grammar/</url>
+    <content><![CDATA[<h2 id="ansible-playbook命令行-more"><a href="#ansible-playbook命令行-more" class="headerlink" title="ansible-playbook命令行(more)"></a>ansible-playbook命令行<a href="https://docs.ansible.com/ansible/latest/cli/ansible-playbook.html">(more)</a></h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">usage: ansible-playbook [-h] [--version] [-v] [-k]</span><br></pre></td></tr></table></figure>
+<h3 id="常用命令行关键字"><a href="#常用命令行关键字" class="headerlink" title="常用命令行关键字"></a>常用命令行关键字</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">--ask-vault-password, --ask-vault-pass</span><br><span class="line">要求提供保管库密码</span><br><span class="line"></span><br><span class="line">--become-method &lt;BECOME_METHOD&gt;</span><br><span class="line">要使用的特权升级方法（默认&#x3D; sudo），请使用ansible-doc -t成为-l列出有效的选择。</span><br><span class="line"></span><br><span class="line">--become-user &lt;BECOME_USER&gt;</span><br><span class="line">以该用户身份运行操作（默认&#x3D; root）</span><br><span class="line"></span><br><span class="line">--flush-cache</span><br><span class="line">清除清单中每个主机的事实缓存</span><br><span class="line"></span><br><span class="line">--force-handlers</span><br><span class="line">即使任务失败也运行处理程序</span><br><span class="line"></span><br><span class="line">--list-hosts</span><br><span class="line">输出匹配主机列表；不执行其他任何操作</span><br><span class="line"></span><br><span class="line">--list-tags</span><br><span class="line">列出所有可用标签</span><br><span class="line"></span><br><span class="line">--list-tasks</span><br><span class="line">列出将要执行的所有任务</span><br><span class="line"></span><br><span class="line">--private-key &lt;PRIVATE_KEY_FILE&gt;, --key-file &lt;PRIVATE_KEY_FILE&gt;</span><br><span class="line">使用此文件来验证连接</span><br><span class="line"></span><br><span class="line">--scp-extra-args &lt;SCP_EXTRA_ARGS&gt;</span><br><span class="line">指定额外的参数以仅传递给scp（例如-l）</span><br><span class="line"></span><br><span class="line">--sftp-extra-args &lt;SFTP_EXTRA_ARGS&gt;</span><br><span class="line">指定额外的参数以仅传递给sftp（例如-f，-l）</span><br><span class="line"></span><br><span class="line">--skip-tags</span><br><span class="line">仅运行标签与这些值不匹配的剧本和任务</span><br><span class="line"></span><br><span class="line">--ssh-common-args &lt;SSH_COMMON_ARGS&gt;</span><br><span class="line">指定要传递给sftp &#x2F; scp &#x2F; ssh的通用参数（例如ProxyCommand）</span><br><span class="line"></span><br><span class="line">--ssh-extra-args &lt;SSH_EXTRA_ARGS&gt;</span><br><span class="line">指定额外的参数以仅传递给ssh（例如-R）</span><br><span class="line"></span><br><span class="line">--start-at-task &lt;START_AT_TASK&gt;</span><br><span class="line">在与此名称匹配的任务处启动剧本</span><br><span class="line"></span><br><span class="line">--step</span><br><span class="line">一步一步：在运行之前确认每个任务</span><br><span class="line"></span><br><span class="line">--syntax-check</span><br><span class="line">在剧本上执行语法检查，但不执行</span><br><span class="line"></span><br><span class="line">--vault-id</span><br><span class="line">要使用的库身份</span><br><span class="line"></span><br><span class="line">--vault-password-file, --vault-pass-file</span><br><span class="line">保险库密码文件</span><br><span class="line"></span><br><span class="line">--version</span><br><span class="line">显示程序的版本号，配置文件位置，配置的模块搜索路径，模块位置，可执行文件位置和退出</span><br><span class="line"></span><br><span class="line">-C, --check</span><br><span class="line">不要做任何改变；相反，尝试预测可能发生的某些变化</span><br><span class="line"></span><br><span class="line">-D, --diff</span><br><span class="line">更改（小的）文件和模板时，请显示这些文件中的差异；与–check一起使用效果很好</span><br><span class="line"></span><br><span class="line">-K, --ask-become-pass</span><br><span class="line">要求特权升级密码</span><br><span class="line"></span><br><span class="line">-M, --module-path</span><br><span class="line">将冒号分隔的路径添加到模块库（默认&#x3D;〜&#x2F; .ansible &#x2F; plugins &#x2F; modules：&#x2F; usr &#x2F; share &#x2F; ansible &#x2F; plugins &#x2F; modules）</span><br><span class="line"></span><br><span class="line">-T &lt;TIMEOUT&gt;, --timeout &lt;TIMEOUT&gt;</span><br><span class="line">覆盖连接超时（以秒为单位）（默认为10）</span><br><span class="line"></span><br><span class="line">-b, --become</span><br><span class="line">使用变为运行操作（不表示提示输入密码）</span><br><span class="line"></span><br><span class="line">-c &lt;CONNECTION&gt;, --connection &lt;CONNECTION&gt;</span><br><span class="line">要使用的连接类型（默认&#x3D;智能）</span><br><span class="line"></span><br><span class="line">-e, --extra-vars</span><br><span class="line">如果文件名以@开头，则将其他变量设置为key &#x3D; value或YAML &#x2F; JSON</span><br><span class="line"></span><br><span class="line">-f &lt;FORKS&gt;, --forks &lt;FORKS&gt;</span><br><span class="line">指定要使用的并行进程数（默认&#x3D; 5）</span><br><span class="line"></span><br><span class="line">-h, --help</span><br><span class="line">显示此帮助消息并退出</span><br><span class="line"></span><br><span class="line">-i, --inventory, --inventory-file</span><br><span class="line">指定清单主机路径或逗号分隔的主机列表。–不推荐使用库存文件</span><br><span class="line"></span><br><span class="line">-k, --ask-pass</span><br><span class="line">询问连接密码</span><br><span class="line"></span><br><span class="line">-l &lt;SUBSET&gt;, --limit &lt;SUBSET&gt;</span><br><span class="line">将所选主机进一步限制为其他模式</span><br><span class="line"></span><br><span class="line">-t, --tags</span><br><span class="line">只运行带有这些值标记的剧本和任务</span><br><span class="line"></span><br><span class="line">-u &lt;REMOTE_USER&gt;, --user &lt;REMOTE_USER&gt;</span><br><span class="line">以该用户身份连接（默认&#x3D;无）</span><br><span class="line"></span><br><span class="line">-v, --verbose</span><br><span class="line">详细模式（-vvv用于更多，-vvvv用于启用连接调试）</span><br></pre></td></tr></table></figure>
+<h3 id="执行Playbook的语法"><a href="#执行Playbook的语法" class="headerlink" title="执行Playbook的语法"></a>执行Playbook的语法</h3><p><code>$ ansible-playbook deploy.yml</code><br>查看输出的细节<br><code>ansible-playbook playbook.yml --verbose</code><br>查看该脚本影响哪些hosts<br><code>ansible-playbook playbook.yml --list-hosts</code><br>并行执行脚本<br><code>ansible-playbook playbook.yml -f 10</code></p>
+<h2 id="完整的playbook脚本示例"><a href="#完整的playbook脚本示例" class="headerlink" title="完整的playbook脚本示例"></a>完整的playbook脚本示例</h2><p>最基本的playbook脚本分为三个部分:</p>
+<ol>
+<li>在什么机器上以什么身份执行</li>
+</ol>
+<ul>
+<li>hosts</li>
+<li>users</li>
+</ul>
+<ol start="2">
+<li>执行的任务是都有什么</li>
+</ol>
+<ul>
+<li>tasks</li>
+</ul>
+<ol start="3">
+<li>善后的任务都有什么</li>
+</ol>
+<ul>
+<li>handlers</li>
+</ul>
+<blockquote>
+<p>deploy.yml文件</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: webservers</span><br><span class="line">  vars:</span><br><span class="line">    http_port: 80</span><br><span class="line">    max_clients: 200</span><br><span class="line">  user: root</span><br><span class="line">  tasks:</span><br><span class="line">    - name: ensure apache is at the latest version</span><br><span class="line">      yum: pkg&#x3D;httpd state&#x3D;latest</span><br><span class="line">    - name: write the apache config file</span><br><span class="line">      template: src&#x3D;&#x2F;srv&#x2F;httpd.j2 dest&#x3D;&#x2F;etc&#x2F;httpd.conf</span><br><span class="line">      notify:</span><br><span class="line">        - restart apache</span><br><span class="line">    - name: ensure apache is running</span><br><span class="line">      service: name&#x3D;httpd state&#x3D;started</span><br><span class="line">  handlers:</span><br><span class="line">    - name: restart apache</span><br><span class="line">      service: name&#x3D;httpd state&#x3D;restarted</span><br></pre></td></tr></table></figure>
+<h2 id="playbook语法特性"><a href="#playbook语法特性" class="headerlink" title="playbook语法特性"></a>playbook语法特性</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1. 以 --- (三个减号)开始，必须顶行写；</span><br><span class="line">2. 次行开始写Playbook的内容，但是一般要求写明该playbook的功能；</span><br><span class="line">3. 严格缩进，并且不能用Tab键缩进；</span><br><span class="line">4. 缩进级别必须是一致的，同样的缩进代表同样的级别，程序判别配置的级别是通过缩进结合换行来实现的；</span><br><span class="line">5. K&#x2F;V的值可同行写，也可换行写。同行使用 :分隔，换行写需要以 - 分隔；</span><br></pre></td></tr></table></figure>
+<hr>
+<p>&nbsp;  </p>
+<!--  https://www.cnblogs.com/yanjieli/p/10969299.html  -->  
+<!--  https://ansible-tran.readthedocs.io/en/latest/docs/playbooks.html  -->  
+]]></content>
+      <categories>
+        <category>Ansible</category>
+      </categories>
+      <tags>
+        <tag>ansible基础</tag>
         <tag>playbook</tag>
       </tags>
   </entry>
@@ -1487,6 +1564,193 @@ Identifier. Can be used for documentation, in or tasks/handlers.
       </tags>
   </entry>
   <entry>
+    <title>go基础之运算符</title>
+    <url>/2020/04/08/go_base_operator/</url>
+    <content><![CDATA[<p>运算符用于在程序运行时执行数学或逻辑运算。</p>
+<h1 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h1><p>Go 语言内置的运算符有：</p>
+<ul>
+<li>算术运算符</li>
+<li>关系运算符</li>
+<li>逻辑运算符</li>
+<li>位运算符</li>
+<li>赋值运算符</li>
+</ul>
+<h2 id="算术运算符"><a href="#算术运算符" class="headerlink" title="算术运算符"></a>算术运算符</h2><table>
+<thead>
+<tr>
+<th align="left">运算符</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">+</td>
+<td align="left">相加</td>
+</tr>
+<tr>
+<td align="left">-</td>
+<td align="left">相减</td>
+</tr>
+<tr>
+<td align="left">*</td>
+<td align="left">相乘</td>
+</tr>
+<tr>
+<td align="left">/</td>
+<td align="left">相除</td>
+</tr>
+<tr>
+<td align="left">%</td>
+<td align="left">求余</td>
+</tr>
+</tbody></table>
+<p>注意： <code>++</code>（自增）和<code>--</code>（自减）在Go语言中是单独的语句，并不是运算符。</p>
+<h2 id="关系运算符"><a href="#关系运算符" class="headerlink" title="关系运算符"></a>关系运算符</h2><table>
+<thead>
+<tr>
+<th align="left">运算符</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">==</td>
+<td align="left">检查两个值是否相等，如果相等返回 True 否则返回 False。</td>
+</tr>
+<tr>
+<td align="left">!=</td>
+<td align="left">检查两个值是否不相等，如果不相等返回 True 否则返回 False。</td>
+</tr>
+<tr>
+<td align="left">&gt;</td>
+<td align="left">检查左边值是否大于右边值，如果是返回 True 否则返回 False。</td>
+</tr>
+<tr>
+<td align="left">&gt;=</td>
+<td align="left">检查左边值是否大于等于右边值，如果是返回 True 否则返回 False。</td>
+</tr>
+<tr>
+<td align="left">&lt;</td>
+<td align="left">检查左边值是否小于右边值，如果是返回 True 否则返回 False。</td>
+</tr>
+<tr>
+<td align="left">&lt;=</td>
+<td align="left">检查左边值是否小于等于右边值，如果是返回 True 否则返回 False。</td>
+</tr>
+</tbody></table>
+<h2 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h2><table>
+<thead>
+<tr>
+<th align="left">运算符</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">&amp;&amp;</td>
+<td align="left">逻辑 AND 运算符。 如果两边的操作数都是 True，则为 True，否则为 False。</td>
+</tr>
+<tr>
+<td align="left">||</td>
+<td align="left">逻辑 OR 运算符。 如果两边的操作数有一个 True，则为 True，否则为 False。</td>
+</tr>
+<tr>
+<td align="left">!</td>
+<td align="left">逻辑 NOT 运算符。 如果条件为 True，则为 False，否则为 True。</td>
+</tr>
+</tbody></table>
+<h2 id="位运算符"><a href="#位运算符" class="headerlink" title="位运算符"></a>位运算符</h2><p>位运算符对整数在内存中的二进制位进行操作。</p>
+<table>
+<thead>
+<tr>
+<th align="left">运算符</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">&amp;</td>
+<td align="left">参与运算的两数各对应的二进位相与。（两位均为1才为1）</td>
+</tr>
+<tr>
+<td align="left">|</td>
+<td align="left">参与运算的两数各对应的二进位相或。（两位有一个为1就为1）</td>
+</tr>
+<tr>
+<td align="left">^</td>
+<td align="left">参与运算的两数各对应的二进位相异或，当两对应的二进位相异时，结果为1。（两位不一样则为1）</td>
+</tr>
+<tr>
+<td align="left">&lt;&lt;</td>
+<td align="left">左移n位就是乘以2的n次方。“a&lt;&lt;b”是把a的各二进位全部左移b位，高位丢弃，低位补0。</td>
+</tr>
+<tr>
+<td align="left">&gt;&gt;</td>
+<td align="left">右移n位就是除以2的n次方。“a&gt;&gt;b”是把a的各二进位全部右移b位。</td>
+</tr>
+</tbody></table>
+<h2 id="赋值运算符"><a href="#赋值运算符" class="headerlink" title="赋值运算符"></a>赋值运算符</h2><table>
+<thead>
+<tr>
+<th align="left">运算符</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">=</td>
+<td align="left">简单的赋值运算符，将一个表达式的值赋给一个左值</td>
+</tr>
+<tr>
+<td align="left">+=</td>
+<td align="left">相加后再赋值</td>
+</tr>
+<tr>
+<td align="left">-=</td>
+<td align="left">相减后再赋值</td>
+</tr>
+<tr>
+<td align="left">*=</td>
+<td align="left">相乘后再赋值</td>
+</tr>
+<tr>
+<td align="left">/=</td>
+<td align="left">相除后再赋值</td>
+</tr>
+<tr>
+<td align="left">%=</td>
+<td align="left">求余后再赋值</td>
+</tr>
+<tr>
+<td align="left">&lt;&lt;=</td>
+<td align="left">左移后赋值</td>
+</tr>
+<tr>
+<td align="left">&gt;&gt;=</td>
+<td align="left">右移后赋值</td>
+</tr>
+<tr>
+<td align="left">&amp;=</td>
+<td align="left">按位与后赋值</td>
+</tr>
+<tr>
+<td align="left">|=</td>
+<td align="left">按位或后赋值</td>
+</tr>
+<tr>
+<td align="left">^=</td>
+<td align="left">按位异或后赋值</td>
+</tr>
+</tbody></table>
+<h2 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h2><ul>
+<li>有一堆数字，如果除了一个数字以外，其他数字都出现了两次，那么如何找到出现一次的数字？<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    &#x2F;&#x2F; 参与运算的两数各对应的二进位相异或，当两对应的二进位相异时，结果为1。</span><br><span class="line">    &#x2F;&#x2F; 相同，为 0</span><br><span class="line">    nums :&#x3D; [...]int&#123;1, 2, 3, 3, 2, 1, 9, 8, 8&#125;</span><br><span class="line"></span><br><span class="line">    n :&#x3D; nums[0]</span><br><span class="line">    for i :&#x3D; 1; i &lt; len(nums); i++ &#123;</span><br><span class="line">        n ^&#x3D; nums[i]</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fmt.Println(n)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>go语言基础</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>go基础之流程控制</title>
     <url>/2020/04/09/go_base_process_control/</url>
     <content><![CDATA[<p>流程控制是每种编程语言控制逻辑走向和执行次序的重要部分，流程控制可以说是一门语言的“经脉”。</p>
@@ -1819,67 +2083,6 @@ Identifier. Can be used for documentation, in or tasks/handlers.
       </tags>
   </entry>
   <entry>
-    <title>go基础之变量和常量</title>
-    <url>/2020/04/08/go_var_constant/</url>
-    <content><![CDATA[<h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><h2 id="变量类型"><a href="#变量类型" class="headerlink" title="变量类型"></a>变量类型</h2><p>变量（Variable）的功能是存储数据。不同的变量保存的数据类型可能会不一样。经过半个多世纪的发展，编程语言已经基本形成了一套固定的类型，常见变量的数据类型有：<code>整型、浮点型、布尔型</code>等。</p>
-<p>Go语言中的每一个变量都有自己的类型，并且变量必须经过声明才能开始使用。</p>
-<h2 id="变量声明-var"><a href="#变量声明-var" class="headerlink" title="变量声明 var"></a>变量声明 var</h2><p>Go语言中的变量需要声明后才能使用，同一作用域内不支持重复声明。 并且Go语言的变量声明后必须使用。</p>
-<h3 id="标准声明"><a href="#标准声明" class="headerlink" title="标准声明"></a>标准声明</h3><p>Go语言的变量声明格式为：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var 变量名 变量类型</span><br></pre></td></tr></table></figure>
-<p>变量声明以关键字<code>var</code>开头，变量类型放在变量的后面，行尾无需分号。 举个例子：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name string</span><br><span class="line">var age int</span><br><span class="line">var isOk bool</span><br></pre></td></tr></table></figure>
-<h3 id="批量声明"><a href="#批量声明" class="headerlink" title="批量声明"></a>批量声明</h3><p>每声明一个变量就需要写<code>var</code>关键字会比较繁琐，go语言中还支持批量变量声明：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var (</span><br><span class="line">    a string</span><br><span class="line">    b int</span><br><span class="line">    c bool</span><br><span class="line">    d float32</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<h3 id="变量的初始化"><a href="#变量的初始化" class="headerlink" title="变量的初始化"></a>变量的初始化</h3><p>Go语言在声明变量的时候，会自动对变量对应的内存区域进行初始化操作。每个变量会被初始化成其类型的默认值，例如： 整型和浮点型变量的默认值为<code>0</code>。 字符串变量的默认值为<code>空字符串</code>。 布尔型变量默认为<code>false</code>。 切片、函数、指针变量的默认为<code>nil</code>。</p>
-<p>当然我们也可在声明变量的时候为其指定初始值。变量初始化的标准格式如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var 变量名 类型 &#x3D; 表达式</span><br></pre></td></tr></table></figure>
-<p>举个例子：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name string &#x3D; &quot;Q1mi&quot;</span><br><span class="line">var age int &#x3D; 18</span><br></pre></td></tr></table></figure>
-<p>或者一次初始化多个变量</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name, age &#x3D; &quot;Q1mi&quot;, 20</span><br></pre></td></tr></table></figure>
-<p><strong>类型推导</strong><br>有时候我们会将变量的类型省略，这个时候编译器会根据等号右边的值来推导变量的类型完成初始化。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name &#x3D; &quot;Q1mi&quot;</span><br><span class="line">var age &#x3D; 18</span><br></pre></td></tr></table></figure>
-<h3 id="短变量声明"><a href="#短变量声明" class="headerlink" title="短变量声明 :="></a><strong>短变量声明</strong> :=</h3><p>在函数内部，可以使用更简略的<code>:=</code>方式声明并初始化变量。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">)</span><br><span class="line">&#x2F;&#x2F; 全局变量m</span><br><span class="line">var m &#x3D; 100</span><br><span class="line">&#x2F;&#x2F; n :&#x3D; &quot;smile111&quot; &#x2F;&#x2F; 非法，短变量声明方式只能用于函数内部</span><br><span class="line">func main() &#123;</span><br><span class="line">    n :&#x3D; 10</span><br><span class="line">    m :&#x3D; 200 &#x2F;&#x2F; 此处声明局部变量m</span><br><span class="line">    fmt.Println(m, n)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="匿名变量"><a href="#匿名变量" class="headerlink" title="匿名变量 _"></a><strong>匿名变量</strong> _</h3><p>在使用多重赋值时，如果想要忽略某个值，可以使用<code>匿名变量（anonymous variable）</code>。 匿名变量用一个下划线_表示，例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func foo() (int, string) &#123;</span><br><span class="line">    return 10, &quot;Q1mi&quot;</span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">    x, _ :&#x3D; foo()</span><br><span class="line">    _, y :&#x3D; foo()</span><br><span class="line">    fmt.Println(&quot;x&#x3D;&quot;, x)</span><br><span class="line">    fmt.Println(&quot;y&#x3D;&quot;, y)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>匿名变量不占用命名空间，不会分配内存，所以匿名变量之间不存在重复声明。 (在<code>Lua</code>等编程语言里，匿名变量也被叫做哑元变量。)</p>
-<p> <code>注意事项：</code></p>
-<ol>
-<li>函数外的每个语句都必须以关键字开始（var、const、func等）</li>
-<li><code>:=</code>不能使用在函数外。</li>
-<li><code>_</code>多用于占位，表示忽略值。</li>
-</ol>
-<h2 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h2><p>相对于变量，常量是恒定不变的值，多用于定义程序运行期间不会改变的那些值。 常量的声明和变量声明非常类似，只是把<code>var</code>换成了<code>const</code>，常量在定义的时候必须赋值。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const pi &#x3D; 3.1415</span><br><span class="line">const e &#x3D; 2.7182</span><br></pre></td></tr></table></figure>
-<p>声明了<code>pi</code>和<code>e</code>这两个常量之后，在整个程序运行期间它们的值都不能再发生变化了。</p>
-<p>多个常量也可以一起声明：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    pi &#x3D; 3.1415</span><br><span class="line">    e &#x3D; 2.7182</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p>const同时声明多个常量时，如果省略了值则表示和上面一行的值相同。 例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; 100</span><br><span class="line">    n2</span><br><span class="line">    n3</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p>上面示例中，常量<code>n1</code>、<code>n2</code>、<code>n3</code>的值都是100。</p>
-<h3 id="iota"><a href="#iota" class="headerlink" title="iota"></a>iota</h3><p><code>iota</code>是go语言的常量计数器，只能在常量的表达式中使用。</p>
-<p><code>iota</code>在const关键字出现时将被重置为0。const中每新增一行常量声明将使iota计数一次(iota可理解为const语句块中的行索引)。 使用iota能简化定义，在定义枚举时很有用。</p>
-<p><strong>举个例子：</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; iota &#x2F;&#x2F;0</span><br><span class="line">    n2        &#x2F;&#x2F;1</span><br><span class="line">    n3        &#x2F;&#x2F;2</span><br><span class="line">    n4        &#x2F;&#x2F;3</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p><strong>几个常见的iota示例:</strong><br>使用<code>_</code>跳过某些值</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; iota &#x2F;&#x2F;0</span><br><span class="line">    n2        &#x2F;&#x2F;1</span><br><span class="line">    _</span><br><span class="line">    n4        &#x2F;&#x2F;3</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p><code>iota</code>声明中间插队</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; iota &#x2F;&#x2F;0</span><br><span class="line">    n2 &#x3D; 100  &#x2F;&#x2F;100</span><br><span class="line">    n3 &#x3D; iota &#x2F;&#x2F;2</span><br><span class="line">    n4        &#x2F;&#x2F;3</span><br><span class="line">)</span><br><span class="line">const n5 &#x3D; iota &#x2F;&#x2F;0</span><br></pre></td></tr></table></figure>
-<p>定义数量级 （这里的<code>&lt;&lt;</code>表示左移操作，<code>1&lt;&lt;10</code>表示将1的二进制表示向左移10位，也就是由<code>1</code>变成了<code>10000000000</code>，也就是十进制的1024。同理<code>2&lt;&lt;2</code>表示将2的二进制表示向左移2位，也就是由<code>10</code>变成了<code>1000</code>，也就是十进制的8。）</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    _  &#x3D; iota</span><br><span class="line">    KB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    MB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    GB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    TB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    PB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p>多个<code>iota</code>定义在一行</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    a, b &#x3D; iota + 1, iota + 2 &#x2F;&#x2F;1,2</span><br><span class="line">    c, d                      &#x2F;&#x2F;2,3</span><br><span class="line">    e, f                      &#x2F;&#x2F;3,4</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Go</category>
-      </categories>
-      <tags>
-        <tag>go语言基础</tag>
-        <tag>variable</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>golang 格式化符号%说明</title>
     <url>/2020/04/08/go_format_description/</url>
     <content><![CDATA[<p>golang 的fmt 包实现了格式化I/O函数，类似于C的 printf 和 scanf。</p>
@@ -2093,6 +2296,130 @@ Identifier. Can be used for documentation, in or tasks/handlers.
       </tags>
   </entry>
   <entry>
+    <title>go基础之变量和常量</title>
+    <url>/2020/04/08/go_var_constant/</url>
+    <content><![CDATA[<h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><h2 id="变量类型"><a href="#变量类型" class="headerlink" title="变量类型"></a>变量类型</h2><p>变量（Variable）的功能是存储数据。不同的变量保存的数据类型可能会不一样。经过半个多世纪的发展，编程语言已经基本形成了一套固定的类型，常见变量的数据类型有：<code>整型、浮点型、布尔型</code>等。</p>
+<p>Go语言中的每一个变量都有自己的类型，并且变量必须经过声明才能开始使用。</p>
+<h2 id="变量声明-var"><a href="#变量声明-var" class="headerlink" title="变量声明 var"></a>变量声明 var</h2><p>Go语言中的变量需要声明后才能使用，同一作用域内不支持重复声明。 并且Go语言的变量声明后必须使用。</p>
+<h3 id="标准声明"><a href="#标准声明" class="headerlink" title="标准声明"></a>标准声明</h3><p>Go语言的变量声明格式为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var 变量名 变量类型</span><br></pre></td></tr></table></figure>
+<p>变量声明以关键字<code>var</code>开头，变量类型放在变量的后面，行尾无需分号。 举个例子：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name string</span><br><span class="line">var age int</span><br><span class="line">var isOk bool</span><br></pre></td></tr></table></figure>
+<h3 id="批量声明"><a href="#批量声明" class="headerlink" title="批量声明"></a>批量声明</h3><p>每声明一个变量就需要写<code>var</code>关键字会比较繁琐，go语言中还支持批量变量声明：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var (</span><br><span class="line">    a string</span><br><span class="line">    b int</span><br><span class="line">    c bool</span><br><span class="line">    d float32</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h3 id="变量的初始化"><a href="#变量的初始化" class="headerlink" title="变量的初始化"></a>变量的初始化</h3><p>Go语言在声明变量的时候，会自动对变量对应的内存区域进行初始化操作。每个变量会被初始化成其类型的默认值，例如： 整型和浮点型变量的默认值为<code>0</code>。 字符串变量的默认值为<code>空字符串</code>。 布尔型变量默认为<code>false</code>。 切片、函数、指针变量的默认为<code>nil</code>。</p>
+<p>当然我们也可在声明变量的时候为其指定初始值。变量初始化的标准格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var 变量名 类型 &#x3D; 表达式</span><br></pre></td></tr></table></figure>
+<p>举个例子：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name string &#x3D; &quot;Q1mi&quot;</span><br><span class="line">var age int &#x3D; 18</span><br></pre></td></tr></table></figure>
+<p>或者一次初始化多个变量</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name, age &#x3D; &quot;Q1mi&quot;, 20</span><br></pre></td></tr></table></figure>
+<p><strong>类型推导</strong><br>有时候我们会将变量的类型省略，这个时候编译器会根据等号右边的值来推导变量的类型完成初始化。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name &#x3D; &quot;Q1mi&quot;</span><br><span class="line">var age &#x3D; 18</span><br></pre></td></tr></table></figure>
+<h3 id="短变量声明"><a href="#短变量声明" class="headerlink" title="短变量声明 :="></a><strong>短变量声明</strong> :=</h3><p>在函数内部，可以使用更简略的<code>:=</code>方式声明并初始化变量。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">)</span><br><span class="line">&#x2F;&#x2F; 全局变量m</span><br><span class="line">var m &#x3D; 100</span><br><span class="line">&#x2F;&#x2F; n :&#x3D; &quot;smile111&quot; &#x2F;&#x2F; 非法，短变量声明方式只能用于函数内部</span><br><span class="line">func main() &#123;</span><br><span class="line">    n :&#x3D; 10</span><br><span class="line">    m :&#x3D; 200 &#x2F;&#x2F; 此处声明局部变量m</span><br><span class="line">    fmt.Println(m, n)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="匿名变量"><a href="#匿名变量" class="headerlink" title="匿名变量 _"></a><strong>匿名变量</strong> _</h3><p>在使用多重赋值时，如果想要忽略某个值，可以使用<code>匿名变量（anonymous variable）</code>。 匿名变量用一个下划线_表示，例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func foo() (int, string) &#123;</span><br><span class="line">    return 10, &quot;Q1mi&quot;</span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">    x, _ :&#x3D; foo()</span><br><span class="line">    _, y :&#x3D; foo()</span><br><span class="line">    fmt.Println(&quot;x&#x3D;&quot;, x)</span><br><span class="line">    fmt.Println(&quot;y&#x3D;&quot;, y)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>匿名变量不占用命名空间，不会分配内存，所以匿名变量之间不存在重复声明。 (在<code>Lua</code>等编程语言里，匿名变量也被叫做哑元变量。)</p>
+<p> <code>注意事项：</code></p>
+<ol>
+<li>函数外的每个语句都必须以关键字开始（var、const、func等）</li>
+<li><code>:=</code>不能使用在函数外。</li>
+<li><code>_</code>多用于占位，表示忽略值。</li>
+</ol>
+<h2 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h2><p>相对于变量，常量是恒定不变的值，多用于定义程序运行期间不会改变的那些值。 常量的声明和变量声明非常类似，只是把<code>var</code>换成了<code>const</code>，常量在定义的时候必须赋值。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const pi &#x3D; 3.1415</span><br><span class="line">const e &#x3D; 2.7182</span><br></pre></td></tr></table></figure>
+<p>声明了<code>pi</code>和<code>e</code>这两个常量之后，在整个程序运行期间它们的值都不能再发生变化了。</p>
+<p>多个常量也可以一起声明：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    pi &#x3D; 3.1415</span><br><span class="line">    e &#x3D; 2.7182</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>const同时声明多个常量时，如果省略了值则表示和上面一行的值相同。 例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; 100</span><br><span class="line">    n2</span><br><span class="line">    n3</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>上面示例中，常量<code>n1</code>、<code>n2</code>、<code>n3</code>的值都是100。</p>
+<h3 id="iota"><a href="#iota" class="headerlink" title="iota"></a>iota</h3><p><code>iota</code>是go语言的常量计数器，只能在常量的表达式中使用。</p>
+<p><code>iota</code>在const关键字出现时将被重置为0。const中每新增一行常量声明将使iota计数一次(iota可理解为const语句块中的行索引)。 使用iota能简化定义，在定义枚举时很有用。</p>
+<p><strong>举个例子：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; iota &#x2F;&#x2F;0</span><br><span class="line">    n2        &#x2F;&#x2F;1</span><br><span class="line">    n3        &#x2F;&#x2F;2</span><br><span class="line">    n4        &#x2F;&#x2F;3</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><strong>几个常见的iota示例:</strong><br>使用<code>_</code>跳过某些值</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; iota &#x2F;&#x2F;0</span><br><span class="line">    n2        &#x2F;&#x2F;1</span><br><span class="line">    _</span><br><span class="line">    n4        &#x2F;&#x2F;3</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><code>iota</code>声明中间插队</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; iota &#x2F;&#x2F;0</span><br><span class="line">    n2 &#x3D; 100  &#x2F;&#x2F;100</span><br><span class="line">    n3 &#x3D; iota &#x2F;&#x2F;2</span><br><span class="line">    n4        &#x2F;&#x2F;3</span><br><span class="line">)</span><br><span class="line">const n5 &#x3D; iota &#x2F;&#x2F;0</span><br></pre></td></tr></table></figure>
+<p>定义数量级 （这里的<code>&lt;&lt;</code>表示左移操作，<code>1&lt;&lt;10</code>表示将1的二进制表示向左移10位，也就是由<code>1</code>变成了<code>10000000000</code>，也就是十进制的1024。同理<code>2&lt;&lt;2</code>表示将2的二进制表示向左移2位，也就是由<code>10</code>变成了<code>1000</code>，也就是十进制的8。）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    _  &#x3D; iota</span><br><span class="line">    KB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    MB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    GB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    TB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    PB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>多个<code>iota</code>定义在一行</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    a, b &#x3D; iota + 1, iota + 2 &#x2F;&#x2F;1,2</span><br><span class="line">    c, d                      &#x2F;&#x2F;2,3</span><br><span class="line">    e, f                      &#x2F;&#x2F;3,4</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>go语言基础</tag>
+        <tag>variable</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>go主要特征—标识符、关键字、构建、编译</title>
+    <url>/2020/01/31/go%E4%B8%BB%E8%A6%81%E7%89%B9%E5%BE%81/</url>
+    <content><![CDATA[<blockquote>
+<p>区别关键字和标识符：</p>
+</blockquote>
+<pre><code>标识（zhi）符，所谓标识符，就是指变量、函数、属性的名字，或者是函数的参数。
+
+关键字，就是在控制语句的开始或结束以及执行特定操作时具有关键作用、特定作用的符号。
+
+保留（关键）字不能用作常量、变量、函数名以及结构字段等标识符。从字面意思上即可得知它是被保留的，将来可能被用作关键字
+</code></pre>
+<p><strong>划重点了：</strong>·<code>关键字是系统自带的 ，标识符是自定义的</code>。</p>
+<hr>
+<h2 id="文件名"><a href="#文件名" class="headerlink" title="文件名"></a>文件名</h2><p>Go 的源文件以 .go 为后缀名存储在计算机中，这些<code>文件名均由小写字母组成</code>，如 <code>scanner.go</code> 。如果文件名由多个部分组成，则使用下划线 _ 对它们进行分隔，如 <code>scanner_test.go</code> 。<code>文件名不包含空格或其他特殊字符</code>。</p>
+<p>一个源文件可以包含任意多行的代码，Go 本身没有对源文件的大小进行限制。</p>
+<h2 id="Go语言命名"><a href="#Go语言命名" class="headerlink" title="Go语言命名"></a>Go语言命名</h2><p>Go的函数、变量、常量、自定义类型、包<code>(package)</code>的命名方式遵循以下规则：</p>
+<pre><code>1）首字符可以是任意的Unicode字符或者下划线
+2）剩余字符可以是Unicode字符、下划线、数字
+3）字符长度不限
+</code></pre>
+<h3 id="标识符"><a href="#标识符" class="headerlink" title="标识符"></a>标识符</h3><p><code>具有特殊意义的词</code>，比如变量、常量、函数。</p>
+<blockquote>
+<p>标识符是允许作为变量（函数、类等）名称的有效字符串</p>
+</blockquote>
+<p>Go语言中标识符由字母数字和_(下划线）组成，并且只能以字母和_开头，然后紧跟着 0 个或多个字符或 Unicode 数字。<br>举几个例子：<code>abc</code>, <code>_</code>, <code>_123</code>, <code>a123</code>。</p>
+<h3 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h3><p>关键字是编程语言中<code>预先定义好的具有特殊含义的标识符</code>。关键字和保留字都不建议用作变量名。</p>
+<p><strong>Go语言中有25个关键字：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">break        default      func         interface    select</span><br><span class="line">case         defer        go           map          struct</span><br><span class="line">chan         else         goto         package      switch</span><br><span class="line">const        fallthrough  if           range        type</span><br><span class="line">continue     for          import       return       var</span><br></pre></td></tr></table></figure>
+<p><strong>此外，Go语言中还有37个保留字：</strong><br>（分类为<a href="http://wen.topgoer.com/docs/golang/chapter02-2">内置常量/类型/函数</a>）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Constants:    true  false  iota  nil</span><br><span class="line"></span><br><span class="line">Types:    int  int8  int16  int32  int64  </span><br><span class="line">          uint  uint8  uint16  uint32  uint64  uintptr</span><br><span class="line">          float32  float64  complex128  complex64</span><br><span class="line">          bool  byte  rune  string  error</span><br><span class="line"></span><br><span class="line">Functions:   make  len  cap  new  append  copy  close  delete</span><br><span class="line">             complex  real  imag</span><br><span class="line">             panic  recover</span><br></pre></td></tr></table></figure>
+<h2 id="Go语言声明："><a href="#Go语言声明：" class="headerlink" title="Go语言声明："></a>Go语言声明：</h2><p>有四种主要声明方式：</p>
+<pre><code>var（声明变量）, const（声明常量）, type（声明类型） ,func（声明函数）。
+</code></pre>
+<p>Go的程序是保存在多个.go文件中，文件的第一行就是package XXX声明，用来说明该文件属于哪个包(package)，package声明下来就是import声明，再下来是类型，变量，常量，函数的声明。</p>
+<h2 id="预定义标识符的总结分类"><a href="#预定义标识符的总结分类" class="headerlink" title="预定义标识符的总结分类"></a>预定义标识符的总结分类</h2><blockquote>
+<p><a href="https://www.cnblogs.com/xzpin/p/11659839.html">Go 内置常量 类型和函数</a></p>
+</blockquote>
+<h2 id="Go项目构建及编译"><a href="#Go项目构建及编译" class="headerlink" title="Go项目构建及编译"></a>Go项目构建及编译</h2><p>一个Go工程中主要包含以下三个目录：</p>
+<pre><code>src：源代码文件
+pkg：包文件
+bin：相关bin文件
+</code></pre>
+<p>1: 建立工程文件夹 goproject<br>2: 在工程文件夹中建立src,pkg,bin文件夹<br>3: 在GOPATH中添加projiect路径 例 e:/goproject<br>4: 如工程中有自己的包examplepackage，那在src文件夹下建立以包名命名的文件夹 例 examplepackage<br>5：在src文件夹下编写主程序代码代码 goproject.go<br>6：在examplepackage文件夹中编写 examplepackage.go 和 包测试文件 examplepackage_test.go<br>7：编译调试包<br>go build examplepackage<br>go test examplepackage<br>go install examplepackage<br>这时在pkg文件夹中可以发现会有一个相应的操作系统文件夹如windows_386z, 在这个文件夹中会有examplepackage文件夹，在该文件中有examplepackage.a文件<br>8：编译主程序<br>go build goproject.go<br>成功后会生成goproject.exe文件<br>至此一个Go工程编辑成功。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1.建立工程文件夹 go</span><br><span class="line">$ pwd</span><br><span class="line">&#x2F;Users&#x2F;***&#x2F;Desktop&#x2F;go</span><br><span class="line">2: 在工程文件夹中建立src,pkg,bin文件夹</span><br><span class="line">$ ls</span><br><span class="line">bin        conf    pkg        src</span><br><span class="line">3: 在GOPATH中添加projiect路径</span><br><span class="line">$ go env</span><br><span class="line">GOPATH&#x3D;&quot;&#x2F;Users&#x2F;liupengjie&#x2F;Desktop&#x2F;go&quot;</span><br><span class="line">4: 那在src文件夹下建立以自己的包 example 文件夹</span><br><span class="line">$ cd src&#x2F;</span><br><span class="line">$ mkdir example</span><br><span class="line">5：在src文件夹下编写主程序代码代码 goproject.go</span><br><span class="line">6：在example文件夹中编写 example.go 和 包测试文件 example_test.go</span><br><span class="line">    example.go 写入如下代码：</span><br><span class="line"></span><br><span class="line">    package example</span><br><span class="line"></span><br><span class="line">    func add(a, b int) int &#123;</span><br><span class="line">        return a + b</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    func sub(a, b int) int &#123;</span><br><span class="line">        return a - b</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    example_test.go 写入如下代码：</span><br><span class="line"></span><br><span class="line">    package example</span><br><span class="line"></span><br><span class="line">    import (</span><br><span class="line">        &quot;testing&quot;</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    func TestAdd(t *testing.T) &#123;</span><br><span class="line">        r :&#x3D; add(2, 4)</span><br><span class="line">        if r !&#x3D; 6 &#123;</span><br><span class="line">            t.Fatalf(&quot;add(2, 4) error, expect:%d, actual:%d&quot;, 6, r)</span><br><span class="line">        &#125;</span><br><span class="line">        t.Logf(&quot;test add succ&quot;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">7：编译调试包</span><br><span class="line">$ go build example</span><br><span class="line">$ go test example</span><br><span class="line">ok      example    0.013s</span><br><span class="line">$ go install example</span><br><span class="line"></span><br><span class="line">$ ls &#x2F;Users&#x2F;***&#x2F;Desktop&#x2F;go&#x2F;pkg&#x2F;</span><br><span class="line">darwin_amd64</span><br><span class="line">$ ls &#x2F;Users&#x2F;***&#x2F;Desktop&#x2F;go&#x2F;pkg&#x2F;darwin_amd64&#x2F;</span><br><span class="line">example.a    </span><br><span class="line">8：编译主程序</span><br><span class="line">oproject.go 写入如下代码：</span><br><span class="line">package main </span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func main()&#123;</span><br><span class="line">    fmt.Println(&quot;go project test&quot;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$ go build goproject.go</span><br><span class="line">$ ls</span><br><span class="line"> example        goproject.go    goproject</span><br><span class="line"></span><br><span class="line">成功后会生成goproject文件，至此一个Go工程编辑成功。</span><br><span class="line"></span><br><span class="line">运行该文件：</span><br><span class="line">$ .&#x2F;goproject</span><br><span class="line">go project test</span><br></pre></td></tr></table></figure>
+<h2 id="go-编译问题"><a href="#go-编译问题" class="headerlink" title="go 编译问题"></a>go 编译问题</h2><p>golang的编译使用命令 go build , go install;除非仅写一个main函数，否则还是准备好目录结构；<br>GOPATH=工程根目录；其下应创建src，pkg，bin目录，bin目录中用于生成可执行文件，pkg目录中用于生成.a文件；<br>golang中的import name，实际是到GOPATH中去寻找name.a, 使用时是该name.a的源码中生命的package 名字；这个在前面已经介绍过了。</p>
+<p>注意点：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1.系统编译时 go install abc_name时，系统会到GOPATH的src目录中寻找abc_name目录，然后编译其下的go文件；</span><br><span class="line">2.同一个目录中所有的go文件的package声明必须相同，所以main方法要单独放一个文件，否则在eclipse和liteide中都会报错；</span><br><span class="line">编译报错如下：（假设test目录中有个main.go 和mymath.go,其中main.go声明package为main，mymath.go声明packag 为test);</span><br><span class="line"></span><br><span class="line">    $ go install test</span><br><span class="line">    can&#39;t load package: package test: found packages main (main.go) and test (mymath.go) in &#x2F;home&#x2F;wanjm&#x2F;go&#x2F;src&#x2F;test</span><br><span class="line">    报错说 不能加载package test（这是命令行的参数），因为发现了两个package，分别时main.go 和 mymath.go;</span><br><span class="line"></span><br><span class="line">3.对于main方法，只能在bin目录下运行 go build path_tomain.go; 可以用-o参数指出输出文件名；</span><br><span class="line">4.可以添加参数 go build -gcflags &quot;-N -l&quot; ****,可以更好的便于gdb；详细参见 http:&#x2F;&#x2F;golang.org&#x2F;doc&#x2F;gdb</span><br><span class="line">5.gdb全局变量主一点。 如有全局变量 a；则应写为 p &#39;main.a&#39;；注意但引号不可少；</span><br></pre></td></tr></table></figure>
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!--https://www.cnblogs.com/xzpin/p/11659839.html-->  
+<!--https://www.pianshen.com/article/2306569585/-->  
+<!--http://wen.topgoer.com/docs/golang/chapter02-1-->
+<!--https://blog.csdn.net/vongolar/article/details/108314005-->  
+]]></content>
+      <categories>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>env</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Go依赖管理—从godep到go mod</title>
     <url>/2020/01/31/go%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E2%80%94_godep_gomod/</url>
     <content><![CDATA[<h2 id="1-1-为什么需要依赖管理"><a href="#1-1-为什么需要依赖管理" class="headerlink" title="1.1 为什么需要依赖管理"></a>1.1 为什么需要依赖管理</h2><p>最早的时候，Go所依赖的所有的第三方库都放在GOPATH这个目录下面。这就导致了同一个库只能保存一个版本的代码。如果不同的项目依赖同一个第三方的库的不同版本，应该怎么解决？</p>
@@ -2162,69 +2489,6 @@ Identifier. Can be used for documentation, in or tasks/handlers.
 
 
 
-]]></content>
-      <categories>
-        <category>Go</category>
-      </categories>
-      <tags>
-        <tag>env</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>go主要特征—标识符、关键字、构建、编译</title>
-    <url>/2020/01/31/go%E4%B8%BB%E8%A6%81%E7%89%B9%E5%BE%81/</url>
-    <content><![CDATA[<blockquote>
-<p>区别关键字和标识符：</p>
-</blockquote>
-<pre><code>标识（zhi）符，所谓标识符，就是指变量、函数、属性的名字，或者是函数的参数。
-
-关键字，就是在控制语句的开始或结束以及执行特定操作时具有关键作用、特定作用的符号。
-
-保留（关键）字不能用作常量、变量、函数名以及结构字段等标识符。从字面意思上即可得知它是被保留的，将来可能被用作关键字
-</code></pre>
-<p><strong>划重点了：</strong>·<code>关键字是系统自带的 ，标识符是自定义的</code>。</p>
-<hr>
-<h2 id="文件名"><a href="#文件名" class="headerlink" title="文件名"></a>文件名</h2><p>Go 的源文件以 .go 为后缀名存储在计算机中，这些<code>文件名均由小写字母组成</code>，如 <code>scanner.go</code> 。如果文件名由多个部分组成，则使用下划线 _ 对它们进行分隔，如 <code>scanner_test.go</code> 。<code>文件名不包含空格或其他特殊字符</code>。</p>
-<p>一个源文件可以包含任意多行的代码，Go 本身没有对源文件的大小进行限制。</p>
-<h2 id="Go语言命名"><a href="#Go语言命名" class="headerlink" title="Go语言命名"></a>Go语言命名</h2><p>Go的函数、变量、常量、自定义类型、包<code>(package)</code>的命名方式遵循以下规则：</p>
-<pre><code>1）首字符可以是任意的Unicode字符或者下划线
-2）剩余字符可以是Unicode字符、下划线、数字
-3）字符长度不限
-</code></pre>
-<h3 id="标识符"><a href="#标识符" class="headerlink" title="标识符"></a>标识符</h3><p><code>具有特殊意义的词</code>，比如变量、常量、函数。</p>
-<blockquote>
-<p>标识符是允许作为变量（函数、类等）名称的有效字符串</p>
-</blockquote>
-<p>Go语言中标识符由字母数字和_(下划线）组成，并且只能以字母和_开头，然后紧跟着 0 个或多个字符或 Unicode 数字。<br>举几个例子：<code>abc</code>, <code>_</code>, <code>_123</code>, <code>a123</code>。</p>
-<h3 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h3><p>关键字是编程语言中<code>预先定义好的具有特殊含义的标识符</code>。关键字和保留字都不建议用作变量名。</p>
-<p><strong>Go语言中有25个关键字：</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">break        default      func         interface    select</span><br><span class="line">case         defer        go           map          struct</span><br><span class="line">chan         else         goto         package      switch</span><br><span class="line">const        fallthrough  if           range        type</span><br><span class="line">continue     for          import       return       var</span><br></pre></td></tr></table></figure>
-<p><strong>此外，Go语言中还有37个保留字：</strong><br>（分类为<a href="http://wen.topgoer.com/docs/golang/chapter02-2">内置常量/类型/函数</a>）</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Constants:    true  false  iota  nil</span><br><span class="line"></span><br><span class="line">Types:    int  int8  int16  int32  int64  </span><br><span class="line">          uint  uint8  uint16  uint32  uint64  uintptr</span><br><span class="line">          float32  float64  complex128  complex64</span><br><span class="line">          bool  byte  rune  string  error</span><br><span class="line"></span><br><span class="line">Functions:   make  len  cap  new  append  copy  close  delete</span><br><span class="line">             complex  real  imag</span><br><span class="line">             panic  recover</span><br></pre></td></tr></table></figure>
-<h2 id="Go语言声明："><a href="#Go语言声明：" class="headerlink" title="Go语言声明："></a>Go语言声明：</h2><p>有四种主要声明方式：</p>
-<pre><code>var（声明变量）, const（声明常量）, type（声明类型） ,func（声明函数）。
-</code></pre>
-<p>Go的程序是保存在多个.go文件中，文件的第一行就是package XXX声明，用来说明该文件属于哪个包(package)，package声明下来就是import声明，再下来是类型，变量，常量，函数的声明。</p>
-<h2 id="预定义标识符的总结分类"><a href="#预定义标识符的总结分类" class="headerlink" title="预定义标识符的总结分类"></a>预定义标识符的总结分类</h2><blockquote>
-<p><a href="https://www.cnblogs.com/xzpin/p/11659839.html">Go 内置常量 类型和函数</a></p>
-</blockquote>
-<h2 id="Go项目构建及编译"><a href="#Go项目构建及编译" class="headerlink" title="Go项目构建及编译"></a>Go项目构建及编译</h2><p>一个Go工程中主要包含以下三个目录：</p>
-<pre><code>src：源代码文件
-pkg：包文件
-bin：相关bin文件
-</code></pre>
-<p>1: 建立工程文件夹 goproject<br>2: 在工程文件夹中建立src,pkg,bin文件夹<br>3: 在GOPATH中添加projiect路径 例 e:/goproject<br>4: 如工程中有自己的包examplepackage，那在src文件夹下建立以包名命名的文件夹 例 examplepackage<br>5：在src文件夹下编写主程序代码代码 goproject.go<br>6：在examplepackage文件夹中编写 examplepackage.go 和 包测试文件 examplepackage_test.go<br>7：编译调试包<br>go build examplepackage<br>go test examplepackage<br>go install examplepackage<br>这时在pkg文件夹中可以发现会有一个相应的操作系统文件夹如windows_386z, 在这个文件夹中会有examplepackage文件夹，在该文件中有examplepackage.a文件<br>8：编译主程序<br>go build goproject.go<br>成功后会生成goproject.exe文件<br>至此一个Go工程编辑成功。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1.建立工程文件夹 go</span><br><span class="line">$ pwd</span><br><span class="line">&#x2F;Users&#x2F;***&#x2F;Desktop&#x2F;go</span><br><span class="line">2: 在工程文件夹中建立src,pkg,bin文件夹</span><br><span class="line">$ ls</span><br><span class="line">bin        conf    pkg        src</span><br><span class="line">3: 在GOPATH中添加projiect路径</span><br><span class="line">$ go env</span><br><span class="line">GOPATH&#x3D;&quot;&#x2F;Users&#x2F;liupengjie&#x2F;Desktop&#x2F;go&quot;</span><br><span class="line">4: 那在src文件夹下建立以自己的包 example 文件夹</span><br><span class="line">$ cd src&#x2F;</span><br><span class="line">$ mkdir example</span><br><span class="line">5：在src文件夹下编写主程序代码代码 goproject.go</span><br><span class="line">6：在example文件夹中编写 example.go 和 包测试文件 example_test.go</span><br><span class="line">    example.go 写入如下代码：</span><br><span class="line"></span><br><span class="line">    package example</span><br><span class="line"></span><br><span class="line">    func add(a, b int) int &#123;</span><br><span class="line">        return a + b</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    func sub(a, b int) int &#123;</span><br><span class="line">        return a - b</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    example_test.go 写入如下代码：</span><br><span class="line"></span><br><span class="line">    package example</span><br><span class="line"></span><br><span class="line">    import (</span><br><span class="line">        &quot;testing&quot;</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    func TestAdd(t *testing.T) &#123;</span><br><span class="line">        r :&#x3D; add(2, 4)</span><br><span class="line">        if r !&#x3D; 6 &#123;</span><br><span class="line">            t.Fatalf(&quot;add(2, 4) error, expect:%d, actual:%d&quot;, 6, r)</span><br><span class="line">        &#125;</span><br><span class="line">        t.Logf(&quot;test add succ&quot;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">7：编译调试包</span><br><span class="line">$ go build example</span><br><span class="line">$ go test example</span><br><span class="line">ok      example    0.013s</span><br><span class="line">$ go install example</span><br><span class="line"></span><br><span class="line">$ ls &#x2F;Users&#x2F;***&#x2F;Desktop&#x2F;go&#x2F;pkg&#x2F;</span><br><span class="line">darwin_amd64</span><br><span class="line">$ ls &#x2F;Users&#x2F;***&#x2F;Desktop&#x2F;go&#x2F;pkg&#x2F;darwin_amd64&#x2F;</span><br><span class="line">example.a    </span><br><span class="line">8：编译主程序</span><br><span class="line">oproject.go 写入如下代码：</span><br><span class="line">package main </span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func main()&#123;</span><br><span class="line">    fmt.Println(&quot;go project test&quot;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$ go build goproject.go</span><br><span class="line">$ ls</span><br><span class="line"> example        goproject.go    goproject</span><br><span class="line"></span><br><span class="line">成功后会生成goproject文件，至此一个Go工程编辑成功。</span><br><span class="line"></span><br><span class="line">运行该文件：</span><br><span class="line">$ .&#x2F;goproject</span><br><span class="line">go project test</span><br></pre></td></tr></table></figure>
-<h2 id="go-编译问题"><a href="#go-编译问题" class="headerlink" title="go 编译问题"></a>go 编译问题</h2><p>golang的编译使用命令 go build , go install;除非仅写一个main函数，否则还是准备好目录结构；<br>GOPATH=工程根目录；其下应创建src，pkg，bin目录，bin目录中用于生成可执行文件，pkg目录中用于生成.a文件；<br>golang中的import name，实际是到GOPATH中去寻找name.a, 使用时是该name.a的源码中生命的package 名字；这个在前面已经介绍过了。</p>
-<p>注意点：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1.系统编译时 go install abc_name时，系统会到GOPATH的src目录中寻找abc_name目录，然后编译其下的go文件；</span><br><span class="line">2.同一个目录中所有的go文件的package声明必须相同，所以main方法要单独放一个文件，否则在eclipse和liteide中都会报错；</span><br><span class="line">编译报错如下：（假设test目录中有个main.go 和mymath.go,其中main.go声明package为main，mymath.go声明packag 为test);</span><br><span class="line"></span><br><span class="line">    $ go install test</span><br><span class="line">    can&#39;t load package: package test: found packages main (main.go) and test (mymath.go) in &#x2F;home&#x2F;wanjm&#x2F;go&#x2F;src&#x2F;test</span><br><span class="line">    报错说 不能加载package test（这是命令行的参数），因为发现了两个package，分别时main.go 和 mymath.go;</span><br><span class="line"></span><br><span class="line">3.对于main方法，只能在bin目录下运行 go build path_tomain.go; 可以用-o参数指出输出文件名；</span><br><span class="line">4.可以添加参数 go build -gcflags &quot;-N -l&quot; ****,可以更好的便于gdb；详细参见 http:&#x2F;&#x2F;golang.org&#x2F;doc&#x2F;gdb</span><br><span class="line">5.gdb全局变量主一点。 如有全局变量 a；则应写为 p &#39;main.a&#39;；注意但引号不可少；</span><br></pre></td></tr></table></figure>
-<hr>
-<p>&nbsp;  </p>
-<!--**参考文章**：-->  
-<!--https://www.cnblogs.com/xzpin/p/11659839.html-->  
-<!--https://www.pianshen.com/article/2306569585/-->  
-<!--http://wen.topgoer.com/docs/golang/chapter02-1-->
-<!--https://blog.csdn.net/vongolar/article/details/108314005-->  
 ]]></content>
       <categories>
         <category>Go</category>
@@ -2695,193 +2959,6 @@ StrictHostKeyChecking=no 对询问的回应（不进行对密钥检查）
       <tags>
         <tag>ansible基础</tag>
         <tag>实践总结</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>go基础之运算符</title>
-    <url>/2020/04/08/go_base_operator/</url>
-    <content><![CDATA[<p>运算符用于在程序运行时执行数学或逻辑运算。</p>
-<h1 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h1><p>Go 语言内置的运算符有：</p>
-<ul>
-<li>算术运算符</li>
-<li>关系运算符</li>
-<li>逻辑运算符</li>
-<li>位运算符</li>
-<li>赋值运算符</li>
-</ul>
-<h2 id="算术运算符"><a href="#算术运算符" class="headerlink" title="算术运算符"></a>算术运算符</h2><table>
-<thead>
-<tr>
-<th align="left">运算符</th>
-<th align="left">描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">+</td>
-<td align="left">相加</td>
-</tr>
-<tr>
-<td align="left">-</td>
-<td align="left">相减</td>
-</tr>
-<tr>
-<td align="left">*</td>
-<td align="left">相乘</td>
-</tr>
-<tr>
-<td align="left">/</td>
-<td align="left">相除</td>
-</tr>
-<tr>
-<td align="left">%</td>
-<td align="left">求余</td>
-</tr>
-</tbody></table>
-<p>注意： <code>++</code>（自增）和<code>--</code>（自减）在Go语言中是单独的语句，并不是运算符。</p>
-<h2 id="关系运算符"><a href="#关系运算符" class="headerlink" title="关系运算符"></a>关系运算符</h2><table>
-<thead>
-<tr>
-<th align="left">运算符</th>
-<th align="left">描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">==</td>
-<td align="left">检查两个值是否相等，如果相等返回 True 否则返回 False。</td>
-</tr>
-<tr>
-<td align="left">!=</td>
-<td align="left">检查两个值是否不相等，如果不相等返回 True 否则返回 False。</td>
-</tr>
-<tr>
-<td align="left">&gt;</td>
-<td align="left">检查左边值是否大于右边值，如果是返回 True 否则返回 False。</td>
-</tr>
-<tr>
-<td align="left">&gt;=</td>
-<td align="left">检查左边值是否大于等于右边值，如果是返回 True 否则返回 False。</td>
-</tr>
-<tr>
-<td align="left">&lt;</td>
-<td align="left">检查左边值是否小于右边值，如果是返回 True 否则返回 False。</td>
-</tr>
-<tr>
-<td align="left">&lt;=</td>
-<td align="left">检查左边值是否小于等于右边值，如果是返回 True 否则返回 False。</td>
-</tr>
-</tbody></table>
-<h2 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h2><table>
-<thead>
-<tr>
-<th align="left">运算符</th>
-<th align="left">描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">&amp;&amp;</td>
-<td align="left">逻辑 AND 运算符。 如果两边的操作数都是 True，则为 True，否则为 False。</td>
-</tr>
-<tr>
-<td align="left">||</td>
-<td align="left">逻辑 OR 运算符。 如果两边的操作数有一个 True，则为 True，否则为 False。</td>
-</tr>
-<tr>
-<td align="left">!</td>
-<td align="left">逻辑 NOT 运算符。 如果条件为 True，则为 False，否则为 True。</td>
-</tr>
-</tbody></table>
-<h2 id="位运算符"><a href="#位运算符" class="headerlink" title="位运算符"></a>位运算符</h2><p>位运算符对整数在内存中的二进制位进行操作。</p>
-<table>
-<thead>
-<tr>
-<th align="left">运算符</th>
-<th align="left">描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">&amp;</td>
-<td align="left">参与运算的两数各对应的二进位相与。（两位均为1才为1）</td>
-</tr>
-<tr>
-<td align="left">|</td>
-<td align="left">参与运算的两数各对应的二进位相或。（两位有一个为1就为1）</td>
-</tr>
-<tr>
-<td align="left">^</td>
-<td align="left">参与运算的两数各对应的二进位相异或，当两对应的二进位相异时，结果为1。（两位不一样则为1）</td>
-</tr>
-<tr>
-<td align="left">&lt;&lt;</td>
-<td align="left">左移n位就是乘以2的n次方。“a&lt;&lt;b”是把a的各二进位全部左移b位，高位丢弃，低位补0。</td>
-</tr>
-<tr>
-<td align="left">&gt;&gt;</td>
-<td align="left">右移n位就是除以2的n次方。“a&gt;&gt;b”是把a的各二进位全部右移b位。</td>
-</tr>
-</tbody></table>
-<h2 id="赋值运算符"><a href="#赋值运算符" class="headerlink" title="赋值运算符"></a>赋值运算符</h2><table>
-<thead>
-<tr>
-<th align="left">运算符</th>
-<th align="left">描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">=</td>
-<td align="left">简单的赋值运算符，将一个表达式的值赋给一个左值</td>
-</tr>
-<tr>
-<td align="left">+=</td>
-<td align="left">相加后再赋值</td>
-</tr>
-<tr>
-<td align="left">-=</td>
-<td align="left">相减后再赋值</td>
-</tr>
-<tr>
-<td align="left">*=</td>
-<td align="left">相乘后再赋值</td>
-</tr>
-<tr>
-<td align="left">/=</td>
-<td align="left">相除后再赋值</td>
-</tr>
-<tr>
-<td align="left">%=</td>
-<td align="left">求余后再赋值</td>
-</tr>
-<tr>
-<td align="left">&lt;&lt;=</td>
-<td align="left">左移后赋值</td>
-</tr>
-<tr>
-<td align="left">&gt;&gt;=</td>
-<td align="left">右移后赋值</td>
-</tr>
-<tr>
-<td align="left">&amp;=</td>
-<td align="left">按位与后赋值</td>
-</tr>
-<tr>
-<td align="left">|=</td>
-<td align="left">按位或后赋值</td>
-</tr>
-<tr>
-<td align="left">^=</td>
-<td align="left">按位异或后赋值</td>
-</tr>
-</tbody></table>
-<h2 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h2><ul>
-<li>有一堆数字，如果除了一个数字以外，其他数字都出现了两次，那么如何找到出现一次的数字？<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    &#x2F;&#x2F; 参与运算的两数各对应的二进位相异或，当两对应的二进位相异时，结果为1。</span><br><span class="line">    &#x2F;&#x2F; 相同，为 0</span><br><span class="line">    nums :&#x3D; [...]int&#123;1, 2, 3, 3, 2, 1, 9, 8, 8&#125;</span><br><span class="line"></span><br><span class="line">    n :&#x3D; nums[0]</span><br><span class="line">    for i :&#x3D; 1; i &lt; len(nums); i++ &#123;</span><br><span class="line">        n ^&#x3D; nums[i]</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fmt.Println(n)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>Go</category>
-      </categories>
-      <tags>
-        <tag>go语言基础</tag>
       </tags>
   </entry>
 </search>
