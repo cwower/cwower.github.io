@@ -321,6 +321,64 @@ timezone: 时区
       </tags>
   </entry>
   <entry>
+    <title>Ansible的配置文件</title>
+    <url>/2019/06/06/ansible.cfg/</url>
+    <content><![CDATA[<h2 id="Ansible的配置文件-more"><a href="#Ansible的配置文件-more" class="headerlink" title="Ansible的配置文件(more)"></a>Ansible的配置文件(<a href="https://ansible-tran.readthedocs.io/en/latest/docs/intro_configuration.html#ansible">more</a>)</h2><p>Ansible的一些的设置可以通过配置文件完成.在大多数场景下默认的配置就能满足大多数用户的需求,在一些特殊场景下,用户还是需要自行修改这些配置文件</p>
+<h2 id="读取配置文件的优先级"><a href="#读取配置文件的优先级" class="headerlink" title="读取配置文件的优先级"></a>读取配置文件的优先级</h2><p>ansible的默认配置文件是/etc/ansible/ansible.cfg。其实ansible会按照下面的顺序查找配置文件，并<code>使用第一个发现的</code>配置文件。</p>
+<ul>
+<li>ANSIBLE_CONFIG (an environment variable)</li>
+<li>ansible.cfg (in the current directory)</li>
+<li>.ansible.cfg (in the home directory)</li>
+<li>/etc/ansible/ansible.cfg</li>
+</ul>
+<p><strong>V1.5以前的版本顺序为：</strong></p>
+<ul>
+<li>ansible.cfg (in the current directory)</li>
+<li>ANSIBLE_CONFIG (an environment variable)</li>
+<li>.ansible.cfg (in the home directory)</li>
+<li>/etc/ansible/ansible.cfg</li>
+</ul>
+<h2 id="配置选项详解"><a href="#配置选项详解" class="headerlink" title="配置选项详解"></a>配置选项详解</h2><p>到目前为止，我还没有见到一个配置项超级少，配置超级简单的配置文件；同样的，Ansible的配置文件也不简单，配置项超级多；但是，二八法则同样也适用于这些配置文件，20%的配置项决定了80%的功能，只有那20%的配置项是我们需要去关心的。所以，大家不要害怕，下面我们就将这20%常用的选项进行一一说明和总结。</p>
+<h3 id="defaults配置"><a href="#defaults配置" class="headerlink" title="defaults配置"></a>defaults配置</h3><p><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/05/asb_conf.png?x-oss-process=style/original_format"></p>
+<h3 id="privilege-escalation配置"><a href="#privilege-escalation配置" class="headerlink" title="privilege_escalation配置"></a>privilege_escalation配置</h3><table>
+<thead>
+<tr>
+<th align="left">配置项</th>
+<th align="left">说明</th>
+<th align="left">默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">become</td>
+<td align="left">是否开启become模式</td>
+<td align="left">True</td>
+</tr>
+<tr>
+<td align="left">become_method</td>
+<td align="left">定义become方式</td>
+<td align="left">sudo</td>
+</tr>
+<tr>
+<td align="left">become_user</td>
+<td align="left">定义become方式</td>
+<td align="left">root</td>
+</tr>
+<tr>
+<td align="left">become_ask_pass</td>
+<td align="left">是否定义become提示密码</td>
+<td align="left">False</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>Ansible</category>
+      </categories>
+      <tags>
+        <tag>env</tag>
+        <tag>ansible基础</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用oss来存取及优化图片资源</title>
     <url>/2019/09/08/aliyun_oss_save_img/</url>
     <content><![CDATA[<blockquote>
@@ -389,7 +447,7 @@ timezone: 时区
 
 ]]></content>
       <categories>
-        <category>公有云</category>
+        <category>阿里云</category>
       </categories>
       <tags>
         <tag>oss</tag>
@@ -428,64 +486,6 @@ timezone: 时区
       <tags>
         <tag>ansible基础</tag>
         <tag>实践总结</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ansible的配置文件</title>
-    <url>/2019/06/06/ansible.cfg/</url>
-    <content><![CDATA[<h2 id="Ansible的配置文件-more"><a href="#Ansible的配置文件-more" class="headerlink" title="Ansible的配置文件(more)"></a>Ansible的配置文件(<a href="https://ansible-tran.readthedocs.io/en/latest/docs/intro_configuration.html#ansible">more</a>)</h2><p>Ansible的一些的设置可以通过配置文件完成.在大多数场景下默认的配置就能满足大多数用户的需求,在一些特殊场景下,用户还是需要自行修改这些配置文件</p>
-<h2 id="读取配置文件的优先级"><a href="#读取配置文件的优先级" class="headerlink" title="读取配置文件的优先级"></a>读取配置文件的优先级</h2><p>ansible的默认配置文件是/etc/ansible/ansible.cfg。其实ansible会按照下面的顺序查找配置文件，并<code>使用第一个发现的</code>配置文件。</p>
-<ul>
-<li>ANSIBLE_CONFIG (an environment variable)</li>
-<li>ansible.cfg (in the current directory)</li>
-<li>.ansible.cfg (in the home directory)</li>
-<li>/etc/ansible/ansible.cfg</li>
-</ul>
-<p><strong>V1.5以前的版本顺序为：</strong></p>
-<ul>
-<li>ansible.cfg (in the current directory)</li>
-<li>ANSIBLE_CONFIG (an environment variable)</li>
-<li>.ansible.cfg (in the home directory)</li>
-<li>/etc/ansible/ansible.cfg</li>
-</ul>
-<h2 id="配置选项详解"><a href="#配置选项详解" class="headerlink" title="配置选项详解"></a>配置选项详解</h2><p>到目前为止，我还没有见到一个配置项超级少，配置超级简单的配置文件；同样的，Ansible的配置文件也不简单，配置项超级多；但是，二八法则同样也适用于这些配置文件，20%的配置项决定了80%的功能，只有那20%的配置项是我们需要去关心的。所以，大家不要害怕，下面我们就将这20%常用的选项进行一一说明和总结。</p>
-<h3 id="defaults配置"><a href="#defaults配置" class="headerlink" title="defaults配置"></a>defaults配置</h3><p><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/05/asb_conf.png?x-oss-process=style/original_format"></p>
-<h3 id="privilege-escalation配置"><a href="#privilege-escalation配置" class="headerlink" title="privilege_escalation配置"></a>privilege_escalation配置</h3><table>
-<thead>
-<tr>
-<th align="left">配置项</th>
-<th align="left">说明</th>
-<th align="left">默认值</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">become</td>
-<td align="left">是否开启become模式</td>
-<td align="left">True</td>
-</tr>
-<tr>
-<td align="left">become_method</td>
-<td align="left">定义become方式</td>
-<td align="left">sudo</td>
-</tr>
-<tr>
-<td align="left">become_user</td>
-<td align="left">定义become方式</td>
-<td align="left">root</td>
-</tr>
-<tr>
-<td align="left">become_ask_pass</td>
-<td align="left">是否定义become提示密码</td>
-<td align="left">False</td>
-</tr>
-</tbody></table>
-]]></content>
-      <categories>
-        <category>Ansible</category>
-      </categories>
-      <tags>
-        <tag>env</tag>
-        <tag>ansible基础</tag>
       </tags>
   </entry>
   <entry>
@@ -620,6 +620,39 @@ timezone: 时区
       </tags>
   </entry>
   <entry>
+    <title>Ansible目录结构介绍</title>
+    <url>/2019/05/09/ansible_dir_structure/</url>
+    <content><![CDATA[<blockquote>
+<p>引言</p>
+</blockquote>
+<p>Ansible是开源工具，整个开发过程或二次开发均遵循GPL协议，所以所有源码均可见。<br>作为一款日常工作所需的核心软件，我们有必要知道其目录分布及各目录功能。通过如下命令我们可以获取Ansible所有文件存放目录：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rpm -ql ansible </span><br></pre></td></tr></table></figure>
+<p>该命令输出内容较多，大致分为如下几类：</p>
+<ul>
+<li><strong>/etc/ansible</strong>：<code>ansible的配置文件目录，如：主机与组的文件（Inventory）、主配置文件（ansible.cfg）、角色(role)、剧本文件(.yml)等等</code>。所有Ansible的配置均存放在该目录下，运维日常的所有配置类操作也均基于此目录进行。</li>
+<li><strong>/usr/bin</strong>：ansible系列命令默认存放目录。ansible所有的可执行文件均存放在该目录下。</li>
+<li><strong>/usr/lib</strong>：ansible程序的相关模块，模块文件主要放在python相关的目录下面，因为ansible就是用python写的嘛。。</li>
+<li><strong>/usr/share</strong>：ansible程序的相关文档</li>
+<li><strong>Help文档目录</strong>：/usr/share/doc/ansible-X.X.X/</li>
+<li><strong>Man文档目录</strong>：/usr/share/man/man1/</li>
+</ul>
+<p>整体的目录概要可参考如<em>图2-1</em>所示的Ansible目录树结构：</p>
+<p><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/05/wKiom1hmDQXy5-acAABpUhXn-oQ211.jpg?x-oss-process=style/original_format"></p>
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!--https://book.51cto.com/art/201612/526511.htm-->  
+
+]]></content>
+      <categories>
+        <category>Ansible</category>
+      </categories>
+      <tags>
+        <tag>env</tag>
+        <tag>ansible基础</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Ansible简介与安装</title>
     <url>/2019/05/09/ansible_env_install/</url>
     <content><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Ansible是一个开源配置管理工具，可以使用它来自动化任务，部署应用程序实现IT基础架构。</p>
@@ -664,39 +697,6 @@ timezone: 时区
       </categories>
       <tags>
         <tag>env</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ansible目录结构介绍</title>
-    <url>/2019/05/09/ansible_dir_structure/</url>
-    <content><![CDATA[<blockquote>
-<p>引言</p>
-</blockquote>
-<p>Ansible是开源工具，整个开发过程或二次开发均遵循GPL协议，所以所有源码均可见。<br>作为一款日常工作所需的核心软件，我们有必要知道其目录分布及各目录功能。通过如下命令我们可以获取Ansible所有文件存放目录：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rpm -ql ansible </span><br></pre></td></tr></table></figure>
-<p>该命令输出内容较多，大致分为如下几类：</p>
-<ul>
-<li><strong>/etc/ansible</strong>：<code>ansible的配置文件目录，如：主机与组的文件（Inventory）、主配置文件（ansible.cfg）、角色(role)、剧本文件(.yml)等等</code>。所有Ansible的配置均存放在该目录下，运维日常的所有配置类操作也均基于此目录进行。</li>
-<li><strong>/usr/bin</strong>：ansible系列命令默认存放目录。ansible所有的可执行文件均存放在该目录下。</li>
-<li><strong>/usr/lib</strong>：ansible程序的相关模块，模块文件主要放在python相关的目录下面，因为ansible就是用python写的嘛。。</li>
-<li><strong>/usr/share</strong>：ansible程序的相关文档</li>
-<li><strong>Help文档目录</strong>：/usr/share/doc/ansible-X.X.X/</li>
-<li><strong>Man文档目录</strong>：/usr/share/man/man1/</li>
-</ul>
-<p>整体的目录概要可参考如<em>图2-1</em>所示的Ansible目录树结构：</p>
-<p><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/05/wKiom1hmDQXy5-acAABpUhXn-oQ211.jpg?x-oss-process=style/original_format"></p>
-<hr>
-<p>&nbsp;  </p>
-<!--**参考文章**：-->  
-<!--https://book.51cto.com/art/201612/526511.htm-->  
-
-]]></content>
-      <categories>
-        <category>Ansible</category>
-      </categories>
-      <tags>
-        <tag>env</tag>
-        <tag>ansible基础</tag>
       </tags>
   </entry>
   <entry>
@@ -1215,28 +1215,6 @@ roles/
       </tags>
   </entry>
   <entry>
-    <title>playbook常见的变量分类与变量优先级</title>
-    <url>/2019/07/10/ansible_var_categores/</url>
-    <content><![CDATA[<h2 id="playbook常见的变量分类"><a href="#playbook常见的变量分类" class="headerlink" title="playbook常见的变量分类"></a>playbook常见的变量分类</h2><p>在Playbook中常用的几种变量包含一下几种情况：</p>
-<ol>
-<li>在Playbook中用户<code>自定义的变量</code>。—var*|other</li>
-<li>用户无需自定义，Ansible会在执行Playbook之前去全程主机上搜集的关于远程节点<code>系统信息的变量</code>。—ansible setup模块</li>
-<li>在文件模版中，可以直接使用上述两种变量</li>
-<li>把task的运行结果作为一个变量来使用，这个变量叫做<code>注册变量</code>。—register</li>
-<li>为了使Playbook更灵活、通用性更强，允许用户在执行的时候传入变量的值，这个时候就需要用到<code>额外变量</code>。</li>
-</ol>
-<h2 id="Ansible变量优先级（由高到低）"><a href="#Ansible变量优先级（由高到低）" class="headerlink" title="Ansible变量优先级（由高到低）"></a>Ansible变量优先级（由高到低）</h2><p>extra vars (在命令行中使用 -e)优先级最高：ansible-playbook -e var=value<br>task变量<br>block变量<br>role中定义的变量和include变量<br>set_fact<br>registered变量<br>vars_files<br>var_prompt<br>play变量<br>host facts<br>playbook中设置的host_vars<br>playbook中设置的group_vars<br>inventory中设置的host_vars<br>inventory中设置的group_vars<br>inventory变量<br>role中defaults/main.yml中定义的变量</p>
-<hr>
-]]></content>
-      <categories>
-        <category>Ansible</category>
-      </categories>
-      <tags>
-        <tag>env</tag>
-        <tag>playbook</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>playbook中逻辑控制语句的使用</title>
     <url>/2019/07/12/ansible_py_control_words/</url>
     <content><![CDATA[<p>playbook也有逻辑控制的语句：</p>
@@ -1294,6 +1272,517 @@ roles/
       </tags>
   </entry>
   <entry>
+    <title>自定义创建 Amazon EBS 支持的AMI</title>
+    <url>/2020/08/26/aws_ami_1/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>知识文档</strong>：</p>
+</blockquote>
+<ul>
+<li><a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/creating-an-ami-ebs.html">创建 Amazon EBS 支持的 Linux AMI</a></li>
+</ul>
+<hr>
+<p>自定义AMI，可以让我们结合日常工作，预置好一些应用程序或配置，以缩短配置耗时。</p>
+<p>此外，您还可以借助自定义 AMI 对底层组件 (如 Linux 内核) 进行更改，这在配置文件中很难实现或需要很长时间才能完成。</p>
+<h2 id="选择适合的AMI"><a href="#选择适合的AMI" class="headerlink" title="选择适合的AMI"></a>选择适合的AMI</h2><p>可以基于以下特性选择要使用的 AMI：</p>
+<ul>
+<li>区域 (请参阅区域和可用区)</li>
+<li>操作系统</li>
+<li>架构 (32 位或 64 位)</li>
+<li>启动许可</li>
+<li>根设备存储</li>
+</ul>
+<h2 id="AMI类型"><a href="#AMI类型" class="headerlink" title="AMI类型"></a>AMI类型</h2><p><strong>确定 AMI 的根设备类型</strong><br>使用控制台确定 AMI 的根设备类型：</p>
+<ol>
+<li>打开 Amazon EC2 控制台。</li>
+<li>在导航窗格中，单击 AMI，然后选择 AMI。</li>
+<li>在 <strong>Details (详细信息)</strong> 选项卡中检查 **Root Device Type (根设备类型) **的值，如下所示：<ul>
+<li>如果值是 <code>ebs</code>，则是 Amazon EBS 支持的 AMI。</li>
+<li>如果值是 <code>instance store</code>，则是实例存储支持的 AMI。</li>
+</ul>
+</li>
+</ol>
+<p><strong>停止状态</strong><br><code>您可以停止由 Amazon EBS 支持的实例，但不能停止由 Amazon EC2 实例存储支持的实例</code>。停止操作会导致实例停止运行 (它的状态会由 running 变成 stopping 再到 stopped)。停止的实例保留在 Amazon EBS 中，这样就可重新启动。停止与终止不同；您无法重新启动一个已终止的实例。因为由 Amazon EC2 实例存储支持的实例不能被停止，所以它们要么在运行要么已经终止。</p>
+<p><strong>如何收费</strong><br>如果您使用由实例存储提供支持的 AMI，您需要为实例使用和在 Amazon S3 中存储 AMI 付费。如果您使用由 Amazon EBS 支持的 AMI，您需要为实例使用、Amazon EBS 卷的存储和使用、以 Amazon EBS 快照形式存储 AMI 付费。</p>
+<p>如果您使用由 Amazon EC2 实例存储支持的 AMI，当您每次自定义以及新建一个 AMI 时，所有分段都存储在每个 AMI 的 Amazon S3 中。因此，每个自定义 AMI 的存储占用空间都是 AMI 的完整大小。对于由 Amazon EBS 支持的 AMI，当您每次自定义以及新建 AMI 时，将仅存储更改内容。因此，您之后自定义的 AMI 的存储占用空间比首次自定义的 AMI 要小得多，从而降低 AMI 存储费用。</p>
+<p>当由 Amazon EBS 支持的实例停止时，您无需再为实例使用付费；但是，您仍需为卷存储付费。一旦您启动实例时，我们便会收取最低一分钟的使用费用。一分钟之后，我们仅按您使用的秒数收费。例如，如果您运行一个实例 20 秒后停止实例，我们将按一整分钟收取费用。如果您运行一个实例 3 分 40 秒，我们将收取 3 分 40 秒的使用费用。我们将对您的实例保持运行状态的每秒钟收取费用，最低一分钟，即使实例处于闲置状态并且您没有连接到它也是如此。</p>
+<h2 id="创建镜像的注意事项"><a href="#创建镜像的注意事项" class="headerlink" title="创建镜像的注意事项"></a>创建镜像的注意事项</h2><p>“不重启” 选项<code>必须勾选</code>，否则在做映像的时候，会自动重启你的机器<br><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/824/cami_20200824153435.png?x-oss-process=style/original_format"></p>
+]]></content>
+      <categories>
+        <category>AWS</category>
+      </categories>
+      <tags>
+        <tag>AMI</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>playbook常见的变量分类与变量优先级</title>
+    <url>/2019/07/10/ansible_var_categores/</url>
+    <content><![CDATA[<h2 id="playbook常见的变量分类"><a href="#playbook常见的变量分类" class="headerlink" title="playbook常见的变量分类"></a>playbook常见的变量分类</h2><p>在Playbook中常用的几种变量包含一下几种情况：</p>
+<ol>
+<li>在Playbook中用户<code>自定义的变量</code>。—var*|other</li>
+<li>用户无需自定义，Ansible会在执行Playbook之前去全程主机上搜集的关于远程节点<code>系统信息的变量</code>。—ansible setup模块</li>
+<li>在文件模版中，可以直接使用上述两种变量</li>
+<li>把task的运行结果作为一个变量来使用，这个变量叫做<code>注册变量</code>。—register</li>
+<li>为了使Playbook更灵活、通用性更强，允许用户在执行的时候传入变量的值，这个时候就需要用到<code>额外变量</code>。</li>
+</ol>
+<h2 id="Ansible变量优先级（由高到低）"><a href="#Ansible变量优先级（由高到低）" class="headerlink" title="Ansible变量优先级（由高到低）"></a>Ansible变量优先级（由高到低）</h2><p>extra vars (在命令行中使用 -e)优先级最高：ansible-playbook -e var=value<br>task变量<br>block变量<br>role中定义的变量和include变量<br>set_fact<br>registered变量<br>vars_files<br>var_prompt<br>play变量<br>host facts<br>playbook中设置的host_vars<br>playbook中设置的group_vars<br>inventory中设置的host_vars<br>inventory中设置的group_vars<br>inventory变量<br>role中defaults/main.yml中定义的变量</p>
+<hr>
+]]></content>
+      <categories>
+        <category>Ansible</category>
+      </categories>
+      <tags>
+        <tag>env</tag>
+        <tag>playbook</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Amazon EBS卷的使用</title>
+    <url>/2020/08/26/aws_ebs_use/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>知识文档</strong>：</p>
+</blockquote>
+<ul>
+<li><a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/ebs-attaching-volume.html">创建 Amazon EBS 卷</a></li>
+<li><a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/ebs-attaching-volume.html">将 Amazon EBS 卷附加到实例</a></li>
+<li><a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/EBSSnapshots.html">Amazon EBS 快照</a></li>
+<li><a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/ebs-creating-snapshot.html">创建 Amazon EBS 快照</a></li>
+</ul>
+<hr>
+<h1 id="Amazon-EBS卷的使用"><a href="#Amazon-EBS卷的使用" class="headerlink" title="Amazon EBS卷的使用"></a>Amazon EBS卷的使用</h1><p><strong>创建卷的方法</strong></p>
+<ul>
+<li>在指定块储存设备映射用以启动实例时，创建并附加 EBS 卷。</li>
+<li>创建空 EBS 卷并将其附加到运行的实例。</li>
+<li>从以前创建的快照中创建 EBS 卷，并将其附加到运行的实例（用于资源恢复）</li>
+</ul>
+<h1 id="创建-Amazon-EBS-快照"><a href="#创建-Amazon-EBS-快照" class="headerlink" title="创建 Amazon EBS 快照"></a>创建 Amazon EBS 快照</h1><h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>创建快照时需考虑以下事项：</p>
+<ul>
+<li>当您为充当根设备的 EBS 卷创建快照时，应在<code>拍摄快照之前停止实例</code>。</li>
+<li>无法从启用了休眠的实例创建快照。</li>
+<li>无法从已休眠实例创建快照。</li>
+<li>尽管您可以在某个卷的前一个快照处于 pending 状态时拍摄该卷的快照，但一个卷有多个 pending 快照可能会导致该卷的性能降低，直至这些快照完成。</li>
+<li>一个 gp2、io1、io2 或 磁介质 卷最多可有 5 个 pending 快照，而一个 st1 或 sc1 卷只能有 1 个 pending 快照。如果您在尝试给同一个卷创建多个并发快照时收到 ConcurrentSnapshotLimitExceeded 错误，请等待一个或多个 pending 快照完成，然后再为该卷创建另一个快照。</li>
+<li>在从具有 AWS Marketplace 产品代码的卷创建快照后，该卷的产品代码将会传送到该快照。</li>
+</ul>
+<h2 id="AWS-EC2的snapshot创建与恢复"><a href="#AWS-EC2的snapshot创建与恢复" class="headerlink" title="AWS EC2的snapshot创建与恢复"></a>AWS EC2的snapshot创建与恢复</h2><p><strong>创建snapshot</strong>：</p>
+<ul>
+<li>点击<code>EBS&gt;快照</code>，创建快照&gt;选择EC2的<code>根设备</code>的卷ID(拍摄快照之前停止实例)</li>
+</ul>
+<p><strong>通过snapshot恢复EC2</strong>：</p>
+<ul>
+<li>按照原EC2配置创建一个新实例（正常启动）</li>
+<li>停止新实例，删除默认<code>根设备</code>的EBS卷</li>
+<li>通过snapshot新建一个可挂载的volume，并挂载到新实例的<code>根设备</code>位置</li>
+<li>启动新实例</li>
+</ul>
+<hr>
+<!--https://www.orczhou.com/index.php/2019/12/ec2-snapshot-backup-restore/-->  
+
+
+]]></content>
+      <categories>
+        <category>AWS</category>
+      </categories>
+      <tags>
+        <tag>EBS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>实例类型及收费方式</title>
+    <url>/2020/08/22/aws_ec2_calculator/</url>
+    <content><![CDATA[<h2 id="如何选择实例类型和购买选项"><a href="#如何选择实例类型和购买选项" class="headerlink" title="如何选择实例类型和购买选项"></a>如何选择实例类型和购买选项</h2><p><strong>实例类型</strong>：</p>
+<ul>
+<li>通用实例</li>
+<li>计算优化型实例</li>
+<li>内存优化型实例</li>
+<li>存储优化型实例</li>
+<li>加速计算实例</li>
+</ul>
+<p>更多详情请查看<a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/instance-types.html">官方文档</a></p>
+<p><strong>实例购买选择</strong>：</p>
+<ul>
+<li>按需实例（On-Demand Instances ） 按秒为启动的实例付费。</li>
+<li>预留实例 （Reserved Instances）以大幅折扣购买一年期到三年期的始终可用的实例。</li>
+<li>计划实例 （Scheduled Instances）以一年为期限购买按指定重复计划始终可用的实例。</li>
+<li>Spot 实例 （Spot Instances）请求未使用的 EC2 实例，这可能会显著降低您的 Amazon EC2 成本。</li>
+<li>专用主机 （Dedicated Hosts）为完全专用于运行您的实例的物理主机付费，让您现有的按插槽、按内核或按 VM 计费的软件许可证降低成本。</li>
+<li>专用实例 （Dedicated Instances）为在单一租户硬件上运行的实例按小时付费。</li>
+<li>容量预留 （Capacity Reservations）可在特定可用区中为 EC2 实例预留容量，持续时间不限。</li>
+</ul>
+<p><strong>计算器</strong>：<br><a href="https://calculator.aws/#/createCalculator">https://calculator.aws/#/createCalculator</a></p>
+]]></content>
+      <categories>
+        <category>AWS</category>
+      </categories>
+      <tags>
+        <tag>EC2</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>创建一个EC2的步骤</title>
+    <url>/2020/08/23/aws_ec2_create/</url>
+    <content><![CDATA[<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><h3 id="创建密钥对"><a href="#创建密钥对" class="headerlink" title="创建密钥对"></a>创建密钥对</h3><p>AWS 使用公共密钥密码术来保护您的实例的登录信息。Linux 实例没有密码；您可以使用密钥对安全地登录您的实例。 使用 SSH 登录时，您在启动实例时指定密钥对的名称，然后提供私有密钥。<br>如果您尚未创建密钥对，则可以通过 Amazon EC2 控制台自行创建。请注意，如果您计划在多个区域中启动实例，则需要在每个区域中创建密钥对。</p>
+<blockquote>
+<p>将私有密钥文件保存在安全位置，<code>这是您保存私有密钥文件的唯一机会</code>。</p>
+</blockquote>
+<h3 id="创建安全组"><a href="#创建安全组" class="headerlink" title="创建安全组"></a>创建安全组</h3><p>安全组用作相关实例的防火墙，可在实例级别控制入站和出站的数据流。您必须在安全组中添加规则，以便能够使用 SSH 从您的 IP 地址连接到实例。您还可以添加允许来自任意位置的入站和出站 HTTP 和 HTTPS 访问的规则。</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/sc1_20200821145027.png?x-oss-process=style/original_format"></p>
+<h2 id="EC2创建步骤-more"><a href="#EC2创建步骤-more" class="headerlink" title="EC2创建步骤(more)"></a>EC2创建步骤(<a href="https://www.bookstack.cn/read/awschina/9c773d8e94048e03.md">more</a>)</h2><p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/s2_20200821145400.png?x-oss-process=style/original_format"></p>
+<h2 id="Amazon-EC2-的最佳实践-more"><a href="#Amazon-EC2-的最佳实践-more" class="headerlink" title="Amazon EC2 的最佳实践(more)"></a>Amazon EC2 的最佳实践(<a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/ec2-best-practices.html">more</a>)</h2>]]></content>
+      <categories>
+        <category>AWS</category>
+      </categories>
+      <tags>
+        <tag>EC2</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AWS 实例生命周期管理</title>
+    <url>/2020/08/25/aws_ec2_management/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>知识文档</strong>：</p>
+</blockquote>
+<ul>
+<li><a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/ec2-launch-templates.html#launch-template-permissions">EC2增删启停</a></li>
+<li><a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/Configure_Instance.html">EC2系统基础配置</a></li>
+</ul>
+<hr>
+<h1 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h1><p>创建实例常用的几种方式：</p>
+<ol>
+<li>从控制台向导<code>启动实例</code>：一般是用于建立一个全新的EC2</li>
+<li>从<code>现有实例</code>启动类似实例：操作》映像和模板》启动更多类似实例</li>
+<li>从<code>启动模板</code>启动实例：控制台向导<code>启动实例</code>》从模板启动实例</li>
+</ol>
+<h1 id="停止和启动"><a href="#停止和启动" class="headerlink" title="停止和启动"></a>停止和启动</h1><p>您只能停止由 Amazon <code>EBS</code> 支持的实例。当您停止运行实例时，将出现以下情况：</p>
+<ul>
+<li>所有 Amazon EBS 卷保持连接至实例，而且其数据将保留下来。</li>
+<li>存储在主机 RAM 或主机实例存储卷中的所有数据都不复存在。</li>
+<li>大多数情况下，实例在启动时会迁移到新的底层主机（尽管在某些情况下，它仍会保留在当前主机上）。</li>
+<li>实例会在停止和启动时保留其私有 IPv4 地址以及任何 IPv6 地址。我们会<code>释放公有 IPv4 地址</code>并在您启动实例时为其分配新的 IPv4 地址。</li>
+<li>实例会保留其关联的弹性 IP 地址。您需要<code>对所有与已停止实例关联的弹性 IP 地址付费</code>。借助 <a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/ec2-classic-platform.html">EC2-Classic</a>，弹性 IP 地址会在您停止实例时取消与其的关联。</li>
+<li>如果您的实例处于 Auto Scaling 组中，则 Amazon EC2 Auto Scaling 服务会将已停止的实例标记为<code>运行状况不佳</code>，可能会<code>终止它并启动替换实例</code>。参阅<a href="https://docs.aws.amazon.com/autoscaling/latest/userguide/healthcheck.html">Auto Scaling 实例的运行状况检查。</a></li>
+</ul>
+<p>只有在实例停止时，您才能修改以下实例属性：</p>
+<ul>
+<li>实例类型</li>
+<li>用户数据</li>
+<li>内核</li>
+<li>RAM 磁盘</li>
+</ul>
+<h1 id="重启"><a href="#重启" class="headerlink" title="重启"></a>重启</h1><p>实例重启相当于操作系统重启。在许多情况下，只需要几分钟时间即可重启您的实例。当您重新启动实例时，将会保留其公有 DNS 名称 (IPv4)、私有 IPv4 地址、IPv6 地址（如果适用）以及实例存储卷上的任何数据。</p>
+<p>与停止并启动您的实例不同，重启实例不会启动新的实例计费周期 (最低收取一分钟的费用)。</p>
+<h1 id="终止"><a href="#终止" class="headerlink" title="终止"></a>终止</h1><p>当实例终止时，与该实例关联的所有实例存储卷上的数据都会被删除。</p>
+<p>默认情况下，当实例终止时，Amazon EBS 根设备卷将自动删除。但是，默认情况下，即使在实例终止后，您在启动时附加的所有额外 EBS 卷或您附加到现有实例的所有 EBS 卷也会保留。这一操作是由卷的 <code>DeleteOnTermination</code> 属性控制的，您可以对其进行修改。有关更多信息，请参阅<a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/terminating-instances.html#preserving-volumes-on-termination">在实例终止时保留 Amazon EBS 卷</a>。</p>
+]]></content>
+      <categories>
+        <category>AWS</category>
+      </categories>
+      <tags>
+        <tag>EC2</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>自定义监控 EC2 内存和磁盘使用率</title>
+    <url>/2020/09/02/aws_ec2_monitor/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>知识文档</strong>：</p>
+</blockquote>
+<ul>
+<li><a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/mon-scripts.html">监控EC2内存和磁盘使用率</a></li>
+<li><a href="https://docs.aws.amazon.com/zh_cn/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html">设置SNS通知</a></li>
+</ul>
+<hr>
+<p>AWS提供的CloudWatch中，没有提供内存使用率和磁盘使用率的信息，因此需要手动添加cron<br>不过，AWS提供了官方的脚本，可以直接下载安装；环境以<code>Amazon Linux 2 或 Amazon Linux AMI </code>为例</p>
+<h2 id="Role权限"><a href="#Role权限" class="headerlink" title="Role权限"></a><strong>Role权限</strong></h2><p>首先确保用户权限中有操作权限，没有的话，用户界面添加：</p>
+<ul>
+<li>cloudwatch:PutMetricData</li>
+<li>cloudwatch:GetMetricStatistics</li>
+<li>cloudwatch:ListMetrics</li>
+<li>ec2:DescribeTags</li>
+</ul>
+<h2 id="依赖包的安装"><a href="#依赖包的安装" class="headerlink" title="依赖包的安装"></a>依赖包的安装</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo yum install -y perl-Switch perl-DateTime perl-Sys-Syslog perl-LWP-Protocol-https perl-Digest-SHA.x86_64</span><br></pre></td></tr></table></figure>
+<h2 id="安装监控脚本"><a href="#安装监控脚本" class="headerlink" title="安装监控脚本"></a>安装监控脚本</h2><p><strong>下载、安装和配置监控脚本：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">curl https:&#x2F;&#x2F;aws-cloudwatch.s3.amazonaws.com&#x2F;downloads&#x2F;CloudWatchMonitoringScripts-1.2.2.zip -O</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>执行以下命令安装监控脚本：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">unzip CloudWatchMonitoringScripts-1.2.2.zip &amp;&amp; \</span><br><span class="line">rm CloudWatchMonitoringScripts-1.2.2.zip &amp;&amp; \</span><br><span class="line">cd aws-scripts-mon</span><br></pre></td></tr></table></figure>
+<h2 id="配置IAM访问认证"><a href="#配置IAM访问认证" class="headerlink" title="配置IAM访问认证"></a>配置IAM访问认证</h2><p>您需要提供一个 IAM 角色或 awscreds.conf 文件。否则，您必须使用 –aws-access-key-id 和 –aws-secret-key 参数为这些命令提供凭证。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cp awscreds.template awscreds.conf</span><br></pre></td></tr></table></figure>
+<p><code>sudo vim awscreds.conf</code>，配置认证信息：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">AWSAccessKeyId &#x3D; my-access-key-id</span><br><span class="line">AWSSecretKey &#x3D; my-secret-access-key</span><br></pre></td></tr></table></figure>
+<h2 id="收集信息发送到CloudWatch"><a href="#收集信息发送到CloudWatch" class="headerlink" title="收集信息发送到CloudWatch"></a>收集信息发送到CloudWatch</h2><p><strong>测试使用：</strong><br>以下示例执行简单的测试运行而不将数据发布到 CloudWatch。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;mon-put-instance-data.pl --mem-util --verify --verbose</span><br></pre></td></tr></table></figure>
+<p>以下示例收集所有可用内存指标并将其发送到 CloudWatch，将缓存和缓冲区内存计为“已用”</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;mon-put-instance-data.pl --mem-used-incl-cache-buff --mem-util --mem-used --mem-avail</span><br></pre></td></tr></table></figure>
+<p><strong><code>crontab -e</code>，添加定时任务：</strong><br>以下示例收集指定将内存和磁盘空间使用率报告到 CloudWatch：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">*&#x2F;5 * * * * ~&#x2F;aws-scripts-mon&#x2F;mon-put-instance-data.pl --mem-used-incl-cache-buff --mem-util --disk-space-util --disk-path&#x3D;&#x2F; --from-cron --aws-credential-file&#x3D;&#x2F;root&#x2F;aws-scripts-mon&#x2F;awscreds.conf</span><br></pre></td></tr></table></figure>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/1113/aws-diskmonitor_20201113104839.png?x-oss-process=style/original_format"></p>
+<h2 id="创建CloudWatch控制面板"><a href="#创建CloudWatch控制面板" class="headerlink" title="创建CloudWatch控制面板"></a>创建CloudWatch控制面板</h2><p>创建一个自定义监控面板<br><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/1113/control_20201113105603.png?x-oss-process=style/original_format"></p>
+<p>搜索并添加你想要监控的指标<br><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/1113/comment1_20201113105910.png?x-oss-process=style/original_format"></p>
+<p><code>创建小部件</code>》<code>保存控制面板</code><br><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/1113/comment2_20201113110200.png?x-oss-process=style/original_format"></p>
+<h2 id="添加报警"><a href="#添加报警" class="headerlink" title="添加报警"></a>添加报警</h2><ul>
+<li>方式一：通过CloudWatch控制台主页的“警报”入库，添加警报</li>
+<li>方式二：通过控制面板中创建的图表，进入选择对应的指标，点击“小铃铛”，添加警报<br><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/1113/monitor2_20201113111010.png?x-oss-process=style/original_format"></li>
+</ul>
+<h3 id="SNS"><a href="#SNS" class="headerlink" title="SNS"></a>SNS</h3><p>在配置报警前，创建一个用于接收和发送告警信息的SNS主题，配置方法参考<a href="https://docs.aws.amazon.com/zh_cn/AmazonCloudWatch/latest/monitoring/US_SetupSNS.html">Amazon SNS 主题</a><br><strong>服务简介<a href="https://docs.aws.amazon.com/zh_cn/sns/latest/dg/welcome.html">(more)</a>：</strong><br>Amazon Simple Notification Service (Amazon SNS) 是一项 Web 服务，用于协调和管理向订阅终端节点或客户端交付或发送消息的过程。在 Amazon SNS 中，有两类客户端—发布者和订阅者—也称为创建者和用户。发布者通过创建消息并将消息发送至主题与订阅者进行异步交流，主题是一个逻辑访问点和通信渠道。订阅者（即 Web 服务器、电子邮件地址、Amazon SQS 队列、AWS Lambda 函数）在其订阅主题后通过受支持协议（即 Amazon SQS、HTTP/S、电子邮件、SMS、Lambda）之一使用或接收消息或通知</p>
+<h3 id="配置报警"><a href="#配置报警" class="headerlink" title="配置报警"></a>配置报警</h3><p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/1113/monitor3_20201113112849.png?x-oss-process=style/original_format"></p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/1113/alarm1_20201113134723.png?x-oss-process=style/original_format"></p>
+<hr>
+<blockquote>
+<p><strong>触发报警后，会通过SNS发出邮件提醒：</strong></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Alarm Details:</span><br><span class="line">- Name:                       EC2-Diskspace-Alarm</span><br><span class="line">- Description:                磁盘空间不足20%告警</span><br><span class="line">- State Change:               OK -&gt; ALARM</span><br><span class="line">- Reason for State Change:    Threshold Crossed: 1 out of the last 1 datapoints [30.8640807993983 (13&#x2F;11&#x2F;20 06:01:00)] was greater than or equal to the threshold (18.0) (minimum 1 datapoint for OK -&gt; ALARM transition).</span><br><span class="line">- Timestamp:                  Friday 13 November, 2020 06:06:29 UTC</span><br><span class="line">- AWS Account:                845089424886</span><br><span class="line">- Alarm Arn:                  arn:aws:cloudwatch:us-east-1:845089424886:alarm:EC2-Diskspace-Alarm</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<hr>
+<!--https://blog.csdn.net/oblily/article/details/86767502-->  
+<!--https://docs.aws.amazon.com/zh_cn/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html-->  
+<!--https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/mon-scripts.html-->  
+<!--https://blog.csdn.net/newtyun/article/details/105384430-->  
+
+
+]]></content>
+      <categories>
+        <category>AWS</category>
+      </categories>
+      <tags>
+        <tag>EC2</tag>
+        <tag>CloudWatch</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AWS用户的角色和权限的划分建议</title>
+    <url>/2020/04/09/aws_iam_suggest/</url>
+    <content><![CDATA[<h2 id="工作环境"><a href="#工作环境" class="headerlink" title="工作环境"></a>工作环境</h2><ul>
+<li>测试环境</li>
+<li>预发布环境</li>
+<li>生产环境</li>
+</ul>
+<h2 id="用户角色和职责"><a href="#用户角色和职责" class="headerlink" title="用户角色和职责"></a>用户角色和职责</h2><ul>
+<li><p>AWS账号所有者<br>管理账号，开通IAM用户</p>
+</li>
+<li><p>AWS账号管理人员<br>日常运维管理工作者、账单管理（除根用户外最大的权限的用户）</p>
+</li>
+<li><p>只读用户<br>只能查看AWS console控制台</p>
+</li>
+<li><p>开发用户</p>
+</li>
+<li><p>部署用户<br>环境设计和部署管理</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>AWS</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>AWS账号注册和控制台介绍</title>
+    <url>/2020/04/09/aws_present/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="https://docs.aws.amazon.com/">AWS官方文档</a></p>
+</blockquote>
+<hr>
+<h2 id="AWS账号注册"><a href="#AWS账号注册" class="headerlink" title="AWS账号注册"></a>AWS账号注册</h2><p>首先，注册一个Global账号：</p>
+<ul>
+<li><a href="https://aws.amazon.com/">https://aws.amazon.com</a></li>
+<li><a href="https://amazonaws-china.com/">https://amazonaws-china.com</a></li>
+</ul>
+<p>注册帐号美国版和中国版一致, 创建EC2时注意选择的国家区域；不要用 <a href="https://www.amazonaws.cn注册/">https://www.amazonaws.cn注册</a><br>免费套餐介绍：<a href="https://amazonaws-china.com/cn/free/faqs/">https://amazonaws-china.com/cn/free/faqs/</a></p>
+<h2 id="AWS控制台"><a href="#AWS控制台" class="headerlink" title="AWS控制台"></a>AWS控制台</h2><p><strong>申请IAM用户</strong><br>登录到aws控制台，打开IAM控制台，开启MFA安全认证，保证根用户的安全；<br>申请一个IAM用户并授权此用户最大权限（AWS架构师第一准则，<code>不要使用根用户登录控制台操作</code>）；<br>用申请的IAM用户进行所有的操作，根用户在没有必要的情况不要使用，并由专人负责；</p>
+<p><strong>熟悉AWS控制台</strong></p>
+<p>把控制台上面的服务选项都点一遍，看看各个服务在哪里；方便后期使用的话知道点击哪里；<br><code>控制台的左下角可以切换语言</code>，如果英语不好的可以换成中文显示；</p>
+<p><strong>熟悉AWS账单管理</strong></p>
+<p>切换到账单控制台，查看账单<br>登录账单控制台，看看账单首选项、付款方式、整合账单、税务设置、订单发票、服务抵扣金额、成本管理等等<br>这个要认真搞下，因为账号区分全球的和中国区账号。</p>
+<ol>
+<li>汇款方式（信用卡（外币卡&amp;银联卡）、电汇、）</li>
+<li>发票问题（中国区可以提供发票、全球区没有发票只有收据）</li>
+<li>缴费时间点（账单生成时间、最迟缴费时间）</li>
+</ol>
+<p><strong>熟悉AWS服务限制</strong></p>
+<p>通过控制台查看服务的限制，或者通过此链接：</p>
+<p><a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/ec2-resource-limits.html">Amazon EC2 服务限制</a><br><a href="https://docs.aws.amazon.com/zh_cn/general/latest/gr/aws_service_limits.html">AWS 服务配额</a></p>
+<p>服务限制，会更好的控制对于AWS资源的合理利用，防止有心人有意或无意的无节制的开启资源。<br>还有就是一些其他不知道的原因，某项服务在某个region不能使用，这些都要知道；防止你们公司业务要上线了。发现那个地区没有想使用的服务；因为你测试的时候使用的region跟上线所在的那个region不一样，而且你也没有提前确认；等等原因。</p>
+<p><strong>熟悉AWS的support中心</strong><br>技术支持，服务限制申请提高；<br>技术支持分为三种，开发人员、商业、企业。<br>具体收费模式请看链接：<a href="https://aws.amazon.com/cn/premiumsupport/plans/">https://aws.amazon.com/cn/premiumsupport/plans/</a><br>还有一种技术支持，就是安排专门的架构师服务于你们公司的，But你公司必须在AWS消费很多大洋才可以伺候你</p>
+<h2 id="AWS学习-阶段划分"><a href="#AWS学习-阶段划分" class="headerlink" title="AWS学习 阶段划分"></a>AWS学习 阶段划分</h2><p><strong>基础玩法</strong></p>
+<p>EC2、ELB、S3、ElastiCache（redis）、RDS（MySql）<br>建议你们先熟悉上面几个服务，使用默认选项（默认VPC、安全组）等创建简单的三层服务并测试。<br>因为几乎迁移到AWS，使用的服务属上面几项最多，当然也是最常用的服务；先熟悉熟悉基本情况，打好基础。</p>
+<p><strong>中级玩法</strong></p>
+<p>首先，<code>全面深入学习VPC一定要学明白VPC</code>，因为AWS大多数服务，多AZ、高可用，都是基于VPC网络区分开的。<br>还有个问题就是，强迫症选手做事情是不会选择默认的选项去做事的。<br>通过自定义VPC，进行网络划分；各个服务做使用的网络不同（公有子网、私有子网），后期扩展。<br>这样做的好处就是，你可以清楚的了解到你们整个架构的划分、业务划分、网络划分、安全防护、后期如何进行架构扩展，都能清楚的了解到；<br>通过自定义的VPC网络进行服务创建，先把基础那几项服务玩一遍；再去测试其他的服务。</p>
+<p><strong>高级玩法</strong></p>
+<p>DevOps<br>ECS、EKS<br>Serverless</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/aws-55ed8db05deb6a0c99575b200bd4d317.jpeg?x-oss-process=style/watermark"></p>
+<hr>
+<!--  https://www.bookstack.cn/read/awschina/c0f7d53e63c37006.md  -->  
+<!--  https://www.jianshu.com/p/89004a16789f  -->  
+]]></content>
+      <categories>
+        <category>AWS</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Lambda + Cloud Watch定时维护EC2</title>
+    <url>/2020/09/01/aws_lambda_cloudwatch_operate_ec2/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>知识文档</strong>：</p>
+</blockquote>
+<ul>
+<li><a href="https://docs.aws.amazon.com/zh_cn/lambda/latest/dg/golang-package.html">Lambda</a></li>
+<li><a href="https://docs.aws.amazon.com/zh_cn/AmazonCloudWatch/latest/events/ScheduledEvents.html">Cloudwatch</a></li>
+</ul>
+<hr>
+<p>有时候在EC2上的一些业务只需要在每天的某个时间段对外提供服务，其余的时候是处于闲置空转的状态。但付费方式为EC2的按需收费，那么闲置时间产生的费用就显得浪费了。怎么办呢？通过Lambda服务结合Cloudwatch规则，实现实例的定时开关，达到节约成本的目的。</p>
+<p><strong>业务需求</strong>：</p>
+<ul>
+<li>每天上午（UTC）9:00~20:00，将实例启动使其处于running状态</li>
+<li>每天晚上（UTC）20:00~次日上午9:00，将实例停止使其处于stopped状态。</li>
+</ul>
+<hr>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p><strong>需要用到的AWS服务包括：</strong></p>
+<ol>
+<li><strong>EC2</strong>：即云端虚拟机，将用于运行我们的脚本。</li>
+<li><strong>Lambda</strong>, 用于操作我们的EC2实例，即启动和关闭。</li>
+<li><strong>IAM</strong>, AWS Identity and Access Management, 用于赋予Lambda函数操作我们EC2实例的权限。</li>
+<li><strong>Cloud Watch</strong>, 用于定时执行我们的Lambda函数，达到定时开关机的效果。</li>
+</ol>
+<hr>
+<h2 id="EC2"><a href="#EC2" class="headerlink" title="EC2"></a>EC2</h2><p>实例的创建步骤这里就不介绍了，可以参考<a href="https://docs.aws.amazon.com/index.html">AWS 官方文档</a>。</p>
+<p>测试资源如下：</p>
+<table>
+<thead>
+<tr>
+<th align="center">Name</th>
+<th align="center">实例ID</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">XLDSMILE-US-Pordoction-app1</td>
+<td align="center">i-0611856bef37b1295</td>
+</tr>
+<tr>
+<td align="center">XLDSMILE-US-Pordoction-app2</td>
+<td align="center">i-01c2654a6acc2f933</td>
+</tr>
+</tbody></table>
+<h2 id="创建Lambda的IAM角色"><a href="#创建Lambda的IAM角色" class="headerlink" title="创建Lambda的IAM角色"></a>创建Lambda的IAM角色</h2><p>因为在创建Lambda函数时会要求选择IAM，因此这里要先把IAM角色给配置喽。</p>
+<h3 id="创建策略"><a href="#创建策略" class="headerlink" title="创建策略"></a>创建策略</h3><ul>
+<li><strong>登录<code>控制台</code>，选择<code>IAM</code>服务》<code>角色</code>》<code>创建角色</code></strong></li>
+</ul>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/add-lambda-role_20201105175614.png?x-oss-process=style/original_format"></p>
+<ul>
+<li>选择 <strong><code>创建策略</code></strong> ，为角色附加自定义权限策略：</li>
+</ul>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/lambda_20201106104548.png?x-oss-process=style/original_format"></p>
+<blockquote>
+<p>将如下JSON字符串复制到选项框内</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;Version&quot;: &quot;2012-10-17&quot;,</span><br><span class="line">    &quot;Statement&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;Effect&quot;: &quot;Allow&quot;,</span><br><span class="line">            &quot;Action&quot;: [</span><br><span class="line">                &quot;logs:CreateLogGroup&quot;,</span><br><span class="line">                &quot;logs:CreateLogStream&quot;,</span><br><span class="line">                &quot;logs:PutLogEvents&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;Resource&quot;: &quot;arn:aws:logs:*:*:*&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;Effect&quot;: &quot;Allow&quot;,</span><br><span class="line">            &quot;Action&quot;: [</span><br><span class="line">                &quot;ec2:Start*&quot;,</span><br><span class="line">                &quot;ec2:Stop*&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;Resource&quot;: &quot;*&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>点击 <strong><code>查看策略</code></strong> ，为其创建<code>名字</code>和<code>描述</code>，点击<code>创建策略</code>，跳转到以下界面。</li>
+</ul>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/lambda_polic1_20201106115100.png?x-oss-process=style/original_format"></p>
+<h3 id="为角色分配策略"><a href="#为角色分配策略" class="headerlink" title="为角色分配策略"></a>为角色分配策略</h3><ul>
+<li>策略创建完成后返回 <strong><code>创建角色</code></strong> 界面，筛选并勾选策略</li>
+</ul>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/lambda_20201106165248.png?x-oss-process=style/original_format"></p>
+<ul>
+<li>点击下一步，标签啥的选默认，点击 <strong><code>审核</code></strong> 》 <strong><code>创建角色</code></strong> ：</li>
+</ul>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/lamdba_20201106165915.png?x-oss-process=style/original_format"></p>
+<h2 id="创建Lambda函数"><a href="#创建Lambda函数" class="headerlink" title="创建Lambda函数"></a>创建Lambda函数</h2><p><strong>步骤或选型：</strong></p>
+<ul>
+<li>选择Lambda服务</li>
+<li>点击 <strong><code>函数</code></strong> 》 <strong><code>创建函数</code></strong></li>
+<li>选择“从头开始撰写”</li>
+<li>函数名称：StopEC2Instances</li>
+<li>语言：Pyhton3.8</li>
+<li>执行角色：现有角色》搜索我们刚才建立的角色</li>
+<li>点击 <strong><code>创建函数</code></strong></li>
+</ul>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/lambda50_20201106175051.png?x-oss-process=style/original_format"></p>
+<p>将以下Python3代码复制粘贴。region替换为你的EC2 region, instancces 替换为你的instance id。这些都可以在EC2控制台找到。完成后点击 <strong><code>Deploy</code></strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># stopped your instances</span><br><span class="line">import boto3</span><br><span class="line">region &#x3D; &#39;us-east-1&#39;</span><br><span class="line">instances &#x3D; [&#39;i-0571c93e69719637c&#39;, &#39;i-057659afa167f65a5&#39;]</span><br><span class="line">ec2 &#x3D; boto3.client(&#39;ec2&#39;, region_name&#x3D;region)</span><br><span class="line">    </span><br><span class="line">def lambda_handler(event, context):</span><br><span class="line">    ec2.stop_instances(InstanceIds&#x3D;instances)</span><br><span class="line">    print(&#39;stopped your instances: &#39; + str(instances))</span><br></pre></td></tr></table></figure>
+
+<p>这样，<code>关闭实例的Lambda函数</code>就创建好了，我们还需要创建一个类似的<code>启动实例的函数</code>。</p>
+<p>重复从 建立函数 开始的以上所有步骤，有以下几点改变：</p>
+<ul>
+<li>函数名称: StartEC2Instances</li>
+<li>Python代码里的 ec2.stop_instances 替换为 ec2.start_instances</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># started your instances</span><br><span class="line">import boto3</span><br><span class="line">region &#x3D; &#39;us-east-1&#39;</span><br><span class="line">instances &#x3D; [&#39;i-0571c93e69719637c&#39;, &#39;i-057659afa167f65a5&#39;]</span><br><span class="line">ec2 &#x3D; boto3.client(&#39;ec2&#39;, region_name&#x3D;region)</span><br><span class="line">    </span><br><span class="line">def lambda_handler(event, context):</span><br><span class="line">    ec2.start_instances(InstanceIds&#x3D;instances)</span><br><span class="line">    print(&#39;started your instances: &#39; + str(instances))</span><br></pre></td></tr></table></figure>
+<ul>
+<li>完成后，在Lambda控制台，就能看到我们刚才建立的两个函数</li>
+</ul>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/lambda_20201106180107.png?x-oss-process=style/original_format"></p>
+<hr>
+<h2 id="使用CloudWatch服务，创建规则"><a href="#使用CloudWatch服务，创建规则" class="headerlink" title="使用CloudWatch服务，创建规则"></a>使用CloudWatch服务，创建规则</h2><ol>
+<li>CloudWatch控制台，选择<code>规则</code>》<code>创建规则</code>，事件源选择<code>计划</code>》<code>cron表达式</code> ，输入 “0 9 * * ? *”</li>
+<li>任务计划格式参考：<a href="https://docs.aws.amazon.com/zh_cn/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions">Cron 表达式</a><ul>
+<li>cron 使用的时间是UTC时间，具体UTC时间可查询此网站：<a href="https://time.is/UTC">https://time.is/UTC</a></li>
+</ul>
+</li>
+<li>目标选择<code>Lambda函数</code>，选择<code>函数</code></li>
+<li>点击<code>配置规则详细信息</code>，名称和描述均写<code>StartEC2</code></li>
+<li>重复步骤1操作，这时cron表达式为“0 20 * * ? *”</li>
+<li>重复上文3，4两步骤，函数版本选择“V2”。文件名和描述均写“StopEC2”</li>
+<li>测试，若机器到时间未停止，首先检查cron表达式和UTC时间表述。其次检查Lambda代码中的instance ID，region是否正确。</li>
+</ol>
+<hr>
+<!--https://segmentfault.com/a/1190000023101856-->  
+<!--https://blog.csdn.net/kepa520/article/details/79297085-->  
+<!--https://blog.csdn.net/captsinpata/article/details/93501163?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-7.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-7.channel_param-->  
+
+]]></content>
+      <categories>
+        <category>AWS</category>
+      </categories>
+      <tags>
+        <tag>CloudWatch</tag>
+        <tag>Lambda</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>go基础之数组</title>
+    <url>/2020/04/09/go_base_array/</url>
+    <content><![CDATA[<h1 id="Array-数组"><a href="#Array-数组" class="headerlink" title="Array(数组)"></a>Array(数组)</h1><p>数组：是同一种数据类型的固定长度的序列。 在Go语言中，数组从声明时就确定，使用时可以修改数组成员，但是数组大小不可变化。 基本语法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 定义一个长度为3元素类型为int的数组a</span><br><span class="line">var a [3]int</span><br></pre></td></tr></table></figure>
+<h2 id="数组定义"><a href="#数组定义" class="headerlink" title="数组定义"></a>数组定义</h2><p><code>var 数组变量名 [元素数量]Type</code><br>比如：<code>var a [5]int</code>， 数组的长度必须是常量，并且长度是数组类型的一部分。一旦定义，长度不能变。<code>[5]int和[10]int</code>是不同的类型。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var a [3]int</span><br><span class="line">var b [4]int</span><br><span class="line">a &#x3D; b &#x2F;&#x2F;不可以这样做，因为此时a和b是不同的类型</span><br></pre></td></tr></table></figure>
+<p>数组可以通过下标进行访问，下标是从0开始，最后一个元素下标是：<code>len-1</code>，访问越界（下标在合法范围之外），则触发访问越界，会panic。</p>
+<h2 id="数组的初始化"><a href="#数组的初始化" class="headerlink" title="数组的初始化"></a>数组的初始化</h2><p><strong><em>一维数组</em></strong></p>
+<h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h3><p>初始化数组时可以使用初始化列表来设置数组元素的值。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var testArray [3]int                        &#x2F;&#x2F;数组会初始化为int类型的零值</span><br><span class="line">    var numArray &#x3D; [3]int&#123;1, 2&#125;                 &#x2F;&#x2F;使用指定的初始值完成初始化</span><br><span class="line">    var cityArray &#x3D; [3]string&#123;&quot;北京&quot;, &quot;上海&quot;, &quot;深圳&quot;&#125; &#x2F;&#x2F;使用指定的初始值完成初始化</span><br><span class="line">    fmt.Println(testArray)                      &#x2F;&#x2F;[0 0 0]</span><br><span class="line">    fmt.Println(numArray)                       &#x2F;&#x2F;[1 2 0]</span><br><span class="line">    fmt.Println(cityArray)                      &#x2F;&#x2F;[北京 上海 深圳]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>按照上面的方法每次都要确保提供的初始值和数组长度一致，一般情况下我们可以让编译器根据初始值的个数自行推断数组的长度，例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var testArray [3]int</span><br><span class="line">    var numArray &#x3D; [...]int&#123;1, 2&#125;</span><br><span class="line">    var cityArray &#x3D; [...]string&#123;&quot;北京&quot;, &quot;上海&quot;, &quot;深圳&quot;&#125;</span><br><span class="line">    fmt.Println(testArray)                          &#x2F;&#x2F;[0 0 0]</span><br><span class="line">    fmt.Println(numArray)                           &#x2F;&#x2F;[1 2]</span><br><span class="line">    fmt.Printf(&quot;type of numArray:%T\n&quot;, numArray)   &#x2F;&#x2F;type of numArray:[2]int</span><br><span class="line">    fmt.Println(cityArray)                          &#x2F;&#x2F;[北京 上海 深圳]</span><br><span class="line">    fmt.Printf(&quot;type of cityArray:%T\n&quot;, cityArray) &#x2F;&#x2F;type of cityArray:[3]string</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a>方法三</h3><p>我们还可以使用指定索引值的方式来初始化数组，例如:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [...]int&#123;1: 1, 3: 5&#125;</span><br><span class="line">    fmt.Println(a)                  &#x2F;&#x2F; [0 1 0 5]</span><br><span class="line">    fmt.Printf(&quot;type of a:%T\n&quot;, a) &#x2F;&#x2F;type of a:[4]int</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="数组的遍历"><a href="#数组的遍历" class="headerlink" title="数组的遍历"></a>数组的遍历</h2><p><strong><em>一维数组</em></strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 遍历数组a有以下两种方法：</span><br><span class="line">func main() &#123;</span><br><span class="line">    var a &#x3D; [...]string&#123;&quot;北京&quot;, &quot;上海&quot;, &quot;深圳&quot;&#125;</span><br><span class="line">    &#x2F;&#x2F; 方法1：for循环遍历</span><br><span class="line">    for i :&#x3D; 0; i &lt; len(a); i++ &#123;</span><br><span class="line">        fmt.Println(a[i])</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 方法2：for range遍历</span><br><span class="line">    for index, value :&#x3D; range a &#123;</span><br><span class="line">        fmt.Println(index, value)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="多维数组"><a href="#多维数组" class="headerlink" title="多维数组"></a>多维数组</h2><h3 id="二维数组的定义"><a href="#二维数组的定义" class="headerlink" title="二维数组的定义"></a>二维数组的定义</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [3][2]string&#123;</span><br><span class="line">        &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">        &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">        &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(a) &#x2F;&#x2F;[[北京 上海] [广州 深圳] [成都 重庆]]</span><br><span class="line">    fmt.Println(a[2][1]) &#x2F;&#x2F;支持索引取值:重庆</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="二维数组的遍历"><a href="#二维数组的遍历" class="headerlink" title="二维数组的遍历"></a>二维数组的遍历</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [3][2]string&#123;</span><br><span class="line">        &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">        &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">        &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    for _, v1 :&#x3D; range a &#123;</span><br><span class="line">        for _, v2 :&#x3D; range v1 &#123;</span><br><span class="line">            fmt.Printf(&quot;%s\t&quot;, v2)</span><br><span class="line">        &#125;</span><br><span class="line">        fmt.Println()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">北京    上海    </span><br><span class="line">广州    深圳    </span><br><span class="line">成都    重庆    </span><br></pre></td></tr></table></figure>
+<p><code>注意</code>： 多维数组<code>只有第一层</code>可以使用<code>...</code>来让编译器推导数组长度。例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;支持的写法</span><br><span class="line">a :&#x3D; [...][2]string&#123;</span><br><span class="line">    &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">    &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">    &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;不支持多维数组的内层使用...</span><br><span class="line">b :&#x3D; [3][...]string&#123;</span><br><span class="line">    &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">    &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">    &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="数组拷贝和传参"><a href="#数组拷贝和传参" class="headerlink" title="数组拷贝和传参"></a>数组拷贝和传参</h2><p>数组是值类型，赋值和传参会复制整个数组。因此改变副本的值，不会改变本身的值。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func modifyArray(x [3]int) &#123;</span><br><span class="line">    x[0] &#x3D; 100</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func modifyArray2(x [3][2]int) &#123;</span><br><span class="line">    x[2][0] &#x3D; 100</span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [3]int&#123;10, 20, 30&#125;</span><br><span class="line">    modifyArray(a) &#x2F;&#x2F;在modify中修改的是a的副本x</span><br><span class="line">    fmt.Println(a) &#x2F;&#x2F;[10 20 30]</span><br><span class="line">    b :&#x3D; [3][2]int&#123;</span><br><span class="line">        &#123;1, 1&#125;,</span><br><span class="line">        &#123;1, 1&#125;,</span><br><span class="line">        &#123;1, 1&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    modifyArray2(b) &#x2F;&#x2F;在modify中修改的是b的副本x</span><br><span class="line">    fmt.Println(b)  &#x2F;&#x2F;[[1 1] [1 1] [1 1]]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong></p>
+<ol>
+<li>数组支持 “==“、”!=” 操作符，因为内存总是被初始化过的。</li>
+<li>[n]*T表示指针数组，*[n]T表示数组指针 。</li>
+</ol>
+<h2 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h2><p>求数组[1, 3, 5, 7, 8]所有元素的和<br>找出数组中和为指定值的两个元素的下标，比如从数组[1, 3, 5, 7, 8]中找出和为8的两个元素的下标分别为(0,3)和(1,2)。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>go语言基础</tag>
+        <tag>array</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>go基础之函数</title>
     <url>/2020/05/07/go_base_func/</url>
     <content><![CDATA[<h1 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h1><p>函数是组织好的、可重复使用的、用于执行指定任务的代码块。Go语言中支持函数、匿名函数和闭包</p>
@@ -1341,48 +1830,6 @@ roles/
       <tags>
         <tag>go语言基础</tag>
         <tag>函数</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>go基础之数组</title>
-    <url>/2020/04/09/go_base_array/</url>
-    <content><![CDATA[<h1 id="Array-数组"><a href="#Array-数组" class="headerlink" title="Array(数组)"></a>Array(数组)</h1><p>数组：是同一种数据类型的固定长度的序列。 在Go语言中，数组从声明时就确定，使用时可以修改数组成员，但是数组大小不可变化。 基本语法：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 定义一个长度为3元素类型为int的数组a</span><br><span class="line">var a [3]int</span><br></pre></td></tr></table></figure>
-<h2 id="数组定义"><a href="#数组定义" class="headerlink" title="数组定义"></a>数组定义</h2><p><code>var 数组变量名 [元素数量]Type</code><br>比如：<code>var a [5]int</code>， 数组的长度必须是常量，并且长度是数组类型的一部分。一旦定义，长度不能变。<code>[5]int和[10]int</code>是不同的类型。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var a [3]int</span><br><span class="line">var b [4]int</span><br><span class="line">a &#x3D; b &#x2F;&#x2F;不可以这样做，因为此时a和b是不同的类型</span><br></pre></td></tr></table></figure>
-<p>数组可以通过下标进行访问，下标是从0开始，最后一个元素下标是：<code>len-1</code>，访问越界（下标在合法范围之外），则触发访问越界，会panic。</p>
-<h2 id="数组的初始化"><a href="#数组的初始化" class="headerlink" title="数组的初始化"></a>数组的初始化</h2><p><strong><em>一维数组</em></strong></p>
-<h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h3><p>初始化数组时可以使用初始化列表来设置数组元素的值。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var testArray [3]int                        &#x2F;&#x2F;数组会初始化为int类型的零值</span><br><span class="line">    var numArray &#x3D; [3]int&#123;1, 2&#125;                 &#x2F;&#x2F;使用指定的初始值完成初始化</span><br><span class="line">    var cityArray &#x3D; [3]string&#123;&quot;北京&quot;, &quot;上海&quot;, &quot;深圳&quot;&#125; &#x2F;&#x2F;使用指定的初始值完成初始化</span><br><span class="line">    fmt.Println(testArray)                      &#x2F;&#x2F;[0 0 0]</span><br><span class="line">    fmt.Println(numArray)                       &#x2F;&#x2F;[1 2 0]</span><br><span class="line">    fmt.Println(cityArray)                      &#x2F;&#x2F;[北京 上海 深圳]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>按照上面的方法每次都要确保提供的初始值和数组长度一致，一般情况下我们可以让编译器根据初始值的个数自行推断数组的长度，例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var testArray [3]int</span><br><span class="line">    var numArray &#x3D; [...]int&#123;1, 2&#125;</span><br><span class="line">    var cityArray &#x3D; [...]string&#123;&quot;北京&quot;, &quot;上海&quot;, &quot;深圳&quot;&#125;</span><br><span class="line">    fmt.Println(testArray)                          &#x2F;&#x2F;[0 0 0]</span><br><span class="line">    fmt.Println(numArray)                           &#x2F;&#x2F;[1 2]</span><br><span class="line">    fmt.Printf(&quot;type of numArray:%T\n&quot;, numArray)   &#x2F;&#x2F;type of numArray:[2]int</span><br><span class="line">    fmt.Println(cityArray)                          &#x2F;&#x2F;[北京 上海 深圳]</span><br><span class="line">    fmt.Printf(&quot;type of cityArray:%T\n&quot;, cityArray) &#x2F;&#x2F;type of cityArray:[3]string</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a>方法三</h3><p>我们还可以使用指定索引值的方式来初始化数组，例如:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [...]int&#123;1: 1, 3: 5&#125;</span><br><span class="line">    fmt.Println(a)                  &#x2F;&#x2F; [0 1 0 5]</span><br><span class="line">    fmt.Printf(&quot;type of a:%T\n&quot;, a) &#x2F;&#x2F;type of a:[4]int</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="数组的遍历"><a href="#数组的遍历" class="headerlink" title="数组的遍历"></a>数组的遍历</h2><p><strong><em>一维数组</em></strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 遍历数组a有以下两种方法：</span><br><span class="line">func main() &#123;</span><br><span class="line">    var a &#x3D; [...]string&#123;&quot;北京&quot;, &quot;上海&quot;, &quot;深圳&quot;&#125;</span><br><span class="line">    &#x2F;&#x2F; 方法1：for循环遍历</span><br><span class="line">    for i :&#x3D; 0; i &lt; len(a); i++ &#123;</span><br><span class="line">        fmt.Println(a[i])</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 方法2：for range遍历</span><br><span class="line">    for index, value :&#x3D; range a &#123;</span><br><span class="line">        fmt.Println(index, value)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="多维数组"><a href="#多维数组" class="headerlink" title="多维数组"></a>多维数组</h2><h3 id="二维数组的定义"><a href="#二维数组的定义" class="headerlink" title="二维数组的定义"></a>二维数组的定义</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [3][2]string&#123;</span><br><span class="line">        &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">        &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">        &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(a) &#x2F;&#x2F;[[北京 上海] [广州 深圳] [成都 重庆]]</span><br><span class="line">    fmt.Println(a[2][1]) &#x2F;&#x2F;支持索引取值:重庆</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="二维数组的遍历"><a href="#二维数组的遍历" class="headerlink" title="二维数组的遍历"></a>二维数组的遍历</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [3][2]string&#123;</span><br><span class="line">        &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">        &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">        &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    for _, v1 :&#x3D; range a &#123;</span><br><span class="line">        for _, v2 :&#x3D; range v1 &#123;</span><br><span class="line">            fmt.Printf(&quot;%s\t&quot;, v2)</span><br><span class="line">        &#125;</span><br><span class="line">        fmt.Println()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">北京    上海    </span><br><span class="line">广州    深圳    </span><br><span class="line">成都    重庆    </span><br></pre></td></tr></table></figure>
-<p><code>注意</code>： 多维数组<code>只有第一层</code>可以使用<code>...</code>来让编译器推导数组长度。例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;支持的写法</span><br><span class="line">a :&#x3D; [...][2]string&#123;</span><br><span class="line">    &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">    &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">    &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;不支持多维数组的内层使用...</span><br><span class="line">b :&#x3D; [3][...]string&#123;</span><br><span class="line">    &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">    &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">    &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="数组拷贝和传参"><a href="#数组拷贝和传参" class="headerlink" title="数组拷贝和传参"></a>数组拷贝和传参</h2><p>数组是值类型，赋值和传参会复制整个数组。因此改变副本的值，不会改变本身的值。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func modifyArray(x [3]int) &#123;</span><br><span class="line">    x[0] &#x3D; 100</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func modifyArray2(x [3][2]int) &#123;</span><br><span class="line">    x[2][0] &#x3D; 100</span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [3]int&#123;10, 20, 30&#125;</span><br><span class="line">    modifyArray(a) &#x2F;&#x2F;在modify中修改的是a的副本x</span><br><span class="line">    fmt.Println(a) &#x2F;&#x2F;[10 20 30]</span><br><span class="line">    b :&#x3D; [3][2]int&#123;</span><br><span class="line">        &#123;1, 1&#125;,</span><br><span class="line">        &#123;1, 1&#125;,</span><br><span class="line">        &#123;1, 1&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    modifyArray2(b) &#x2F;&#x2F;在modify中修改的是b的副本x</span><br><span class="line">    fmt.Println(b)  &#x2F;&#x2F;[[1 1] [1 1] [1 1]]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>注意：</strong></p>
-<ol>
-<li>数组支持 “==“、”!=” 操作符，因为内存总是被初始化过的。</li>
-<li>[n]*T表示指针数组，*[n]T表示数组指针 。</li>
-</ol>
-<h2 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h2><p>求数组[1, 3, 5, 7, 8]所有元素的和<br>找出数组中和为指定值的两个元素的下标，比如从数组[1, 3, 5, 7, 8]中找出和为8的两个元素的下标分别为(0,3)和(1,2)。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>Go</category>
-      </categories>
-      <tags>
-        <tag>go语言基础</tag>
-        <tag>array</tag>
       </tags>
   </entry>
   <entry>
@@ -1748,90 +2195,6 @@ roles/
       </tags>
   </entry>
   <entry>
-    <title>go基础之流程控制</title>
-    <url>/2020/04/09/go_base_process_control/</url>
-    <content><![CDATA[<p>流程控制是每种编程语言控制逻辑走向和执行次序的重要部分，流程控制可以说是一门语言的“经脉”。</p>
-<p>Go语言中最常用的流程控制有<code>if</code>和<code>for</code>，而<code>switch</code>和<code>goto</code>主要是为了简化代码、降低重复代码而生的结构，属于扩展类的流程控制。</p>
-<h2 id="if-else-分支结构"><a href="#if-else-分支结构" class="headerlink" title="if else(分支结构)"></a>if else(分支结构)</h2><h3 id="基本写法"><a href="#基本写法" class="headerlink" title="基本写法"></a>基本写法</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">if 表达式1 &#123;</span><br><span class="line">    分支1</span><br><span class="line">&#125; else if 表达式2 &#123;</span><br><span class="line">    分支2</span><br><span class="line">&#125; else&#123;</span><br><span class="line">    分支3</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Go语言规定与<code>if</code>匹配的左括号<code>&#123;</code>必须与<code>if和表达式</code>放在同一行，<code>&#123;</code>放在其他位置会触发编译错误。 同理，与<code>else</code>匹配的<code>&#123;</code>也必须与<code>else</code>写在同一行，<code>else</code>也必须与上一个<code>if</code>或<code>else if</code>右边的大括号在同一行。</p>
-<blockquote>
-<p>例子：</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 输出：C</span><br><span class="line">func ifDemo1() &#123;</span><br><span class="line">    score :&#x3D; 65</span><br><span class="line">    if score &gt;&#x3D; 90 &#123;</span><br><span class="line">        fmt.Println(&quot;A&quot;)</span><br><span class="line">    &#125; else if score &gt; 75 &#123;</span><br><span class="line">        fmt.Println(&quot;B&quot;)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        fmt.Println(&quot;C&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="特殊写法"><a href="#特殊写法" class="headerlink" title="特殊写法"></a>特殊写法</h3><p>与上个例子的区别，<code>score</code>变量只在if分支内生效</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func ifDemo2() &#123;</span><br><span class="line">    if score :&#x3D; 65; score &gt;&#x3D; 90 &#123;</span><br><span class="line">        fmt.Println(&quot;A&quot;)</span><br><span class="line">    &#125; else if score &gt; 75 &#123;</span><br><span class="line">        fmt.Println(&quot;B&quot;)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        fmt.Println(&quot;C&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="for"><a href="#for" class="headerlink" title="for"></a>for</h2><p>Go 语言中的所有循环类型均可以使用<code>for关键字</code>来完成。</p>
-<p>for循环的基本格式如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">for 初始语句;条件表达式;结束语句&#123;</span><br><span class="line">    循环体语句</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>条件表达式返回<code>true</code>时循环体不停地进行循环，直到条件表达式返回<code>false</code>时自动退出循环。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func forDemo() &#123;</span><br><span class="line">    for i :&#x3D; 0; i &lt; 10; i++ &#123;</span><br><span class="line">        fmt.Println(i)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>for循环的初始语句可以被忽略，但是初始语句后的分号必须要写，例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func forDemo2() &#123;</span><br><span class="line">    i :&#x3D; 0</span><br><span class="line">    for ; i &lt; 10; i++ &#123;</span><br><span class="line">        fmt.Println(i)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>for循环的初始语句和结束语句都可以省略，例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func forDemo3() &#123;</span><br><span class="line">    i :&#x3D; 0</span><br><span class="line">    for i &lt; 10 &#123;</span><br><span class="line">        fmt.Println(i)</span><br><span class="line">        i++</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这种写法类似于其他编程语言中的<code>while</code>，在<code>while</code>后添加一个条件表达式，满足条件表达式时持续循环，否则结束循环。</p>
-<h3 id="无限循环"><a href="#无限循环" class="headerlink" title="无限循环"></a>无限循环</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">for &#123;</span><br><span class="line">    循环体语句</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>for循环可以通过<code>break、goto、return、panic</code>语句强制退出循环。</p>
-<h2 id="for-range-键值循环"><a href="#for-range-键值循环" class="headerlink" title="for range(键值循环)"></a>for range(键值循环)</h2><p>Go语言中可以使用<code>for range</code>遍历数组、切片、字符串、map 及通道（channel）。 通过<code>for range</code>遍历的返回值有以下规律：</p>
-<ol>
-<li>数组、切片、字符串返回索引和值。</li>
-<li>map返回键和值。</li>
-<li>通道（channel）只返回通道内的值。</li>
-</ol>
-<h2 id="break-跳出循环"><a href="#break-跳出循环" class="headerlink" title="break(跳出循环)"></a>break(跳出循环)</h2><p><code>break</code>语句可以结束<code>for</code>、<code>switch</code>和<code>select</code>的代码块。</p>
-<p><code>break</code>语句还可以在语句后面添加标签，表示退出某个标签对应的代码块，标签要求必须定义在对应的<code>for</code>、<code>switch</code>和 <code>select</code>的代码块上。 举个例子：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func breakDemo1() &#123;</span><br><span class="line">BREAKDEMO1:</span><br><span class="line">    for i :&#x3D; 0; i &lt; 10; i++ &#123;</span><br><span class="line">        for j :&#x3D; 0; j &lt; 10; j++ &#123;</span><br><span class="line">            if j &#x3D;&#x3D; 3 &#123;</span><br><span class="line">                break BREAKDEMO1</span><br><span class="line">            &#125;</span><br><span class="line">            fmt.Printf(&quot;%v-%v\n&quot;, i, j)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(&quot;...&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>输出：</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0-0</span><br><span class="line">0-1</span><br><span class="line">0-2</span><br></pre></td></tr></table></figure>
-<h2 id="continue-继续下次循环"><a href="#continue-继续下次循环" class="headerlink" title="continue(继续下次循环)"></a>continue(继续下次循环)</h2><p><code>continue</code> 语句可以结束当前循环，开始下一次的循环迭代过程，仅限在<code>for</code>循环内使用。</p>
-<p>在 <code>continue</code>语句后添加标签时，表示开始标签对应的循环。例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func continueDemo() &#123;</span><br><span class="line">forloop1:</span><br><span class="line">    for i :&#x3D; 0; i &lt; 5; i++ &#123;</span><br><span class="line">        &#x2F;&#x2F; forloop2:</span><br><span class="line">        for j :&#x3D; 0; j &lt; 5; j++ &#123;</span><br><span class="line">            if i &#x3D;&#x3D; 2 &amp;&amp; j &#x3D;&#x3D; 2 &#123;</span><br><span class="line">                continue forloop1</span><br><span class="line">            &#125;</span><br><span class="line">            fmt.Printf(&quot;%v-%v\n&quot;, i, j)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>输出：</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0-0</span><br><span class="line">0-1</span><br><span class="line">0-2</span><br><span class="line">0-3</span><br><span class="line">0-4</span><br><span class="line">1-0</span><br><span class="line">1-1</span><br><span class="line">1-2</span><br><span class="line">1-3</span><br><span class="line">1-4</span><br><span class="line">2-0</span><br><span class="line">2-1</span><br><span class="line">3-0</span><br><span class="line">3-1</span><br><span class="line">3-2</span><br><span class="line">3-3</span><br><span class="line">3-4</span><br><span class="line">4-0</span><br><span class="line">4-1</span><br><span class="line">4-2</span><br><span class="line">4-3</span><br><span class="line">4-4</span><br></pre></td></tr></table></figure>
-<h2 id="switch-case"><a href="#switch-case" class="headerlink" title="switch case"></a>switch case</h2><blockquote>
-<p><a href="http://wen.topgoer.com/docs/golang/chapter04-3">select 语句</a>：select 语句类似于 switch 语句，但是select会随机执行一个可运行的case。如果没有case可运行，它将阻塞，直到有case可运行。</p>
-</blockquote>
-<p>使用<code>switch</code>语句可方便地对大量的值进行条件判断。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 输出：中指</span><br><span class="line">func switchDemo1() &#123;</span><br><span class="line">    finger :&#x3D; 3</span><br><span class="line">    switch finger &#123;</span><br><span class="line">    case 1:</span><br><span class="line">        fmt.Println(&quot;大拇指&quot;)</span><br><span class="line">    case 2:</span><br><span class="line">        fmt.Println(&quot;食指&quot;)</span><br><span class="line">    case 3:</span><br><span class="line">        fmt.Println(&quot;中指&quot;)</span><br><span class="line">    case 4:</span><br><span class="line">        fmt.Println(&quot;无名指&quot;)</span><br><span class="line">    case 5:</span><br><span class="line">        fmt.Println(&quot;小拇指&quot;)</span><br><span class="line">    default:</span><br><span class="line">        fmt.Println(&quot;无效的输入！&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Go语言规定每个<code>switch</code>只能有一个<code>default</code>分支。</p>
-<p>一个分支可以有多个值，多个<code>case</code>值中间使用英文逗号分隔。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 输出：奇数</span><br><span class="line">func testSwitch3() &#123;</span><br><span class="line">    switch n :&#x3D; 7; n &#123;</span><br><span class="line">    case 1, 3, 5, 7, 9:</span><br><span class="line">        fmt.Println(&quot;奇数&quot;)</span><br><span class="line">    case 2, 4, 6, 8:</span><br><span class="line">        fmt.Println(&quot;偶数&quot;)</span><br><span class="line">    default:</span><br><span class="line">        fmt.Println(n)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>分支还可以使用表达式，这时候<code>switch</code>语句后面不需要再跟判断变量。例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func switchDemo4() &#123;</span><br><span class="line">    age :&#x3D; 30</span><br><span class="line">    switch &#123;</span><br><span class="line">    case age &lt; 25:</span><br><span class="line">        fmt.Println(&quot;好好学习吧&quot;)</span><br><span class="line">    case age &gt; 25 &amp;&amp; age &lt; 35:</span><br><span class="line">        fmt.Println(&quot;好好工作吧&quot;)</span><br><span class="line">    case age &gt; 60:</span><br><span class="line">        fmt.Println(&quot;好好享受吧&quot;)</span><br><span class="line">    default:</span><br><span class="line">        fmt.Println(&quot;活着真好&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>fallthrough</code>语法可以执行满足条件的<code>case</code>的下一个<code>case</code>，是为了兼容C语言中的<code>case</code>设计的。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func switchDemo5() &#123;</span><br><span class="line">    s :&#x3D; &quot;a&quot;</span><br><span class="line">    switch &#123;</span><br><span class="line">    case s &#x3D;&#x3D; &quot;a&quot;:</span><br><span class="line">        fmt.Println(&quot;a&quot;)</span><br><span class="line">        fallthrough</span><br><span class="line">    case s &#x3D;&#x3D; &quot;b&quot;:</span><br><span class="line">        fmt.Println(&quot;b&quot;)</span><br><span class="line">    case s &#x3D;&#x3D; &quot;c&quot;:</span><br><span class="line">        fmt.Println(&quot;c&quot;)</span><br><span class="line">    default:</span><br><span class="line">        fmt.Println(&quot;...&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">a</span><br><span class="line">b</span><br></pre></td></tr></table></figure>
-<h2 id="goto-跳转到指定标签"><a href="#goto-跳转到指定标签" class="headerlink" title="goto(跳转到指定标签)"></a>goto(跳转到指定标签)</h2><p><code>goto</code>语句通过标签进行代码间的无条件跳转。<code>goto</code>语句可以在快速跳出循环、避免重复退出上有一定的帮助。Go语言中使用<code>goto</code>语句能简化一些代码的实现过程。 例如双层嵌套的for循环要退出时：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func gotoDemo1() &#123;</span><br><span class="line">    var breakFlag bool</span><br><span class="line">    for i :&#x3D; 0; i &lt; 10; i++ &#123;</span><br><span class="line">        for j :&#x3D; 0; j &lt; 10; j++ &#123;</span><br><span class="line">            if j &#x3D;&#x3D; 2 &#123;</span><br><span class="line">                &#x2F;&#x2F; 设置退出标签</span><br><span class="line">                breakFlag &#x3D; true</span><br><span class="line">                break</span><br><span class="line">            &#125;</span><br><span class="line">            fmt.Printf(&quot;%v-%v\n&quot;, i, j)</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F; 外层for循环判断</span><br><span class="line">        if breakFlag &#123;</span><br><span class="line">            break</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>输出：</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0-0</span><br><span class="line">0-1</span><br></pre></td></tr></table></figure>
-<p>使用goto语句能简化代码：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func gotoDemo2() &#123;</span><br><span class="line">    for i :&#x3D; 0; i &lt; 10; i++ &#123;</span><br><span class="line">        for j :&#x3D; 0; j &lt; 10; j++ &#123;</span><br><span class="line">            if j &#x3D;&#x3D; 2 &#123;</span><br><span class="line">                &#x2F;&#x2F; 设置退出标签</span><br><span class="line">                goto breakTag</span><br><span class="line">            &#125;</span><br><span class="line">            fmt.Printf(&quot;%v-%v\n&quot;, i, j)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return</span><br><span class="line">    &#x2F;&#x2F; 标签</span><br><span class="line">breakTag:</span><br><span class="line">    fmt.Println(&quot;结束for循环&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h2><blockquote>
-<ol>
-<li>编写代码打印9*9乘法表</li>
-</ol>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>Go</category>
-      </categories>
-      <tags>
-        <tag>go语言基础</tag>
-        <tag>流程控制</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>go基础之切片</title>
     <url>/2020/04/29/go_base_slice/</url>
     <content><![CDATA[<blockquote>
@@ -1967,6 +2330,90 @@ roles/
       </tags>
   </entry>
   <entry>
+    <title>go基础之流程控制</title>
+    <url>/2020/04/09/go_base_process_control/</url>
+    <content><![CDATA[<p>流程控制是每种编程语言控制逻辑走向和执行次序的重要部分，流程控制可以说是一门语言的“经脉”。</p>
+<p>Go语言中最常用的流程控制有<code>if</code>和<code>for</code>，而<code>switch</code>和<code>goto</code>主要是为了简化代码、降低重复代码而生的结构，属于扩展类的流程控制。</p>
+<h2 id="if-else-分支结构"><a href="#if-else-分支结构" class="headerlink" title="if else(分支结构)"></a>if else(分支结构)</h2><h3 id="基本写法"><a href="#基本写法" class="headerlink" title="基本写法"></a>基本写法</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">if 表达式1 &#123;</span><br><span class="line">    分支1</span><br><span class="line">&#125; else if 表达式2 &#123;</span><br><span class="line">    分支2</span><br><span class="line">&#125; else&#123;</span><br><span class="line">    分支3</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Go语言规定与<code>if</code>匹配的左括号<code>&#123;</code>必须与<code>if和表达式</code>放在同一行，<code>&#123;</code>放在其他位置会触发编译错误。 同理，与<code>else</code>匹配的<code>&#123;</code>也必须与<code>else</code>写在同一行，<code>else</code>也必须与上一个<code>if</code>或<code>else if</code>右边的大括号在同一行。</p>
+<blockquote>
+<p>例子：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 输出：C</span><br><span class="line">func ifDemo1() &#123;</span><br><span class="line">    score :&#x3D; 65</span><br><span class="line">    if score &gt;&#x3D; 90 &#123;</span><br><span class="line">        fmt.Println(&quot;A&quot;)</span><br><span class="line">    &#125; else if score &gt; 75 &#123;</span><br><span class="line">        fmt.Println(&quot;B&quot;)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        fmt.Println(&quot;C&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="特殊写法"><a href="#特殊写法" class="headerlink" title="特殊写法"></a>特殊写法</h3><p>与上个例子的区别，<code>score</code>变量只在if分支内生效</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func ifDemo2() &#123;</span><br><span class="line">    if score :&#x3D; 65; score &gt;&#x3D; 90 &#123;</span><br><span class="line">        fmt.Println(&quot;A&quot;)</span><br><span class="line">    &#125; else if score &gt; 75 &#123;</span><br><span class="line">        fmt.Println(&quot;B&quot;)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        fmt.Println(&quot;C&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="for"><a href="#for" class="headerlink" title="for"></a>for</h2><p>Go 语言中的所有循环类型均可以使用<code>for关键字</code>来完成。</p>
+<p>for循环的基本格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">for 初始语句;条件表达式;结束语句&#123;</span><br><span class="line">    循环体语句</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>条件表达式返回<code>true</code>时循环体不停地进行循环，直到条件表达式返回<code>false</code>时自动退出循环。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func forDemo() &#123;</span><br><span class="line">    for i :&#x3D; 0; i &lt; 10; i++ &#123;</span><br><span class="line">        fmt.Println(i)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>for循环的初始语句可以被忽略，但是初始语句后的分号必须要写，例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func forDemo2() &#123;</span><br><span class="line">    i :&#x3D; 0</span><br><span class="line">    for ; i &lt; 10; i++ &#123;</span><br><span class="line">        fmt.Println(i)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>for循环的初始语句和结束语句都可以省略，例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func forDemo3() &#123;</span><br><span class="line">    i :&#x3D; 0</span><br><span class="line">    for i &lt; 10 &#123;</span><br><span class="line">        fmt.Println(i)</span><br><span class="line">        i++</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这种写法类似于其他编程语言中的<code>while</code>，在<code>while</code>后添加一个条件表达式，满足条件表达式时持续循环，否则结束循环。</p>
+<h3 id="无限循环"><a href="#无限循环" class="headerlink" title="无限循环"></a>无限循环</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">for &#123;</span><br><span class="line">    循环体语句</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>for循环可以通过<code>break、goto、return、panic</code>语句强制退出循环。</p>
+<h2 id="for-range-键值循环"><a href="#for-range-键值循环" class="headerlink" title="for range(键值循环)"></a>for range(键值循环)</h2><p>Go语言中可以使用<code>for range</code>遍历数组、切片、字符串、map 及通道（channel）。 通过<code>for range</code>遍历的返回值有以下规律：</p>
+<ol>
+<li>数组、切片、字符串返回索引和值。</li>
+<li>map返回键和值。</li>
+<li>通道（channel）只返回通道内的值。</li>
+</ol>
+<h2 id="break-跳出循环"><a href="#break-跳出循环" class="headerlink" title="break(跳出循环)"></a>break(跳出循环)</h2><p><code>break</code>语句可以结束<code>for</code>、<code>switch</code>和<code>select</code>的代码块。</p>
+<p><code>break</code>语句还可以在语句后面添加标签，表示退出某个标签对应的代码块，标签要求必须定义在对应的<code>for</code>、<code>switch</code>和 <code>select</code>的代码块上。 举个例子：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func breakDemo1() &#123;</span><br><span class="line">BREAKDEMO1:</span><br><span class="line">    for i :&#x3D; 0; i &lt; 10; i++ &#123;</span><br><span class="line">        for j :&#x3D; 0; j &lt; 10; j++ &#123;</span><br><span class="line">            if j &#x3D;&#x3D; 3 &#123;</span><br><span class="line">                break BREAKDEMO1</span><br><span class="line">            &#125;</span><br><span class="line">            fmt.Printf(&quot;%v-%v\n&quot;, i, j)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(&quot;...&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0-0</span><br><span class="line">0-1</span><br><span class="line">0-2</span><br></pre></td></tr></table></figure>
+<h2 id="continue-继续下次循环"><a href="#continue-继续下次循环" class="headerlink" title="continue(继续下次循环)"></a>continue(继续下次循环)</h2><p><code>continue</code> 语句可以结束当前循环，开始下一次的循环迭代过程，仅限在<code>for</code>循环内使用。</p>
+<p>在 <code>continue</code>语句后添加标签时，表示开始标签对应的循环。例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func continueDemo() &#123;</span><br><span class="line">forloop1:</span><br><span class="line">    for i :&#x3D; 0; i &lt; 5; i++ &#123;</span><br><span class="line">        &#x2F;&#x2F; forloop2:</span><br><span class="line">        for j :&#x3D; 0; j &lt; 5; j++ &#123;</span><br><span class="line">            if i &#x3D;&#x3D; 2 &amp;&amp; j &#x3D;&#x3D; 2 &#123;</span><br><span class="line">                continue forloop1</span><br><span class="line">            &#125;</span><br><span class="line">            fmt.Printf(&quot;%v-%v\n&quot;, i, j)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0-0</span><br><span class="line">0-1</span><br><span class="line">0-2</span><br><span class="line">0-3</span><br><span class="line">0-4</span><br><span class="line">1-0</span><br><span class="line">1-1</span><br><span class="line">1-2</span><br><span class="line">1-3</span><br><span class="line">1-4</span><br><span class="line">2-0</span><br><span class="line">2-1</span><br><span class="line">3-0</span><br><span class="line">3-1</span><br><span class="line">3-2</span><br><span class="line">3-3</span><br><span class="line">3-4</span><br><span class="line">4-0</span><br><span class="line">4-1</span><br><span class="line">4-2</span><br><span class="line">4-3</span><br><span class="line">4-4</span><br></pre></td></tr></table></figure>
+<h2 id="switch-case"><a href="#switch-case" class="headerlink" title="switch case"></a>switch case</h2><blockquote>
+<p><a href="http://wen.topgoer.com/docs/golang/chapter04-3">select 语句</a>：select 语句类似于 switch 语句，但是select会随机执行一个可运行的case。如果没有case可运行，它将阻塞，直到有case可运行。</p>
+</blockquote>
+<p>使用<code>switch</code>语句可方便地对大量的值进行条件判断。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 输出：中指</span><br><span class="line">func switchDemo1() &#123;</span><br><span class="line">    finger :&#x3D; 3</span><br><span class="line">    switch finger &#123;</span><br><span class="line">    case 1:</span><br><span class="line">        fmt.Println(&quot;大拇指&quot;)</span><br><span class="line">    case 2:</span><br><span class="line">        fmt.Println(&quot;食指&quot;)</span><br><span class="line">    case 3:</span><br><span class="line">        fmt.Println(&quot;中指&quot;)</span><br><span class="line">    case 4:</span><br><span class="line">        fmt.Println(&quot;无名指&quot;)</span><br><span class="line">    case 5:</span><br><span class="line">        fmt.Println(&quot;小拇指&quot;)</span><br><span class="line">    default:</span><br><span class="line">        fmt.Println(&quot;无效的输入！&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Go语言规定每个<code>switch</code>只能有一个<code>default</code>分支。</p>
+<p>一个分支可以有多个值，多个<code>case</code>值中间使用英文逗号分隔。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 输出：奇数</span><br><span class="line">func testSwitch3() &#123;</span><br><span class="line">    switch n :&#x3D; 7; n &#123;</span><br><span class="line">    case 1, 3, 5, 7, 9:</span><br><span class="line">        fmt.Println(&quot;奇数&quot;)</span><br><span class="line">    case 2, 4, 6, 8:</span><br><span class="line">        fmt.Println(&quot;偶数&quot;)</span><br><span class="line">    default:</span><br><span class="line">        fmt.Println(n)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>分支还可以使用表达式，这时候<code>switch</code>语句后面不需要再跟判断变量。例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func switchDemo4() &#123;</span><br><span class="line">    age :&#x3D; 30</span><br><span class="line">    switch &#123;</span><br><span class="line">    case age &lt; 25:</span><br><span class="line">        fmt.Println(&quot;好好学习吧&quot;)</span><br><span class="line">    case age &gt; 25 &amp;&amp; age &lt; 35:</span><br><span class="line">        fmt.Println(&quot;好好工作吧&quot;)</span><br><span class="line">    case age &gt; 60:</span><br><span class="line">        fmt.Println(&quot;好好享受吧&quot;)</span><br><span class="line">    default:</span><br><span class="line">        fmt.Println(&quot;活着真好&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>fallthrough</code>语法可以执行满足条件的<code>case</code>的下一个<code>case</code>，是为了兼容C语言中的<code>case</code>设计的。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func switchDemo5() &#123;</span><br><span class="line">    s :&#x3D; &quot;a&quot;</span><br><span class="line">    switch &#123;</span><br><span class="line">    case s &#x3D;&#x3D; &quot;a&quot;:</span><br><span class="line">        fmt.Println(&quot;a&quot;)</span><br><span class="line">        fallthrough</span><br><span class="line">    case s &#x3D;&#x3D; &quot;b&quot;:</span><br><span class="line">        fmt.Println(&quot;b&quot;)</span><br><span class="line">    case s &#x3D;&#x3D; &quot;c&quot;:</span><br><span class="line">        fmt.Println(&quot;c&quot;)</span><br><span class="line">    default:</span><br><span class="line">        fmt.Println(&quot;...&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">a</span><br><span class="line">b</span><br></pre></td></tr></table></figure>
+<h2 id="goto-跳转到指定标签"><a href="#goto-跳转到指定标签" class="headerlink" title="goto(跳转到指定标签)"></a>goto(跳转到指定标签)</h2><p><code>goto</code>语句通过标签进行代码间的无条件跳转。<code>goto</code>语句可以在快速跳出循环、避免重复退出上有一定的帮助。Go语言中使用<code>goto</code>语句能简化一些代码的实现过程。 例如双层嵌套的for循环要退出时：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func gotoDemo1() &#123;</span><br><span class="line">    var breakFlag bool</span><br><span class="line">    for i :&#x3D; 0; i &lt; 10; i++ &#123;</span><br><span class="line">        for j :&#x3D; 0; j &lt; 10; j++ &#123;</span><br><span class="line">            if j &#x3D;&#x3D; 2 &#123;</span><br><span class="line">                &#x2F;&#x2F; 设置退出标签</span><br><span class="line">                breakFlag &#x3D; true</span><br><span class="line">                break</span><br><span class="line">            &#125;</span><br><span class="line">            fmt.Printf(&quot;%v-%v\n&quot;, i, j)</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F; 外层for循环判断</span><br><span class="line">        if breakFlag &#123;</span><br><span class="line">            break</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0-0</span><br><span class="line">0-1</span><br></pre></td></tr></table></figure>
+<p>使用goto语句能简化代码：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func gotoDemo2() &#123;</span><br><span class="line">    for i :&#x3D; 0; i &lt; 10; i++ &#123;</span><br><span class="line">        for j :&#x3D; 0; j &lt; 10; j++ &#123;</span><br><span class="line">            if j &#x3D;&#x3D; 2 &#123;</span><br><span class="line">                &#x2F;&#x2F; 设置退出标签</span><br><span class="line">                goto breakTag</span><br><span class="line">            &#125;</span><br><span class="line">            fmt.Printf(&quot;%v-%v\n&quot;, i, j)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return</span><br><span class="line">    &#x2F;&#x2F; 标签</span><br><span class="line">breakTag:</span><br><span class="line">    fmt.Println(&quot;结束for循环&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h2><blockquote>
+<ol>
+<li>编写代码打印9*9乘法表</li>
+</ol>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>go语言基础</tag>
+        <tag>流程控制</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>go基础之数据类型</title>
     <url>/2020/04/08/go_data_type/</url>
     <content><![CDATA[<h2 id="整型"><a href="#整型" class="headerlink" title="整型"></a>整型</h2><p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/go/int_20201118230752.png?x-oss-process=style/original_format"></p>
@@ -2077,6 +2524,67 @@ roles/
       <tags>
         <tag>go语言基础</tag>
         <tag>数据类型</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>go基础之变量和常量</title>
+    <url>/2020/04/08/go_var_constant/</url>
+    <content><![CDATA[<h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><h2 id="变量类型"><a href="#变量类型" class="headerlink" title="变量类型"></a>变量类型</h2><p>变量（Variable）的功能是存储数据。不同的变量保存的数据类型可能会不一样。经过半个多世纪的发展，编程语言已经基本形成了一套固定的类型，常见变量的数据类型有：<code>整型、浮点型、布尔型</code>等。</p>
+<p>Go语言中的每一个变量都有自己的类型，并且变量必须经过声明才能开始使用。</p>
+<h2 id="变量声明-var"><a href="#变量声明-var" class="headerlink" title="变量声明 var"></a>变量声明 var</h2><p>Go语言中的变量需要声明后才能使用，同一作用域内不支持重复声明。 并且Go语言的变量声明后必须使用。</p>
+<h3 id="标准声明"><a href="#标准声明" class="headerlink" title="标准声明"></a>标准声明</h3><p>Go语言的变量声明格式为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var 变量名 变量类型</span><br></pre></td></tr></table></figure>
+<p>变量声明以关键字<code>var</code>开头，变量类型放在变量的后面，行尾无需分号。 举个例子：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name string</span><br><span class="line">var age int</span><br><span class="line">var isOk bool</span><br></pre></td></tr></table></figure>
+<h3 id="批量声明"><a href="#批量声明" class="headerlink" title="批量声明"></a>批量声明</h3><p>每声明一个变量就需要写<code>var</code>关键字会比较繁琐，go语言中还支持批量变量声明：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var (</span><br><span class="line">    a string</span><br><span class="line">    b int</span><br><span class="line">    c bool</span><br><span class="line">    d float32</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h3 id="变量的初始化"><a href="#变量的初始化" class="headerlink" title="变量的初始化"></a>变量的初始化</h3><p>Go语言在声明变量的时候，会自动对变量对应的内存区域进行初始化操作。每个变量会被初始化成其类型的默认值，例如： 整型和浮点型变量的默认值为<code>0</code>。 字符串变量的默认值为<code>空字符串</code>。 布尔型变量默认为<code>false</code>。 切片、函数、指针变量的默认为<code>nil</code>。</p>
+<p>当然我们也可在声明变量的时候为其指定初始值。变量初始化的标准格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var 变量名 类型 &#x3D; 表达式</span><br></pre></td></tr></table></figure>
+<p>举个例子：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name string &#x3D; &quot;Q1mi&quot;</span><br><span class="line">var age int &#x3D; 18</span><br></pre></td></tr></table></figure>
+<p>或者一次初始化多个变量</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name, age &#x3D; &quot;Q1mi&quot;, 20</span><br></pre></td></tr></table></figure>
+<p><strong>类型推导</strong><br>有时候我们会将变量的类型省略，这个时候编译器会根据等号右边的值来推导变量的类型完成初始化。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name &#x3D; &quot;Q1mi&quot;</span><br><span class="line">var age &#x3D; 18</span><br></pre></td></tr></table></figure>
+<h3 id="短变量声明"><a href="#短变量声明" class="headerlink" title="短变量声明 :="></a><strong>短变量声明</strong> :=</h3><p>在函数内部，可以使用更简略的<code>:=</code>方式声明并初始化变量。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">)</span><br><span class="line">&#x2F;&#x2F; 全局变量m</span><br><span class="line">var m &#x3D; 100</span><br><span class="line">&#x2F;&#x2F; n :&#x3D; &quot;smile111&quot; &#x2F;&#x2F; 非法，短变量声明方式只能用于函数内部</span><br><span class="line">func main() &#123;</span><br><span class="line">    n :&#x3D; 10</span><br><span class="line">    m :&#x3D; 200 &#x2F;&#x2F; 此处声明局部变量m</span><br><span class="line">    fmt.Println(m, n)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="匿名变量"><a href="#匿名变量" class="headerlink" title="匿名变量 _"></a><strong>匿名变量</strong> _</h3><p>在使用多重赋值时，如果想要忽略某个值，可以使用<code>匿名变量（anonymous variable）</code>。 匿名变量用一个下划线_表示，例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func foo() (int, string) &#123;</span><br><span class="line">    return 10, &quot;Q1mi&quot;</span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">    x, _ :&#x3D; foo()</span><br><span class="line">    _, y :&#x3D; foo()</span><br><span class="line">    fmt.Println(&quot;x&#x3D;&quot;, x)</span><br><span class="line">    fmt.Println(&quot;y&#x3D;&quot;, y)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>匿名变量不占用命名空间，不会分配内存，所以匿名变量之间不存在重复声明。 (在<code>Lua</code>等编程语言里，匿名变量也被叫做哑元变量。)</p>
+<p> <code>注意事项：</code></p>
+<ol>
+<li>函数外的每个语句都必须以关键字开始（var、const、func等）</li>
+<li><code>:=</code>不能使用在函数外。</li>
+<li><code>_</code>多用于占位，表示忽略值。</li>
+</ol>
+<h2 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h2><p>相对于变量，常量是恒定不变的值，多用于定义程序运行期间不会改变的那些值。 常量的声明和变量声明非常类似，只是把<code>var</code>换成了<code>const</code>，常量在定义的时候必须赋值。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const pi &#x3D; 3.1415</span><br><span class="line">const e &#x3D; 2.7182</span><br></pre></td></tr></table></figure>
+<p>声明了<code>pi</code>和<code>e</code>这两个常量之后，在整个程序运行期间它们的值都不能再发生变化了。</p>
+<p>多个常量也可以一起声明：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    pi &#x3D; 3.1415</span><br><span class="line">    e &#x3D; 2.7182</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>const同时声明多个常量时，如果省略了值则表示和上面一行的值相同。 例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; 100</span><br><span class="line">    n2</span><br><span class="line">    n3</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>上面示例中，常量<code>n1</code>、<code>n2</code>、<code>n3</code>的值都是100。</p>
+<h3 id="iota"><a href="#iota" class="headerlink" title="iota"></a>iota</h3><p><code>iota</code>是go语言的常量计数器，只能在常量的表达式中使用。</p>
+<p><code>iota</code>在const关键字出现时将被重置为0。const中每新增一行常量声明将使iota计数一次(iota可理解为const语句块中的行索引)。 使用iota能简化定义，在定义枚举时很有用。</p>
+<p><strong>举个例子：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; iota &#x2F;&#x2F;0</span><br><span class="line">    n2        &#x2F;&#x2F;1</span><br><span class="line">    n3        &#x2F;&#x2F;2</span><br><span class="line">    n4        &#x2F;&#x2F;3</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><strong>几个常见的iota示例:</strong><br>使用<code>_</code>跳过某些值</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; iota &#x2F;&#x2F;0</span><br><span class="line">    n2        &#x2F;&#x2F;1</span><br><span class="line">    _</span><br><span class="line">    n4        &#x2F;&#x2F;3</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><code>iota</code>声明中间插队</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; iota &#x2F;&#x2F;0</span><br><span class="line">    n2 &#x3D; 100  &#x2F;&#x2F;100</span><br><span class="line">    n3 &#x3D; iota &#x2F;&#x2F;2</span><br><span class="line">    n4        &#x2F;&#x2F;3</span><br><span class="line">)</span><br><span class="line">const n5 &#x3D; iota &#x2F;&#x2F;0</span><br></pre></td></tr></table></figure>
+<p>定义数量级 （这里的<code>&lt;&lt;</code>表示左移操作，<code>1&lt;&lt;10</code>表示将1的二进制表示向左移10位，也就是由<code>1</code>变成了<code>10000000000</code>，也就是十进制的1024。同理<code>2&lt;&lt;2</code>表示将2的二进制表示向左移2位，也就是由<code>10</code>变成了<code>1000</code>，也就是十进制的8。）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    _  &#x3D; iota</span><br><span class="line">    KB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    MB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    GB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    TB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    PB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>多个<code>iota</code>定义在一行</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    a, b &#x3D; iota + 1, iota + 2 &#x2F;&#x2F;1,2</span><br><span class="line">    c, d                      &#x2F;&#x2F;2,3</span><br><span class="line">    e, f                      &#x2F;&#x2F;3,4</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>go语言基础</tag>
+        <tag>variable</tag>
       </tags>
   </entry>
   <entry>
@@ -2290,67 +2798,6 @@ roles/
       </categories>
       <tags>
         <tag>go语言基础</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>go基础之变量和常量</title>
-    <url>/2020/04/08/go_var_constant/</url>
-    <content><![CDATA[<h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><h2 id="变量类型"><a href="#变量类型" class="headerlink" title="变量类型"></a>变量类型</h2><p>变量（Variable）的功能是存储数据。不同的变量保存的数据类型可能会不一样。经过半个多世纪的发展，编程语言已经基本形成了一套固定的类型，常见变量的数据类型有：<code>整型、浮点型、布尔型</code>等。</p>
-<p>Go语言中的每一个变量都有自己的类型，并且变量必须经过声明才能开始使用。</p>
-<h2 id="变量声明-var"><a href="#变量声明-var" class="headerlink" title="变量声明 var"></a>变量声明 var</h2><p>Go语言中的变量需要声明后才能使用，同一作用域内不支持重复声明。 并且Go语言的变量声明后必须使用。</p>
-<h3 id="标准声明"><a href="#标准声明" class="headerlink" title="标准声明"></a>标准声明</h3><p>Go语言的变量声明格式为：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var 变量名 变量类型</span><br></pre></td></tr></table></figure>
-<p>变量声明以关键字<code>var</code>开头，变量类型放在变量的后面，行尾无需分号。 举个例子：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name string</span><br><span class="line">var age int</span><br><span class="line">var isOk bool</span><br></pre></td></tr></table></figure>
-<h3 id="批量声明"><a href="#批量声明" class="headerlink" title="批量声明"></a>批量声明</h3><p>每声明一个变量就需要写<code>var</code>关键字会比较繁琐，go语言中还支持批量变量声明：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var (</span><br><span class="line">    a string</span><br><span class="line">    b int</span><br><span class="line">    c bool</span><br><span class="line">    d float32</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<h3 id="变量的初始化"><a href="#变量的初始化" class="headerlink" title="变量的初始化"></a>变量的初始化</h3><p>Go语言在声明变量的时候，会自动对变量对应的内存区域进行初始化操作。每个变量会被初始化成其类型的默认值，例如： 整型和浮点型变量的默认值为<code>0</code>。 字符串变量的默认值为<code>空字符串</code>。 布尔型变量默认为<code>false</code>。 切片、函数、指针变量的默认为<code>nil</code>。</p>
-<p>当然我们也可在声明变量的时候为其指定初始值。变量初始化的标准格式如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var 变量名 类型 &#x3D; 表达式</span><br></pre></td></tr></table></figure>
-<p>举个例子：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name string &#x3D; &quot;Q1mi&quot;</span><br><span class="line">var age int &#x3D; 18</span><br></pre></td></tr></table></figure>
-<p>或者一次初始化多个变量</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name, age &#x3D; &quot;Q1mi&quot;, 20</span><br></pre></td></tr></table></figure>
-<p><strong>类型推导</strong><br>有时候我们会将变量的类型省略，这个时候编译器会根据等号右边的值来推导变量的类型完成初始化。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name &#x3D; &quot;Q1mi&quot;</span><br><span class="line">var age &#x3D; 18</span><br></pre></td></tr></table></figure>
-<h3 id="短变量声明"><a href="#短变量声明" class="headerlink" title="短变量声明 :="></a><strong>短变量声明</strong> :=</h3><p>在函数内部，可以使用更简略的<code>:=</code>方式声明并初始化变量。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">)</span><br><span class="line">&#x2F;&#x2F; 全局变量m</span><br><span class="line">var m &#x3D; 100</span><br><span class="line">&#x2F;&#x2F; n :&#x3D; &quot;smile111&quot; &#x2F;&#x2F; 非法，短变量声明方式只能用于函数内部</span><br><span class="line">func main() &#123;</span><br><span class="line">    n :&#x3D; 10</span><br><span class="line">    m :&#x3D; 200 &#x2F;&#x2F; 此处声明局部变量m</span><br><span class="line">    fmt.Println(m, n)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="匿名变量"><a href="#匿名变量" class="headerlink" title="匿名变量 _"></a><strong>匿名变量</strong> _</h3><p>在使用多重赋值时，如果想要忽略某个值，可以使用<code>匿名变量（anonymous variable）</code>。 匿名变量用一个下划线_表示，例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func foo() (int, string) &#123;</span><br><span class="line">    return 10, &quot;Q1mi&quot;</span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">    x, _ :&#x3D; foo()</span><br><span class="line">    _, y :&#x3D; foo()</span><br><span class="line">    fmt.Println(&quot;x&#x3D;&quot;, x)</span><br><span class="line">    fmt.Println(&quot;y&#x3D;&quot;, y)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>匿名变量不占用命名空间，不会分配内存，所以匿名变量之间不存在重复声明。 (在<code>Lua</code>等编程语言里，匿名变量也被叫做哑元变量。)</p>
-<p> <code>注意事项：</code></p>
-<ol>
-<li>函数外的每个语句都必须以关键字开始（var、const、func等）</li>
-<li><code>:=</code>不能使用在函数外。</li>
-<li><code>_</code>多用于占位，表示忽略值。</li>
-</ol>
-<h2 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h2><p>相对于变量，常量是恒定不变的值，多用于定义程序运行期间不会改变的那些值。 常量的声明和变量声明非常类似，只是把<code>var</code>换成了<code>const</code>，常量在定义的时候必须赋值。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const pi &#x3D; 3.1415</span><br><span class="line">const e &#x3D; 2.7182</span><br></pre></td></tr></table></figure>
-<p>声明了<code>pi</code>和<code>e</code>这两个常量之后，在整个程序运行期间它们的值都不能再发生变化了。</p>
-<p>多个常量也可以一起声明：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    pi &#x3D; 3.1415</span><br><span class="line">    e &#x3D; 2.7182</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p>const同时声明多个常量时，如果省略了值则表示和上面一行的值相同。 例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; 100</span><br><span class="line">    n2</span><br><span class="line">    n3</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p>上面示例中，常量<code>n1</code>、<code>n2</code>、<code>n3</code>的值都是100。</p>
-<h3 id="iota"><a href="#iota" class="headerlink" title="iota"></a>iota</h3><p><code>iota</code>是go语言的常量计数器，只能在常量的表达式中使用。</p>
-<p><code>iota</code>在const关键字出现时将被重置为0。const中每新增一行常量声明将使iota计数一次(iota可理解为const语句块中的行索引)。 使用iota能简化定义，在定义枚举时很有用。</p>
-<p><strong>举个例子：</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; iota &#x2F;&#x2F;0</span><br><span class="line">    n2        &#x2F;&#x2F;1</span><br><span class="line">    n3        &#x2F;&#x2F;2</span><br><span class="line">    n4        &#x2F;&#x2F;3</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p><strong>几个常见的iota示例:</strong><br>使用<code>_</code>跳过某些值</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; iota &#x2F;&#x2F;0</span><br><span class="line">    n2        &#x2F;&#x2F;1</span><br><span class="line">    _</span><br><span class="line">    n4        &#x2F;&#x2F;3</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p><code>iota</code>声明中间插队</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; iota &#x2F;&#x2F;0</span><br><span class="line">    n2 &#x3D; 100  &#x2F;&#x2F;100</span><br><span class="line">    n3 &#x3D; iota &#x2F;&#x2F;2</span><br><span class="line">    n4        &#x2F;&#x2F;3</span><br><span class="line">)</span><br><span class="line">const n5 &#x3D; iota &#x2F;&#x2F;0</span><br></pre></td></tr></table></figure>
-<p>定义数量级 （这里的<code>&lt;&lt;</code>表示左移操作，<code>1&lt;&lt;10</code>表示将1的二进制表示向左移10位，也就是由<code>1</code>变成了<code>10000000000</code>，也就是十进制的1024。同理<code>2&lt;&lt;2</code>表示将2的二进制表示向左移2位，也就是由<code>10</code>变成了<code>1000</code>，也就是十进制的8。）</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    _  &#x3D; iota</span><br><span class="line">    KB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    MB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    GB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    TB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    PB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p>多个<code>iota</code>定义在一行</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    a, b &#x3D; iota + 1, iota + 2 &#x2F;&#x2F;1,2</span><br><span class="line">    c, d                      &#x2F;&#x2F;2,3</span><br><span class="line">    e, f                      &#x2F;&#x2F;3,4</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Go</category>
-      </categories>
-      <tags>
-        <tag>go语言基础</tag>
-        <tag>variable</tag>
       </tags>
   </entry>
   <entry>
