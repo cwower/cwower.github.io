@@ -1295,7 +1295,7 @@ roles/
 <ol>
 <li>打开 Amazon EC2 控制台。</li>
 <li>在导航窗格中，单击 AMI，然后选择 AMI。</li>
-<li>在 <strong>Details (详细信息)</strong> 选项卡中检查 **Root Device Type (根设备类型) **的值，如下所示：<ul>
+<li>在 <strong>Details (详细信息)</strong> 选项卡中检查 <strong>Root Device Type(根设备类型)</strong> 的值，如下所示：<ul>
 <li>如果值是 <code>ebs</code>，则是 Amazon EBS 支持的 AMI。</li>
 <li>如果值是 <code>instance store</code>，则是实例存储支持的 AMI。</li>
 </ul>
