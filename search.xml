@@ -1619,8 +1619,7 @@ roles/
         <category>AWS</category>
       </categories>
       <tags>
-        <tag>CloudWatch</tag>
-        <tag>Lambda</tag>
+        <tag>ELB</tag>
       </tags>
   </entry>
   <entry>
@@ -1665,8 +1664,7 @@ roles/
         <category>AWS</category>
       </categories>
       <tags>
-        <tag>CloudWatch</tag>
-        <tag>Lambda</tag>
+        <tag>ELB</tag>
       </tags>
   </entry>
   <entry>
@@ -1763,8 +1761,7 @@ roles/
         <category>AWS</category>
       </categories>
       <tags>
-        <tag>CloudWatch</tag>
-        <tag>Lambda</tag>
+        <tag>ELB</tag>
       </tags>
   </entry>
   <entry>
