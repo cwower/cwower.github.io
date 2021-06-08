@@ -1,10 +1,10 @@
+https://www.996promax.com/2020/08/26/aws_ami_1/
 https://www.996promax.com/2020/08/26/aws_ebs_use/
 https://www.996promax.com/2020/09/02/aws_elb_listener/
 https://www.996promax.com/2020/09/02/aws_elb_use/
 https://www.996promax.com/2020/09/02/aws_elb_introduction/
 https://www.996promax.com/2017/03/16/linux_os_install_1/
 https://www.996promax.com/2017/03/16/basic_ops_introduction/
-https://www.996promax.com/2020/08/26/aws_ami_1/
 https://www.996promax.com/2020/09/01/aws_lambda_cloudwatch_operate_ec2/
 https://www.996promax.com/2020/09/02/aws_ec2_monitor/
 https://www.996promax.com/2020/08/23/aws_ec2_create/
