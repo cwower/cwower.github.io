@@ -3405,4 +3405,206 @@ StrictHostKeyChecking=no 对询问的回应（不进行对密钥检查）
         <tag>实践总结</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Linux简介以及32位与64位操作系统</title>
+    <url>/2017/03/16/basic_ops_introduction/</url>
+    <content><![CDATA[<h2 id="Linux操作系统简介"><a href="#Linux操作系统简介" class="headerlink" title="Linux操作系统简介"></a>Linux操作系统简介</h2><p><a href="https://baike.baidu.com/item/Linux/27050?fr=aladdin">Linux</a>，全称GNU/Linux，是一种免费使用和自由传播的类UNIX操作系统，其内核由林纳斯·本纳第克特·托瓦兹于1991年10月5日首次发布，它主要受到Minix和Unix思想的启发，是一个基于POSIX的多用户、多任务、支持多线程和多CPU的操作系统。它能运行主要的Unix工具软件、应用程序和网络协议。它支持32位和64位硬件。Linux继承了Unix以网络为核心的设计思想，是一个性能稳定的多用户网络操作系统。</p>
+<h2 id="常见Linux发行版本"><a href="#常见Linux发行版本" class="headerlink" title="常见Linux发行版本"></a>常见Linux发行版本</h2><p>从技术上来说，李纳斯•托瓦兹开发的 Linux 只是一个内核。内核指的是一个提供设备驱动、文件系统、进程管理、网络通信等功能的系统软件，内核并不是一套完整的操作系统，它只是操作系统的核心。一些组织或厂商将 Linux 内核与各种软件和文档包装起来，并提供系统安装界面和系统配置、设定与管理工具，就构成了 Linux 的发行版本。</p>
+<p>在 Linux 内核的发展过程中，各种 Linux 发行版本起了巨大的作用，正是它们推动了 Linux 的应用，从而让更多的人开始关注 Linux。因此，把 Red Hat、Ubuntu、SUSE 等直接说成 Linux 其实是不确切的，它们是 Linux 的发行版本，更确切地说，应该叫作“以Linux为核心的操作系统软件包”。</p>
+<p>Linux 的各个发行版本使用的是同一个 Linux 内核，因此在内核层不存在什么兼容性问题，每个版本有不一样的感觉，只是在发行版本的最外层（由发行商整合开发的应用）才有所体现。</p>
+<p><strong>Linux 的发行版本可以大体分为两类：</strong></p>
+<ul>
+<li>商业公司维护的发行版本，以著名的 Red Hat 为代表；</li>
+<li>社区组织维护的发行版本，以 Debian 为代表。</li>
+</ul>
+<p><strong>Linux 发行版本的选择：</strong><br>Linux 的发行版本众多，在此不逐一介绍，下面给选择 Linux 发行版本犯愁的朋友一点建议：<br>如果你需要的是一个服务器系统，而且已经厌烦了各种 Linux 的配置，只是想要一个比较稳定的服务器系统，那么建议你选择 CentOS 或 RHEL。<br>如果你只是需要一个桌面系统，而且既不想使用盗版，又不想花大价钱购买商业软件，不想自己定制，也不想在系统上浪费太多时间，则可以选择 Ubuntu。<br>如果你想深入摸索一下 Linux 各个方面的知识，而且还想非常灵活地定制自己的 Linux 系统，那就选择 Gentoo 吧，尽情享受 Gentoo 带来的自由快感。<br>如果你对系统稳定性要求很高，则可以考虑 FreeBSD。<br>如果你需要使用数据库高级服务和电子邮件网络应用，则可以选择 SuSE。</p>
+<h2 id="32位与64位操作系统的区别"><a href="#32位与64位操作系统的区别" class="headerlink" title="32位与64位操作系统的区别"></a>32位与64位操作系统的区别</h2><p><strong><code>操作系统</code></strong> （英语：operating system，缩写作 OS）是管理计算机硬件与软件资源的计算机程序，同时也是计算机系统的内核与基石。操作系统需要处理如管理与配置内存、决定系统资源供需的优先次序、控制输入与输出设备、操作网络与管理文件系统等基本事务。操作系统也提供一个让用户与系统交互的操作界面。</p>
+<p><strong><code>中央处理器</code></strong> （<a href="https://baike.baidu.com/item/%E4%B8%AD%E5%A4%AE%E5%A4%84%E7%90%86%E5%99%A8/284033?fromtitle=CPU&fromid=120556&fr=aladdin">CPU</a>）是你智能设备的大脑。<br>它的任务是通过执行一系列指令来驱动你的设备，包括显示屏、触摸屏、调制解调器等，让一坨塑料金属混合物变成闪亮的智能手机或者平板电脑。<br>移动设备非常复杂，其中的处理器需要执行数百万行指令才能完成人们希望这些设备去做的事。速度和功耗对处理器来说至关重要。速度影响用户体验，功耗影响电池寿命。完美的移动设备必须有好性能以及低功耗。这就是为什么选择什么样的处理器很重要。一个超级耗电、反应迟钝的处理器会很快吸干你的电池，而一个考究的、高效的处理器给你带来高性能和长久的电池寿命。</p>
+<h3 id="CPU对比"><a href="#CPU对比" class="headerlink" title="CPU对比"></a>CPU对比</h3><p>32位系统CPU一次可处理32位数据，即一次处理4个字节<br>64位系统CPU一次可处理64位数据，即一次处理8个字节。</p>
+<p>通俗一点说：</p>
+<ul>
+<li>32位，就相当于你拥有32个工人，每次能完成32个工人的工作量</li>
+<li>64位，就相当于你拥有64个工人，每次能完成64个工人的工作量</li>
+</ul>
+<p>总结： 由32位系统过渡到64位系统，CPU处理数据能力提升了一倍。</p>
+<h3 id="寻址能力"><a href="#寻址能力" class="headerlink" title="寻址能力"></a>寻址能力</h3><p>内存中一个地址占用8bit，即一个字节，32位cpu含有32根地址线，寻址能力为2的32次方个字节，相当于4G内存（所以，如果我们装32位系统，安装8G内存实际上是没有用的）。而64位cpu理论上寻址能力为2的64次方个字节，但目前硬件还达不到这个水准，当然我们用不了这么大的内存。</p>
+<p>另外，补充两点：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1 Byte &#x3D; 8 bit （8）</span><br><span class="line">1 KB &#x3D; 2^10 Byte （1024）</span><br><span class="line">1 MB &#x3D; 2^10 KB （1024）</span><br><span class="line">1 GB &#x3D; 2^10 MB （1024）</span><br><span class="line">1 TB &#x3D; 2^10 GB （1024）</span><br></pre></td></tr></table></figure>
+<p>64位系统下运行64位软件比32位系统运行32位软件要快；<br>但是，64位系统运行32位软件跟32位系统运行32位软件速度应该是一样的 。<br>总结： 64位CPU有更大的寻址能力。</p>
+<h2 id="Linux内核版本命名规则"><a href="#Linux内核版本命名规则" class="headerlink" title="Linux内核版本命名规则"></a>Linux内核版本命名规则</h2><p><strong>1.有关Linux内核版本命名如下：</strong></p>
+<pre><code>major.minor.patch-build.desc
+</code></pre>
+<p>major—–表示主版本号<br>minor—–次版本号<br>patch——对minor版本的修订次数<br>build—–编译次数<br>desc—–当前版本的特殊信息</p>
+<ul>
+<li>次版本号有奇数偶数之分，奇数表示开发版本，偶数表示稳定版</li>
+<li>每次对内核修订一次或打一次补丁就递增版本号中的patch域</li>
+<li>当对少量代码做了优化或者修改，并重新编译一次，那么就递增版本号中的build域</li>
+</ul>
+<p><strong>2.有关desc域</strong><br>desc即description，采用一些具有实际意义的省略字符串来描述当前内核的关键特征。常用的主要有以下几种：<br>rc—-release candidate，表示候选版本<br>smp—-symmetric multiprocessing,表示对称多处理器<br>pp—–pre-patch,表示测试版本<br>EL—-enterprise Linux ，表示企业版<br>fc—-fedora core ,表示Fedora core</p>
+<hr>
+<!--http://c.biancheng.net/view/710.html-->
+<!--https://www.kancloud.cn/thinkphp/linux_basic/43178-->
+<!--https://www.bookstack.cn/read/fasionchan-learn-linux/c01ec522d84363da.md--> 
+
+
+
+]]></content>
+      <categories>
+        <category>基础运维</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>centos7系统安装及Raid划分的完整流程</title>
+    <url>/2017/03/16/linux_os_install_1/</url>
+    <content><![CDATA[<h1 id="一、Centos7的新特性："><a href="#一、Centos7的新特性：" class="headerlink" title="一、Centos7的新特性："></a>一、Centos7的新特性：</h1><p><strong>身份管理</strong><br>kerberos将完全兼容微软活动目录</p>
+<p><strong>性能管理</strong><br>可以收集、分析系统瓶颈</p>
+<p><strong>虚拟化</strong></p>
+<ul>
+<li>完全兼容vmwarevshpere架构</li>
+<li>相比6系列，新增了虚拟I/O，可以为每台虚拟机提供了调用底层PCI 设备的接口</li>
+<li>虚拟机USB3.0接口支持</li>
+<li>QCOW2格式文件更好的支持快照</li>
+<li>新增嵌套虚拟化支持，可以在KVM中安装配置OpenStack</li>
+<li>加强了对VMWARE的技术支持，自带open-vm-tools替换vm-tools</li>
+<li>完全支持最热的技术Docker</li>
+</ul>
+<p><strong>文件系统</strong><br>Centos7 选择XFS作为其默认的文件系统。但仍然兼容ext4。<br>XFS文件系统完全为大数据而生，单个文件系统最大可以支持到8EB大小，单个文件的大小最大可达到16T。（1EB=1024PB   1PB=1024TB）<br>可通过工具xfsdump和xfsrestore来备份和恢复xfs文件系统</p>
+<p><strong>网络管理</strong><br>新增网络管理接口NMCLI</p>
+<p><strong>服务管理</strong><br>使用systemctl 调用服务脚本</p>
+<p><strong>RHEL7桌面</strong><br>使用最新的Gnome 3为默认桌面环境，使用最新的KDE 4.10为备选桌面环境。</p>
+<p><strong>Centos7新特性总结</strong></p>
+<ul>
+<li>对于开发人员最大的变化是内核升级到3.10</li>
+<li>对于系统管理人员最大的变化是系统及服务管理程序修改为Systemd</li>
+<li>对于网络运维人员最大的变化是网络管理程序和服务修改为NetworkManager</li>
+<li>对于存储工程师最大的变化是iSCSI导出服务修改为LIO kernel Target Subsystem</li>
+<li>对于云计算工程师最大的喜讯是原生的支持KVM嵌套虚拟化和Docker容器虚拟化</li>
+</ul>
+<p>#二、安装方法与准备工作（U盘镜像）</p>
+<h2 id="1-安装方法介绍"><a href="#1-安装方法介绍" class="headerlink" title="1. 安装方法介绍"></a>1. 安装方法介绍</h2><p>系统安装分以下两种方式：</p>
+<blockquote>
+<p>注：目前广泛使用<strong>U盘安装</strong>方法，光盘安装方法请简单了解即可</p>
+</blockquote>
+<ol>
+<li><p>方法1：设置服务器光盘启动（根据服务器品牌及服务器自带的安装说明或网络查询）<br>准备工作：根据要求下载指定IOS镜像并进行刻录光盘</p>
+</li>
+<li><p>方法2：设置服务器U盘启动（注意事项同上）<br>准备工作：8G以上U盘、最新版UltraISO（这个要用较新版本，9.3.6以上）、CentOS6/7光盘镜像</p>
+</li>
+</ol>
+<h2 id="2-Centos-iso-常用镜像下载地址："><a href="#2-Centos-iso-常用镜像下载地址：" class="headerlink" title="2. Centos iso 常用镜像下载地址："></a>2. Centos iso 常用镜像下载地址：</h2><ul>
+<li>7.2 <a href="http://archive.kernel.org/centos-vault/7.2.1511/isos/x86_64/CentOS-7-x86_64-DVD-1511.iso">http://archive.kernel.org/centos-vault/7.2.1511/isos/x86_64/CentOS-7-x86_64-DVD-1511.iso</a></li>
+<li>6.5 <a href="http://vault.centos.org/6.5/isos/x86_64/">http://vault.centos.org/6.5/isos/x86_64/</a></li>
+<li>其他：<ul>
+<li><a href="http://isoredirect.centos.org/centos/7/isos/x86_64/">http://isoredirect.centos.org/centos/7/isos/x86_64/</a> </li>
+<li><a href="http://mirror.atlantic.net/centos/7/isos/x86_64/">http://mirror.atlantic.net/centos/7/isos/x86_64/</a></li>
+<li><a href="http://centos.chicago.waneq.com/7/isos/x86_64/">http://centos.chicago.waneq.com/7/isos/x86_64/</a></li>
+<li><a href="http://mirror.mojohost.com/centos/7/isos/x86_64/">http://mirror.mojohost.com/centos/7/isos/x86_64/</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="3-UltraISO制作U盘系统镜像"><a href="#3-UltraISO制作U盘系统镜像" class="headerlink" title="3. UltraISO制作U盘系统镜像"></a>3. UltraISO制作U盘系统镜像</h2><h3 id="3-1-准备工作："><a href="#3-1-准备工作：" class="headerlink" title="3.1 准备工作："></a>3.1 准备工作：</h3><p>8G以上U盘、最新版UltraISO<a href="https://pan.baidu.com/s/1HlZaUQC4NI_E0LXRihsHhg">点我MrGao下载</a>（密码: tza3）、CentOS6/7光盘镜像</p>
+<h3 id="3-2-制作U盘启动盘"><a href="#3-2-制作U盘启动盘" class="headerlink" title="3.2 制作U盘启动盘"></a>3.2 制作U盘启动盘</h3><p>打开<code>UltraISO</code>程序，通过客户端打开iso文件，然后在下面选中我们需要安装的CentOS的镜像，双击打开。</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/OS/0.4882599760750157.png?x-oss-process=style/watermark"></p>
+<p>启动—&gt;写入硬盘映像…</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/OS/0.8140853472936764.png?x-oss-process=style/watermark"></p>
+<p>硬盘驱动器：选择将要写入的U盘<br>写入方式 : USB-HDD+<br>刻录校验：最好选上</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/OS/0.9079941702719487.png?x-oss-process=style/watermark"></p>
+<p>然后点写入。点”是”之前确保U盘中的内容已经备份好</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/OS/0.4809153498612806.png?x-oss-process=style/watermark"></p>
+<p>开始写入硬盘映像，可能需要几分钟，耐心等待哦。</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/OS/0.3567575665802749.png?x-oss-process=style/watermark"></p>
+<p>到这一步就是成功了，点返回。</p>
+<h1 id="三、Centos7版本安装"><a href="#三、Centos7版本安装" class="headerlink" title="三、Centos7版本安装"></a>三、Centos7版本安装</h1><h2 id="3-1-raid划分"><a href="#3-1-raid划分" class="headerlink" title="3.1 raid划分"></a>3.1 raid划分</h2><blockquote>
+<p>Raid的几种类型：关于raid的知识，请自行度娘补充吧</p>
+</blockquote>
+<h3 id="3-1-1-清理历史raid阵列："><a href="#3-1-1-清理历史raid阵列：" class="headerlink" title="3.1.1 清理历史raid阵列："></a>3.1.1 清理历史raid阵列：</h3><p>开机Ctrl+R，直接进入RAID界面，初始界面会显示服务器所有的磁盘信息，如果做过RAID，使用“↑”移动到最上端，选中磁盘组按F2选择“Clear Config”删除RAID阵列；</p>
+<p>最终显示下图效果：</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/OS/1a16e70fe-aa4c-44c2-8441-fb351c615d33.jpg?x-oss-process=style/watermark"></p>
+<h3 id="3-1-2-raid-划分"><a href="#3-1-2-raid-划分" class="headerlink" title="3.1.2 raid 划分"></a>3.1.2 raid 划分</h3><p>选中最上端的磁盘设备，按“F2”，进入下图状态，再次选择“Create New VD”，回车进行磁盘Raid绑定</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/OS/2f56e37c2-af7e-4951-80cf-61aff3399b07.jpg?x-oss-process=style/watermark"></p>
+<p>左上方使用”上下“键选择Raid模式，右侧使用“空格”选择绑定该组Raid的磁盘</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/OS/34ebefef6-474c-4a7c-969c-aa698dbc78c3.jpg?x-oss-process=style/watermark"></p>
+<p>左下角显示绑定完Raid后，核对磁盘容量，然后点击OK完成，如下图：</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/OS/d7880f02-47f9-4901-843f-8402e0b7bace.jpg?x-oss-process=style/watermark"></p>
+<p>绑定完Raid后，选中磁盘组，按F2，选择快速格式化，如下图：</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/OS/54d249f6d-2afb-466a-9ac7-88729d1d9a3f.jpg?x-oss-process=style/watermark"></p>
+<p>划分完成后，可以看到你已经进行划分的raid类型，确认无误，按ESC推出，根据提示按Ctrl+Alt+DEL保存配置重启：</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/OS/6691194.jpg?x-oss-process=style/watermark"></p>
+<p>##3.2 如何选用U盘启动</p>
+<blockquote>
+<p>注：这里特指DELL服务器，其他品牌可能略有差异</p>
+</blockquote>
+<p>开机按F11进入，启动BIOS Boot Manager</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/OS/ac5bfadb2-a9d8-4b96-bed8-9ccf46cbba17.jpg?x-oss-process=style/watermark"></p>
+<p>选择你的USB启动盘，按Enter</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/OS/b51d9fe71-72e6-423e-9e4f-fc9167c8e087.jpg?x-oss-process=style/watermark"></p>
+<h2 id="3-3-系统安装过程"><a href="#3-3-系统安装过程" class="headerlink" title="3.3 系统安装过程"></a>3.3 系统安装过程</h2><blockquote>
+<p>注意：这里的安装过程，是很早之前通过vmware整理的，只为你提供大致流程</p>
+</blockquote>
+<p><strong>1）</strong>选择Install CentOS 7，然后等。。成功引导系统后，会出现下面的界面</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/OS/e0c5b9dc-05f4-418b-b358-323805df87ff.png?x-oss-process=style/watermark"></p>
+<p><strong>2）</strong>选择语言<br>注：生产服务器建议安装英文版本，单击继续按钮</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/OS/852d9dca-46e8-4df6-8d1d-f20dd95632e8.png?x-oss-process=style/watermark"></p>
+<p><strong>3）</strong>日期和时间:<br>注：这里设置为国内使用的时区-东八区 亚洲上海，点击左上角Done完成设置。</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/OS/ee3947d7-0f76-43d0-8eca-58caedf16fef.png?x-oss-process=style/watermark"></p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/OS/433a4787-7b63-4782-be19-f06c78217707.jpg?x-oss-process=style/watermark"></p>
+<p><strong>4）</strong>安全设置（可忽略）</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/OS/7c06a199-5a60-4927-9e6d-51487e3f34a6.png?x-oss-process=style/watermark"></p>
+<p>选择default（默认的）策略就可以，通过<code>Select profile</code>进行选择，单击完成即可 </p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/OS/dd16cc3f-2eb7-4e50-973f-408367b60a75.png?x-oss-process=style/watermark"></p>
+<blockquote>
+<p><strong>安全策略说明</strong>：</p>
+</blockquote>
+<pre><code>Default #默认策略
+隐式XCCDF概要文件。通常情况下,默认不包含规则
+
+Standard System Security Profile #---标准系统安全性配置文件
+这个概要文件包含规则,以确保标准安全级的CenOS Linux 7系统
+
+Draft PCI-DSS v3 Control Baseline for CentOS Linux 7 #---草案PCI-DSS v3控制基线Linux CentOS 7
+这是一个概要草案PCI-DSS v3
+
+CentOS Profile for Cloud Providers (CPCP) #---云提供商CentOS概要(CPCP)
+这是一个SCAP概要草案CentOS云提供商
+
+Common Profile for General-Purpose Systems #---常见的通用概要文件系统
+这个概要文件包含项目普遍通用的桌面和服务器安装
+
+Pre-release Draft STIG for CentOS Linux 7 Server #---CentOS7的预发布草案
+这个概要文件在国防部正在开发共识模型成为STIG配合DISA无线光通信
+</code></pre>
+<p><strong>5）</strong>安装源选择</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/OS/af558643-d248-4b3e-927e-5a7d3257fa91.png?x-oss-process=style/watermark"></p>
+<p>单击验证（可选步骤），验证光盘或镜像是否完整，防止安装过程出现软件包不完整，导致无法安装</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/OS/07b31fef-3015-4a4d-b3d6-c3e76b222042.jpg?x-oss-process=style/watermark"></p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/OS/3df7b851-ba76-4567-a6dc-15d579baab2d.jpg?x-oss-process=style/watermark"></p>
+<p><strong>6）</strong>软件包选择（根据需求，默认最小化安装即可）</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/OS/cd6eeb91-8504-447a-a8d9-681ffc902704.jpg?x-oss-process=style/watermark"></p>
+<p>注：在安装完系统后，可配置yum源再次安装需要的软件包。</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/OS/5289c537-f85e-4dbe-a6c9-8a183086a5f7.jpg?x-oss-process=style/watermark"></p>
+<p><strong>7）</strong>进行磁盘分区</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/OS/9b7c6099-fc27-412b-81b0-1be7c5bd984e.png?x-oss-process=style/watermark"></p>
+<p>勾选计划安装操作系统的磁盘后，在选择下面的I will configure partitioning，然后点击左上角的Done来执行手动分区。<br>自定义分区：</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/OS/26092595-82cf-40c8-b01a-d243db371bcb.jpg?x-oss-process=style/watermark"></p>
+<p>资源分配：<br>注：boot 200M空间即可<br>Swap交换分区以服务器的物理内容x1.5倍的值设置<br>/ 可以将剩下的分区都给根“/”</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/OS/2c351bdf-89a1-453f-9414-64b7dd8a8267.jpg?x-oss-process=style/watermark"></p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/OS/876bee86-9e42-4a5e-8082-66df5796cb97.png?x-oss-process=style/watermark"></p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/OS/92ab2934-060d-4001-bf22-f52a8b1be817.jpg?x-oss-process=style/watermark"></p>
+<p><strong>8）</strong>登录用户密码设置：默认为root用户</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/OS/3662c6a9-a2ee-40ec-8b4c-c4be6f4a4fc1.jpg?x-oss-process=style/watermark"></p>
+<p><strong>9）</strong>安装预设系统及登录验证<br>CentOS 7.x这样默认的安装，是启动到命令行界面的。键入root用户与安装时设置的密码登录到系统。</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/OS/76cfb0a6-9cbe-4ca5-b5b6-ab2fbea294e9.jpg?x-oss-process=style/watermark"></p>
+<p>至此，CentOS7.2版本安装完成！</p>
+<h1 id="四、安装后的基本环境调整"><a href="#四、安装后的基本环境调整" class="headerlink" title="四、安装后的基本环境调整:"></a>四、安装后的基本环境调整:</h1><p>最小化安装的Centos7系统并没有nano、vim、wget、curl、ifconfig、lsof命令，出网后优先安装一下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum -y install nano vim wget curl net-tools lsof zip unzip</span><br></pre></td></tr></table></figure>
+
+<!--http://www.mamicode.com/info-detail-1257726.html-->
+]]></content>
+      <categories>
+        <category>基础运维</category>
+      </categories>
+      <tags>
+        <tag>Linux安装</tag>
+      </tags>
+  </entry>
 </search>
