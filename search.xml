@@ -3480,8 +3480,7 @@ StrictHostKeyChecking=no 对询问的回应（不进行对密钥检查）
 <li>对于存储工程师最大的变化是iSCSI导出服务修改为LIO kernel Target Subsystem</li>
 <li>对于云计算工程师最大的喜讯是原生的支持KVM嵌套虚拟化和Docker容器虚拟化</li>
 </ul>
-<p>#二、安装方法与准备工作（U盘镜像）</p>
-<h2 id="1-安装方法介绍"><a href="#1-安装方法介绍" class="headerlink" title="1. 安装方法介绍"></a>1. 安装方法介绍</h2><p>系统安装分以下两种方式：</p>
+<h1 id="二、安装方法与准备工作（U盘镜像）"><a href="#二、安装方法与准备工作（U盘镜像）" class="headerlink" title="二、安装方法与准备工作（U盘镜像）"></a>二、安装方法与准备工作（U盘镜像）</h1><h2 id="1-安装方法介绍"><a href="#1-安装方法介绍" class="headerlink" title="1. 安装方法介绍"></a>1. 安装方法介绍</h2><p>系统安装分以下两种方式：</p>
 <blockquote>
 <p>注：目前广泛使用<strong>U盘安装</strong>方法，光盘安装方法请简单了解即可</p>
 </blockquote>
@@ -3530,8 +3529,7 @@ StrictHostKeyChecking=no 对询问的回应（不进行对密钥检查）
 <p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/OS/54d249f6d-2afb-466a-9ac7-88729d1d9a3f.jpg?x-oss-process=style/watermark"></p>
 <p>划分完成后，可以看到你已经进行划分的raid类型，确认无误，按ESC推出，根据提示按Ctrl+Alt+DEL保存配置重启：</p>
 <p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/OS/6691194.jpg?x-oss-process=style/watermark"></p>
-<p>##3.2 如何选用U盘启动</p>
-<blockquote>
+<h2 id="3-2-如何选用U盘启动"><a href="#3-2-如何选用U盘启动" class="headerlink" title="3.2 如何选用U盘启动"></a>3.2 如何选用U盘启动</h2><blockquote>
 <p>注：这里特指DELL服务器，其他品牌可能略有差异</p>
 </blockquote>
 <p>开机按F11进入，启动BIOS Boot Manager</p>
