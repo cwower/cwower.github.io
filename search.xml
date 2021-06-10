@@ -2965,7 +2965,7 @@ inode和block：
 <li>软链接：类似于 Windows 系统中给文件创建快捷方式，即产生一个特殊的文件，该文件用来指向另一个文件，此链接方式同样适用于目录。</li>
 <li>硬链接：我们知道，文件的基本信息都存储在 inode 中，而硬链接指的就是给一个文件的 inode 分配多个文件名，通过任何一个文件名，都可以找到此文件的 inode，从而读取该文件的数据信息。</li>
 </ul>
-<p><strong>ln 命令的基本格式：</strong></p>
+<p><strong>语法：</strong></p>
 <pre><code>ln [选项] 源文件 目标文件
 </code></pre>
 <p><strong>选项：</strong></p>
@@ -2973,9 +2973,14 @@ inode和block：
 <li>-s：建立软链接文件。如果不加 “-s” 选项，则建立硬链接文件；</li>
 <li>-f：强制。如果目标文件已经存在，则删除目标文件后再建立链接文件；</li>
 </ul>
+<p><strong>举例：</strong></p>
+<blockquote>
 <p>Example 1：创建硬链接：</p>
+</blockquote>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# touch cangls</span><br><span class="line">[root@localhost ~]# ln &#x2F;root&#x2F;cangls &#x2F;tmp</span><br><span class="line"># 建立硬链接文件，目标文件没有写文件名，会和原名一致；也就是&#x2F;tmp&#x2F;cangls 是硬链接文件</span><br></pre></td></tr></table></figure>
+<blockquote>
 <p>Example 2：创建软链接：</p>
+</blockquote>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# touch bols</span><br><span class="line">[root@localhost ~]# In -s &#x2F;root&#x2F;bols &#x2F;tmp</span><br><span class="line"># 建立软链接文件</span><br></pre></td></tr></table></figure>
 <p>这里需要注意的是，软链接文件的源文件必须写成绝对路径，而不能写成相对路径（硬链接没有这样的要求）；否则软链接文件会报错。这是初学者非常容易犯的错误。</p>
 ]]></content>
@@ -2991,7 +2996,7 @@ inode和block：
     <url>/2017/03/21/linux_command_touch/</url>
     <content><![CDATA[<h1 id="touch-命令"><a href="#touch-命令" class="headerlink" title="touch 命令"></a>touch 命令</h1><p>touch 命令不光可以用来创建文件（当指定操作文件不存在时，该命令会在当前位置建立一个空文件），此命令更重要的功能是修改文件的时间参数（但当文件存在时，会修改此文件的时间参数）。</p>
 <p>Linux 系统中，每个文件主要拥有 3 个时间参数（通过 stat 命令进行查看），分别是文件的访问时间、数据修改时间以及状态修改时间：<br>访问时间（Access Time，简称 atime）：只要文件的内容被读取，访问时间就会更新。例如，使用 cat 命令可以查看文件的内容，此时文件的访问时间就会发生改变。<br>数据修改时间（Modify Time，简称 mtime）：当文件的内容数据发生改变，此文件的数据修改时间就会跟着相应改变。<br>状态修改时间（Change Time，简称 ctime）：当文件的状态发生变化，就会相应改变这个时间。比如说，如果文件的权限或者属性发生改变，此时间就会相应改变。</p>
-<p><strong>命令的基本格式：</strong></p>
+<p><strong>语法：</strong></p>
 <pre><code>touch [选项] 文件名
 </code></pre>
 <p><strong>选项：</strong></p>
@@ -3003,19 +3008,25 @@ inode和block：
 <li>-t：命令后面可以跟欲修订的时间，而不用目前的时间，时间书写格式为 YYMMDDhhmm。</li>
 </ul>
 <p>可以看到，touch 命令可以只修改文件的访问时间，也可以只修改文件的数据修改时间，但是<code>不能只修改文件的状态修改时间</code>。因为，不论是修改访问时间，还是修改文件的数据时间，对文件来讲，状态都会发生改变，即状态修改时间会随之改变（更新为操作当前文件的真正时间）。</p>
+<p><strong>举例：</strong></p>
+<blockquote>
 <p>Example 1：touch 命令创建文件</p>
+</blockquote>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]#touch bols</span><br><span class="line"># 建立名为 bols 的空文件</span><br></pre></td></tr></table></figure>
+<blockquote>
 <p>Example 2：在例 1 的基础上修改文件的访问时间。</p>
+</blockquote>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]#ll --time&#x3D;atime bols</span><br><span class="line"># 查看文件的访问时间</span><br><span class="line">-rw-r--r-- 1 root root 0 Sep 25 21:23 bols</span><br><span class="line"># 文件上次的访问时间为 9 月 25 号 21：23</span><br><span class="line">[root@localhost ~]#touch bols</span><br><span class="line">[root@localhost ~]#ll --time&#x3D;atime bols</span><br><span class="line">-rw-r--r-- 1 root root 0 May 15 16:36 bols</span><br><span class="line"># 而如果文件已经存在，则也不会报错，只是会修改文件的访问时间。</span><br></pre></td></tr></table></figure>
+<blockquote>
 <p>Example 3：修改 bols 文件的 atime 和 mtime。</p>
+</blockquote>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# touch -d &quot;2017-05-04 15:44&quot; bols</span><br><span class="line">[root@localhost ~]# ll bols; ll --time&#x3D;atime bols; ll --time&#x3D;ctime bols</span><br><span class="line">-rw-r--r-- 1 root root 0 May 4 2017 bols</span><br><span class="line">-rw-r--r-- 1 root root 0 May 4 2017 bols</span><br><span class="line">-rw-r--r-- 1 root root 0 Sep 25 21:40 bols</span><br><span class="line"># ctime不会变为设定时间，但更新为当前服务器的时间</span><br></pre></td></tr></table></figure>
-
 ]]></content>
       <categories>
         <category>基础运维</category>
       </categories>
       <tags>
-        <tag>Linux安装</tag>
+        <tag>Linux文件和目录管理</tag>
       </tags>
   </entry>
   <entry>
@@ -4031,6 +4042,219 @@ StrictHostKeyChecking=no 对询问的回应（不进行对密钥检查）
       </categories>
       <tags>
         <tag>S3</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux tar/zip/unzip命令：打包（归档）和压缩详解</title>
+    <url>/2017/03/25/linux_command_tar/</url>
+    <content><![CDATA[<p><strong>打包</strong> 指的是将多个文件和目录集中存储在一个文件中；<br><strong>压缩</strong> 指的是利用算法对文件进行处理，从而达到缩减占用磁盘空间的目的。<br>Linux 下，常用归档（打包）命令有 2 个，分别是 <code>tar</code> 和 <code>dd</code>（相对而言，tar 的使用更为广泛）；常用的压缩命令有很多，比如 <code>gzip、zip、bzip2</code> 等</p>
+<h1 id="tar"><a href="#tar" class="headerlink" title="tar"></a><a href="https://wangchujiang.com/linux-command/c/tar.html">tar</a></h1><p>Linux 系统中，最常用的归档（打包）命令就是 tar，该命令可以将许多文件一起保存到一个单独的磁带或磁盘中进行归档。不仅如此，该命令还可以从归档文件中还原所需文件，也就是打包的反过程，称为解打包。</p>
+<pre><code>使用 tar 命令归档的包通常称为 tar 包（tar 包文件都是以“.tar”结尾的）
+</code></pre>
+<h2 id="tar命令做打包操作"><a href="#tar命令做打包操作" class="headerlink" title="tar命令做打包操作"></a>tar命令做打包操作</h2><p><strong>语法：</strong></p>
+<pre><code>tar [选项] 源文件或目录
+</code></pre>
+<p><strong>选项：</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">-c</td>
+<td align="left">将多个文件或目录进行打包。</td>
+</tr>
+<tr>
+<td align="left">-A</td>
+<td align="left">追加 tar 文件到归档文件。</td>
+</tr>
+<tr>
+<td align="left">-f 包名</td>
+<td align="left">指定包的文件名。包的扩展名是用来给管理员识别格式的，所以一定要正确指定扩展名；</td>
+</tr>
+<tr>
+<td align="left">-v</td>
+<td align="left">显示打包文件过程；</td>
+</tr>
+</tbody></table>
+<p>需要注意的是，在使用 tar 命令指定选项时可以不在选项前面输入“-”。例如，使用“cvf”选项和 “-cvf”起到的作用一样。</p>
+<p><strong>举例：</strong></p>
+<blockquote>
+<p>Example 1：打包文件和目录</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# tar -cvf anaconda-ks.cfg.tar anaconda-ks.cfg</span><br><span class="line"># 把anacondehks.cfg打包为 anacondehks.cfg.tar文件</span><br></pre></td></tr></table></figure>
+<p>选项 “-cvf” 一般是习惯用法，记住打包时需要指定打包之后的文件名，而且要用 “.tar” 作为扩展名。打包目录也是如此：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# ll -d test&#x2F;</span><br><span class="line">drwxr-xr-x 2 root root 4096 6月 17 21:09 test&#x2F;</span><br><span class="line"># test是我们之前的测试目录</span><br><span class="line">[root@localhost ~]# tar -cvf test.tar test&#x2F;</span><br><span class="line">test&#x2F;</span><br><span class="line">test&#x2F;test3</span><br><span class="line">test&#x2F;test2</span><br><span class="line">test&#x2F;test1</span><br><span class="line"># 把目录打包为test.tar文件</span><br><span class="line"># tar命令也可以打包多个文件或目录，只要用空格分开即可。例如:</span><br><span class="line">[root@localhost ~]# tar -cvf ana.tar anaconda-ks.cfg &#x2F;tmp&#x2F;</span><br><span class="line"># 把anaconda-ks.cfg文件和&#x2F;tmp目录打包成ana.tar文件包</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Example 2：包并压缩目录。</p>
+</blockquote>
+<p>首先声明一点，压缩命令不能直接压缩目录，必须先用 tar 命令将目录打包，然后才能用 gzip 命令或 bzip2 命令对打包文件进行压缩。例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]#ll -d test test.tar</span><br><span class="line">drwxr-xr-x 2 root root 4096 6月 17 21:09 test</span><br><span class="line">-rw-r--r-- 1 root root 10240 6月 18 01:06 test.tar</span><br><span class="line"># 我们之前已经把test目录打包成test.tar文件</span><br><span class="line">[root@localhost ~]# gzip test.tar</span><br><span class="line">[root@localhost ~]# ll test.tar.gz</span><br><span class="line">-rw-r--r-- 1 root root 176 6月 18 01:06 test.tar.gz</span><br><span class="line"># gzip命令会把test.tar压缩成test.tar.gz</span><br></pre></td></tr></table></figure>
+<h2 id="tar命令做解打包操作"><a href="#tar命令做解打包操作" class="headerlink" title="tar命令做解打包操作"></a>tar命令做解打包操作</h2><p><strong>语法：</strong></p>
+<pre><code>tar [选项] 压缩包
+</code></pre>
+<p><strong>选项：</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">-x</td>
+<td align="left">对 tar 包做解打包操作。</td>
+</tr>
+<tr>
+<td align="left">-f</td>
+<td align="left">指定要解压的 tar 包的包名。</td>
+</tr>
+<tr>
+<td align="left">-t</td>
+<td align="left">只查看 tar 包中有哪些文件或目录，不对 tar 包做解打包操作。</td>
+</tr>
+<tr>
+<td align="left">-C 目录</td>
+<td align="left">指定解打包位置。</td>
+</tr>
+<tr>
+<td align="left">-v</td>
+<td align="left">显示解打包的具体过程。</td>
+</tr>
+</tbody></table>
+<p>其实解打包和打包相比，只是把打包选项 “-cvf” 更换为 “-xvf”</p>
+<p><strong>举例：</strong></p>
+<blockquote>
+<p>Example1：解打包到当前目录下</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# tar -xvf anaconda-ks.cfg. tar</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Example2：解打包到指定目录下</p>
+</blockquote>
+<p>如果使用 “-xvf” 选项，则会把包中的文件解压到当前目录下。如果想要指定解压位置，则需要使用 “-C(大写)” 选项。例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# tar -xvf test.tar -C &#x2F;tmp</span><br><span class="line"># 把文件包test.tar解打包到&#x2F;tmp&#x2F;目录下</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Example3：查看包中有哪些文件</p>
+</blockquote>
+<p>如果只想查看文件包中有哪些文件，则可以把解打包选项 <code>&quot;-x&quot;</code> 更换为测试选项 <code>&quot;-t&quot;</code>。例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# tar -tvf test.tar</span><br><span class="line">drwxr-xr-x root&#x2F;root 0 2016-06-17 21:09 test&#x2F;</span><br><span class="line">-rw-r-r- root&#x2F;root 0 2016-06-17 17:51 test&#x2F;test3</span><br><span class="line">-rw-r-r- root&#x2F;root 0 2016-06-17 17:51 test&#x2F;test2</span><br><span class="line">-rw-r-r- root&#x2F;root 0 2016-06-17 17:51 test&#x2F;test1</span><br><span class="line"># 会用长格式显示test.tar文件包中文件的详细信息</span><br></pre></td></tr></table></figure>
+<h2 id="tar命令做打包压缩（解压缩解打包）操作"><a href="#tar命令做打包压缩（解压缩解打包）操作" class="headerlink" title="tar命令做打包压缩（解压缩解打包）操作"></a>tar命令做打包压缩（解压缩解打包）操作</h2><p>你可能会觉得 Linux 实在太不智能了，一个打包压缩，居然还要先打包成 “.tar” 格式，再压缩成 “.tar.gz” 或 “.tar.bz2” 格式。其实 tar 命令是可以同时打包压缩的，前面的讲解之所打包和压缩分开，是为了让大家了解在 Linux 中打包和压缩的不同。</p>
+<p><strong>语法：</strong></p>
+<pre><code>tar [选项] 压缩包 源文件或目录
+</code></pre>
+<p><strong>选项：</strong><br>此处常用的选项有以下 2 个，分别是：</p>
+<ul>
+<li>-z：压缩和解压缩 “.tar.gz” 格式；</li>
+<li>-j：压缩和解压缩 “.tar.bz2”格式。</li>
+</ul>
+<p><strong>举例：</strong></p>
+<blockquote>
+<p>Example 1：压缩与解压缩 “.tar.gz”格式。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# tar -zcvf tmp.tar.gz &#x2F;tmp&#x2F;</span><br><span class="line"># 把&#x2F;temp&#x2F;目录直接打包压缩为&quot;.tar.gz&quot;格式，通过&quot;-z&quot;来识别格式，&quot;-cvf&quot;和打包选项一致</span><br></pre></td></tr></table></figure>
+<p>解压缩也只是在解打包选项 “-xvf” 前面加了一个 “-z” 选项。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# tar -zxvf tmp.tar.gz</span><br><span class="line"># 解压缩与解打包&quot;.tar.gz&quot;格式</span><br></pre></td></tr></table></figure>
+<p>前面讲的选项 “-C” 用于指定解压位置、”-t” 用于查看压缩包内容，在这里同样适用。</p>
+<blockquote>
+<p>Example 2：压缩与解压缩 “.tar.bz2” 格式。</p>
+</blockquote>
+<p>和”.tar.gz”格式唯一的不同就是”-zcvf”选项换成了 “-jcvf”，如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# tar -jcvf tmp.tar.bz2 &#x2F;tmp&#x2F;</span><br><span class="line"># 打包压缩为&quot;.tar.bz2&quot;格式，注意压缩包文件名</span><br><span class="line">[root@localhost ~]# tar -jxvf tmp.tar.bz2</span><br><span class="line"># 解压缩与解打包&quot;.tar.bz2&quot;格式</span><br></pre></td></tr></table></figure>
+<p>把文件直接压缩成”.tar.gz”和”.tar.bz2”格式，才是 Linux 中最常用的压缩方式，这是大家一定要掌握的压缩和解压缩方法。</p>
+<p>tar 命令最初被用来在磁带上创建备份，现在可以在任何设备上创建备份。利用 tar 命令可以把一大堆的文件和目录打包成一个文件，这对于备份文件或是将几个文件组合成为一个文件进行网络传输是非常有用的。</p>
+<h1 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h1><p>我们经常会在 Windows 系统上使用 “.zip”格式压缩文件，其实“.zip”格式文件是 Windows 和 Linux 系统都通用的压缩文件类型，属于几种主流的压缩格式（zip、rar等）之一，是一种相当简单的分别压缩每个文件的存储格式，</p>
+<p><strong>语法：</strong></p>
+<pre><code>zip [选项] 压缩包名 源文件或源目录列表
+</code></pre>
+<p><strong>选项：</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">-r</td>
+<td align="left">递归压缩目录，及将制定目录下的所有文件以及子目录全部压缩。</td>
+</tr>
+<tr>
+<td align="left">-m</td>
+<td align="left">将文件压缩之后，删除原始文件，相当于把文件移到压缩文件中。</td>
+</tr>
+<tr>
+<td align="left">-v</td>
+<td align="left">显示详细的压缩过程信息。</td>
+</tr>
+<tr>
+<td align="left">-q</td>
+<td align="left">在压缩的时候不显示命令的执行过程。</td>
+</tr>
+<tr>
+<td align="left">-压缩级别</td>
+<td align="left">压缩级别是从 1~9 的数字，-1 代表压缩速度更快，-9 代表压缩效果更好。</td>
+</tr>
+<tr>
+<td align="left">-u</td>
+<td align="left">更新压缩文件，即往压缩文件中添加新文件。</td>
+</tr>
+</tbody></table>
+<h1 id="unzip"><a href="#unzip" class="headerlink" title="unzip"></a>unzip</h1><p>unzip 命令可以查看和解压缩 zip 文件。<br><strong>语法：</strong></p>
+<pre><code>unzip [选项] 压缩包名
+</code></pre>
+<p><strong>选项：</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">-d 目录名</td>
+<td align="left">将压缩文件解压到指定目录下。</td>
+</tr>
+<tr>
+<td align="left">-n</td>
+<td align="left">解压时并不覆盖已经存在的文件。</td>
+</tr>
+<tr>
+<td align="left">-o</td>
+<td align="left">解压时覆盖已经存在的文件，并且无需用户确认。</td>
+</tr>
+<tr>
+<td align="left">-v</td>
+<td align="left">查看压缩文件的详细信息，包括压缩文件中包含的文件大小、文件名以及压缩比等，但并不做解压操作。</td>
+</tr>
+<tr>
+<td align="left">-t</td>
+<td align="left">测试压缩文件有无损坏，但并不解压。</td>
+</tr>
+<tr>
+<td align="left">-x 文件列表</td>
+<td align="left">解压文件，但不包含文件列表中指定的文件。</td>
+</tr>
+</tbody></table>
+<p><strong>举例：</strong></p>
+<blockquote>
+<p>Example 1：使用 -d 选项手动指定解压缩位置，例如：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# unzip -d &#x2F;tmp&#x2F; ana.zip</span><br><span class="line">Archive: ana.zip</span><br><span class="line">inflating: &#x2F;tmp&#x2F;anaconda-ks.cfg</span><br><span class="line"># 把压缩包解压到指定位置</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>基础运维</category>
+      </categories>
+      <tags>
+        <tag>tar</tag>
+        <tag>zip</tag>
+        <tag>unzip</tag>
+        <tag>gzip</tag>
+        <tag>gunzip</tag>
+        <tag>bzip2</tag>
+        <tag>bunzip2</tag>
       </tags>
   </entry>
 </search>
