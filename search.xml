@@ -1554,7 +1554,7 @@ roles/
   </entry>
   <entry>
     <title>AWS 侦听器配置管理</title>
-    <url>/2020/09/02/aws_elb_listener/</url>
+    <url>/2020/09/03/aws_elb_listener/</url>
     <content><![CDATA[<blockquote>
 <p><strong>知识文档</strong>：</p>
 </blockquote>
@@ -1583,7 +1583,7 @@ roles/
   </entry>
   <entry>
     <title>AWS应用程序负载均衡的使用</title>
-    <url>/2020/09/02/aws_elb_use/</url>
+    <url>/2020/09/03/aws_elb_use/</url>
     <content><![CDATA[<h2 id="配置负载均衡器"><a href="#配置负载均衡器" class="headerlink" title="配置负载均衡器"></a>配置负载均衡器</h2><p>名称：就是ELB的标识名称<br>模式：如果是需要对外Internet访问就选择面向internet；如果是内网服务使用，就选择内部<br>侦听器：就是填写监听的端口，端口号，自定义</p>
 <p>可用区：（这个比较重要）<br>你后端的那些机器在那个VPC、子网、可用区内，这里你就选哪个。<br>例如，我的两台web在默认VPC内的，az-1a和az-1d内，所以我在ALB选择可用区的话，就选择az-1a和az-1d<br><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/824/01a9cdfffeb10700ff42605b6ef322f2.png?x-oss-process=style/original_format"></p>
 <blockquote>
@@ -3924,6 +3924,113 @@ StrictHostKeyChecking=no 对询问的回应（不进行对密钥检查）
       <tags>
         <tag>EC2</tag>
         <tag>CloudWatch</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AWS S3 Bucket 简介</title>
+    <url>/2020/09/05/aws_s3_introduction/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>知识文档</strong>：</p>
+</blockquote>
+<ul>
+<li><a href="https://aws.amazon.com/cn/s3/">产品介绍</a></li>
+<li><a href="https://docs.aws.amazon.com/zh_cn/AmazonS3/latest/gsg/GetStartedWithS3.html">DOSC</a></li>
+</ul>
+<hr>
+<h2 id="对象存储-Amazon-S3"><a href="#对象存储-Amazon-S3" class="headerlink" title="对象存储 Amazon S3"></a>对象存储 <a href="https://docs.aws.amazon.com/zh_cn/AmazonS3/latest/userguide/Welcome.html">Amazon S3</a></h2><p>Amazon Simple Storage Service (Amazon S3) 是一种<code>对象存储</code>服务，提供行业领先的可扩展性、数据可用性、安全性和性能。Amazon S3 可达到 99.999999999%（11 个 9）的持久性，并为全球各地的公司存储数百万个应用程序的数据。</p>
+<h2 id="使用-Amazon-S3-的优势"><a href="#使用-Amazon-S3-的优势" class="headerlink" title="使用 Amazon S3 的优势"></a>使用 Amazon S3 的优势</h2><p>Amazon S3 特意内置了着重于简易性和稳健性的最小功能集。以下是使用 Amazon S3 的一些优势：</p>
+<ul>
+<li>创建存储桶 – 创建和命名存储数据的存储桶。存储桶是 Amazon S3 中用于数据存储的基础容器。</li>
+<li>存储数据 – 在存储桶中存储无限量的数据。可将所需数量的对象上传到 Amazon S3 存储桶。每个对象可包含最多 5 TB 的数据。使用开发人员分配的唯一键值存储和检索每个对象。</li>
+<li>下载数据 – 下载您的数据或允许其他人进行下载。随时下载您的数据或允许其他人进行下载。</li>
+<li>权限 – 对于要在您的 Amazon S3 存储桶中上传或下载数据的其他人员，您可以授予其访问权限或拒绝其访问。将上传和下载的许可授予三种类型的用户。身份验证机制可帮助确保数据安全，以防未授权访问。</li>
+<li>标准接口 – 使用基于标准的 REST 和 SOAP 接口，它们可与任何 Internet 开发工具包搭配使用。<ul>
+<li>注意：HTTP 上的 SOAP 支持已弃用，但是仍可在 HTTPS 上使用。不支持将新 Amazon S3 功能用于 SOAP。我们建议您使用 REST API 或 AWS 开发工具包。</li>
+</ul>
+</li>
+</ul>
+<p>##基本概念</p>
+<ul>
+<li>存储桶：存储桶是 Amazon S3 中用于存储对象的容器。每个对象都储存在一个存储桶中。</li>
+<li>对象：对象是 Amazon S3 中存储的基本实体。对象由对象数据和元数据组成。数据部分对 Amazon S3 不透明。元数据是一组描述对象的名称-值对。其中包括一些默认元数据（如上次修改日期）和标准 HTTP 元数据（如 Content-Type）。您还可以在存储对象时指定自定义元数据。在存储桶中，对象将由键 (名称) 和版本 ID 进行唯一地标识。</li>
+<li>键：键是指存储桶中对象的唯一标识符。存储桶内的每个对象都只能有一个键。存储桶、键和版本 ID 的组合唯一标识各个对象。</li>
+<li>区域：您可以选择一个 AWS 区域供 Amazon S3 存储您创建的存储桶。您可以选择一个区域，以便优化延迟、尽可能降低成本或满足法规要求。在某一区域存储的数据元将一直留在该区域，除非您特意将其传输到另一区域。</li>
+<li>Amazon S3 数据一致性模型：最终一致性</li>
+</ul>
+<h2 id="S3-收费模式"><a href="#S3-收费模式" class="headerlink" title="S3 收费模式"></a>S3 收费模式</h2><p>参考 <a href="https://aws.amazon.com/cn/s3/pricing/">Amazon S3 定价</a>，Amazon S3 成本组成：</p>
+<ul>
+<li>存储</li>
+<li>请求和数据检索(API 调用)</li>
+<li>数据传输</li>
+<li>管理和分析</li>
+<li>复制</li>
+<li>S3 Object Lambda</li>
+</ul>
+<h2 id="Amazon-S3-存储类比较"><a href="#Amazon-S3-存储类比较" class="headerlink" title="Amazon S3 存储类比较"></a>Amazon S3 存储类比较</h2><p>存储类别只有在上传对象，或者通过生命周期管理时涉及到。<br><strong>Topics：</strong></p>
+<ul>
+<li>经常访问对象的存储类</li>
+<li>用于自动优化访问模式不断变化或未知的数据的存储类</li>
+<li>不经常访问对象的存储类</li>
+<li>用于存档对象的存储类</li>
+<li>Amazon S3 on Outposts 的存储类</li>
+<li>比较 Amazon S3 存储类</li>
+<li>设置对象的存储类</li>
+</ul>
+<h2 id="操作入门"><a href="#操作入门" class="headerlink" title="操作入门"></a>操作入门</h2><p>参考文档<a href="https://docs.aws.amazon.com/zh_cn/AmazonS3/latest/gsg/GetStartedWithS3.html"> AWS S3 DOSC</a></p>
+<hr>
+<!--https://docs.aws.amazon.com/zh_cn/AmazonS3/latest/userguide/Welcome.html-->  
+
+]]></content>
+      <categories>
+        <category>AWS</category>
+      </categories>
+      <tags>
+        <tag>S3</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>s3cmd——AWS S3存储桶管理工具</title>
+    <url>/2020/09/05/aws_s3cmd/</url>
+    <content><![CDATA[<p>s3cmd 是用于创建S3桶，上传，检索和管理数据到对象存储命令行实用程序。 本文将指导linux下安装s3cmd程序，以及对象存储服务桶和对象数据管理，包括创建桶、上传、检索、删除及本地与对象存储服务间数据同步等。本文以下内容将以CentOS 7.3的弹性云服务器为例，windows操作系统使用类似。</p>
+<h2 id="1-安装s3cmd"><a href="#1-安装s3cmd" class="headerlink" title="1. 安装s3cmd"></a>1. 安装s3cmd</h2><ul>
+<li>yum：<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ yum -y install s3cmd</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="2-配置s3cmd"><a href="#2-配置s3cmd" class="headerlink" title="2. 配置s3cmd"></a>2. 配置s3cmd</h2><p><strong>执行 <code>$ s3cmd --configure</code>生成配置文件，一路<code>Enter</code>，注意跳过认证并保存配置</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">......</span><br><span class="line">...</span><br><span class="line">Test access with supplied credentials? [Y&#x2F;n] n</span><br><span class="line"></span><br><span class="line">Save settings? [y&#x2F;N] y</span><br><span class="line">Configuration saved to &#39;&#x2F;root&#x2F;.s3cfg&#39;</span><br></pre></td></tr></table></figure>
+<p><strong>修改一下几项：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ vim &#x2F;root&#x2F;.s3cfg</span><br><span class="line">access_key &#x3D; xxx</span><br><span class="line">secret_key &#x3D; xxx</span><br><span class="line">host_base &#x3D; ip:port</span><br><span class="line">host_bucket &#x3D; ip&#x2F;kucketname</span><br><span class="line">use_https &#x3D; False</span><br></pre></td></tr></table></figure>
+<p>其中，access_key和secret_key是在本地创建S3用户时获得，host_base是S3服务所使用的ip地址（包括端口 号）,host_bucket为S3用户下的一个bucket(可在配置之后再创建，但该字段不能为空)</p>
+<h2 id="3-使用s3cmd"><a href="#3-使用s3cmd" class="headerlink" title="3. 使用s3cmd"></a>3. 使用s3cmd</h2><p>通过s3cmd –help查看具体使用方法；</p>
+<ul>
+<li>列举所有 Buckets<br><code>$ s3cmd ls</code></li>
+<li>创建 bucket，且 bucket 名称是唯一的，不能重复。<br><code>s3cmd mb s3://my-bucket-name</code></li>
+<li>删除空 bucket<br><code>s3cmd rb s3://my-bucket-name</code></li>
+<li>列举 Bucket 中的内容<br><code>s3cmd ls s3://my-bucket-name</code></li>
+<li>上传 file.txt 到某个 bucket，<br><code>s3cmd put file.txt s3://my-bucket-name/file.txt</code></li>
+<li>上传并将权限设置为所有人可读<br><code>s3cmd put --acl-public file.txt s3://my-bucket-name/file.txt</code></li>
+<li>批量上传文件<br><code>s3cmd put ./* s3://my-bucket-name/</code></li>
+<li>下载文件<br><code>s3cmd get s3://my-bucket-name/file.txt file.txt</code></li>
+<li>批量下载<br><code>s3cmd get s3://my-bucket-name/* ./</code></li>
+<li>删除文件<br><code>s3cmd del s3://my-bucket-name/file.txt</code></li>
+<li>来获得对应的bucket所占用的空间大小<br><code>s3cmd du -H s3://my-bucket-name</code></li>
+<li>设置S3 bucket的Public权限<br><code>s3cmd setacl s3://myexamplebucket.calvium.com/ --acl-public --recursive</code></li>
+</ul>
+<hr>
+<!--  https://blog.csdn.net/baidu_26495369/article/details/81535209  -->
+<!--  https://blog.51cto.com/weimouren/2166601  -->
+<!--  https://bbs.huaweicloud.com/blogs/378ac7ff96c611e7b8317ca23e93a891  -->
+<!--  https://www.cnblogs.com/xd502djj/p/3604783.htmlhttps://www.cnblogs.com/xd502djj/p/3604783.html  -->
+<!--https://www.cnblogs.com/hiyang/p/12631922.html-->
+
+
+]]></content>
+      <categories>
+        <category>AWS</category>
+      </categories>
+      <tags>
+        <tag>S3</tag>
       </tags>
   </entry>
 </search>
