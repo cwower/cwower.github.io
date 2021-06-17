@@ -3960,8 +3960,7 @@ StrictHostKeyChecking=no 对询问的回应（不进行对密钥检查）
 </ul>
 </li>
 </ul>
-<p>##基本概念</p>
-<ul>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
 <li>存储桶：存储桶是 Amazon S3 中用于存储对象的容器。每个对象都储存在一个存储桶中。</li>
 <li>对象：对象是 Amazon S3 中存储的基本实体。对象由对象数据和元数据组成。数据部分对 Amazon S3 不透明。元数据是一组描述对象的名称-值对。其中包括一些默认元数据（如上次修改日期）和标准 HTTP 元数据（如 Content-Type）。您还可以在存储对象时指定自定义元数据。在存储桶中，对象将由键 (名称) 和版本 ID 进行唯一地标识。</li>
 <li>键：键是指存储桶中对象的唯一标识符。存储桶内的每个对象都只能有一个键。存储桶、键和版本 ID 的组合唯一标识各个对象。</li>
@@ -4003,11 +4002,8 @@ StrictHostKeyChecking=no 对询问的回应（不进行对密钥检查）
     <title>s3cmd——AWS S3存储桶管理工具</title>
     <url>/2020/09/05/aws_s3cmd/</url>
     <content><![CDATA[<p>s3cmd 是用于创建S3桶，上传，检索和管理数据到对象存储命令行实用程序。 本文将指导linux下安装s3cmd程序，以及对象存储服务桶和对象数据管理，包括创建桶、上传、检索、删除及本地与对象存储服务间数据同步等。本文以下内容将以CentOS 7.3的弹性云服务器为例，windows操作系统使用类似。</p>
-<h2 id="1-安装s3cmd"><a href="#1-安装s3cmd" class="headerlink" title="1. 安装s3cmd"></a>1. 安装s3cmd</h2><ul>
-<li>yum：<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ yum -y install s3cmd</span><br></pre></td></tr></table></figure>
+<h2 id="1-安装s3cmd"><a href="#1-安装s3cmd" class="headerlink" title="1. 安装s3cmd"></a>1. 安装s3cmd</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ yum -y install s3cmd</span><br></pre></td></tr></table></figure>
 
-</li>
-</ul>
 <h2 id="2-配置s3cmd"><a href="#2-配置s3cmd" class="headerlink" title="2. 配置s3cmd"></a>2. 配置s3cmd</h2><p><strong>执行 <code>$ s3cmd --configure</code>生成配置文件，一路<code>Enter</code>，注意跳过认证并保存配置</strong></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">......</span><br><span class="line">...</span><br><span class="line">Test access with supplied credentials? [Y&#x2F;n] n</span><br><span class="line"></span><br><span class="line">Save settings? [y&#x2F;N] y</span><br><span class="line">Configuration saved to &#39;&#x2F;root&#x2F;.s3cfg&#39;</span><br></pre></td></tr></table></figure>
 <p><strong>修改一下几项：</strong></p>
@@ -4217,6 +4213,10 @@ StrictHostKeyChecking=no 对询问的回应（不进行对密钥检查）
 <td align="left">将压缩文件解压到指定目录下。</td>
 </tr>
 <tr>
+<td align="left">-q</td>
+<td align="left">执行时不显示任何信息；</td>
+</tr>
+<tr>
 <td align="left">-n</td>
 <td align="left">解压时并不覆盖已经存在的文件。</td>
 </tr>
@@ -4249,12 +4249,7 @@ StrictHostKeyChecking=no 对询问的回应（不进行对密钥检查）
       </categories>
       <tags>
         <tag>tar</tag>
-        <tag>zip</tag>
-        <tag>unzip</tag>
-        <tag>gzip</tag>
-        <tag>gunzip</tag>
-        <tag>bzip2</tag>
-        <tag>bunzip2</tag>
+        <tag>command</tag>
       </tags>
   </entry>
 </search>
