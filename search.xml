@@ -1,121 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Go语言开发环境</title>
-    <url>/2020/01/31/Go%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
-    <content><![CDATA[<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><blockquote>
-<p>下载地址：</p>
-</blockquote>
-<p>Go官网下载地址：<a href="https://golang.org/dl/">https://golang.org/dl/</a><br>Go官方镜像站（推荐）：<a href="https://golang.google.cn/dl/">https://golang.google.cn/dl/</a></p>
-<blockquote>
-<p>版本的选择：</p>
-</blockquote>
-<p>Windows平台和Mac平台推荐下载可执行文件版，Linux平台下载压缩文件版。<br>Go语言更新迭代比较快，推荐使用较新版本，体验最新特性。</p>
-<h3 id="Linux下安装"><a href="#Linux下安装" class="headerlink" title="Linux下安装"></a>Linux下安装</h3><blockquote>
-<p>下载地址：</p>
-</blockquote>
-<p>Go官网下载地址：<a href="https://golang.org/dl/">https://golang.org/dl/</a><br>Go官方镜像站（推荐）：<a href="https://golang.google.cn/dl/">https://golang.google.cn/dl/</a></p>
-<p>如果不是要在Linux平台敲go代码就不需要在Linux平台安装Go，我们开发机上写好的go代码只需要跨平台编译（详见文章末尾的跨平台编译）好之后就可以拷贝到Linux服务器上运行了，这也是go程序跨平台易部署的优势。</p>
-<p>我们在版本选择页面选择并下载好<code>go1.14.1.linux-amd64.tar.gz</code>文件：</p>
-<p><code>wget https://dl.google.com/go/go1.14.1.linux-amd64.tar.gz</code><br>将下载好的文件解压到/usr/local目录下：</p>
-<p><code>tar -zxvf go1.14.1.linux-amd64.tar.gz -C /usr/local  # 解压</code><br>如果提示没有权限，加上sudo以root用户的身份再运行。执行完就可以在/usr/local/下看到go目录了。</p>
-<p>配置环境变量： Linux下有两个文件可以配置环境变量，其中/etc/profile是对所有用户生效的；$HOME/.profile是对当前用户生效的，根据自己的情况自行选择一个文件打开，添加如下两行代码，保存退出。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export GOROOT&#x3D;&#x2F;usr&#x2F;local&#x2F;go</span><br><span class="line">export PATH&#x3D;$PATH:$GOROOT&#x2F;bin</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>在开发 Go 项目时，你还需要一个环境变量来保存你的工作目录。<br><code>export GOPATH=$HOME/Applications/Go</code><br><code>$GOPATH</code> 可以包含多个工作目录，取决于你的个人情况。如果你设置了多个工作目录，那么当你在之后使用 <code>go get</code>（远程包安装命令）时远程包将会被安装在第一个目录下。</p>
-</blockquote>
-<p>修改/etc/profile后要重启生效，修改$HOME/.profile后使用source命令加载$HOME/.profile文件即可生效。 检查：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">~ go version</span><br><span class="line">go version go1.14.1 linux&#x2F;amd64</span><br></pre></td></tr></table></figure>
-<p><strong>GOPROXY</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ export GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn</span><br></pre></td></tr></table></figure>
-<p>或者</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ echo &quot;export GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn&quot; &gt;&gt; ~&#x2F;.profile &amp;&amp; source ~&#x2F;.profile</span><br></pre></td></tr></table></figure>
-<h2 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h2><h3 id="GOROOT和GOPATH"><a href="#GOROOT和GOPATH" class="headerlink" title="GOROOT和GOPATH"></a>GOROOT和GOPATH</h3><p><code>GOROOT</code>和<code>GOPATH</code>都是环境变量，其中<code>GOROOT</code>是我们安装go开发包的路径，而从Go 1.8版本开始，Go开发包在安装完成后会为<code>GOPATH</code>设置一个默认目录，参见下表。<br><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/golang/gopath_20200915161111.png?x-oss-process=style/original_format"></p>
-<p>我们只需要记住默认的<code>GOPATH</code>路径在哪里就可以了，并且默认情况下 <code>GOROOT</code>下的bin目录及<code>GOPATH</code>下的bin目录都已经添加到环境变量中了，我们也不需要额外配置了。</p>
-<hr>
-<p>Go<code>1.14版本之后</code>，都推荐使用<code>go mod</code>模式来管理依赖环境了，也不再强制我们把代码必须写在<code>GOPATH</code>下面的src目录了；<code>GOPATH</code>下可以包含多个包含 Go 语言源码文件、包文件和可执行文件的路径，而这些路径下又必须分别包含三个规定的目录：<code>src、pkg 和 bin</code>，这三个目录分别用于存放源码文件、包文件和可执行文件。你可以在你电脑的任意位置编写go代码。（网上有些教程适用于1.11版本之前。）</p>
-<blockquote>
-<p>在<code>老版本1.11之前</code>，Go语言开发的时候，我们的代码总是会保存在<code>$GOPATH/src</code>目录下。在工程经过<code>go build、go install</code>或<code>go get</code>等指令后，会将下载的第三方包源代码文件放在<code>$GOPATH/src</code>目录下， 产生的二进制可执行文件放在 <code>$GOPATH/bin</code>目录下，生成的中间缓存文件会被保存在<code>$GOPATH/pkg</code> 下。<br>如果我们使用版本管理工具（Version Control System，VCS。常用如Git）来管理我们的项目代码时，我们只需要添加$GOPATH/src目录的源代码即可。bin 和 pkg 目录的内容无需版本控制。</p>
-</blockquote>
-<h3 id="GOPROXY"><a href="#GOPROXY" class="headerlink" title="GOPROXY"></a>GOPROXY</h3><p>默认GoPROXY配置是：<code>GOPROXY=https://proxy.golang.org,direct</code>，由于国内访问不到<code>https://proxy.golang.org</code>，所以我们需要换一个PROXY，这里推荐使用<code>https://goproxy.io</code>或<code>https://goproxy.cn</code>。</p>
-<p>可以执行下面的命令修改GOPROXY：<br><code>go env -w GOPROXY=https://goproxy.cn,direct</code></p>
-<h3 id="企业开发者的go项目结构"><a href="#企业开发者的go项目结构" class="headerlink" title="企业开发者的go项目结构"></a>企业开发者的go项目结构</h3><blockquote>
-<p>参考文档：<a href="%5Bhttp://www.topgoer.com/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/%E9%85%8D%E7%BD%AEgopath.html%5D(http://www.topgoer.com/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/%E9%85%8D%E7%BD%AEgopath.html)">go语言中文文档</a></p>
-</blockquote>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/golang/gopath-qy.png?x-oss-process=style/original_format"></p>
-<h2 id="编辑器"><a href="#编辑器" class="headerlink" title="编辑器"></a>编辑器</h2><h3 id="vs-code"><a href="#vs-code" class="headerlink" title="vs code"></a>vs code</h3><p><code>Visual Studio Code</code>，简称<code>VS Code</code>，它是目前使用人数最多的编辑器。尽管它由微软发布于2015年，与其他热门编辑器相比显得有些年轻，但它在过去几年中一直在不停的更新，它在最新的<code>Stack Overflow</code>调查中被选为<code>Web</code>开发人员中最受欢迎的文本编辑器。</p>
-<p><code>VS Code</code>不仅仅是一个基本的代码编辑器。有人说它更像是<code>IDE</code>而不是代码编辑器，因为它提供了许多通常只在<code>IDE</code>中才有的功能。主要功能包括内置调试工具，智能代码提示，集成终端以及对简易的<code>Git</code>操作（微软刚收购了GitHub）。作为初学者，您可以利用这些功能大大提高编程效率。</p>
-<blockquote>
-<p>下载地址：</p>
-</blockquote>
-<p><a href="https://code.visualstudio.com/">https://code.visualstudio.com/</a></p>
-<h4 id="配置中文"><a href="#配置中文" class="headerlink" title="配置中文"></a>配置中文</h4><p>点击左侧菜单栏最后一项<code>管理扩展</code>，在搜索框中输入<code>chinese</code>，选中结果列表第一项，点击<code>install</code>安装。<br><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/03/install_cn_language.gif?x-oss-process=style/gif_format"></p>
-<h4 id="安装go插件"><a href="#安装go插件" class="headerlink" title="安装go插件"></a>安装go插件</h4><p>启动<code>vscode</code>选择插件-&gt;搜<code>go</code>选择<code>Go for Visual Studio Code</code>插件点击安装即可</p>
-<h4 id="安装Go语言开发工具包"><a href="#安装Go语言开发工具包" class="headerlink" title="安装Go语言开发工具包"></a>安装Go语言开发工具包</h4><p>在Go语言开发的时候为我们提供诸如代码提示、代码自动补全等功能。</p>
-<p>Windows平台按下<code>Ctrl+Shift+P</code>，Mac平台按<code>Command+Shift+P</code>，这个时候<code>VS Code</code>界面会弹出一个输入框；</p>
-<p>我们在这个输入框中输入&gt;<code>go:install</code>，下面会自动搜索相关命令，我们选择<code>Go:Install/Update Tools</code>这个命令，选中并会回车执行该命令（或者使用鼠标点击该命令）<br><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/03/16tools.png?x-oss-process=style/original_format"></p>
-<p>VS Code此时会下载并安装上图列出来的16个工具，但是由于国内的网络环境基本上都会出现安装失败</p>
-<p><strong>两种方法解决这个问题：</strong></p>
-<blockquote>
-<p>方法一：使用git下载源代码再安装</p>
-</blockquote>
-<p>我们可以手动从github上下载工具，(执行此步骤前提需要你的电脑上已经安装了git)<br>第一步：现在自己的<code>GOPATH</code>的<code>src</code>目录下创建<code>golang.org/x</code>目录<br>第二步：在终端/cmd中cd到<code>GOPATH/src/golang.org/x</code>目录下<br>第三步：执行<code>git clone https://github.com/golang/tools.git tools</code>命令<br>第四步：执行<code>git clone https://github.com/golang/lint.git</code>命令<br>第五步：按下<code>Ctrl/Command+Shift+P</code>再次执行<code>Go:Install/Update Tools</code>命令，在弹出的窗口全选并点击确定，这一次的安装都会SUCCESSED了。<br>经过上面的步骤就可以安装成功了。 这个时候创建一个Go文件，就能正常使用代码提示、代码格式化等工具了。</p>
-<blockquote>
-<p>方法二：下载已经编译好的可执行文件</p>
-</blockquote>
-<p>如果上面的步骤执行失败了或者懒得一步一步执行，可以直接下载我已经编译好的可执行文件，拷贝到自己电脑上的 <code>go/bin</code>(GO的安装包目录不是代码包啊) 目录下。 </p>
-<blockquote>
-<blockquote>
-<p>链接: <a href="https://pan.baidu.com/s/1kxXsoSXmqwloTKsvRGZbpQ">https://pan.baidu.com/s/1kxXsoSXmqwloTKsvRGZbpQ</a><br>提取码: cucu</p>
-</blockquote>
-</blockquote>
-<p>注意：特别是Mac下需要给拷贝的这些文件赋予可执行的权限。</p>
-<h2 id="第一个Go程序"><a href="#第一个Go程序" class="headerlink" title="第一个Go程序"></a>第一个Go程序</h2><h3 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h3><p>现在我们来创建第一个Go项目——<code>hello</code>。在我们桌面创建一个<code>hello</code>目录。<br>在该目录中创建一个main.go文件：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package main &#x2F;&#x2F; 声明 main 包，表明当前是一个可执行程序</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot; &#x2F;&#x2F; 导入内置 fmt 包</span><br><span class="line"></span><br><span class="line">func main()&#123; &#x2F;&#x2F; main函数，是程序执行的入口</span><br><span class="line">    fmt.Println(&quot;Hello World!&quot;) &#x2F;&#x2F; 在终端打印 Hello World!</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="go-build"><a href="#go-build" class="headerlink" title="go build"></a>go build</h3><p><code>go build</code>表示将源代码编译成可执行文件，或者在其他目录执行以下命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go build hello</span><br></pre></td></tr></table></figure>
-<p>go编译器会去 <code>GOPATH</code>的src目录下查找你要编译的<code>hello</code>项目</p>
-<blockquote>
-<p>如果报错<code>go: cannot find main module; see &#39;go help modules&#39;</code>，可能是变量<code>GO111MODULE</code>导致，试试设置为<code>GO111MODULE=off</code></p>
-</blockquote>
-<p>编译得到的可执行文件会保存在执行编译命令的当前目录下，如果是windows平台会在当前目录下找到hello.exe可执行文件。</p>
-<p>可在终端直接执行该hello.exe文件：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">c:\desktop\hello&gt;hello.exe</span><br><span class="line">Hello World!</span><br></pre></td></tr></table></figure>
-<p>我们还可以使用<code>-o</code>参数来指定编译后得到的可执行文件的名字。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go build -o heiheihei.exe</span><br></pre></td></tr></table></figure>
-<h3 id="go-install"><a href="#go-install" class="headerlink" title="go install"></a>go install</h3><p><code>go install</code>表示安装的意思，它先编译源代码得到可执行文件，然后将可执行文件移动到<code>GOPATH</code>的bin目录下。因为我们的环境变量中配置了<code>GOPATH</code>下的bin目录，所以我们就可以在任意地方直接执行可执行文件了。</p>
-<h4 id="go-install与go-build-的区别"><a href="#go-install与go-build-的区别" class="headerlink" title="go install与go build 的区别"></a>go install与go build 的区别</h4><p><code>go install</code>与<code>go build</code>都可生成执行文件</p>
-<p><code>go build</code>会生成可实行文件放在当前目录中。<br><code>go install</code>则会把它放到<code>$GOPATH/bin</code>中。</p>
-<p><code>go install</code>还会把导入的依赖包编译到<code>$GOPATH/pkg</code>，并缓存，如果包未做更改，下次编译则直接使用缓存。<code>go build</code>命令加参数<code>-i</code>也能达到<code>go install</code>的效果。</p>
-<p>如果项目很大，每次编译都要花很长时间，则建议使用<code>go install</code>来编译，充分利用它对依赖包的缓存功能。</p>
-<h3 id="go-run"><a href="#go-run" class="headerlink" title="go run"></a>go run</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 直接执行go文件，不用编译</span><br><span class="line">go run main.go</span><br></pre></td></tr></table></figure>
-<h3 id="跨平台编译-more"><a href="#跨平台编译-more" class="headerlink" title="跨平台编译(more)"></a>跨平台编译(<a href="%5Bhttps://www.liwenzhou.com/posts/Go/install_go_dev/#autoid-1-5-4%5D(https://www.liwenzhou.com/posts/Go/install_go_dev/#autoid-1-5-4)">more</a>)</h3><p>默认我们go build的可执行文件都是当前操作系统可执行的文件，如果我想在windows下编译一个linux下可执行文件，那需要怎么做呢？</p>
-<p>只需要指定目标操作系统的平台和处理器架构即可：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SET CGO_ENABLED&#x3D;0  &#x2F;&#x2F; 禁用CGO</span><br><span class="line">SET GOOS&#x3D;linux  &#x2F;&#x2F; 目标平台是linux</span><br><span class="line">SET GOARCH&#x3D;amd64  &#x2F;&#x2F; 目标处理器架构是amd64</span><br></pre></td></tr></table></figure>
-<p>使用了cgo的代码是不支持跨平台编译的</p>
-<p>然后再执行go build命令，得到的就是能够在Linux平台运行的可执行文件了。</p>
-<p>Mac 下编译 Linux 和 Windows平台 64位 可执行程序：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;linux GOARCH&#x3D;amd64 go build</span><br><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;windows GOARCH&#x3D;amd64 go build</span><br></pre></td></tr></table></figure>
-<p>Linux 下编译 Mac 和 Windows 平台64位可执行程序：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;darwin GOARCH&#x3D;amd64 go build</span><br><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;windows GOARCH&#x3D;amd64 go build</span><br></pre></td></tr></table></figure>
-<p>Windows下编译Mac平台64位可执行程序：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SET CGO_ENABLED&#x3D;0</span><br><span class="line">SET GOOS&#x3D;darwin</span><br><span class="line">SET GOARCH&#x3D;amd64</span><br><span class="line">go build</span><br></pre></td></tr></table></figure>
-
-<hr>
-<p>&nbsp;  </p>
-<!--**参考文章**：-->  
-<!--  https://www.liwenzhou.com/posts/Go/install_go_dev/  -->
-<!--  path https://learnku.com/docs/the-way-to-go/go-environment-variable/3565  -->
-<!--  mod https://blog.csdn.net/weixin_39003229/article/details/97638573  -->
-]]></content>
-      <categories>
-        <category>Go</category>
-      </categories>
-      <tags>
-        <tag>env</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hexo 食用说明</title>
     <url>/1992/06/21/Github-Pages_Hexo/</url>
     <content><![CDATA[<h1 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h1><p><strong>部署环境</strong>：</p>
@@ -243,6 +128,121 @@ timezone: 时区
       </tags>
   </entry>
   <entry>
+    <title>Go语言开发环境</title>
+    <url>/2020/01/31/Go%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
+    <content><![CDATA[<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><blockquote>
+<p>下载地址：</p>
+</blockquote>
+<p>Go官网下载地址：<a href="https://golang.org/dl/">https://golang.org/dl/</a><br>Go官方镜像站（推荐）：<a href="https://golang.google.cn/dl/">https://golang.google.cn/dl/</a></p>
+<blockquote>
+<p>版本的选择：</p>
+</blockquote>
+<p>Windows平台和Mac平台推荐下载可执行文件版，Linux平台下载压缩文件版。<br>Go语言更新迭代比较快，推荐使用较新版本，体验最新特性。</p>
+<h3 id="Linux下安装"><a href="#Linux下安装" class="headerlink" title="Linux下安装"></a>Linux下安装</h3><blockquote>
+<p>下载地址：</p>
+</blockquote>
+<p>Go官网下载地址：<a href="https://golang.org/dl/">https://golang.org/dl/</a><br>Go官方镜像站（推荐）：<a href="https://golang.google.cn/dl/">https://golang.google.cn/dl/</a></p>
+<p>如果不是要在Linux平台敲go代码就不需要在Linux平台安装Go，我们开发机上写好的go代码只需要跨平台编译（详见文章末尾的跨平台编译）好之后就可以拷贝到Linux服务器上运行了，这也是go程序跨平台易部署的优势。</p>
+<p>我们在版本选择页面选择并下载好<code>go1.14.1.linux-amd64.tar.gz</code>文件：</p>
+<p><code>wget https://dl.google.com/go/go1.14.1.linux-amd64.tar.gz</code><br>将下载好的文件解压到/usr/local目录下：</p>
+<p><code>tar -zxvf go1.14.1.linux-amd64.tar.gz -C /usr/local  # 解压</code><br>如果提示没有权限，加上sudo以root用户的身份再运行。执行完就可以在/usr/local/下看到go目录了。</p>
+<p>配置环境变量： Linux下有两个文件可以配置环境变量，其中/etc/profile是对所有用户生效的；$HOME/.profile是对当前用户生效的，根据自己的情况自行选择一个文件打开，添加如下两行代码，保存退出。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export GOROOT&#x3D;&#x2F;usr&#x2F;local&#x2F;go</span><br><span class="line">export PATH&#x3D;$PATH:$GOROOT&#x2F;bin</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在开发 Go 项目时，你还需要一个环境变量来保存你的工作目录。<br><code>export GOPATH=$HOME/Applications/Go</code><br><code>$GOPATH</code> 可以包含多个工作目录，取决于你的个人情况。如果你设置了多个工作目录，那么当你在之后使用 <code>go get</code>（远程包安装命令）时远程包将会被安装在第一个目录下。</p>
+</blockquote>
+<p>修改/etc/profile后要重启生效，修改$HOME/.profile后使用source命令加载$HOME/.profile文件即可生效。 检查：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">~ go version</span><br><span class="line">go version go1.14.1 linux&#x2F;amd64</span><br></pre></td></tr></table></figure>
+<p><strong>GOPROXY</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ export GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ echo &quot;export GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn&quot; &gt;&gt; ~&#x2F;.profile &amp;&amp; source ~&#x2F;.profile</span><br></pre></td></tr></table></figure>
+<h2 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h2><h3 id="GOROOT和GOPATH"><a href="#GOROOT和GOPATH" class="headerlink" title="GOROOT和GOPATH"></a>GOROOT和GOPATH</h3><p><code>GOROOT</code>和<code>GOPATH</code>都是环境变量，其中<code>GOROOT</code>是我们安装go开发包的路径，而从Go 1.8版本开始，Go开发包在安装完成后会为<code>GOPATH</code>设置一个默认目录，参见下表。<br><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/golang/gopath_20200915161111.png?x-oss-process=style/original_format"></p>
+<p>我们只需要记住默认的<code>GOPATH</code>路径在哪里就可以了，并且默认情况下 <code>GOROOT</code>下的bin目录及<code>GOPATH</code>下的bin目录都已经添加到环境变量中了，我们也不需要额外配置了。</p>
+<hr>
+<p>Go<code>1.14版本之后</code>，都推荐使用<code>go mod</code>模式来管理依赖环境了，也不再强制我们把代码必须写在<code>GOPATH</code>下面的src目录了；<code>GOPATH</code>下可以包含多个包含 Go 语言源码文件、包文件和可执行文件的路径，而这些路径下又必须分别包含三个规定的目录：<code>src、pkg 和 bin</code>，这三个目录分别用于存放源码文件、包文件和可执行文件。你可以在你电脑的任意位置编写go代码。（网上有些教程适用于1.11版本之前。）</p>
+<blockquote>
+<p>在<code>老版本1.11之前</code>，Go语言开发的时候，我们的代码总是会保存在<code>$GOPATH/src</code>目录下。在工程经过<code>go build、go install</code>或<code>go get</code>等指令后，会将下载的第三方包源代码文件放在<code>$GOPATH/src</code>目录下， 产生的二进制可执行文件放在 <code>$GOPATH/bin</code>目录下，生成的中间缓存文件会被保存在<code>$GOPATH/pkg</code> 下。<br>如果我们使用版本管理工具（Version Control System，VCS。常用如Git）来管理我们的项目代码时，我们只需要添加$GOPATH/src目录的源代码即可。bin 和 pkg 目录的内容无需版本控制。</p>
+</blockquote>
+<h3 id="GOPROXY"><a href="#GOPROXY" class="headerlink" title="GOPROXY"></a>GOPROXY</h3><p>默认GoPROXY配置是：<code>GOPROXY=https://proxy.golang.org,direct</code>，由于国内访问不到<code>https://proxy.golang.org</code>，所以我们需要换一个PROXY，这里推荐使用<code>https://goproxy.io</code>或<code>https://goproxy.cn</code>。</p>
+<p>可以执行下面的命令修改GOPROXY：<br><code>go env -w GOPROXY=https://goproxy.cn,direct</code></p>
+<h3 id="企业开发者的go项目结构"><a href="#企业开发者的go项目结构" class="headerlink" title="企业开发者的go项目结构"></a>企业开发者的go项目结构</h3><blockquote>
+<p>参考文档：<a href="%5Bhttp://www.topgoer.com/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/%E9%85%8D%E7%BD%AEgopath.html%5D(http://www.topgoer.com/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/%E9%85%8D%E7%BD%AEgopath.html)">go语言中文文档</a></p>
+</blockquote>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/golang/gopath-qy.png?x-oss-process=style/original_format"></p>
+<h2 id="编辑器"><a href="#编辑器" class="headerlink" title="编辑器"></a>编辑器</h2><h3 id="vs-code"><a href="#vs-code" class="headerlink" title="vs code"></a>vs code</h3><p><code>Visual Studio Code</code>，简称<code>VS Code</code>，它是目前使用人数最多的编辑器。尽管它由微软发布于2015年，与其他热门编辑器相比显得有些年轻，但它在过去几年中一直在不停的更新，它在最新的<code>Stack Overflow</code>调查中被选为<code>Web</code>开发人员中最受欢迎的文本编辑器。</p>
+<p><code>VS Code</code>不仅仅是一个基本的代码编辑器。有人说它更像是<code>IDE</code>而不是代码编辑器，因为它提供了许多通常只在<code>IDE</code>中才有的功能。主要功能包括内置调试工具，智能代码提示，集成终端以及对简易的<code>Git</code>操作（微软刚收购了GitHub）。作为初学者，您可以利用这些功能大大提高编程效率。</p>
+<blockquote>
+<p>下载地址：</p>
+</blockquote>
+<p><a href="https://code.visualstudio.com/">https://code.visualstudio.com/</a></p>
+<h4 id="配置中文"><a href="#配置中文" class="headerlink" title="配置中文"></a>配置中文</h4><p>点击左侧菜单栏最后一项<code>管理扩展</code>，在搜索框中输入<code>chinese</code>，选中结果列表第一项，点击<code>install</code>安装。<br><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/03/install_cn_language.gif?x-oss-process=style/gif_format"></p>
+<h4 id="安装go插件"><a href="#安装go插件" class="headerlink" title="安装go插件"></a>安装go插件</h4><p>启动<code>vscode</code>选择插件-&gt;搜<code>go</code>选择<code>Go for Visual Studio Code</code>插件点击安装即可</p>
+<h4 id="安装Go语言开发工具包"><a href="#安装Go语言开发工具包" class="headerlink" title="安装Go语言开发工具包"></a>安装Go语言开发工具包</h4><p>在Go语言开发的时候为我们提供诸如代码提示、代码自动补全等功能。</p>
+<p>Windows平台按下<code>Ctrl+Shift+P</code>，Mac平台按<code>Command+Shift+P</code>，这个时候<code>VS Code</code>界面会弹出一个输入框；</p>
+<p>我们在这个输入框中输入&gt;<code>go:install</code>，下面会自动搜索相关命令，我们选择<code>Go:Install/Update Tools</code>这个命令，选中并会回车执行该命令（或者使用鼠标点击该命令）<br><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/03/16tools.png?x-oss-process=style/original_format"></p>
+<p>VS Code此时会下载并安装上图列出来的16个工具，但是由于国内的网络环境基本上都会出现安装失败</p>
+<p><strong>两种方法解决这个问题：</strong></p>
+<blockquote>
+<p>方法一：使用git下载源代码再安装</p>
+</blockquote>
+<p>我们可以手动从github上下载工具，(执行此步骤前提需要你的电脑上已经安装了git)<br>第一步：现在自己的<code>GOPATH</code>的<code>src</code>目录下创建<code>golang.org/x</code>目录<br>第二步：在终端/cmd中cd到<code>GOPATH/src/golang.org/x</code>目录下<br>第三步：执行<code>git clone https://github.com/golang/tools.git tools</code>命令<br>第四步：执行<code>git clone https://github.com/golang/lint.git</code>命令<br>第五步：按下<code>Ctrl/Command+Shift+P</code>再次执行<code>Go:Install/Update Tools</code>命令，在弹出的窗口全选并点击确定，这一次的安装都会SUCCESSED了。<br>经过上面的步骤就可以安装成功了。 这个时候创建一个Go文件，就能正常使用代码提示、代码格式化等工具了。</p>
+<blockquote>
+<p>方法二：下载已经编译好的可执行文件</p>
+</blockquote>
+<p>如果上面的步骤执行失败了或者懒得一步一步执行，可以直接下载我已经编译好的可执行文件，拷贝到自己电脑上的 <code>go/bin</code>(GO的安装包目录不是代码包啊) 目录下。 </p>
+<blockquote>
+<blockquote>
+<p>链接: <a href="https://pan.baidu.com/s/1kxXsoSXmqwloTKsvRGZbpQ">https://pan.baidu.com/s/1kxXsoSXmqwloTKsvRGZbpQ</a><br>提取码: cucu</p>
+</blockquote>
+</blockquote>
+<p>注意：特别是Mac下需要给拷贝的这些文件赋予可执行的权限。</p>
+<h2 id="第一个Go程序"><a href="#第一个Go程序" class="headerlink" title="第一个Go程序"></a>第一个Go程序</h2><h3 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h3><p>现在我们来创建第一个Go项目——<code>hello</code>。在我们桌面创建一个<code>hello</code>目录。<br>在该目录中创建一个main.go文件：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package main &#x2F;&#x2F; 声明 main 包，表明当前是一个可执行程序</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot; &#x2F;&#x2F; 导入内置 fmt 包</span><br><span class="line"></span><br><span class="line">func main()&#123; &#x2F;&#x2F; main函数，是程序执行的入口</span><br><span class="line">    fmt.Println(&quot;Hello World!&quot;) &#x2F;&#x2F; 在终端打印 Hello World!</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="go-build"><a href="#go-build" class="headerlink" title="go build"></a>go build</h3><p><code>go build</code>表示将源代码编译成可执行文件，或者在其他目录执行以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go build hello</span><br></pre></td></tr></table></figure>
+<p>go编译器会去 <code>GOPATH</code>的src目录下查找你要编译的<code>hello</code>项目</p>
+<blockquote>
+<p>如果报错<code>go: cannot find main module; see &#39;go help modules&#39;</code>，可能是变量<code>GO111MODULE</code>导致，试试设置为<code>GO111MODULE=off</code></p>
+</blockquote>
+<p>编译得到的可执行文件会保存在执行编译命令的当前目录下，如果是windows平台会在当前目录下找到hello.exe可执行文件。</p>
+<p>可在终端直接执行该hello.exe文件：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">c:\desktop\hello&gt;hello.exe</span><br><span class="line">Hello World!</span><br></pre></td></tr></table></figure>
+<p>我们还可以使用<code>-o</code>参数来指定编译后得到的可执行文件的名字。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go build -o heiheihei.exe</span><br></pre></td></tr></table></figure>
+<h3 id="go-install"><a href="#go-install" class="headerlink" title="go install"></a>go install</h3><p><code>go install</code>表示安装的意思，它先编译源代码得到可执行文件，然后将可执行文件移动到<code>GOPATH</code>的bin目录下。因为我们的环境变量中配置了<code>GOPATH</code>下的bin目录，所以我们就可以在任意地方直接执行可执行文件了。</p>
+<h4 id="go-install与go-build-的区别"><a href="#go-install与go-build-的区别" class="headerlink" title="go install与go build 的区别"></a>go install与go build 的区别</h4><p><code>go install</code>与<code>go build</code>都可生成执行文件</p>
+<p><code>go build</code>会生成可实行文件放在当前目录中。<br><code>go install</code>则会把它放到<code>$GOPATH/bin</code>中。</p>
+<p><code>go install</code>还会把导入的依赖包编译到<code>$GOPATH/pkg</code>，并缓存，如果包未做更改，下次编译则直接使用缓存。<code>go build</code>命令加参数<code>-i</code>也能达到<code>go install</code>的效果。</p>
+<p>如果项目很大，每次编译都要花很长时间，则建议使用<code>go install</code>来编译，充分利用它对依赖包的缓存功能。</p>
+<h3 id="go-run"><a href="#go-run" class="headerlink" title="go run"></a>go run</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 直接执行go文件，不用编译</span><br><span class="line">go run main.go</span><br></pre></td></tr></table></figure>
+<h3 id="跨平台编译-more"><a href="#跨平台编译-more" class="headerlink" title="跨平台编译(more)"></a>跨平台编译(<a href="%5Bhttps://www.liwenzhou.com/posts/Go/install_go_dev/#autoid-1-5-4%5D(https://www.liwenzhou.com/posts/Go/install_go_dev/#autoid-1-5-4)">more</a>)</h3><p>默认我们go build的可执行文件都是当前操作系统可执行的文件，如果我想在windows下编译一个linux下可执行文件，那需要怎么做呢？</p>
+<p>只需要指定目标操作系统的平台和处理器架构即可：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SET CGO_ENABLED&#x3D;0  &#x2F;&#x2F; 禁用CGO</span><br><span class="line">SET GOOS&#x3D;linux  &#x2F;&#x2F; 目标平台是linux</span><br><span class="line">SET GOARCH&#x3D;amd64  &#x2F;&#x2F; 目标处理器架构是amd64</span><br></pre></td></tr></table></figure>
+<p>使用了cgo的代码是不支持跨平台编译的</p>
+<p>然后再执行go build命令，得到的就是能够在Linux平台运行的可执行文件了。</p>
+<p>Mac 下编译 Linux 和 Windows平台 64位 可执行程序：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;linux GOARCH&#x3D;amd64 go build</span><br><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;windows GOARCH&#x3D;amd64 go build</span><br></pre></td></tr></table></figure>
+<p>Linux 下编译 Mac 和 Windows 平台64位可执行程序：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;darwin GOARCH&#x3D;amd64 go build</span><br><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;windows GOARCH&#x3D;amd64 go build</span><br></pre></td></tr></table></figure>
+<p>Windows下编译Mac平台64位可执行程序：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SET CGO_ENABLED&#x3D;0</span><br><span class="line">SET GOOS&#x3D;darwin</span><br><span class="line">SET GOARCH&#x3D;amd64</span><br><span class="line">go build</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!--  https://www.liwenzhou.com/posts/Go/install_go_dev/  -->
+<!--  path https://learnku.com/docs/the-way-to-go/go-environment-variable/3565  -->
+<!--  mod https://blog.csdn.net/weixin_39003229/article/details/97638573  -->
+]]></content>
+      <categories>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>env</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Go语言介绍</title>
     <url>/2020/01/31/Go%E8%AF%AD%E8%A8%80%E7%AE%80%E4%BB%8B/</url>
     <content><![CDATA[<blockquote>
@@ -282,6 +282,43 @@ timezone: 时区
       <categories>
         <category>Go</category>
       </categories>
+  </entry>
+  <entry>
+    <title>好用的Markdown编辑器 —— Pad2 和 Typora</title>
+    <url>/2018/04/21/Pad2%E5%92%8CTypora/</url>
+    <content><![CDATA[<blockquote>
+<p>前言：<br><del>选用“<a href="http://markdownpad.com/">MarkdownPad 2</a>”作为文档编写工具的原因：方便，支持实时预览</del>。<br><strong>[更新]：<code>目前已经由”MarkdownPad 2“转用”Typora“，但本文内容仍然有效</code>。</strong></p>
+</blockquote>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/markdownpad2.png?x-oss-process=style/watermark" alt="md pad 2"></p>
+<hr>
+<h2 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h2><ul>
+<li>MarkdownPad 2 的官网下载地址： <a href="http://markdownpad.com/">http://markdownpad.com/</a></li>
+<li>个人网盘下载（附激活码），点击【<a href="https://pan.baidu.com/s/1Aym5-XRNMuWupvOTIdFHNA">链接</a>】， 提取码：ib02 </li>
+</ul>
+<h2 id="2-破解"><a href="#2-破解" class="headerlink" title="2. 破解"></a>2. 破解</h2><p>安装完毕后，首次启动提示激活，如下图：点击<code>”Enter Key“</code> —&gt; 键入<code>”Email address“</code>和<code>”License key“</code></p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/mdpad2_enterkey.png?x-oss-process=style/watermark" alt="mdpad2_enterkey"></p>
+<h2 id="3-异常"><a href="#3-异常" class="headerlink" title="3. 异常"></a>3. 异常</h2><h3 id="3-1-http渲染"><a href="#3-1-http渲染" class="headerlink" title="3.1 http渲染"></a>3.1 http渲染</h3><p><strong>安装激活后提示</strong>：</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/erro_html_readering.png?x-oss-process=style/watermark" alt="erro_html_readering"></p>
+<p><strong>解决方案</strong>：<br>安装一个SDK的工具包，【<a href="http://markdownpad.com/download/awesomium_v1.6.6_sdk_win.exe">点击获取</a>】，重启pad2即可。</p>
+<h3 id="3-2-PDF格式转换"><a href="#3-2-PDF格式转换" class="headerlink" title="3.2 PDF格式转换"></a>3.2 PDF格式转换</h3><p><strong>问题描述</strong>：<br>”.md“文件中包含”https“的图片链接，通过Mdpad2可以进行预览展示，但使用Mdpad2将其导出为“pdf”文件后，包含”https“的图片链接无法通过”pdf“显示。如果你没有导出需求，可以忽略该问题。</p>
+<p><strong>解决方案</strong>：<br>可以考虑结合使用”<a href="https://www.typora.io/">Typora</a>“进行转换，它也是一款Markdown编辑器，轻便简洁，支持即时渲染技术。</p>
+<p>或者。。。直接放弃”MarkdownPad 2“转而使用”Typora“，这两种MarkDown编辑器都比较亲民。</p>
+<pre><code>”MarkdownPad 2“有左右两个分页窗口，实时预览效果比较好。
+”Typora“刚刚使用，给我的感觉就是简洁，自定义功能较多。
+</code></pre>
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!--  https://blog.csdn.net/xiaojin21cen/article/details/78752561  -->  
+<!--  https://blog.csdn.net/kuangay/article/details/79854665  -->  
+
+]]></content>
+      <categories>
+        <category>Tools</category>
+      </categories>
+      <tags>
+        <tag>markdown</tag>
+      </tags>
   </entry>
   <entry>
     <title>使用oss来存取及优化图片资源</title>
@@ -356,136 +393,6 @@ timezone: 时区
       </categories>
       <tags>
         <tag>oss</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ansible的配置文件</title>
-    <url>/2019/06/06/ansible.cfg/</url>
-    <content><![CDATA[<h2 id="Ansible的配置文件-more"><a href="#Ansible的配置文件-more" class="headerlink" title="Ansible的配置文件(more)"></a>Ansible的配置文件(<a href="https://ansible-tran.readthedocs.io/en/latest/docs/intro_configuration.html#ansible">more</a>)</h2><p>Ansible的一些的设置可以通过配置文件完成.在大多数场景下默认的配置就能满足大多数用户的需求,在一些特殊场景下,用户还是需要自行修改这些配置文件</p>
-<h2 id="读取配置文件的优先级"><a href="#读取配置文件的优先级" class="headerlink" title="读取配置文件的优先级"></a>读取配置文件的优先级</h2><p>ansible的默认配置文件是/etc/ansible/ansible.cfg。其实ansible会按照下面的顺序查找配置文件，并<code>使用第一个发现的</code>配置文件。</p>
-<ul>
-<li>ANSIBLE_CONFIG (an environment variable)</li>
-<li>ansible.cfg (in the current directory)</li>
-<li>.ansible.cfg (in the home directory)</li>
-<li>/etc/ansible/ansible.cfg</li>
-</ul>
-<p><strong>V1.5以前的版本顺序为：</strong></p>
-<ul>
-<li>ansible.cfg (in the current directory)</li>
-<li>ANSIBLE_CONFIG (an environment variable)</li>
-<li>.ansible.cfg (in the home directory)</li>
-<li>/etc/ansible/ansible.cfg</li>
-</ul>
-<h2 id="配置选项详解"><a href="#配置选项详解" class="headerlink" title="配置选项详解"></a>配置选项详解</h2><p>到目前为止，我还没有见到一个配置项超级少，配置超级简单的配置文件；同样的，Ansible的配置文件也不简单，配置项超级多；但是，二八法则同样也适用于这些配置文件，20%的配置项决定了80%的功能，只有那20%的配置项是我们需要去关心的。所以，大家不要害怕，下面我们就将这20%常用的选项进行一一说明和总结。</p>
-<h3 id="defaults配置"><a href="#defaults配置" class="headerlink" title="defaults配置"></a>defaults配置</h3><p><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/05/asb_conf.png?x-oss-process=style/original_format"></p>
-<h3 id="privilege-escalation配置"><a href="#privilege-escalation配置" class="headerlink" title="privilege_escalation配置"></a>privilege_escalation配置</h3><table>
-<thead>
-<tr>
-<th align="left">配置项</th>
-<th align="left">说明</th>
-<th align="left">默认值</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">become</td>
-<td align="left">是否开启become模式</td>
-<td align="left">True</td>
-</tr>
-<tr>
-<td align="left">become_method</td>
-<td align="left">定义become方式</td>
-<td align="left">sudo</td>
-</tr>
-<tr>
-<td align="left">become_user</td>
-<td align="left">定义become方式</td>
-<td align="left">root</td>
-</tr>
-<tr>
-<td align="left">become_ask_pass</td>
-<td align="left">是否定义become提示密码</td>
-<td align="left">False</td>
-</tr>
-</tbody></table>
-]]></content>
-      <categories>
-        <category>Ansible</category>
-      </categories>
-      <tags>
-        <tag>env</tag>
-        <tag>ansible基础</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>好用的Markdown编辑器 —— Pad2 和 Typora</title>
-    <url>/2018/04/21/Pad2%E5%92%8CTypora/</url>
-    <content><![CDATA[<blockquote>
-<p>前言：<br><del>选用“<a href="http://markdownpad.com/">MarkdownPad 2</a>”作为文档编写工具的原因：方便，支持实时预览</del>。<br><strong>[更新]：<code>目前已经由”MarkdownPad 2“转用”Typora“，但本文内容仍然有效</code>。</strong></p>
-</blockquote>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/markdownpad2.png?x-oss-process=style/watermark" alt="md pad 2"></p>
-<hr>
-<h2 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h2><ul>
-<li>MarkdownPad 2 的官网下载地址： <a href="http://markdownpad.com/">http://markdownpad.com/</a></li>
-<li>个人网盘下载（附激活码），点击【<a href="https://pan.baidu.com/s/1Aym5-XRNMuWupvOTIdFHNA">链接</a>】， 提取码：ib02 </li>
-</ul>
-<h2 id="2-破解"><a href="#2-破解" class="headerlink" title="2. 破解"></a>2. 破解</h2><p>安装完毕后，首次启动提示激活，如下图：点击<code>”Enter Key“</code> —&gt; 键入<code>”Email address“</code>和<code>”License key“</code></p>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/mdpad2_enterkey.png?x-oss-process=style/watermark" alt="mdpad2_enterkey"></p>
-<h2 id="3-异常"><a href="#3-异常" class="headerlink" title="3. 异常"></a>3. 异常</h2><h3 id="3-1-http渲染"><a href="#3-1-http渲染" class="headerlink" title="3.1 http渲染"></a>3.1 http渲染</h3><p><strong>安装激活后提示</strong>：</p>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/markdown/erro_html_readering.png?x-oss-process=style/watermark" alt="erro_html_readering"></p>
-<p><strong>解决方案</strong>：<br>安装一个SDK的工具包，【<a href="http://markdownpad.com/download/awesomium_v1.6.6_sdk_win.exe">点击获取</a>】，重启pad2即可。</p>
-<h3 id="3-2-PDF格式转换"><a href="#3-2-PDF格式转换" class="headerlink" title="3.2 PDF格式转换"></a>3.2 PDF格式转换</h3><p><strong>问题描述</strong>：<br>”.md“文件中包含”https“的图片链接，通过Mdpad2可以进行预览展示，但使用Mdpad2将其导出为“pdf”文件后，包含”https“的图片链接无法通过”pdf“显示。如果你没有导出需求，可以忽略该问题。</p>
-<p><strong>解决方案</strong>：<br>可以考虑结合使用”<a href="https://www.typora.io/">Typora</a>“进行转换，它也是一款Markdown编辑器，轻便简洁，支持即时渲染技术。</p>
-<p>或者。。。直接放弃”MarkdownPad 2“转而使用”Typora“，这两种MarkDown编辑器都比较亲民。</p>
-<pre><code>”MarkdownPad 2“有左右两个分页窗口，实时预览效果比较好。
-”Typora“刚刚使用，给我的感觉就是简洁，自定义功能较多。
-</code></pre>
-<hr>
-<p>&nbsp;  </p>
-<!--**参考文章**：-->  
-<!--  https://blog.csdn.net/xiaojin21cen/article/details/78752561  -->  
-<!--  https://blog.csdn.net/kuangay/article/details/79854665  -->  
-
-]]></content>
-      <categories>
-        <category>Tools</category>
-      </categories>
-      <tags>
-        <tag>markdown</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ansible中的幂等性</title>
-    <url>/2019/07/06/ansible_Idempotency/</url>
-    <content><![CDATA[<blockquote>
-<p>幂等性（Idempotency）</p>
-</blockquote>
-<p>幂等性是数学和计算机科学上一个常见的概念，多次执行产生的结果不会发生改变，这样的特性就被成为幂等性。幂等性是Idempotency的中文翻译，幂在数学上表示乘方结果，乘方的结果相等可以简洁地描述多次执行后得到相同结果这一概念的意思。</p>
-<h2 id="ansible中的幂等性"><a href="#ansible中的幂等性" class="headerlink" title="ansible中的幂等性"></a>ansible中的幂等性</h2><p>ansible中绝大多数的模块都具有幂等特性，意味着执行一次或多次不会产生副作用。但是<code>shell、command、script、raw</code>这四个模块时不满足幂等性，所有操作会重复执行，但是有些操作不允许重复执行，比如MySQL的初始化命令mysql_install_db，逻辑上它只在第一次配置的过程中初始化一次，其他任何时候都不应该再执行。所有，每当使用这四个模块的时候，都要想一想，重复执行这个命令会不会产生负面影响。</p>
-<p>当然，在上面的四个模块中，除了raw模块外，都提供了实现幂等特性的参数，就是creates和removes：</p>
-<ul>
-<li><strong><code>creates参数</code>：</strong>当指定的文件或目录存在时，则不执行命令；</li>
-<li><strong><code>removes参数</code>：</strong>定的文件或目录不存在时，则不执行命令；</li>
-</ul>
-<blockquote>
-<p>示例如下：</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">- name: use some module</span><br><span class="line">  hosts: node</span><br><span class="line">  gather_facts: false</span><br><span class="line">  tasks:</span><br><span class="line">  # 网卡配置文件不存在时则不执行</span><br><span class="line">  - name: use command module</span><br><span class="line">    command: ifup ens33</span><br><span class="line">    args:</span><br><span class="line">      removes: &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33</span><br><span class="line"></span><br><span class="line">  # mysql配置文件已存在时则不执行，避免覆盖</span><br><span class="line">  - name: use shell module</span><br><span class="line">    shell: cp &#x2F;tmp&#x2F;my.cnf &#x2F;etc&#x2F;my.cnf</span><br><span class="line">    args:</span><br><span class="line">      creates: &#x2F;etc&#x2F;my.cnf</span><br></pre></td></tr></table></figure>
-<p>经过测试可以证明，使用removes或creates参数之后，就可以实现幂等性，保证命令不会重复执行。</p>
-<p>这四个模块都不限于执行shell命令或shell脚本，可以通过executable参数指定其他解释器，如expec执行expect脚本、perl解释器执行perl脚本等等。如下：</p>
-<p><strong><code>change_when 和 faild_when</code></strong><br>使用change_when 和 faild_when来改变task是changed还是faild的认定，也可以实现幂等性</p>
-<hr>
-<p>&nbsp;  </p>
-<!--**参考文章**：-->  
-<!--  https://www.jianshu.com/p/af4eb9caa216  -->  
-
-
-]]></content>
-      <categories>
-        <category>Ansible</category>
-      </categories>
-      <tags>
-        <tag>ansible基础</tag>
-        <tag>实践总结</tag>
       </tags>
   </entry>
   <entry>
@@ -573,6 +480,132 @@ timezone: 时区
       </tags>
   </entry>
   <entry>
+    <title>Ansible的配置文件</title>
+    <url>/2019/06/06/ansible.cfg/</url>
+    <content><![CDATA[<h2 id="Ansible的配置文件-more"><a href="#Ansible的配置文件-more" class="headerlink" title="Ansible的配置文件(more)"></a>Ansible的配置文件(<a href="https://ansible-tran.readthedocs.io/en/latest/docs/intro_configuration.html#ansible">more</a>)</h2><p>Ansible的一些的设置可以通过配置文件完成.在大多数场景下默认的配置就能满足大多数用户的需求,在一些特殊场景下,用户还是需要自行修改这些配置文件</p>
+<h2 id="读取配置文件的优先级"><a href="#读取配置文件的优先级" class="headerlink" title="读取配置文件的优先级"></a>读取配置文件的优先级</h2><p>ansible的默认配置文件是/etc/ansible/ansible.cfg。其实ansible会按照下面的顺序查找配置文件，并<code>使用第一个发现的</code>配置文件。</p>
+<ul>
+<li>ANSIBLE_CONFIG (an environment variable)</li>
+<li>ansible.cfg (in the current directory)</li>
+<li>.ansible.cfg (in the home directory)</li>
+<li>/etc/ansible/ansible.cfg</li>
+</ul>
+<p><strong>V1.5以前的版本顺序为：</strong></p>
+<ul>
+<li>ansible.cfg (in the current directory)</li>
+<li>ANSIBLE_CONFIG (an environment variable)</li>
+<li>.ansible.cfg (in the home directory)</li>
+<li>/etc/ansible/ansible.cfg</li>
+</ul>
+<h2 id="配置选项详解"><a href="#配置选项详解" class="headerlink" title="配置选项详解"></a>配置选项详解</h2><p>到目前为止，我还没有见到一个配置项超级少，配置超级简单的配置文件；同样的，Ansible的配置文件也不简单，配置项超级多；但是，二八法则同样也适用于这些配置文件，20%的配置项决定了80%的功能，只有那20%的配置项是我们需要去关心的。所以，大家不要害怕，下面我们就将这20%常用的选项进行一一说明和总结。</p>
+<h3 id="defaults配置"><a href="#defaults配置" class="headerlink" title="defaults配置"></a>defaults配置</h3><p><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/05/asb_conf.png?x-oss-process=style/original_format"></p>
+<h3 id="privilege-escalation配置"><a href="#privilege-escalation配置" class="headerlink" title="privilege_escalation配置"></a>privilege_escalation配置</h3><table>
+<thead>
+<tr>
+<th align="left">配置项</th>
+<th align="left">说明</th>
+<th align="left">默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">become</td>
+<td align="left">是否开启become模式</td>
+<td align="left">True</td>
+</tr>
+<tr>
+<td align="left">become_method</td>
+<td align="left">定义become方式</td>
+<td align="left">sudo</td>
+</tr>
+<tr>
+<td align="left">become_user</td>
+<td align="left">定义become方式</td>
+<td align="left">root</td>
+</tr>
+<tr>
+<td align="left">become_ask_pass</td>
+<td align="left">是否定义become提示密码</td>
+<td align="left">False</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>Ansible</category>
+      </categories>
+      <tags>
+        <tag>env</tag>
+        <tag>ansible基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ansible中的幂等性</title>
+    <url>/2019/07/06/ansible_Idempotency/</url>
+    <content><![CDATA[<blockquote>
+<p>幂等性（Idempotency）</p>
+</blockquote>
+<p>幂等性是数学和计算机科学上一个常见的概念，多次执行产生的结果不会发生改变，这样的特性就被成为幂等性。幂等性是Idempotency的中文翻译，幂在数学上表示乘方结果，乘方的结果相等可以简洁地描述多次执行后得到相同结果这一概念的意思。</p>
+<h2 id="ansible中的幂等性"><a href="#ansible中的幂等性" class="headerlink" title="ansible中的幂等性"></a>ansible中的幂等性</h2><p>ansible中绝大多数的模块都具有幂等特性，意味着执行一次或多次不会产生副作用。但是<code>shell、command、script、raw</code>这四个模块时不满足幂等性，所有操作会重复执行，但是有些操作不允许重复执行，比如MySQL的初始化命令mysql_install_db，逻辑上它只在第一次配置的过程中初始化一次，其他任何时候都不应该再执行。所有，每当使用这四个模块的时候，都要想一想，重复执行这个命令会不会产生负面影响。</p>
+<p>当然，在上面的四个模块中，除了raw模块外，都提供了实现幂等特性的参数，就是creates和removes：</p>
+<ul>
+<li><strong><code>creates参数</code>：</strong>当指定的文件或目录存在时，则不执行命令；</li>
+<li><strong><code>removes参数</code>：</strong>定的文件或目录不存在时，则不执行命令；</li>
+</ul>
+<blockquote>
+<p>示例如下：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">- name: use some module</span><br><span class="line">  hosts: node</span><br><span class="line">  gather_facts: false</span><br><span class="line">  tasks:</span><br><span class="line">  # 网卡配置文件不存在时则不执行</span><br><span class="line">  - name: use command module</span><br><span class="line">    command: ifup ens33</span><br><span class="line">    args:</span><br><span class="line">      removes: &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33</span><br><span class="line"></span><br><span class="line">  # mysql配置文件已存在时则不执行，避免覆盖</span><br><span class="line">  - name: use shell module</span><br><span class="line">    shell: cp &#x2F;tmp&#x2F;my.cnf &#x2F;etc&#x2F;my.cnf</span><br><span class="line">    args:</span><br><span class="line">      creates: &#x2F;etc&#x2F;my.cnf</span><br></pre></td></tr></table></figure>
+<p>经过测试可以证明，使用removes或creates参数之后，就可以实现幂等性，保证命令不会重复执行。</p>
+<p>这四个模块都不限于执行shell命令或shell脚本，可以通过executable参数指定其他解释器，如expec执行expect脚本、perl解释器执行perl脚本等等。如下：</p>
+<p><strong><code>change_when 和 faild_when</code></strong><br>使用change_when 和 faild_when来改变task是changed还是faild的认定，也可以实现幂等性</p>
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!--  https://www.jianshu.com/p/af4eb9caa216  -->  
+
+
+]]></content>
+      <categories>
+        <category>Ansible</category>
+      </categories>
+      <tags>
+        <tag>ansible基础</tag>
+        <tag>实践总结</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ansible目录结构介绍</title>
+    <url>/2019/05/09/ansible_dir_structure/</url>
+    <content><![CDATA[<blockquote>
+<p>引言</p>
+</blockquote>
+<p>Ansible是开源工具，整个开发过程或二次开发均遵循GPL协议，所以所有源码均可见。<br>作为一款日常工作所需的核心软件，我们有必要知道其目录分布及各目录功能。通过如下命令我们可以获取Ansible所有文件存放目录：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rpm -ql ansible </span><br></pre></td></tr></table></figure>
+<p>该命令输出内容较多，大致分为如下几类：</p>
+<ul>
+<li><strong>/etc/ansible</strong>：<code>ansible的配置文件目录，如：主机与组的文件（Inventory）、主配置文件（ansible.cfg）、角色(role)、剧本文件(.yml)等等</code>。所有Ansible的配置均存放在该目录下，运维日常的所有配置类操作也均基于此目录进行。</li>
+<li><strong>/usr/bin</strong>：ansible系列命令默认存放目录。ansible所有的可执行文件均存放在该目录下。</li>
+<li><strong>/usr/lib</strong>：ansible程序的相关模块，模块文件主要放在python相关的目录下面，因为ansible就是用python写的嘛。。</li>
+<li><strong>/usr/share</strong>：ansible程序的相关文档</li>
+<li><strong>Help文档目录</strong>：/usr/share/doc/ansible-X.X.X/</li>
+<li><strong>Man文档目录</strong>：/usr/share/man/man1/</li>
+</ul>
+<p>整体的目录概要可参考如<em>图2-1</em>所示的Ansible目录树结构：</p>
+<p><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/05/wKiom1hmDQXy5-acAABpUhXn-oQ211.jpg?x-oss-process=style/original_format"></p>
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!--https://book.51cto.com/art/201612/526511.htm-->  
+
+]]></content>
+      <categories>
+        <category>Ansible</category>
+      </categories>
+      <tags>
+        <tag>env</tag>
+        <tag>ansible基础</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>playbook中的条件判断与错误处理</title>
     <url>/2019/07/22/ansible_change_failed_when/</url>
     <content><![CDATA[<h1 id="failed-when-和-changed-when"><a href="#failed-when-和-changed-when" class="headerlink" title="failed_when 和 changed_when"></a>failed_when 和 changed_when</h1><p><code>failed_when</code>关键字的作用是在条件成立时，将对应任务的执行状态设置为<code>Failed</code></p>
@@ -617,39 +650,6 @@ timezone: 时区
       <tags>
         <tag>实践总结</tag>
         <tag>playbook</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ansible目录结构介绍</title>
-    <url>/2019/05/09/ansible_dir_structure/</url>
-    <content><![CDATA[<blockquote>
-<p>引言</p>
-</blockquote>
-<p>Ansible是开源工具，整个开发过程或二次开发均遵循GPL协议，所以所有源码均可见。<br>作为一款日常工作所需的核心软件，我们有必要知道其目录分布及各目录功能。通过如下命令我们可以获取Ansible所有文件存放目录：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rpm -ql ansible </span><br></pre></td></tr></table></figure>
-<p>该命令输出内容较多，大致分为如下几类：</p>
-<ul>
-<li><strong>/etc/ansible</strong>：<code>ansible的配置文件目录，如：主机与组的文件（Inventory）、主配置文件（ansible.cfg）、角色(role)、剧本文件(.yml)等等</code>。所有Ansible的配置均存放在该目录下，运维日常的所有配置类操作也均基于此目录进行。</li>
-<li><strong>/usr/bin</strong>：ansible系列命令默认存放目录。ansible所有的可执行文件均存放在该目录下。</li>
-<li><strong>/usr/lib</strong>：ansible程序的相关模块，模块文件主要放在python相关的目录下面，因为ansible就是用python写的嘛。。</li>
-<li><strong>/usr/share</strong>：ansible程序的相关文档</li>
-<li><strong>Help文档目录</strong>：/usr/share/doc/ansible-X.X.X/</li>
-<li><strong>Man文档目录</strong>：/usr/share/man/man1/</li>
-</ul>
-<p>整体的目录概要可参考如<em>图2-1</em>所示的Ansible目录树结构：</p>
-<p><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/05/wKiom1hmDQXy5-acAABpUhXn-oQ211.jpg?x-oss-process=style/original_format"></p>
-<hr>
-<p>&nbsp;  </p>
-<!--**参考文章**：-->  
-<!--https://book.51cto.com/art/201612/526511.htm-->  
-
-]]></content>
-      <categories>
-        <category>Ansible</category>
-      </categories>
-      <tags>
-        <tag>env</tag>
-        <tag>ansible基础</tag>
       </tags>
   </entry>
   <entry>
@@ -1343,6 +1343,37 @@ roles/
       </tags>
   </entry>
   <entry>
+    <title>实例类型及收费方式</title>
+    <url>/2020/08/22/aws_ec2_calculator/</url>
+    <content><![CDATA[<h2 id="如何选择实例类型和购买选项"><a href="#如何选择实例类型和购买选项" class="headerlink" title="如何选择实例类型和购买选项"></a>如何选择实例类型和购买选项</h2><p><strong>实例类型</strong>：</p>
+<ul>
+<li>通用实例</li>
+<li>计算优化型实例</li>
+<li>内存优化型实例</li>
+<li>存储优化型实例</li>
+<li>加速计算实例</li>
+</ul>
+<p>更多详情请查看<a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/instance-types.html">官方文档</a></p>
+<p><strong>实例购买选择</strong>：</p>
+<ul>
+<li>按需实例（On-Demand Instances ） 按秒为启动的实例付费。</li>
+<li>预留实例 （Reserved Instances）以大幅折扣购买一年期到三年期的始终可用的实例。</li>
+<li>计划实例 （Scheduled Instances）以一年为期限购买按指定重复计划始终可用的实例。</li>
+<li>Spot 实例 （Spot Instances）请求未使用的 EC2 实例，这可能会显著降低您的 Amazon EC2 成本。</li>
+<li>专用主机 （Dedicated Hosts）为完全专用于运行您的实例的物理主机付费，让您现有的按插槽、按内核或按 VM 计费的软件许可证降低成本。</li>
+<li>专用实例 （Dedicated Instances）为在单一租户硬件上运行的实例按小时付费。</li>
+<li>容量预留 （Capacity Reservations）可在特定可用区中为 EC2 实例预留容量，持续时间不限。</li>
+</ul>
+<p><strong>计算器</strong>：<br><a href="https://calculator.aws/#/createCalculator">https://calculator.aws/#/createCalculator</a></p>
+]]></content>
+      <categories>
+        <category>AWS</category>
+      </categories>
+      <tags>
+        <tag>EC2</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Amazon EBS卷的使用</title>
     <url>/2020/08/26/aws_ebs_use/</url>
     <content><![CDATA[<blockquote>
@@ -1395,37 +1426,6 @@ roles/
       </tags>
   </entry>
   <entry>
-    <title>实例类型及收费方式</title>
-    <url>/2020/08/22/aws_ec2_calculator/</url>
-    <content><![CDATA[<h2 id="如何选择实例类型和购买选项"><a href="#如何选择实例类型和购买选项" class="headerlink" title="如何选择实例类型和购买选项"></a>如何选择实例类型和购买选项</h2><p><strong>实例类型</strong>：</p>
-<ul>
-<li>通用实例</li>
-<li>计算优化型实例</li>
-<li>内存优化型实例</li>
-<li>存储优化型实例</li>
-<li>加速计算实例</li>
-</ul>
-<p>更多详情请查看<a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/instance-types.html">官方文档</a></p>
-<p><strong>实例购买选择</strong>：</p>
-<ul>
-<li>按需实例（On-Demand Instances ） 按秒为启动的实例付费。</li>
-<li>预留实例 （Reserved Instances）以大幅折扣购买一年期到三年期的始终可用的实例。</li>
-<li>计划实例 （Scheduled Instances）以一年为期限购买按指定重复计划始终可用的实例。</li>
-<li>Spot 实例 （Spot Instances）请求未使用的 EC2 实例，这可能会显著降低您的 Amazon EC2 成本。</li>
-<li>专用主机 （Dedicated Hosts）为完全专用于运行您的实例的物理主机付费，让您现有的按插槽、按内核或按 VM 计费的软件许可证降低成本。</li>
-<li>专用实例 （Dedicated Instances）为在单一租户硬件上运行的实例按小时付费。</li>
-<li>容量预留 （Capacity Reservations）可在特定可用区中为 EC2 实例预留容量，持续时间不限。</li>
-</ul>
-<p><strong>计算器</strong>：<br><a href="https://calculator.aws/#/createCalculator">https://calculator.aws/#/createCalculator</a></p>
-]]></content>
-      <categories>
-        <category>AWS</category>
-      </categories>
-      <tags>
-        <tag>EC2</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>创建一个EC2的步骤</title>
     <url>/2020/08/23/aws_ec2_create/</url>
     <content><![CDATA[<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><h3 id="创建密钥对"><a href="#创建密钥对" class="headerlink" title="创建密钥对"></a>创建密钥对</h3><p>AWS 使用公共密钥密码术来保护您的实例的登录信息。Linux 实例没有密码；您可以使用密钥对安全地登录您的实例。 使用 SSH 登录时，您在启动实例时指定密钥对的名称，然后提供私有密钥。<br>如果您尚未创建密钥对，则可以通过 Amazon EC2 控制台自行创建。请注意，如果您计划在多个区域中启动实例，则需要在每个区域中创建密钥对。</p>
@@ -1441,6 +1441,76 @@ roles/
       </categories>
       <tags>
         <tag>EC2</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>自定义监控 EC2 内存和磁盘使用率</title>
+    <url>/2020/09/02/aws_ec2_monitor-disk_memory/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>知识文档</strong>：</p>
+</blockquote>
+<ul>
+<li><a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/mon-scripts.html">监控EC2内存和磁盘使用率</a></li>
+<li><a href="https://docs.aws.amazon.com/zh_cn/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html">设置SNS通知</a></li>
+</ul>
+<hr>
+<p>AWS提供的CloudWatch中，没有提供内存使用率和磁盘使用率的信息，因此需要手动添加cron<br>不过，AWS提供了官方的脚本，可以直接下载安装；环境以<code>Amazon Linux 2 或 Amazon Linux AMI </code>为例</p>
+<h2 id="Role权限"><a href="#Role权限" class="headerlink" title="Role权限"></a><strong>Role权限</strong></h2><p>首先确保用户权限中有操作权限，没有的话，用户界面添加：</p>
+<ul>
+<li>cloudwatch:PutMetricData</li>
+<li>cloudwatch:GetMetricStatistics</li>
+<li>cloudwatch:ListMetrics</li>
+<li>ec2:DescribeTags</li>
+</ul>
+<h2 id="依赖包的安装"><a href="#依赖包的安装" class="headerlink" title="依赖包的安装"></a>依赖包的安装</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo yum install -y perl-Switch perl-DateTime perl-Sys-Syslog perl-LWP-Protocol-https perl-Digest-SHA.x86_64</span><br></pre></td></tr></table></figure>
+<h2 id="安装监控脚本"><a href="#安装监控脚本" class="headerlink" title="安装监控脚本"></a>安装监控脚本</h2><p><strong>下载、安装和配置监控脚本：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">curl https:&#x2F;&#x2F;aws-cloudwatch.s3.amazonaws.com&#x2F;downloads&#x2F;CloudWatchMonitoringScripts-1.2.2.zip -O</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>执行以下命令安装监控脚本：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">unzip CloudWatchMonitoringScripts-1.2.2.zip &amp;&amp; \</span><br><span class="line">rm CloudWatchMonitoringScripts-1.2.2.zip &amp;&amp; \</span><br><span class="line">cd aws-scripts-mon</span><br></pre></td></tr></table></figure>
+<h2 id="配置IAM访问认证"><a href="#配置IAM访问认证" class="headerlink" title="配置IAM访问认证"></a>配置IAM访问认证</h2><p>您需要提供一个 IAM 角色或 awscreds.conf 文件。否则，您必须使用 –aws-access-key-id 和 –aws-secret-key 参数为这些命令提供凭证。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cp awscreds.template awscreds.conf</span><br></pre></td></tr></table></figure>
+<p><code>sudo vim awscreds.conf</code>，配置认证信息：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">AWSAccessKeyId &#x3D; my-access-key-id</span><br><span class="line">AWSSecretKey &#x3D; my-secret-access-key</span><br></pre></td></tr></table></figure>
+<h2 id="收集信息发送到CloudWatch"><a href="#收集信息发送到CloudWatch" class="headerlink" title="收集信息发送到CloudWatch"></a>收集信息发送到CloudWatch</h2><p><strong>测试使用：</strong><br>以下示例执行简单的测试运行而不将数据发布到 CloudWatch。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;mon-put-instance-data.pl --mem-util --verify --verbose</span><br></pre></td></tr></table></figure>
+<p>以下示例收集所有可用内存指标并将其发送到 CloudWatch，将缓存和缓冲区内存计为“已用”</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;mon-put-instance-data.pl --mem-used-incl-cache-buff --mem-util --mem-used --mem-avail</span><br></pre></td></tr></table></figure>
+<p><strong><code>crontab -e</code>，添加定时任务：</strong><br>以下示例收集指定将内存和磁盘空间使用率报告到 CloudWatch：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">*&#x2F;5 * * * * ~&#x2F;aws-scripts-mon&#x2F;mon-put-instance-data.pl --mem-used-incl-cache-buff --mem-util --disk-space-util --disk-path&#x3D;&#x2F; --from-cron --aws-credential-file&#x3D;&#x2F;root&#x2F;aws-scripts-mon&#x2F;awscreds.conf</span><br></pre></td></tr></table></figure>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/1113/aws-diskmonitor_20201113104839.png?x-oss-process=style/original_format"></p>
+<h2 id="创建CloudWatch控制面板"><a href="#创建CloudWatch控制面板" class="headerlink" title="创建CloudWatch控制面板"></a>创建CloudWatch控制面板</h2><p>创建一个自定义监控面板<br><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/1113/control_20201113105603.png?x-oss-process=style/original_format"></p>
+<p>搜索并添加你想要监控的指标<br><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/1113/comment1_20201113105910.png?x-oss-process=style/original_format"></p>
+<p><code>创建小部件</code>》<code>保存控制面板</code><br><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/1113/comment2_20201113110200.png?x-oss-process=style/original_format"></p>
+<h2 id="添加报警"><a href="#添加报警" class="headerlink" title="添加报警"></a>添加报警</h2><ul>
+<li>方式一：通过CloudWatch控制台主页的“警报”入库，添加警报</li>
+<li>方式二：通过控制面板中创建的图表，进入选择对应的指标，点击“小铃铛”，添加警报<br><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/1113/monitor2_20201113111010.png?x-oss-process=style/original_format"></li>
+</ul>
+<h3 id="SNS"><a href="#SNS" class="headerlink" title="SNS"></a>SNS</h3><p>在配置报警前，创建一个用于接收和发送告警信息的SNS主题，配置方法参考<a href="https://docs.aws.amazon.com/zh_cn/AmazonCloudWatch/latest/monitoring/US_SetupSNS.html">Amazon SNS 主题</a><br><strong>服务简介<a href="https://docs.aws.amazon.com/zh_cn/sns/latest/dg/welcome.html">(more)</a>：</strong><br>Amazon Simple Notification Service (Amazon SNS) 是一项 Web 服务，用于协调和管理向订阅终端节点或客户端交付或发送消息的过程。在 Amazon SNS 中，有两类客户端—发布者和订阅者—也称为创建者和用户。发布者通过创建消息并将消息发送至主题与订阅者进行异步交流，主题是一个逻辑访问点和通信渠道。订阅者（即 Web 服务器、电子邮件地址、Amazon SQS 队列、AWS Lambda 函数）在其订阅主题后通过受支持协议（即 Amazon SQS、HTTP/S、电子邮件、SMS、Lambda）之一使用或接收消息或通知</p>
+<h3 id="配置报警"><a href="#配置报警" class="headerlink" title="配置报警"></a>配置报警</h3><p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/1113/monitor3_20201113112849.png?x-oss-process=style/original_format"></p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/1113/alarm1_20201113134723.png?x-oss-process=style/original_format"></p>
+<hr>
+<blockquote>
+<p><strong>触发报警后，会通过SNS发出邮件提醒：</strong></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Alarm Details:</span><br><span class="line">- Name:                       EC2-Diskspace-Alarm</span><br><span class="line">- Description:                磁盘空间不足20%告警</span><br><span class="line">- State Change:               OK -&gt; ALARM</span><br><span class="line">- Reason for State Change:    Threshold Crossed: 1 out of the last 1 datapoints [30.8640807993983 (13&#x2F;11&#x2F;20 06:01:00)] was greater than or equal to the threshold (18.0) (minimum 1 datapoint for OK -&gt; ALARM transition).</span><br><span class="line">- Timestamp:                  Friday 13 November, 2020 06:06:29 UTC</span><br><span class="line">- AWS Account:                845089424886</span><br><span class="line">- Alarm Arn:                  arn:aws:cloudwatch:us-east-1:845089424886:alarm:EC2-Diskspace-Alarm</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<hr>
+<!--https://blog.csdn.net/oblily/article/details/86767502-->  
+<!--https://docs.aws.amazon.com/zh_cn/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html-->  
+<!--https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/mon-scripts.html-->  
+<!--https://blog.csdn.net/newtyun/article/details/105384430-->  
+
+
+]]></content>
+      <categories>
+        <category>AWS</category>
+      </categories>
+      <tags>
+        <tag>EC2</tag>
+        <tag>CloudWatch</tag>
       </tags>
   </entry>
   <entry>
@@ -1486,6 +1556,57 @@ roles/
       </categories>
       <tags>
         <tag>EC2</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>EC2监控最佳实践</title>
+    <url>/2020/09/01/aws_ec2_monitor_ideas/</url>
+    <content><![CDATA[<h1 id="EC2监控最佳实践"><a href="#EC2监控最佳实践" class="headerlink" title="EC2监控最佳实践"></a>EC2监控最佳实践</h1><p>使用以下监控最佳实践，帮助您执行 Amazon EC2 监控任务。</p>
+<ul>
+<li>让监控成为优先事务，阻止小问题演变为大问题。</li>
+<li>创建并实施从 AWS 解决方案各个部分收集监控数据的监控计划，以便更轻松地调试发生的多点故障。您的监控计划至少应该解决以下问题：<ul>
+<li>您的监控目标是什么？</li>
+<li>您将监控哪些资源？</li>
+<li>监控这些资源的频率如何？</li>
+<li>您将使用哪些监控工具？</li>
+<li>谁负责执行监控任务？</li>
+<li>出现错误时应通知谁？</li>
+</ul>
+</li>
+<li>尽可能自动监控任务。</li>
+<li>检查 EC2 实例的日志文件。</li>
+</ul>
+<hr>
+<h2 id="使用-EC2-控制台创建警报"><a href="#使用-EC2-控制台创建警报" class="headerlink" title="使用 EC2 控制台创建警报"></a>使用 EC2 控制台创建警报</h2><blockquote>
+<p><strong>知识文档</strong>：</p>
+</blockquote>
+<ul>
+<li><a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/using-cloudwatch-createalarm.html">为实例创建 CloudWatch 警报</a></li>
+<li><a href="https://docs.aws.amazon.com/zh_cn/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html">使用CloudWatch 警报</a></li>
+</ul>
+<p>您可以使用 Amazon EC2 控制台创建 CloudWatch 警报，或者使用 CloudWatch 控制台提供的更多高级选项。</p>
+<p>当该指标达到指定阈值时，CloudWatch 自动向您发送通知。</p>
+<p><strong>使用 CloudWatch 控制台创建警报</strong><br>有关示例，请参阅Amazon CloudWatch 用户指南中的<a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html">创建 Amazon CloudWatch 警报</a>。</p>
+<p><strong>使用 Amazon EC2 控制台创建警报</strong></p>
+<ul>
+<li>打开 Amazon EC2 控制台 <a href="https://console.aws.amazon.com/ec2/%E3%80%82">https://console.aws.amazon.com/ec2/。</a></li>
+<li>在导航窗格中，选择 <code>Instances</code>。</li>
+<li>选择所需实例，然后依次选择<code>操作、监控、管理 CloudWatch 警报</code>。</li>
+<li>在<code>管理 CloudWatch 警报</code>详细信息页面的<code>添加或编辑警报</code>下，选择<code>创建新警报</code>。</li>
+<li>对于<code>警报通知</code>，选择打开或关闭开关来配置 Amazon Simple Notification Service (<strong>Amazon SNS</strong>) 通知。输入现有 Amazon SNS 主题或输入名称来创建新主题。</li>
+<li>对于<code>警报操作</code>，选择打开或关闭开关来指定触发警报时要执行的操作。从下拉列表中选择一个操作。</li>
+<li>对于<code>警报阈值</code>，选择警报的指标和条件。例如，您可以为<code>样本分组依据（平均）</code>和<code>要采样的数据类型（CPU 利用率）</code>保留默认设置。对于<code>警报触发条件</code>，选择 &gt;= 并输入 <code>0.80</code>。对于<code>连续周期</code>，输入 1。对于<code>时段</code>，选择 <code>5 分钟</code>。</li>
+<li>（可选）对于<code>样本指标数据</code>，选择<code>添加到控制面板</code>。 </li>
+<li>选择<code>创建</code>。</li>
+</ul>
+<hr>
+]]></content>
+      <categories>
+        <category>AWS</category>
+      </categories>
+      <tags>
+        <tag>EC2</tag>
+        <tag>CloudWatch</tag>
       </tags>
   </entry>
   <entry>
@@ -1627,45 +1748,295 @@ roles/
       </tags>
   </entry>
   <entry>
-    <title>go基础之数组</title>
-    <url>/2020/04/09/go_base_array/</url>
-    <content><![CDATA[<h1 id="Array-数组"><a href="#Array-数组" class="headerlink" title="Array(数组)"></a>Array(数组)</h1><p>数组：是同一种数据类型的固定长度的序列。 在Go语言中，数组从声明时就确定，使用时可以修改数组成员，但是数组大小不可变化。 基本语法：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 定义一个长度为3元素类型为int的数组a</span><br><span class="line">var a [3]int</span><br></pre></td></tr></table></figure>
-<h2 id="数组定义"><a href="#数组定义" class="headerlink" title="数组定义"></a>数组定义</h2><p><code>var 数组变量名 [元素数量]Type</code><br>比如：<code>var a [5]int</code>， 数组的长度必须是常量，并且长度是数组类型的一部分。一旦定义，长度不能变。<code>[5]int和[10]int</code>是不同的类型。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var a [3]int</span><br><span class="line">var b [4]int</span><br><span class="line">a &#x3D; b &#x2F;&#x2F;不可以这样做，因为此时a和b是不同的类型</span><br></pre></td></tr></table></figure>
-<p>数组可以通过下标进行访问，下标是从0开始，最后一个元素下标是：<code>len-1</code>，访问越界（下标在合法范围之外），则触发访问越界，会panic。</p>
-<h2 id="数组的初始化"><a href="#数组的初始化" class="headerlink" title="数组的初始化"></a>数组的初始化</h2><p><strong><em>一维数组</em></strong></p>
-<h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h3><p>初始化数组时可以使用初始化列表来设置数组元素的值。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var testArray [3]int                        &#x2F;&#x2F;数组会初始化为int类型的零值</span><br><span class="line">    var numArray &#x3D; [3]int&#123;1, 2&#125;                 &#x2F;&#x2F;使用指定的初始值完成初始化</span><br><span class="line">    var cityArray &#x3D; [3]string&#123;&quot;北京&quot;, &quot;上海&quot;, &quot;深圳&quot;&#125; &#x2F;&#x2F;使用指定的初始值完成初始化</span><br><span class="line">    fmt.Println(testArray)                      &#x2F;&#x2F;[0 0 0]</span><br><span class="line">    fmt.Println(numArray)                       &#x2F;&#x2F;[1 2 0]</span><br><span class="line">    fmt.Println(cityArray)                      &#x2F;&#x2F;[北京 上海 深圳]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>按照上面的方法每次都要确保提供的初始值和数组长度一致，一般情况下我们可以让编译器根据初始值的个数自行推断数组的长度，例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var testArray [3]int</span><br><span class="line">    var numArray &#x3D; [...]int&#123;1, 2&#125;</span><br><span class="line">    var cityArray &#x3D; [...]string&#123;&quot;北京&quot;, &quot;上海&quot;, &quot;深圳&quot;&#125;</span><br><span class="line">    fmt.Println(testArray)                          &#x2F;&#x2F;[0 0 0]</span><br><span class="line">    fmt.Println(numArray)                           &#x2F;&#x2F;[1 2]</span><br><span class="line">    fmt.Printf(&quot;type of numArray:%T\n&quot;, numArray)   &#x2F;&#x2F;type of numArray:[2]int</span><br><span class="line">    fmt.Println(cityArray)                          &#x2F;&#x2F;[北京 上海 深圳]</span><br><span class="line">    fmt.Printf(&quot;type of cityArray:%T\n&quot;, cityArray) &#x2F;&#x2F;type of cityArray:[3]string</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a>方法三</h3><p>我们还可以使用指定索引值的方式来初始化数组，例如:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [...]int&#123;1: 1, 3: 5&#125;</span><br><span class="line">    fmt.Println(a)                  &#x2F;&#x2F; [0 1 0 5]</span><br><span class="line">    fmt.Printf(&quot;type of a:%T\n&quot;, a) &#x2F;&#x2F;type of a:[4]int</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="数组的遍历"><a href="#数组的遍历" class="headerlink" title="数组的遍历"></a>数组的遍历</h2><p><strong><em>一维数组</em></strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 遍历数组a有以下两种方法：</span><br><span class="line">func main() &#123;</span><br><span class="line">    var a &#x3D; [...]string&#123;&quot;北京&quot;, &quot;上海&quot;, &quot;深圳&quot;&#125;</span><br><span class="line">    &#x2F;&#x2F; 方法1：for循环遍历</span><br><span class="line">    for i :&#x3D; 0; i &lt; len(a); i++ &#123;</span><br><span class="line">        fmt.Println(a[i])</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 方法2：for range遍历</span><br><span class="line">    for index, value :&#x3D; range a &#123;</span><br><span class="line">        fmt.Println(index, value)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="多维数组"><a href="#多维数组" class="headerlink" title="多维数组"></a>多维数组</h2><h3 id="二维数组的定义"><a href="#二维数组的定义" class="headerlink" title="二维数组的定义"></a>二维数组的定义</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [3][2]string&#123;</span><br><span class="line">        &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">        &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">        &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(a) &#x2F;&#x2F;[[北京 上海] [广州 深圳] [成都 重庆]]</span><br><span class="line">    fmt.Println(a[2][1]) &#x2F;&#x2F;支持索引取值:重庆</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="二维数组的遍历"><a href="#二维数组的遍历" class="headerlink" title="二维数组的遍历"></a>二维数组的遍历</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [3][2]string&#123;</span><br><span class="line">        &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">        &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">        &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    for _, v1 :&#x3D; range a &#123;</span><br><span class="line">        for _, v2 :&#x3D; range v1 &#123;</span><br><span class="line">            fmt.Printf(&quot;%s\t&quot;, v2)</span><br><span class="line">        &#125;</span><br><span class="line">        fmt.Println()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">北京    上海    </span><br><span class="line">广州    深圳    </span><br><span class="line">成都    重庆    </span><br></pre></td></tr></table></figure>
-<p><code>注意</code>： 多维数组<code>只有第一层</code>可以使用<code>...</code>来让编译器推导数组长度。例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;支持的写法</span><br><span class="line">a :&#x3D; [...][2]string&#123;</span><br><span class="line">    &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">    &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">    &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;不支持多维数组的内层使用...</span><br><span class="line">b :&#x3D; [3][...]string&#123;</span><br><span class="line">    &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">    &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">    &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="数组拷贝和传参"><a href="#数组拷贝和传参" class="headerlink" title="数组拷贝和传参"></a>数组拷贝和传参</h2><p>数组是值类型，赋值和传参会复制整个数组。因此改变副本的值，不会改变本身的值。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func modifyArray(x [3]int) &#123;</span><br><span class="line">    x[0] &#x3D; 100</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func modifyArray2(x [3][2]int) &#123;</span><br><span class="line">    x[2][0] &#x3D; 100</span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [3]int&#123;10, 20, 30&#125;</span><br><span class="line">    modifyArray(a) &#x2F;&#x2F;在modify中修改的是a的副本x</span><br><span class="line">    fmt.Println(a) &#x2F;&#x2F;[10 20 30]</span><br><span class="line">    b :&#x3D; [3][2]int&#123;</span><br><span class="line">        &#123;1, 1&#125;,</span><br><span class="line">        &#123;1, 1&#125;,</span><br><span class="line">        &#123;1, 1&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    modifyArray2(b) &#x2F;&#x2F;在modify中修改的是b的副本x</span><br><span class="line">    fmt.Println(b)  &#x2F;&#x2F;[[1 1] [1 1] [1 1]]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>注意：</strong></p>
+    <title>AWS用户的角色和权限的划分建议</title>
+    <url>/2020/04/09/aws_iam_suggest/</url>
+    <content><![CDATA[<h2 id="工作环境"><a href="#工作环境" class="headerlink" title="工作环境"></a>工作环境</h2><ul>
+<li>测试环境</li>
+<li>预发布环境</li>
+<li>生产环境</li>
+</ul>
+<h2 id="用户角色和职责"><a href="#用户角色和职责" class="headerlink" title="用户角色和职责"></a>用户角色和职责</h2><ul>
+<li><p>AWS账号所有者<br>管理账号，开通IAM用户</p>
+</li>
+<li><p>AWS账号管理人员<br>日常运维管理工作者、账单管理（除根用户外最大的权限的用户）</p>
+</li>
+<li><p>只读用户<br>只能查看AWS console控制台</p>
+</li>
+<li><p>开发用户</p>
+</li>
+<li><p>部署用户<br>环境设计和部署管理</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>AWS</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Lambda + Cloud Watch定时维护EC2</title>
+    <url>/2020/09/01/aws_lambda_cloudwatch_operate_ec2/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>知识文档</strong>：</p>
+</blockquote>
+<ul>
+<li><a href="https://docs.aws.amazon.com/zh_cn/lambda/latest/dg/golang-package.html">Lambda</a></li>
+<li><a href="https://docs.aws.amazon.com/zh_cn/AmazonCloudWatch/latest/events/ScheduledEvents.html">Cloudwatch</a></li>
+</ul>
+<hr>
+<p>有时候在EC2上的一些业务只需要在每天的某个时间段对外提供服务，其余的时候是处于闲置空转的状态。但付费方式为EC2的按需收费，那么闲置时间产生的费用就显得浪费了。怎么办呢？通过Lambda服务结合Cloudwatch规则，实现实例的定时开关，达到节约成本的目的。</p>
+<p><strong>业务需求</strong>：</p>
+<ul>
+<li>每天上午（UTC）9:00~20:00，将实例启动使其处于running状态</li>
+<li>每天晚上（UTC）20:00~次日上午9:00，将实例停止使其处于stopped状态。</li>
+</ul>
+<hr>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p><strong>需要用到的AWS服务包括：</strong></p>
 <ol>
-<li>数组支持 “==“、”!=” 操作符，因为内存总是被初始化过的。</li>
-<li>[n]*T表示指针数组，*[n]T表示数组指针 。</li>
+<li><strong>EC2</strong>：即云端虚拟机，将用于运行我们的脚本。</li>
+<li><strong>Lambda</strong>, 用于操作我们的EC2实例，即启动和关闭。</li>
+<li><strong>IAM</strong>, AWS Identity and Access Management, 用于赋予Lambda函数操作我们EC2实例的权限。</li>
+<li><strong>Cloud Watch</strong>, 用于定时执行我们的Lambda函数，达到定时开关机的效果。</li>
 </ol>
-<h2 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h2><p>求数组[1, 3, 5, 7, 8]所有元素的和<br>找出数组中和为指定值的两个元素的下标，比如从数组[1, 3, 5, 7, 8]中找出和为8的两个元素的下标分别为(0,3)和(1,2)。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="EC2"><a href="#EC2" class="headerlink" title="EC2"></a>EC2</h2><p>实例的创建步骤这里就不介绍了，可以参考<a href="https://docs.aws.amazon.com/index.html">AWS 官方文档</a>。</p>
+<p>测试资源如下：</p>
+<table>
+<thead>
+<tr>
+<th align="center">Name</th>
+<th align="center">实例ID</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">XLDSMILE-US-Pordoction-app1</td>
+<td align="center">i-0611856bef37b1295</td>
+</tr>
+<tr>
+<td align="center">XLDSMILE-US-Pordoction-app2</td>
+<td align="center">i-01c2654a6acc2f933</td>
+</tr>
+</tbody></table>
+<h2 id="创建Lambda的IAM角色"><a href="#创建Lambda的IAM角色" class="headerlink" title="创建Lambda的IAM角色"></a>创建Lambda的IAM角色</h2><p>因为在创建Lambda函数时会要求选择IAM，因此这里要先把IAM角色给配置喽。</p>
+<h3 id="创建策略"><a href="#创建策略" class="headerlink" title="创建策略"></a>创建策略</h3><ul>
+<li><strong>登录<code>控制台</code>，选择<code>IAM</code>服务》<code>角色</code>》<code>创建角色</code></strong></li>
+</ul>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/add-lambda-role_20201105175614.png?x-oss-process=style/original_format"></p>
+<ul>
+<li>选择 <strong><code>创建策略</code></strong> ，为角色附加自定义权限策略：</li>
+</ul>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/lambda_20201106104548.png?x-oss-process=style/original_format"></p>
+<blockquote>
+<p>将如下JSON字符串复制到选项框内</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;Version&quot;: &quot;2012-10-17&quot;,</span><br><span class="line">    &quot;Statement&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;Effect&quot;: &quot;Allow&quot;,</span><br><span class="line">            &quot;Action&quot;: [</span><br><span class="line">                &quot;logs:CreateLogGroup&quot;,</span><br><span class="line">                &quot;logs:CreateLogStream&quot;,</span><br><span class="line">                &quot;logs:PutLogEvents&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;Resource&quot;: &quot;arn:aws:logs:*:*:*&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;Effect&quot;: &quot;Allow&quot;,</span><br><span class="line">            &quot;Action&quot;: [</span><br><span class="line">                &quot;ec2:Start*&quot;,</span><br><span class="line">                &quot;ec2:Stop*&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;Resource&quot;: &quot;*&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>点击 <strong><code>查看策略</code></strong> ，为其创建<code>名字</code>和<code>描述</code>，点击<code>创建策略</code>，跳转到以下界面。</li>
+</ul>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/lambda_polic1_20201106115100.png?x-oss-process=style/original_format"></p>
+<h3 id="为角色分配策略"><a href="#为角色分配策略" class="headerlink" title="为角色分配策略"></a>为角色分配策略</h3><ul>
+<li>策略创建完成后返回 <strong><code>创建角色</code></strong> 界面，筛选并勾选策略</li>
+</ul>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/lambda_20201106165248.png?x-oss-process=style/original_format"></p>
+<ul>
+<li>点击下一步，标签啥的选默认，点击 <strong><code>审核</code></strong> 》 <strong><code>创建角色</code></strong> ：</li>
+</ul>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/lamdba_20201106165915.png?x-oss-process=style/original_format"></p>
+<h2 id="创建Lambda函数"><a href="#创建Lambda函数" class="headerlink" title="创建Lambda函数"></a>创建Lambda函数</h2><p><strong>步骤或选型：</strong></p>
+<ul>
+<li>选择Lambda服务</li>
+<li>点击 <strong><code>函数</code></strong> 》 <strong><code>创建函数</code></strong></li>
+<li>选择“从头开始撰写”</li>
+<li>函数名称：StopEC2Instances</li>
+<li>语言：Pyhton3.8</li>
+<li>执行角色：现有角色》搜索我们刚才建立的角色</li>
+<li>点击 <strong><code>创建函数</code></strong></li>
+</ul>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/lambda50_20201106175051.png?x-oss-process=style/original_format"></p>
+<p>将以下Python3代码复制粘贴。region替换为你的EC2 region, instancces 替换为你的instance id。这些都可以在EC2控制台找到。完成后点击 <strong><code>Deploy</code></strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># stopped your instances</span><br><span class="line">import boto3</span><br><span class="line">region &#x3D; &#39;us-east-1&#39;</span><br><span class="line">instances &#x3D; [&#39;i-0571c93e69719637c&#39;, &#39;i-057659afa167f65a5&#39;]</span><br><span class="line">ec2 &#x3D; boto3.client(&#39;ec2&#39;, region_name&#x3D;region)</span><br><span class="line">    </span><br><span class="line">def lambda_handler(event, context):</span><br><span class="line">    ec2.stop_instances(InstanceIds&#x3D;instances)</span><br><span class="line">    print(&#39;stopped your instances: &#39; + str(instances))</span><br></pre></td></tr></table></figure>
+
+<p>这样，<code>关闭实例的Lambda函数</code>就创建好了，我们还需要创建一个类似的<code>启动实例的函数</code>。</p>
+<p>重复从 建立函数 开始的以上所有步骤，有以下几点改变：</p>
+<ul>
+<li>函数名称: StartEC2Instances</li>
+<li>Python代码里的 ec2.stop_instances 替换为 ec2.start_instances</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># started your instances</span><br><span class="line">import boto3</span><br><span class="line">region &#x3D; &#39;us-east-1&#39;</span><br><span class="line">instances &#x3D; [&#39;i-0571c93e69719637c&#39;, &#39;i-057659afa167f65a5&#39;]</span><br><span class="line">ec2 &#x3D; boto3.client(&#39;ec2&#39;, region_name&#x3D;region)</span><br><span class="line">    </span><br><span class="line">def lambda_handler(event, context):</span><br><span class="line">    ec2.start_instances(InstanceIds&#x3D;instances)</span><br><span class="line">    print(&#39;started your instances: &#39; + str(instances))</span><br></pre></td></tr></table></figure>
+<ul>
+<li>完成后，在Lambda控制台，就能看到我们刚才建立的两个函数</li>
+</ul>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/lambda_20201106180107.png?x-oss-process=style/original_format"></p>
+<hr>
+<h2 id="使用CloudWatch服务，创建规则"><a href="#使用CloudWatch服务，创建规则" class="headerlink" title="使用CloudWatch服务，创建规则"></a>使用CloudWatch服务，创建规则</h2><ol>
+<li>CloudWatch控制台，选择<code>规则</code>》<code>创建规则</code>，事件源选择<code>计划</code>》<code>cron表达式</code> ，输入 “0 9 * * ? *”</li>
+<li>任务计划格式参考：<a href="https://docs.aws.amazon.com/zh_cn/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions">Cron 表达式</a><ul>
+<li>cron 使用的时间是UTC时间，具体UTC时间可查询此网站：<a href="https://time.is/UTC">https://time.is/UTC</a></li>
+</ul>
+</li>
+<li>目标选择<code>Lambda函数</code>，选择<code>函数</code></li>
+<li>点击<code>配置规则详细信息</code>，名称和描述均写<code>StartEC2</code></li>
+<li>重复步骤1操作，这时cron表达式为“0 20 * * ? *”</li>
+<li>重复上文3，4两步骤，函数版本选择“V2”。文件名和描述均写“StopEC2”</li>
+<li>测试，若机器到时间未停止，首先检查cron表达式和UTC时间表述。其次检查Lambda代码中的instance ID，region是否正确。</li>
+</ol>
+<hr>
+<!--https://segmentfault.com/a/1190000023101856-->  
+<!--https://blog.csdn.net/kepa520/article/details/79297085-->  
+<!--https://blog.csdn.net/captsinpata/article/details/93501163?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-7.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-7.channel_param-->  
 
 ]]></content>
       <categories>
-        <category>Go</category>
+        <category>AWS</category>
       </categories>
       <tags>
-        <tag>go语言基础</tag>
-        <tag>array</tag>
+        <tag>CloudWatch</tag>
+        <tag>Lambda</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AWS S3 Bucket 简介</title>
+    <url>/2020/09/05/aws_s3_introduction/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>知识文档</strong>：</p>
+</blockquote>
+<ul>
+<li><a href="https://aws.amazon.com/cn/s3/">产品介绍</a></li>
+<li><a href="https://docs.aws.amazon.com/zh_cn/AmazonS3/latest/gsg/GetStartedWithS3.html">DOSC</a></li>
+</ul>
+<hr>
+<h2 id="对象存储-Amazon-S3"><a href="#对象存储-Amazon-S3" class="headerlink" title="对象存储 Amazon S3"></a>对象存储 <a href="https://docs.aws.amazon.com/zh_cn/AmazonS3/latest/userguide/Welcome.html">Amazon S3</a></h2><p>Amazon Simple Storage Service (Amazon S3) 是一种<code>对象存储</code>服务，提供行业领先的可扩展性、数据可用性、安全性和性能。Amazon S3 可达到 99.999999999%（11 个 9）的持久性，并为全球各地的公司存储数百万个应用程序的数据。</p>
+<h2 id="使用-Amazon-S3-的优势"><a href="#使用-Amazon-S3-的优势" class="headerlink" title="使用 Amazon S3 的优势"></a>使用 Amazon S3 的优势</h2><p>Amazon S3 特意内置了着重于简易性和稳健性的最小功能集。以下是使用 Amazon S3 的一些优势：</p>
+<ul>
+<li>创建存储桶 – 创建和命名存储数据的存储桶。存储桶是 Amazon S3 中用于数据存储的基础容器。</li>
+<li>存储数据 – 在存储桶中存储无限量的数据。可将所需数量的对象上传到 Amazon S3 存储桶。每个对象可包含最多 5 TB 的数据。使用开发人员分配的唯一键值存储和检索每个对象。</li>
+<li>下载数据 – 下载您的数据或允许其他人进行下载。随时下载您的数据或允许其他人进行下载。</li>
+<li>权限 – 对于要在您的 Amazon S3 存储桶中上传或下载数据的其他人员，您可以授予其访问权限或拒绝其访问。将上传和下载的许可授予三种类型的用户。身份验证机制可帮助确保数据安全，以防未授权访问。</li>
+<li>标准接口 – 使用基于标准的 REST 和 SOAP 接口，它们可与任何 Internet 开发工具包搭配使用。<ul>
+<li>注意：HTTP 上的 SOAP 支持已弃用，但是仍可在 HTTPS 上使用。不支持将新 Amazon S3 功能用于 SOAP。我们建议您使用 REST API 或 AWS 开发工具包。</li>
+</ul>
+</li>
+</ul>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
+<li>存储桶：存储桶是 Amazon S3 中用于存储对象的容器。每个对象都储存在一个存储桶中。</li>
+<li>对象：对象是 Amazon S3 中存储的基本实体。对象由对象数据和元数据组成。数据部分对 Amazon S3 不透明。元数据是一组描述对象的名称-值对。其中包括一些默认元数据（如上次修改日期）和标准 HTTP 元数据（如 Content-Type）。您还可以在存储对象时指定自定义元数据。在存储桶中，对象将由键 (名称) 和版本 ID 进行唯一地标识。</li>
+<li>键：键是指存储桶中对象的唯一标识符。存储桶内的每个对象都只能有一个键。存储桶、键和版本 ID 的组合唯一标识各个对象。</li>
+<li>区域：您可以选择一个 AWS 区域供 Amazon S3 存储您创建的存储桶。您可以选择一个区域，以便优化延迟、尽可能降低成本或满足法规要求。在某一区域存储的数据元将一直留在该区域，除非您特意将其传输到另一区域。</li>
+<li>Amazon S3 数据一致性模型：最终一致性</li>
+</ul>
+<h2 id="S3-收费模式"><a href="#S3-收费模式" class="headerlink" title="S3 收费模式"></a>S3 收费模式</h2><p>参考 <a href="https://aws.amazon.com/cn/s3/pricing/">Amazon S3 定价</a>，Amazon S3 成本组成：</p>
+<ul>
+<li>存储</li>
+<li>请求和数据检索(API 调用)</li>
+<li>数据传输</li>
+<li>管理和分析</li>
+<li>复制</li>
+<li>S3 Object Lambda</li>
+</ul>
+<h2 id="Amazon-S3-存储类比较"><a href="#Amazon-S3-存储类比较" class="headerlink" title="Amazon S3 存储类比较"></a>Amazon S3 存储类比较</h2><p>存储类别只有在上传对象，或者通过生命周期管理时涉及到。<br><strong>Topics：</strong></p>
+<ul>
+<li>经常访问对象的存储类</li>
+<li>用于自动优化访问模式不断变化或未知的数据的存储类</li>
+<li>不经常访问对象的存储类</li>
+<li>用于存档对象的存储类</li>
+<li>Amazon S3 on Outposts 的存储类</li>
+<li>比较 Amazon S3 存储类</li>
+<li>设置对象的存储类</li>
+</ul>
+<h2 id="操作入门"><a href="#操作入门" class="headerlink" title="操作入门"></a>操作入门</h2><p>参考文档<a href="https://docs.aws.amazon.com/zh_cn/AmazonS3/latest/gsg/GetStartedWithS3.html"> AWS S3 DOSC</a></p>
+<hr>
+<!--https://docs.aws.amazon.com/zh_cn/AmazonS3/latest/userguide/Welcome.html-->  
+
+]]></content>
+      <categories>
+        <category>AWS</category>
+      </categories>
+      <tags>
+        <tag>S3</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AWS账号注册和控制台介绍</title>
+    <url>/2020/04/09/aws_present/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="https://docs.aws.amazon.com/">AWS官方文档</a></p>
+</blockquote>
+<hr>
+<h2 id="AWS账号注册"><a href="#AWS账号注册" class="headerlink" title="AWS账号注册"></a>AWS账号注册</h2><p>首先，注册一个Global账号：</p>
+<ul>
+<li><a href="https://aws.amazon.com/">https://aws.amazon.com</a></li>
+<li><a href="https://amazonaws-china.com/">https://amazonaws-china.com</a></li>
+</ul>
+<p>注册帐号美国版和中国版一致, 创建EC2时注意选择的国家区域；不要用 <a href="https://www.amazonaws.cn注册/">https://www.amazonaws.cn注册</a><br>免费套餐介绍：<a href="https://amazonaws-china.com/cn/free/faqs/">https://amazonaws-china.com/cn/free/faqs/</a></p>
+<h2 id="AWS控制台"><a href="#AWS控制台" class="headerlink" title="AWS控制台"></a>AWS控制台</h2><p><strong>申请IAM用户</strong><br>登录到aws控制台，打开IAM控制台，开启MFA安全认证，保证根用户的安全；<br>申请一个IAM用户并授权此用户最大权限（AWS架构师第一准则，<code>不要使用根用户登录控制台操作</code>）；<br>用申请的IAM用户进行所有的操作，根用户在没有必要的情况不要使用，并由专人负责；</p>
+<p><strong>熟悉AWS控制台</strong></p>
+<p>把控制台上面的服务选项都点一遍，看看各个服务在哪里；方便后期使用的话知道点击哪里；<br><code>控制台的左下角可以切换语言</code>，如果英语不好的可以换成中文显示；</p>
+<p><strong>熟悉AWS账单管理</strong></p>
+<p>切换到账单控制台，查看账单<br>登录账单控制台，看看账单首选项、付款方式、整合账单、税务设置、订单发票、服务抵扣金额、成本管理等等<br>这个要认真搞下，因为账号区分全球的和中国区账号。</p>
+<ol>
+<li>汇款方式（信用卡（外币卡&amp;银联卡）、电汇、）</li>
+<li>发票问题（中国区可以提供发票、全球区没有发票只有收据）</li>
+<li>缴费时间点（账单生成时间、最迟缴费时间）</li>
+</ol>
+<p><strong>熟悉AWS服务限制</strong></p>
+<p>通过控制台查看服务的限制，或者通过此链接：</p>
+<p><a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/ec2-resource-limits.html">Amazon EC2 服务限制</a><br><a href="https://docs.aws.amazon.com/zh_cn/general/latest/gr/aws_service_limits.html">AWS 服务配额</a></p>
+<p>服务限制，会更好的控制对于AWS资源的合理利用，防止有心人有意或无意的无节制的开启资源。<br>还有就是一些其他不知道的原因，某项服务在某个region不能使用，这些都要知道；防止你们公司业务要上线了。发现那个地区没有想使用的服务；因为你测试的时候使用的region跟上线所在的那个region不一样，而且你也没有提前确认；等等原因。</p>
+<p><strong>熟悉AWS的support中心</strong><br>技术支持，服务限制申请提高；<br>技术支持分为三种，开发人员、商业、企业。<br>具体收费模式请看链接：<a href="https://aws.amazon.com/cn/premiumsupport/plans/">https://aws.amazon.com/cn/premiumsupport/plans/</a><br>还有一种技术支持，就是安排专门的架构师服务于你们公司的，But你公司必须在AWS消费很多大洋才可以伺候你</p>
+<h2 id="AWS学习-阶段划分"><a href="#AWS学习-阶段划分" class="headerlink" title="AWS学习 阶段划分"></a>AWS学习 阶段划分</h2><p><strong>基础玩法</strong></p>
+<p>EC2、ELB、S3、ElastiCache（redis）、RDS（MySql）<br>建议你们先熟悉上面几个服务，使用默认选项（默认VPC、安全组）等创建简单的三层服务并测试。<br>因为几乎迁移到AWS，使用的服务属上面几项最多，当然也是最常用的服务；先熟悉熟悉基本情况，打好基础。</p>
+<p><strong>中级玩法</strong></p>
+<p>首先，<code>全面深入学习VPC一定要学明白VPC</code>，因为AWS大多数服务，多AZ、高可用，都是基于VPC网络区分开的。<br>还有个问题就是，强迫症选手做事情是不会选择默认的选项去做事的。<br>通过自定义VPC，进行网络划分；各个服务做使用的网络不同（公有子网、私有子网），后期扩展。<br>这样做的好处就是，你可以清楚的了解到你们整个架构的划分、业务划分、网络划分、安全防护、后期如何进行架构扩展，都能清楚的了解到；<br>通过自定义的VPC网络进行服务创建，先把基础那几项服务玩一遍；再去测试其他的服务。</p>
+<p><strong>高级玩法</strong></p>
+<p>DevOps<br>ECS、EKS<br>Serverless</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/aws-55ed8db05deb6a0c99575b200bd4d317.jpeg?x-oss-process=style/watermark"></p>
+<hr>
+<!--  https://www.bookstack.cn/read/awschina/c0f7d53e63c37006.md  -->  
+<!--  https://www.jianshu.com/p/89004a16789f  -->  
+]]></content>
+      <categories>
+        <category>AWS</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>s3cmd——AWS S3存储桶管理工具</title>
+    <url>/2020/09/05/aws_s3cmd/</url>
+    <content><![CDATA[<p>s3cmd 是用于创建S3桶，上传，检索和管理数据到对象存储命令行实用程序。 本文将指导linux下安装s3cmd程序，以及对象存储服务桶和对象数据管理，包括创建桶、上传、检索、删除及本地与对象存储服务间数据同步等。本文以下内容将以CentOS 7.3的弹性云服务器为例，windows操作系统使用类似。</p>
+<h2 id="1-安装s3cmd"><a href="#1-安装s3cmd" class="headerlink" title="1. 安装s3cmd"></a>1. 安装s3cmd</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ yum -y install s3cmd</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-配置s3cmd"><a href="#2-配置s3cmd" class="headerlink" title="2. 配置s3cmd"></a>2. 配置s3cmd</h2><p><strong>执行 <code>$ s3cmd --configure</code>生成配置文件，一路<code>Enter</code>，注意跳过认证并保存配置</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">......</span><br><span class="line">...</span><br><span class="line">Test access with supplied credentials? [Y&#x2F;n] n</span><br><span class="line"></span><br><span class="line">Save settings? [y&#x2F;N] y</span><br><span class="line">Configuration saved to &#39;&#x2F;root&#x2F;.s3cfg&#39;</span><br></pre></td></tr></table></figure>
+<p><strong>修改一下几项：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ vim &#x2F;root&#x2F;.s3cfg</span><br><span class="line">access_key &#x3D; xxx</span><br><span class="line">secret_key &#x3D; xxx</span><br><span class="line">host_base &#x3D; ip:port</span><br><span class="line">host_bucket &#x3D; ip&#x2F;kucketname</span><br><span class="line">use_https &#x3D; False</span><br></pre></td></tr></table></figure>
+<p>其中，access_key和secret_key是在本地创建S3用户时获得，host_base是S3服务所使用的ip地址（包括端口 号）,host_bucket为S3用户下的一个bucket(可在配置之后再创建，但该字段不能为空)</p>
+<h2 id="3-使用s3cmd"><a href="#3-使用s3cmd" class="headerlink" title="3. 使用s3cmd"></a>3. 使用s3cmd</h2><p>通过s3cmd –help查看具体使用方法；</p>
+<ul>
+<li>列举所有 Buckets<br><code>$ s3cmd ls</code></li>
+<li>创建 bucket，且 bucket 名称是唯一的，不能重复。<br><code>s3cmd mb s3://my-bucket-name</code></li>
+<li>删除空 bucket<br><code>s3cmd rb s3://my-bucket-name</code></li>
+<li>列举 Bucket 中的内容<br><code>s3cmd ls s3://my-bucket-name</code></li>
+<li>上传 file.txt 到某个 bucket，<br><code>s3cmd put file.txt s3://my-bucket-name/file.txt</code></li>
+<li>上传并将权限设置为所有人可读<br><code>s3cmd put --acl-public file.txt s3://my-bucket-name/file.txt</code></li>
+<li>批量上传文件<br><code>s3cmd put ./* s3://my-bucket-name/</code></li>
+<li>下载文件<br><code>s3cmd get s3://my-bucket-name/file.txt file.txt</code></li>
+<li>批量下载<br><code>s3cmd get s3://my-bucket-name/* ./</code></li>
+<li>删除文件<br><code>s3cmd del s3://my-bucket-name/file.txt</code></li>
+<li>来获得对应的bucket所占用的空间大小<br><code>s3cmd du -H s3://my-bucket-name</code></li>
+<li>设置S3 bucket的Public权限<br><code>s3cmd setacl s3://myexamplebucket.calvium.com/ --acl-public --recursive</code></li>
+</ul>
+<hr>
+<!--  https://blog.csdn.net/baidu_26495369/article/details/81535209  -->
+<!--  https://blog.51cto.com/weimouren/2166601  -->
+<!--  https://bbs.huaweicloud.com/blogs/378ac7ff96c611e7b8317ca23e93a891  -->
+<!--  https://www.cnblogs.com/xd502djj/p/3604783.htmlhttps://www.cnblogs.com/xd502djj/p/3604783.html  -->
+<!--https://www.cnblogs.com/hiyang/p/12631922.html-->
+
+
+]]></content>
+      <categories>
+        <category>AWS</category>
+      </categories>
+      <tags>
+        <tag>S3</tag>
       </tags>
   </entry>
   <entry>
@@ -1719,29 +2090,46 @@ roles/
       </tags>
   </entry>
   <entry>
-    <title>AWS用户的角色和权限的划分建议</title>
-    <url>/2020/04/09/aws_iam_suggest/</url>
-    <content><![CDATA[<h2 id="工作环境"><a href="#工作环境" class="headerlink" title="工作环境"></a>工作环境</h2><ul>
-<li>测试环境</li>
-<li>预发布环境</li>
-<li>生产环境</li>
-</ul>
-<h2 id="用户角色和职责"><a href="#用户角色和职责" class="headerlink" title="用户角色和职责"></a>用户角色和职责</h2><ul>
-<li><p>AWS账号所有者<br>管理账号，开通IAM用户</p>
-</li>
-<li><p>AWS账号管理人员<br>日常运维管理工作者、账单管理（除根用户外最大的权限的用户）</p>
-</li>
-<li><p>只读用户<br>只能查看AWS console控制台</p>
-</li>
-<li><p>开发用户</p>
-</li>
-<li><p>部署用户<br>环境设计和部署管理</p>
-</li>
-</ul>
+    <title>go基础之数组</title>
+    <url>/2020/04/09/go_base_array/</url>
+    <content><![CDATA[<h1 id="Array-数组"><a href="#Array-数组" class="headerlink" title="Array(数组)"></a>Array(数组)</h1><p>数组：是同一种数据类型的固定长度的序列。 在Go语言中，数组从声明时就确定，使用时可以修改数组成员，但是数组大小不可变化。 基本语法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 定义一个长度为3元素类型为int的数组a</span><br><span class="line">var a [3]int</span><br></pre></td></tr></table></figure>
+<h2 id="数组定义"><a href="#数组定义" class="headerlink" title="数组定义"></a>数组定义</h2><p><code>var 数组变量名 [元素数量]Type</code><br>比如：<code>var a [5]int</code>， 数组的长度必须是常量，并且长度是数组类型的一部分。一旦定义，长度不能变。<code>[5]int和[10]int</code>是不同的类型。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var a [3]int</span><br><span class="line">var b [4]int</span><br><span class="line">a &#x3D; b &#x2F;&#x2F;不可以这样做，因为此时a和b是不同的类型</span><br></pre></td></tr></table></figure>
+<p>数组可以通过下标进行访问，下标是从0开始，最后一个元素下标是：<code>len-1</code>，访问越界（下标在合法范围之外），则触发访问越界，会panic。</p>
+<h2 id="数组的初始化"><a href="#数组的初始化" class="headerlink" title="数组的初始化"></a>数组的初始化</h2><p><strong><em>一维数组</em></strong></p>
+<h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h3><p>初始化数组时可以使用初始化列表来设置数组元素的值。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var testArray [3]int                        &#x2F;&#x2F;数组会初始化为int类型的零值</span><br><span class="line">    var numArray &#x3D; [3]int&#123;1, 2&#125;                 &#x2F;&#x2F;使用指定的初始值完成初始化</span><br><span class="line">    var cityArray &#x3D; [3]string&#123;&quot;北京&quot;, &quot;上海&quot;, &quot;深圳&quot;&#125; &#x2F;&#x2F;使用指定的初始值完成初始化</span><br><span class="line">    fmt.Println(testArray)                      &#x2F;&#x2F;[0 0 0]</span><br><span class="line">    fmt.Println(numArray)                       &#x2F;&#x2F;[1 2 0]</span><br><span class="line">    fmt.Println(cityArray)                      &#x2F;&#x2F;[北京 上海 深圳]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>按照上面的方法每次都要确保提供的初始值和数组长度一致，一般情况下我们可以让编译器根据初始值的个数自行推断数组的长度，例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var testArray [3]int</span><br><span class="line">    var numArray &#x3D; [...]int&#123;1, 2&#125;</span><br><span class="line">    var cityArray &#x3D; [...]string&#123;&quot;北京&quot;, &quot;上海&quot;, &quot;深圳&quot;&#125;</span><br><span class="line">    fmt.Println(testArray)                          &#x2F;&#x2F;[0 0 0]</span><br><span class="line">    fmt.Println(numArray)                           &#x2F;&#x2F;[1 2]</span><br><span class="line">    fmt.Printf(&quot;type of numArray:%T\n&quot;, numArray)   &#x2F;&#x2F;type of numArray:[2]int</span><br><span class="line">    fmt.Println(cityArray)                          &#x2F;&#x2F;[北京 上海 深圳]</span><br><span class="line">    fmt.Printf(&quot;type of cityArray:%T\n&quot;, cityArray) &#x2F;&#x2F;type of cityArray:[3]string</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a>方法三</h3><p>我们还可以使用指定索引值的方式来初始化数组，例如:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [...]int&#123;1: 1, 3: 5&#125;</span><br><span class="line">    fmt.Println(a)                  &#x2F;&#x2F; [0 1 0 5]</span><br><span class="line">    fmt.Printf(&quot;type of a:%T\n&quot;, a) &#x2F;&#x2F;type of a:[4]int</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="数组的遍历"><a href="#数组的遍历" class="headerlink" title="数组的遍历"></a>数组的遍历</h2><p><strong><em>一维数组</em></strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 遍历数组a有以下两种方法：</span><br><span class="line">func main() &#123;</span><br><span class="line">    var a &#x3D; [...]string&#123;&quot;北京&quot;, &quot;上海&quot;, &quot;深圳&quot;&#125;</span><br><span class="line">    &#x2F;&#x2F; 方法1：for循环遍历</span><br><span class="line">    for i :&#x3D; 0; i &lt; len(a); i++ &#123;</span><br><span class="line">        fmt.Println(a[i])</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 方法2：for range遍历</span><br><span class="line">    for index, value :&#x3D; range a &#123;</span><br><span class="line">        fmt.Println(index, value)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="多维数组"><a href="#多维数组" class="headerlink" title="多维数组"></a>多维数组</h2><h3 id="二维数组的定义"><a href="#二维数组的定义" class="headerlink" title="二维数组的定义"></a>二维数组的定义</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [3][2]string&#123;</span><br><span class="line">        &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">        &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">        &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(a) &#x2F;&#x2F;[[北京 上海] [广州 深圳] [成都 重庆]]</span><br><span class="line">    fmt.Println(a[2][1]) &#x2F;&#x2F;支持索引取值:重庆</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="二维数组的遍历"><a href="#二维数组的遍历" class="headerlink" title="二维数组的遍历"></a>二维数组的遍历</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [3][2]string&#123;</span><br><span class="line">        &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">        &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">        &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    for _, v1 :&#x3D; range a &#123;</span><br><span class="line">        for _, v2 :&#x3D; range v1 &#123;</span><br><span class="line">            fmt.Printf(&quot;%s\t&quot;, v2)</span><br><span class="line">        &#125;</span><br><span class="line">        fmt.Println()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">北京    上海    </span><br><span class="line">广州    深圳    </span><br><span class="line">成都    重庆    </span><br></pre></td></tr></table></figure>
+<p><code>注意</code>： 多维数组<code>只有第一层</code>可以使用<code>...</code>来让编译器推导数组长度。例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;支持的写法</span><br><span class="line">a :&#x3D; [...][2]string&#123;</span><br><span class="line">    &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">    &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">    &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;不支持多维数组的内层使用...</span><br><span class="line">b :&#x3D; [3][...]string&#123;</span><br><span class="line">    &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">    &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">    &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="数组拷贝和传参"><a href="#数组拷贝和传参" class="headerlink" title="数组拷贝和传参"></a>数组拷贝和传参</h2><p>数组是值类型，赋值和传参会复制整个数组。因此改变副本的值，不会改变本身的值。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func modifyArray(x [3]int) &#123;</span><br><span class="line">    x[0] &#x3D; 100</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func modifyArray2(x [3][2]int) &#123;</span><br><span class="line">    x[2][0] &#x3D; 100</span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [3]int&#123;10, 20, 30&#125;</span><br><span class="line">    modifyArray(a) &#x2F;&#x2F;在modify中修改的是a的副本x</span><br><span class="line">    fmt.Println(a) &#x2F;&#x2F;[10 20 30]</span><br><span class="line">    b :&#x3D; [3][2]int&#123;</span><br><span class="line">        &#123;1, 1&#125;,</span><br><span class="line">        &#123;1, 1&#125;,</span><br><span class="line">        &#123;1, 1&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    modifyArray2(b) &#x2F;&#x2F;在modify中修改的是b的副本x</span><br><span class="line">    fmt.Println(b)  &#x2F;&#x2F;[[1 1] [1 1] [1 1]]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong></p>
+<ol>
+<li>数组支持 “==“、”!=” 操作符，因为内存总是被初始化过的。</li>
+<li>[n]*T表示指针数组，*[n]T表示数组指针 。</li>
+</ol>
+<h2 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h2><p>求数组[1, 3, 5, 7, 8]所有元素的和<br>找出数组中和为指定值的两个元素的下标，比如从数组[1, 3, 5, 7, 8]中找出和为8的两个元素的下标分别为(0,3)和(1,2)。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
-        <category>AWS</category>
+        <category>Go</category>
       </categories>
+      <tags>
+        <tag>go语言基础</tag>
+        <tag>array</tag>
+      </tags>
   </entry>
   <entry>
     <title>go基础之函数进阶</title>
@@ -2106,170 +2494,6 @@ roles/
       </tags>
   </entry>
   <entry>
-    <title>AWS账号注册和控制台介绍</title>
-    <url>/2020/04/09/aws_present/</url>
-    <content><![CDATA[<blockquote>
-<p><a href="https://docs.aws.amazon.com/">AWS官方文档</a></p>
-</blockquote>
-<hr>
-<h2 id="AWS账号注册"><a href="#AWS账号注册" class="headerlink" title="AWS账号注册"></a>AWS账号注册</h2><p>首先，注册一个Global账号：</p>
-<ul>
-<li><a href="https://aws.amazon.com/">https://aws.amazon.com</a></li>
-<li><a href="https://amazonaws-china.com/">https://amazonaws-china.com</a></li>
-</ul>
-<p>注册帐号美国版和中国版一致, 创建EC2时注意选择的国家区域；不要用 <a href="https://www.amazonaws.cn注册/">https://www.amazonaws.cn注册</a><br>免费套餐介绍：<a href="https://amazonaws-china.com/cn/free/faqs/">https://amazonaws-china.com/cn/free/faqs/</a></p>
-<h2 id="AWS控制台"><a href="#AWS控制台" class="headerlink" title="AWS控制台"></a>AWS控制台</h2><p><strong>申请IAM用户</strong><br>登录到aws控制台，打开IAM控制台，开启MFA安全认证，保证根用户的安全；<br>申请一个IAM用户并授权此用户最大权限（AWS架构师第一准则，<code>不要使用根用户登录控制台操作</code>）；<br>用申请的IAM用户进行所有的操作，根用户在没有必要的情况不要使用，并由专人负责；</p>
-<p><strong>熟悉AWS控制台</strong></p>
-<p>把控制台上面的服务选项都点一遍，看看各个服务在哪里；方便后期使用的话知道点击哪里；<br><code>控制台的左下角可以切换语言</code>，如果英语不好的可以换成中文显示；</p>
-<p><strong>熟悉AWS账单管理</strong></p>
-<p>切换到账单控制台，查看账单<br>登录账单控制台，看看账单首选项、付款方式、整合账单、税务设置、订单发票、服务抵扣金额、成本管理等等<br>这个要认真搞下，因为账号区分全球的和中国区账号。</p>
-<ol>
-<li>汇款方式（信用卡（外币卡&amp;银联卡）、电汇、）</li>
-<li>发票问题（中国区可以提供发票、全球区没有发票只有收据）</li>
-<li>缴费时间点（账单生成时间、最迟缴费时间）</li>
-</ol>
-<p><strong>熟悉AWS服务限制</strong></p>
-<p>通过控制台查看服务的限制，或者通过此链接：</p>
-<p><a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/ec2-resource-limits.html">Amazon EC2 服务限制</a><br><a href="https://docs.aws.amazon.com/zh_cn/general/latest/gr/aws_service_limits.html">AWS 服务配额</a></p>
-<p>服务限制，会更好的控制对于AWS资源的合理利用，防止有心人有意或无意的无节制的开启资源。<br>还有就是一些其他不知道的原因，某项服务在某个region不能使用，这些都要知道；防止你们公司业务要上线了。发现那个地区没有想使用的服务；因为你测试的时候使用的region跟上线所在的那个region不一样，而且你也没有提前确认；等等原因。</p>
-<p><strong>熟悉AWS的support中心</strong><br>技术支持，服务限制申请提高；<br>技术支持分为三种，开发人员、商业、企业。<br>具体收费模式请看链接：<a href="https://aws.amazon.com/cn/premiumsupport/plans/">https://aws.amazon.com/cn/premiumsupport/plans/</a><br>还有一种技术支持，就是安排专门的架构师服务于你们公司的，But你公司必须在AWS消费很多大洋才可以伺候你</p>
-<h2 id="AWS学习-阶段划分"><a href="#AWS学习-阶段划分" class="headerlink" title="AWS学习 阶段划分"></a>AWS学习 阶段划分</h2><p><strong>基础玩法</strong></p>
-<p>EC2、ELB、S3、ElastiCache（redis）、RDS（MySql）<br>建议你们先熟悉上面几个服务，使用默认选项（默认VPC、安全组）等创建简单的三层服务并测试。<br>因为几乎迁移到AWS，使用的服务属上面几项最多，当然也是最常用的服务；先熟悉熟悉基本情况，打好基础。</p>
-<p><strong>中级玩法</strong></p>
-<p>首先，<code>全面深入学习VPC一定要学明白VPC</code>，因为AWS大多数服务，多AZ、高可用，都是基于VPC网络区分开的。<br>还有个问题就是，强迫症选手做事情是不会选择默认的选项去做事的。<br>通过自定义VPC，进行网络划分；各个服务做使用的网络不同（公有子网、私有子网），后期扩展。<br>这样做的好处就是，你可以清楚的了解到你们整个架构的划分、业务划分、网络划分、安全防护、后期如何进行架构扩展，都能清楚的了解到；<br>通过自定义的VPC网络进行服务创建，先把基础那几项服务玩一遍；再去测试其他的服务。</p>
-<p><strong>高级玩法</strong></p>
-<p>DevOps<br>ECS、EKS<br>Serverless</p>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/aws-55ed8db05deb6a0c99575b200bd4d317.jpeg?x-oss-process=style/watermark"></p>
-<hr>
-<!--  https://www.bookstack.cn/read/awschina/c0f7d53e63c37006.md  -->  
-<!--  https://www.jianshu.com/p/89004a16789f  -->  
-]]></content>
-      <categories>
-        <category>AWS</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Lambda + Cloud Watch定时维护EC2</title>
-    <url>/2020/09/01/aws_lambda_cloudwatch_operate_ec2/</url>
-    <content><![CDATA[<blockquote>
-<p><strong>知识文档</strong>：</p>
-</blockquote>
-<ul>
-<li><a href="https://docs.aws.amazon.com/zh_cn/lambda/latest/dg/golang-package.html">Lambda</a></li>
-<li><a href="https://docs.aws.amazon.com/zh_cn/AmazonCloudWatch/latest/events/ScheduledEvents.html">Cloudwatch</a></li>
-</ul>
-<hr>
-<p>有时候在EC2上的一些业务只需要在每天的某个时间段对外提供服务，其余的时候是处于闲置空转的状态。但付费方式为EC2的按需收费，那么闲置时间产生的费用就显得浪费了。怎么办呢？通过Lambda服务结合Cloudwatch规则，实现实例的定时开关，达到节约成本的目的。</p>
-<p><strong>业务需求</strong>：</p>
-<ul>
-<li>每天上午（UTC）9:00~20:00，将实例启动使其处于running状态</li>
-<li>每天晚上（UTC）20:00~次日上午9:00，将实例停止使其处于stopped状态。</li>
-</ul>
-<hr>
-<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p><strong>需要用到的AWS服务包括：</strong></p>
-<ol>
-<li><strong>EC2</strong>：即云端虚拟机，将用于运行我们的脚本。</li>
-<li><strong>Lambda</strong>, 用于操作我们的EC2实例，即启动和关闭。</li>
-<li><strong>IAM</strong>, AWS Identity and Access Management, 用于赋予Lambda函数操作我们EC2实例的权限。</li>
-<li><strong>Cloud Watch</strong>, 用于定时执行我们的Lambda函数，达到定时开关机的效果。</li>
-</ol>
-<hr>
-<h2 id="EC2"><a href="#EC2" class="headerlink" title="EC2"></a>EC2</h2><p>实例的创建步骤这里就不介绍了，可以参考<a href="https://docs.aws.amazon.com/index.html">AWS 官方文档</a>。</p>
-<p>测试资源如下：</p>
-<table>
-<thead>
-<tr>
-<th align="center">Name</th>
-<th align="center">实例ID</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">XLDSMILE-US-Pordoction-app1</td>
-<td align="center">i-0611856bef37b1295</td>
-</tr>
-<tr>
-<td align="center">XLDSMILE-US-Pordoction-app2</td>
-<td align="center">i-01c2654a6acc2f933</td>
-</tr>
-</tbody></table>
-<h2 id="创建Lambda的IAM角色"><a href="#创建Lambda的IAM角色" class="headerlink" title="创建Lambda的IAM角色"></a>创建Lambda的IAM角色</h2><p>因为在创建Lambda函数时会要求选择IAM，因此这里要先把IAM角色给配置喽。</p>
-<h3 id="创建策略"><a href="#创建策略" class="headerlink" title="创建策略"></a>创建策略</h3><ul>
-<li><strong>登录<code>控制台</code>，选择<code>IAM</code>服务》<code>角色</code>》<code>创建角色</code></strong></li>
-</ul>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/add-lambda-role_20201105175614.png?x-oss-process=style/original_format"></p>
-<ul>
-<li>选择 <strong><code>创建策略</code></strong> ，为角色附加自定义权限策略：</li>
-</ul>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/lambda_20201106104548.png?x-oss-process=style/original_format"></p>
-<blockquote>
-<p>将如下JSON字符串复制到选项框内</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;Version&quot;: &quot;2012-10-17&quot;,</span><br><span class="line">    &quot;Statement&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;Effect&quot;: &quot;Allow&quot;,</span><br><span class="line">            &quot;Action&quot;: [</span><br><span class="line">                &quot;logs:CreateLogGroup&quot;,</span><br><span class="line">                &quot;logs:CreateLogStream&quot;,</span><br><span class="line">                &quot;logs:PutLogEvents&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;Resource&quot;: &quot;arn:aws:logs:*:*:*&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;Effect&quot;: &quot;Allow&quot;,</span><br><span class="line">            &quot;Action&quot;: [</span><br><span class="line">                &quot;ec2:Start*&quot;,</span><br><span class="line">                &quot;ec2:Stop*&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;Resource&quot;: &quot;*&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>点击 <strong><code>查看策略</code></strong> ，为其创建<code>名字</code>和<code>描述</code>，点击<code>创建策略</code>，跳转到以下界面。</li>
-</ul>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/lambda_polic1_20201106115100.png?x-oss-process=style/original_format"></p>
-<h3 id="为角色分配策略"><a href="#为角色分配策略" class="headerlink" title="为角色分配策略"></a>为角色分配策略</h3><ul>
-<li>策略创建完成后返回 <strong><code>创建角色</code></strong> 界面，筛选并勾选策略</li>
-</ul>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/lambda_20201106165248.png?x-oss-process=style/original_format"></p>
-<ul>
-<li>点击下一步，标签啥的选默认，点击 <strong><code>审核</code></strong> 》 <strong><code>创建角色</code></strong> ：</li>
-</ul>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/lamdba_20201106165915.png?x-oss-process=style/original_format"></p>
-<h2 id="创建Lambda函数"><a href="#创建Lambda函数" class="headerlink" title="创建Lambda函数"></a>创建Lambda函数</h2><p><strong>步骤或选型：</strong></p>
-<ul>
-<li>选择Lambda服务</li>
-<li>点击 <strong><code>函数</code></strong> 》 <strong><code>创建函数</code></strong></li>
-<li>选择“从头开始撰写”</li>
-<li>函数名称：StopEC2Instances</li>
-<li>语言：Pyhton3.8</li>
-<li>执行角色：现有角色》搜索我们刚才建立的角色</li>
-<li>点击 <strong><code>创建函数</code></strong></li>
-</ul>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/lambda50_20201106175051.png?x-oss-process=style/original_format"></p>
-<p>将以下Python3代码复制粘贴。region替换为你的EC2 region, instancces 替换为你的instance id。这些都可以在EC2控制台找到。完成后点击 <strong><code>Deploy</code></strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># stopped your instances</span><br><span class="line">import boto3</span><br><span class="line">region &#x3D; &#39;us-east-1&#39;</span><br><span class="line">instances &#x3D; [&#39;i-0571c93e69719637c&#39;, &#39;i-057659afa167f65a5&#39;]</span><br><span class="line">ec2 &#x3D; boto3.client(&#39;ec2&#39;, region_name&#x3D;region)</span><br><span class="line">    </span><br><span class="line">def lambda_handler(event, context):</span><br><span class="line">    ec2.stop_instances(InstanceIds&#x3D;instances)</span><br><span class="line">    print(&#39;stopped your instances: &#39; + str(instances))</span><br></pre></td></tr></table></figure>
-
-<p>这样，<code>关闭实例的Lambda函数</code>就创建好了，我们还需要创建一个类似的<code>启动实例的函数</code>。</p>
-<p>重复从 建立函数 开始的以上所有步骤，有以下几点改变：</p>
-<ul>
-<li>函数名称: StartEC2Instances</li>
-<li>Python代码里的 ec2.stop_instances 替换为 ec2.start_instances</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># started your instances</span><br><span class="line">import boto3</span><br><span class="line">region &#x3D; &#39;us-east-1&#39;</span><br><span class="line">instances &#x3D; [&#39;i-0571c93e69719637c&#39;, &#39;i-057659afa167f65a5&#39;]</span><br><span class="line">ec2 &#x3D; boto3.client(&#39;ec2&#39;, region_name&#x3D;region)</span><br><span class="line">    </span><br><span class="line">def lambda_handler(event, context):</span><br><span class="line">    ec2.start_instances(InstanceIds&#x3D;instances)</span><br><span class="line">    print(&#39;started your instances: &#39; + str(instances))</span><br></pre></td></tr></table></figure>
-<ul>
-<li>完成后，在Lambda控制台，就能看到我们刚才建立的两个函数</li>
-</ul>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/lambda_20201106180107.png?x-oss-process=style/original_format"></p>
-<hr>
-<h2 id="使用CloudWatch服务，创建规则"><a href="#使用CloudWatch服务，创建规则" class="headerlink" title="使用CloudWatch服务，创建规则"></a>使用CloudWatch服务，创建规则</h2><ol>
-<li>CloudWatch控制台，选择<code>规则</code>》<code>创建规则</code>，事件源选择<code>计划</code>》<code>cron表达式</code> ，输入 “0 9 * * ? *”</li>
-<li>任务计划格式参考：<a href="https://docs.aws.amazon.com/zh_cn/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions">Cron 表达式</a><ul>
-<li>cron 使用的时间是UTC时间，具体UTC时间可查询此网站：<a href="https://time.is/UTC">https://time.is/UTC</a></li>
-</ul>
-</li>
-<li>目标选择<code>Lambda函数</code>，选择<code>函数</code></li>
-<li>点击<code>配置规则详细信息</code>，名称和描述均写<code>StartEC2</code></li>
-<li>重复步骤1操作，这时cron表达式为“0 20 * * ? *”</li>
-<li>重复上文3，4两步骤，函数版本选择“V2”。文件名和描述均写“StopEC2”</li>
-<li>测试，若机器到时间未停止，首先检查cron表达式和UTC时间表述。其次检查Lambda代码中的instance ID，region是否正确。</li>
-</ol>
-<hr>
-<!--https://segmentfault.com/a/1190000023101856-->  
-<!--https://blog.csdn.net/kepa520/article/details/79297085-->  
-<!--https://blog.csdn.net/captsinpata/article/details/93501163?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-7.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-7.channel_param-->  
-
-]]></content>
-      <categories>
-        <category>AWS</category>
-      </categories>
-      <tags>
-        <tag>CloudWatch</tag>
-        <tag>Lambda</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>go基础之流程控制</title>
     <url>/2020/04/09/go_base_process_control/</url>
     <content><![CDATA[<p>流程控制是每种编程语言控制逻辑走向和执行次序的重要部分，流程控制可以说是一门语言的“经脉”。</p>
@@ -2486,6 +2710,67 @@ roles/
       <tags>
         <tag>go语言基础</tag>
         <tag>slice</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>go基础之变量和常量</title>
+    <url>/2020/04/08/go_var_constant/</url>
+    <content><![CDATA[<h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><h2 id="变量类型"><a href="#变量类型" class="headerlink" title="变量类型"></a>变量类型</h2><p>变量（Variable）的功能是存储数据。不同的变量保存的数据类型可能会不一样。经过半个多世纪的发展，编程语言已经基本形成了一套固定的类型，常见变量的数据类型有：<code>整型、浮点型、布尔型</code>等。</p>
+<p>Go语言中的每一个变量都有自己的类型，并且变量必须经过声明才能开始使用。</p>
+<h2 id="变量声明-var"><a href="#变量声明-var" class="headerlink" title="变量声明 var"></a>变量声明 var</h2><p>Go语言中的变量需要声明后才能使用，同一作用域内不支持重复声明。 并且Go语言的变量声明后必须使用。</p>
+<h3 id="标准声明"><a href="#标准声明" class="headerlink" title="标准声明"></a>标准声明</h3><p>Go语言的变量声明格式为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var 变量名 变量类型</span><br></pre></td></tr></table></figure>
+<p>变量声明以关键字<code>var</code>开头，变量类型放在变量的后面，行尾无需分号。 举个例子：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name string</span><br><span class="line">var age int</span><br><span class="line">var isOk bool</span><br></pre></td></tr></table></figure>
+<h3 id="批量声明"><a href="#批量声明" class="headerlink" title="批量声明"></a>批量声明</h3><p>每声明一个变量就需要写<code>var</code>关键字会比较繁琐，go语言中还支持批量变量声明：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var (</span><br><span class="line">    a string</span><br><span class="line">    b int</span><br><span class="line">    c bool</span><br><span class="line">    d float32</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h3 id="变量的初始化"><a href="#变量的初始化" class="headerlink" title="变量的初始化"></a>变量的初始化</h3><p>Go语言在声明变量的时候，会自动对变量对应的内存区域进行初始化操作。每个变量会被初始化成其类型的默认值，例如： 整型和浮点型变量的默认值为<code>0</code>。 字符串变量的默认值为<code>空字符串</code>。 布尔型变量默认为<code>false</code>。 切片、函数、指针变量的默认为<code>nil</code>。</p>
+<p>当然我们也可在声明变量的时候为其指定初始值。变量初始化的标准格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var 变量名 类型 &#x3D; 表达式</span><br></pre></td></tr></table></figure>
+<p>举个例子：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name string &#x3D; &quot;Q1mi&quot;</span><br><span class="line">var age int &#x3D; 18</span><br></pre></td></tr></table></figure>
+<p>或者一次初始化多个变量</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name, age &#x3D; &quot;Q1mi&quot;, 20</span><br></pre></td></tr></table></figure>
+<p><strong>类型推导</strong><br>有时候我们会将变量的类型省略，这个时候编译器会根据等号右边的值来推导变量的类型完成初始化。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name &#x3D; &quot;Q1mi&quot;</span><br><span class="line">var age &#x3D; 18</span><br></pre></td></tr></table></figure>
+<h3 id="短变量声明"><a href="#短变量声明" class="headerlink" title="短变量声明 :="></a><strong>短变量声明</strong> :=</h3><p>在函数内部，可以使用更简略的<code>:=</code>方式声明并初始化变量。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">)</span><br><span class="line">&#x2F;&#x2F; 全局变量m</span><br><span class="line">var m &#x3D; 100</span><br><span class="line">&#x2F;&#x2F; n :&#x3D; &quot;smile111&quot; &#x2F;&#x2F; 非法，短变量声明方式只能用于函数内部</span><br><span class="line">func main() &#123;</span><br><span class="line">    n :&#x3D; 10</span><br><span class="line">    m :&#x3D; 200 &#x2F;&#x2F; 此处声明局部变量m</span><br><span class="line">    fmt.Println(m, n)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="匿名变量"><a href="#匿名变量" class="headerlink" title="匿名变量 _"></a><strong>匿名变量</strong> _</h3><p>在使用多重赋值时，如果想要忽略某个值，可以使用<code>匿名变量（anonymous variable）</code>。 匿名变量用一个下划线_表示，例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func foo() (int, string) &#123;</span><br><span class="line">    return 10, &quot;Q1mi&quot;</span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">    x, _ :&#x3D; foo()</span><br><span class="line">    _, y :&#x3D; foo()</span><br><span class="line">    fmt.Println(&quot;x&#x3D;&quot;, x)</span><br><span class="line">    fmt.Println(&quot;y&#x3D;&quot;, y)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>匿名变量不占用命名空间，不会分配内存，所以匿名变量之间不存在重复声明。 (在<code>Lua</code>等编程语言里，匿名变量也被叫做哑元变量。)</p>
+<p> <code>注意事项：</code></p>
+<ol>
+<li>函数外的每个语句都必须以关键字开始（var、const、func等）</li>
+<li><code>:=</code>不能使用在函数外。</li>
+<li><code>_</code>多用于占位，表示忽略值。</li>
+</ol>
+<h2 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h2><p>相对于变量，常量是恒定不变的值，多用于定义程序运行期间不会改变的那些值。 常量的声明和变量声明非常类似，只是把<code>var</code>换成了<code>const</code>，常量在定义的时候必须赋值。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const pi &#x3D; 3.1415</span><br><span class="line">const e &#x3D; 2.7182</span><br></pre></td></tr></table></figure>
+<p>声明了<code>pi</code>和<code>e</code>这两个常量之后，在整个程序运行期间它们的值都不能再发生变化了。</p>
+<p>多个常量也可以一起声明：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    pi &#x3D; 3.1415</span><br><span class="line">    e &#x3D; 2.7182</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>const同时声明多个常量时，如果省略了值则表示和上面一行的值相同。 例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; 100</span><br><span class="line">    n2</span><br><span class="line">    n3</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>上面示例中，常量<code>n1</code>、<code>n2</code>、<code>n3</code>的值都是100。</p>
+<h3 id="iota"><a href="#iota" class="headerlink" title="iota"></a>iota</h3><p><code>iota</code>是go语言的常量计数器，只能在常量的表达式中使用。</p>
+<p><code>iota</code>在const关键字出现时将被重置为0。const中每新增一行常量声明将使iota计数一次(iota可理解为const语句块中的行索引)。 使用iota能简化定义，在定义枚举时很有用。</p>
+<p><strong>举个例子：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; iota &#x2F;&#x2F;0</span><br><span class="line">    n2        &#x2F;&#x2F;1</span><br><span class="line">    n3        &#x2F;&#x2F;2</span><br><span class="line">    n4        &#x2F;&#x2F;3</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><strong>几个常见的iota示例:</strong><br>使用<code>_</code>跳过某些值</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; iota &#x2F;&#x2F;0</span><br><span class="line">    n2        &#x2F;&#x2F;1</span><br><span class="line">    _</span><br><span class="line">    n4        &#x2F;&#x2F;3</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><code>iota</code>声明中间插队</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; iota &#x2F;&#x2F;0</span><br><span class="line">    n2 &#x3D; 100  &#x2F;&#x2F;100</span><br><span class="line">    n3 &#x3D; iota &#x2F;&#x2F;2</span><br><span class="line">    n4        &#x2F;&#x2F;3</span><br><span class="line">)</span><br><span class="line">const n5 &#x3D; iota &#x2F;&#x2F;0</span><br></pre></td></tr></table></figure>
+<p>定义数量级 （这里的<code>&lt;&lt;</code>表示左移操作，<code>1&lt;&lt;10</code>表示将1的二进制表示向左移10位，也就是由<code>1</code>变成了<code>10000000000</code>，也就是十进制的1024。同理<code>2&lt;&lt;2</code>表示将2的二进制表示向左移2位，也就是由<code>10</code>变成了<code>1000</code>，也就是十进制的8。）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    _  &#x3D; iota</span><br><span class="line">    KB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    MB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    GB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    TB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    PB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>多个<code>iota</code>定义在一行</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    a, b &#x3D; iota + 1, iota + 2 &#x2F;&#x2F;1,2</span><br><span class="line">    c, d                      &#x2F;&#x2F;2,3</span><br><span class="line">    e, f                      &#x2F;&#x2F;3,4</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>go语言基础</tag>
+        <tag>variable</tag>
       </tags>
   </entry>
   <entry>
@@ -2815,67 +3100,6 @@ roles/
       </tags>
   </entry>
   <entry>
-    <title>go基础之变量和常量</title>
-    <url>/2020/04/08/go_var_constant/</url>
-    <content><![CDATA[<h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><h2 id="变量类型"><a href="#变量类型" class="headerlink" title="变量类型"></a>变量类型</h2><p>变量（Variable）的功能是存储数据。不同的变量保存的数据类型可能会不一样。经过半个多世纪的发展，编程语言已经基本形成了一套固定的类型，常见变量的数据类型有：<code>整型、浮点型、布尔型</code>等。</p>
-<p>Go语言中的每一个变量都有自己的类型，并且变量必须经过声明才能开始使用。</p>
-<h2 id="变量声明-var"><a href="#变量声明-var" class="headerlink" title="变量声明 var"></a>变量声明 var</h2><p>Go语言中的变量需要声明后才能使用，同一作用域内不支持重复声明。 并且Go语言的变量声明后必须使用。</p>
-<h3 id="标准声明"><a href="#标准声明" class="headerlink" title="标准声明"></a>标准声明</h3><p>Go语言的变量声明格式为：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var 变量名 变量类型</span><br></pre></td></tr></table></figure>
-<p>变量声明以关键字<code>var</code>开头，变量类型放在变量的后面，行尾无需分号。 举个例子：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name string</span><br><span class="line">var age int</span><br><span class="line">var isOk bool</span><br></pre></td></tr></table></figure>
-<h3 id="批量声明"><a href="#批量声明" class="headerlink" title="批量声明"></a>批量声明</h3><p>每声明一个变量就需要写<code>var</code>关键字会比较繁琐，go语言中还支持批量变量声明：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var (</span><br><span class="line">    a string</span><br><span class="line">    b int</span><br><span class="line">    c bool</span><br><span class="line">    d float32</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<h3 id="变量的初始化"><a href="#变量的初始化" class="headerlink" title="变量的初始化"></a>变量的初始化</h3><p>Go语言在声明变量的时候，会自动对变量对应的内存区域进行初始化操作。每个变量会被初始化成其类型的默认值，例如： 整型和浮点型变量的默认值为<code>0</code>。 字符串变量的默认值为<code>空字符串</code>。 布尔型变量默认为<code>false</code>。 切片、函数、指针变量的默认为<code>nil</code>。</p>
-<p>当然我们也可在声明变量的时候为其指定初始值。变量初始化的标准格式如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var 变量名 类型 &#x3D; 表达式</span><br></pre></td></tr></table></figure>
-<p>举个例子：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name string &#x3D; &quot;Q1mi&quot;</span><br><span class="line">var age int &#x3D; 18</span><br></pre></td></tr></table></figure>
-<p>或者一次初始化多个变量</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name, age &#x3D; &quot;Q1mi&quot;, 20</span><br></pre></td></tr></table></figure>
-<p><strong>类型推导</strong><br>有时候我们会将变量的类型省略，这个时候编译器会根据等号右边的值来推导变量的类型完成初始化。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name &#x3D; &quot;Q1mi&quot;</span><br><span class="line">var age &#x3D; 18</span><br></pre></td></tr></table></figure>
-<h3 id="短变量声明"><a href="#短变量声明" class="headerlink" title="短变量声明 :="></a><strong>短变量声明</strong> :=</h3><p>在函数内部，可以使用更简略的<code>:=</code>方式声明并初始化变量。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">)</span><br><span class="line">&#x2F;&#x2F; 全局变量m</span><br><span class="line">var m &#x3D; 100</span><br><span class="line">&#x2F;&#x2F; n :&#x3D; &quot;smile111&quot; &#x2F;&#x2F; 非法，短变量声明方式只能用于函数内部</span><br><span class="line">func main() &#123;</span><br><span class="line">    n :&#x3D; 10</span><br><span class="line">    m :&#x3D; 200 &#x2F;&#x2F; 此处声明局部变量m</span><br><span class="line">    fmt.Println(m, n)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="匿名变量"><a href="#匿名变量" class="headerlink" title="匿名变量 _"></a><strong>匿名变量</strong> _</h3><p>在使用多重赋值时，如果想要忽略某个值，可以使用<code>匿名变量（anonymous variable）</code>。 匿名变量用一个下划线_表示，例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func foo() (int, string) &#123;</span><br><span class="line">    return 10, &quot;Q1mi&quot;</span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">    x, _ :&#x3D; foo()</span><br><span class="line">    _, y :&#x3D; foo()</span><br><span class="line">    fmt.Println(&quot;x&#x3D;&quot;, x)</span><br><span class="line">    fmt.Println(&quot;y&#x3D;&quot;, y)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>匿名变量不占用命名空间，不会分配内存，所以匿名变量之间不存在重复声明。 (在<code>Lua</code>等编程语言里，匿名变量也被叫做哑元变量。)</p>
-<p> <code>注意事项：</code></p>
-<ol>
-<li>函数外的每个语句都必须以关键字开始（var、const、func等）</li>
-<li><code>:=</code>不能使用在函数外。</li>
-<li><code>_</code>多用于占位，表示忽略值。</li>
-</ol>
-<h2 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h2><p>相对于变量，常量是恒定不变的值，多用于定义程序运行期间不会改变的那些值。 常量的声明和变量声明非常类似，只是把<code>var</code>换成了<code>const</code>，常量在定义的时候必须赋值。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const pi &#x3D; 3.1415</span><br><span class="line">const e &#x3D; 2.7182</span><br></pre></td></tr></table></figure>
-<p>声明了<code>pi</code>和<code>e</code>这两个常量之后，在整个程序运行期间它们的值都不能再发生变化了。</p>
-<p>多个常量也可以一起声明：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    pi &#x3D; 3.1415</span><br><span class="line">    e &#x3D; 2.7182</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p>const同时声明多个常量时，如果省略了值则表示和上面一行的值相同。 例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; 100</span><br><span class="line">    n2</span><br><span class="line">    n3</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p>上面示例中，常量<code>n1</code>、<code>n2</code>、<code>n3</code>的值都是100。</p>
-<h3 id="iota"><a href="#iota" class="headerlink" title="iota"></a>iota</h3><p><code>iota</code>是go语言的常量计数器，只能在常量的表达式中使用。</p>
-<p><code>iota</code>在const关键字出现时将被重置为0。const中每新增一行常量声明将使iota计数一次(iota可理解为const语句块中的行索引)。 使用iota能简化定义，在定义枚举时很有用。</p>
-<p><strong>举个例子：</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; iota &#x2F;&#x2F;0</span><br><span class="line">    n2        &#x2F;&#x2F;1</span><br><span class="line">    n3        &#x2F;&#x2F;2</span><br><span class="line">    n4        &#x2F;&#x2F;3</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p><strong>几个常见的iota示例:</strong><br>使用<code>_</code>跳过某些值</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; iota &#x2F;&#x2F;0</span><br><span class="line">    n2        &#x2F;&#x2F;1</span><br><span class="line">    _</span><br><span class="line">    n4        &#x2F;&#x2F;3</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p><code>iota</code>声明中间插队</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; iota &#x2F;&#x2F;0</span><br><span class="line">    n2 &#x3D; 100  &#x2F;&#x2F;100</span><br><span class="line">    n3 &#x3D; iota &#x2F;&#x2F;2</span><br><span class="line">    n4        &#x2F;&#x2F;3</span><br><span class="line">)</span><br><span class="line">const n5 &#x3D; iota &#x2F;&#x2F;0</span><br></pre></td></tr></table></figure>
-<p>定义数量级 （这里的<code>&lt;&lt;</code>表示左移操作，<code>1&lt;&lt;10</code>表示将1的二进制表示向左移10位，也就是由<code>1</code>变成了<code>10000000000</code>，也就是十进制的1024。同理<code>2&lt;&lt;2</code>表示将2的二进制表示向左移2位，也就是由<code>10</code>变成了<code>1000</code>，也就是十进制的8。）</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    _  &#x3D; iota</span><br><span class="line">    KB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    MB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    GB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    TB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    PB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p>多个<code>iota</code>定义在一行</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    a, b &#x3D; iota + 1, iota + 2 &#x2F;&#x2F;1,2</span><br><span class="line">    c, d                      &#x2F;&#x2F;2,3</span><br><span class="line">    e, f                      &#x2F;&#x2F;3,4</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Go</category>
-      </categories>
-      <tags>
-        <tag>go语言基础</tag>
-        <tag>variable</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>go主要特征—标识符、关键字、构建、编译</title>
     <url>/2020/01/31/go%E4%B8%BB%E8%A6%81%E7%89%B9%E5%BE%81/</url>
     <content><![CDATA[<blockquote>
@@ -2937,167 +3161,6 @@ bin：相关bin文件
       <tags>
         <tag>env</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Linux ln命令：建立链接（硬链接和软链接）文件</title>
-    <url>/2017/03/21/linux_command_ln/</url>
-    <content><![CDATA[<pre><code>软连接与硬连接：
-    硬链接：通过inode进行链接，硬链接就是文件的入口，多硬链删除一个不影响，删除所有才消失，目录也不能做硬链，且不能跨分区，多个硬链接inode相同
-    软连接：相当于快捷方式，链连接就是一个文本文件，文件中记录着另一个文件的位置，并指向目的位置，多个软链接inode不同。
-inode和block：
-    Block：实际存储数据用的。
-    Inode：存储数据属性信息，包含文件大小、属主、归属、用户组、权限、文件类型、修改时间，就不包括文件名
-</code></pre>
-<hr>
-<p>如果要想说清楚 ln 命令，则必须先解释下 ext 文件系统（Linux 文件系统）是如何工作的。我们在前面讲解了分区的格式化就是写入文件系统，而我们的 Linux 目前使用的是 ext4 文件系统。用一张示意图来描述 ext4 文件系统</p>
-<p><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/06/2-1P92Q6130RO.jpg?x-oss-process=style/original_format" alt="ext4 文件系统示意图"></p>
-<p>ext4 文件系统会把分区主要分为两大部分（暂时不提超级块）：小部分用于保存文件的 inode (i 节点）信息；剩余的大部分用于保存 block 信息。</p>
-<p>inode 的默认大小为 128 Byte，用来记录文件的权限（r、w、x）、文件的所有者和属组、文件的大小、文件的状态改变时间（ctime）、文件的最近一次读取时间（atime）、文件的最近一次修改时间（mtime）、文件的数据真正保存的 block 编号。每个文件需要占用一个 inode。大家如果仔细查看，就会发现 inode 中是不记录文件名的，那是因为文件名记录在文件所在目录的 block 中。</p>
-<p>block 的大小可以是 1KB、2KB、4KB，默认为 4KB。block 用于实际的数据存储，如果一个 block 放不下数据，则可以占用多个 block。例如，有一个 10KB 的文件需要存储，则会占用 3 个 block，虽然最后一个 block 不能占满，但也不能再放入其他文件的数据。这 3 个 block 有可能是连续的，也有可能是分散的。</p>
-<p>由此，我们可以知道以下 2 个重要的信息：</p>
-<ul>
-<li>每个文件都独自占用一个 inode，文件内容由 inode 的记录来指向；</li>
-<li>如果想要读取文件内容，就必须借助目录中记录的文件名找到该文件的 inode，才能成功找到文件内容所在的 block 块；</li>
-</ul>
-<p>了解了 Linux 系统底层文件的存储状态后，接下来学习 ln 命令。</p>
-<h1 id="ln-命令"><a href="#ln-命令" class="headerlink" title="ln 命令"></a>ln 命令</h1><p>ln 命令用于给文件创建链接，根据 Linux 系统存储文件的特点，链接的方式分为以下 2 种：</p>
-<ul>
-<li>软链接：类似于 Windows 系统中给文件创建快捷方式，即产生一个特殊的文件，该文件用来指向另一个文件，此链接方式同样适用于目录。</li>
-<li>硬链接：我们知道，文件的基本信息都存储在 inode 中，而硬链接指的就是给一个文件的 inode 分配多个文件名，通过任何一个文件名，都可以找到此文件的 inode，从而读取该文件的数据信息。</li>
-</ul>
-<p><strong>语法：</strong></p>
-<pre><code>ln [选项] 源文件 目标文件
-</code></pre>
-<p><strong>选项：</strong></p>
-<ul>
-<li>-s：建立软链接文件。如果不加 “-s” 选项，则建立硬链接文件；</li>
-<li>-f：强制。如果目标文件已经存在，则删除目标文件后再建立链接文件；</li>
-</ul>
-<p><strong>举例：</strong></p>
-<blockquote>
-<p>Example 1：创建硬链接：</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# touch cangls</span><br><span class="line">[root@localhost ~]# ln &#x2F;root&#x2F;cangls &#x2F;tmp</span><br><span class="line"># 建立硬链接文件，目标文件没有写文件名，会和原名一致；也就是&#x2F;tmp&#x2F;cangls 是硬链接文件</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>Example 2：创建软链接：</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# touch bols</span><br><span class="line">[root@localhost ~]# In -s &#x2F;root&#x2F;bols &#x2F;tmp</span><br><span class="line"># 建立软链接文件</span><br></pre></td></tr></table></figure>
-<p>这里需要注意的是，软链接文件的源文件必须写成绝对路径，而不能写成相对路径（硬链接没有这样的要求）；否则软链接文件会报错。这是初学者非常容易犯的错误。</p>
-]]></content>
-      <categories>
-        <category>基础运维</category>
-      </categories>
-      <tags>
-        <tag>Linux文件和目录管理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux touch命令：创建文件及修改文件时间戳</title>
-    <url>/2017/03/21/linux_command_touch/</url>
-    <content><![CDATA[<h1 id="touch-命令"><a href="#touch-命令" class="headerlink" title="touch 命令"></a>touch 命令</h1><p>touch 命令不光可以用来创建文件（当指定操作文件不存在时，该命令会在当前位置建立一个空文件），此命令更重要的功能是修改文件的时间参数（但当文件存在时，会修改此文件的时间参数）。</p>
-<p>Linux 系统中，每个文件主要拥有 3 个时间参数（通过 stat 命令进行查看），分别是文件的访问时间、数据修改时间以及状态修改时间：<br>访问时间（Access Time，简称 atime）：只要文件的内容被读取，访问时间就会更新。例如，使用 cat 命令可以查看文件的内容，此时文件的访问时间就会发生改变。<br>数据修改时间（Modify Time，简称 mtime）：当文件的内容数据发生改变，此文件的数据修改时间就会跟着相应改变。<br>状态修改时间（Change Time，简称 ctime）：当文件的状态发生变化，就会相应改变这个时间。比如说，如果文件的权限或者属性发生改变，此时间就会相应改变。</p>
-<p><strong>语法：</strong></p>
-<pre><code>touch [选项] 文件名
-</code></pre>
-<p><strong>选项：</strong></p>
-<ul>
-<li>-a：只修改文件的访问时间；</li>
-<li>-c：仅修改文件的时间参数（3 个时间参数都改变），如果文件不存在，则不建立新文件。</li>
-<li>-d：后面可以跟欲修订的日期，而不用当前的日期，即把文件的 atime 和 mtime 时间改为指定的时间。</li>
-<li>-m：只修改文件的数据修改时间。</li>
-<li>-t：命令后面可以跟欲修订的时间，而不用目前的时间，时间书写格式为 YYMMDDhhmm。</li>
-</ul>
-<p>可以看到，touch 命令可以只修改文件的访问时间，也可以只修改文件的数据修改时间，但是<code>不能只修改文件的状态修改时间</code>。因为，不论是修改访问时间，还是修改文件的数据时间，对文件来讲，状态都会发生改变，即状态修改时间会随之改变（更新为操作当前文件的真正时间）。</p>
-<p><strong>举例：</strong></p>
-<blockquote>
-<p>Example 1：touch 命令创建文件</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]#touch bols</span><br><span class="line"># 建立名为 bols 的空文件</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>Example 2：在例 1 的基础上修改文件的访问时间。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]#ll --time&#x3D;atime bols</span><br><span class="line"># 查看文件的访问时间</span><br><span class="line">-rw-r--r-- 1 root root 0 Sep 25 21:23 bols</span><br><span class="line"># 文件上次的访问时间为 9 月 25 号 21：23</span><br><span class="line">[root@localhost ~]#touch bols</span><br><span class="line">[root@localhost ~]#ll --time&#x3D;atime bols</span><br><span class="line">-rw-r--r-- 1 root root 0 May 15 16:36 bols</span><br><span class="line"># 而如果文件已经存在，则也不会报错，只是会修改文件的访问时间。</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>Example 3：修改 bols 文件的 atime 和 mtime。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# touch -d &quot;2017-05-04 15:44&quot; bols</span><br><span class="line">[root@localhost ~]# ll bols; ll --time&#x3D;atime bols; ll --time&#x3D;ctime bols</span><br><span class="line">-rw-r--r-- 1 root root 0 May 4 2017 bols</span><br><span class="line">-rw-r--r-- 1 root root 0 May 4 2017 bols</span><br><span class="line">-rw-r--r-- 1 root root 0 Sep 25 21:40 bols</span><br><span class="line"># ctime不会变为设定时间，但更新为当前服务器的时间</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>基础运维</category>
-      </categories>
-      <tags>
-        <tag>Linux文件和目录管理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux文件系统的层次结构</title>
-    <url>/2017/03/20/linux_directory_structure/</url>
-    <content><![CDATA[<h2 id="Linux文件系统的层次结构"><a href="#Linux文件系统的层次结构" class="headerlink" title="Linux文件系统的层次结构"></a>Linux文件系统的层次结构</h2><p>在 Linux 操作系统中，所有的文件和目录都被组织成以一个根节点“/”开始的倒置的树状结构</p>
-<p><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/06/2-1Z5061A1003X.gif?x-oss-process=style/original_format" alt="Linux 系统文件和目录组织示意图"></p>
-<p>其中，目录就相当于 Windows 中的文件夹，目录中存放的既可以是文件，也可以是其他的子目录，而文件中存储的是真正的信息。</p>
-<p>文件系统的最顶层是由根目录开始的，系统使用“/”来表示根目录，在根目录之下的既可以是目录，也可以是文件，而每一个目录中又可以包含（子）目录或文件。如此反复就可以构成一个庞大的文件系统。</p>
-<pre><code>其实，使用这种树状、具有层次的文件结构主要目的是方便文件系统的管理和维护，想象一下，如果所有的文件都放在一个目录下，其文件系统的管理和维护将变成一场噩梦。
-</code></pre>
-<p>现实中也有许多类似的例子，例如在整个行政管理体制中，村民就相当于文件，他们住在一个村庄中，村庄就是存储村民的目录。许多村又组成了个乡，这个乡就相当于存储村的目录，依此类推，最终就构建出了一个庞大的行政区域管理结构图。</p>
-<p>注意，目录名或文件名都是区分大小写的，如 dog、DOG 和 Dog 为 3 个不同的目录或文件。完整的目录或文件路径是由一连串的目录名所组成的，其中每一个目录由“/”来分隔。如 cat 的完整路径是 /home/cat。</p>
-<p>在文件系统中，有两个特殊的目录，一个是用户所在的工作目录，即当前目录，可用一个点“.”表示；另一个是当前目录的上一层目录，也叫父目录，用两个点“..”表示。</p>
-<pre><code>如果一个目录或文件名是以一个点开始，就表示这个目录或文件是一个隐藏目录或文件。即以默认方式査找（后续会讲查找命令）时，不显示该目录或文件。
-</code></pre>
-]]></content>
-      <categories>
-        <category>基础运维</category>
-      </categories>
-      <tags>
-        <tag>Linux安装</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux简介以及32位与64位操作系统</title>
-    <url>/2017/03/16/linux_introduction/</url>
-    <content><![CDATA[<h2 id="Linux操作系统简介"><a href="#Linux操作系统简介" class="headerlink" title="Linux操作系统简介"></a>Linux操作系统简介</h2><p><a href="https://baike.baidu.com/item/Linux/27050?fr=aladdin">Linux</a>，全称GNU/Linux，是一种免费使用和自由传播的类UNIX操作系统，其内核由林纳斯·本纳第克特·托瓦兹于1991年10月5日首次发布，它主要受到Minix和Unix思想的启发，是一个基于POSIX的多用户、多任务、支持多线程和多CPU的操作系统。它能运行主要的Unix工具软件、应用程序和网络协议。它支持32位和64位硬件。Linux继承了Unix以网络为核心的设计思想，是一个性能稳定的多用户网络操作系统。</p>
-<h2 id="常见Linux发行版本"><a href="#常见Linux发行版本" class="headerlink" title="常见Linux发行版本"></a>常见Linux发行版本</h2><p>从技术上来说，李纳斯•托瓦兹开发的 Linux 只是一个内核。内核指的是一个提供设备驱动、文件系统、进程管理、网络通信等功能的系统软件，内核并不是一套完整的操作系统，它只是操作系统的核心。一些组织或厂商将 Linux 内核与各种软件和文档包装起来，并提供系统安装界面和系统配置、设定与管理工具，就构成了 Linux 的发行版本。</p>
-<p>在 Linux 内核的发展过程中，各种 Linux 发行版本起了巨大的作用，正是它们推动了 Linux 的应用，从而让更多的人开始关注 Linux。因此，把 Red Hat、Ubuntu、SUSE 等直接说成 Linux 其实是不确切的，它们是 Linux 的发行版本，更确切地说，应该叫作“以Linux为核心的操作系统软件包”。</p>
-<p>Linux 的各个发行版本使用的是同一个 Linux 内核，因此在内核层不存在什么兼容性问题，每个版本有不一样的感觉，只是在发行版本的最外层（由发行商整合开发的应用）才有所体现。</p>
-<p><strong>Linux 的发行版本可以大体分为两类：</strong></p>
-<ul>
-<li>商业公司维护的发行版本，以著名的 Red Hat 为代表；</li>
-<li>社区组织维护的发行版本，以 Debian 为代表。</li>
-</ul>
-<p><strong>Linux 发行版本的选择：</strong><br>Linux 的发行版本众多，在此不逐一介绍，下面给选择 Linux 发行版本犯愁的朋友一点建议：<br>如果你需要的是一个服务器系统，而且已经厌烦了各种 Linux 的配置，只是想要一个比较稳定的服务器系统，那么建议你选择 CentOS 或 RHEL。<br>如果你只是需要一个桌面系统，而且既不想使用盗版，又不想花大价钱购买商业软件，不想自己定制，也不想在系统上浪费太多时间，则可以选择 Ubuntu。<br>如果你想深入摸索一下 Linux 各个方面的知识，而且还想非常灵活地定制自己的 Linux 系统，那就选择 Gentoo 吧，尽情享受 Gentoo 带来的自由快感。<br>如果你对系统稳定性要求很高，则可以考虑 FreeBSD。<br>如果你需要使用数据库高级服务和电子邮件网络应用，则可以选择 SuSE。</p>
-<h2 id="32位与64位操作系统的区别"><a href="#32位与64位操作系统的区别" class="headerlink" title="32位与64位操作系统的区别"></a>32位与64位操作系统的区别</h2><p><strong><code>操作系统</code></strong> （英语：operating system，缩写作 OS）是管理计算机硬件与软件资源的计算机程序，同时也是计算机系统的内核与基石。操作系统需要处理如管理与配置内存、决定系统资源供需的优先次序、控制输入与输出设备、操作网络与管理文件系统等基本事务。操作系统也提供一个让用户与系统交互的操作界面。</p>
-<p><strong><code>中央处理器</code></strong> （<a href="https://baike.baidu.com/item/%E4%B8%AD%E5%A4%AE%E5%A4%84%E7%90%86%E5%99%A8/284033?fromtitle=CPU&fromid=120556&fr=aladdin">CPU</a>）是你智能设备的大脑。<br>它的任务是通过执行一系列指令来驱动你的设备，包括显示屏、触摸屏、调制解调器等，让一坨塑料金属混合物变成闪亮的智能手机或者平板电脑。<br>移动设备非常复杂，其中的处理器需要执行数百万行指令才能完成人们希望这些设备去做的事。速度和功耗对处理器来说至关重要。速度影响用户体验，功耗影响电池寿命。完美的移动设备必须有好性能以及低功耗。这就是为什么选择什么样的处理器很重要。一个超级耗电、反应迟钝的处理器会很快吸干你的电池，而一个考究的、高效的处理器给你带来高性能和长久的电池寿命。</p>
-<h3 id="CPU对比"><a href="#CPU对比" class="headerlink" title="CPU对比"></a>CPU对比</h3><p>32位系统CPU一次可处理32位数据，即一次处理4个字节<br>64位系统CPU一次可处理64位数据，即一次处理8个字节。</p>
-<p>通俗一点说：</p>
-<ul>
-<li>32位，就相当于你拥有32个工人，每次能完成32个工人的工作量</li>
-<li>64位，就相当于你拥有64个工人，每次能完成64个工人的工作量</li>
-</ul>
-<p>总结： 由32位系统过渡到64位系统，CPU处理数据能力提升了一倍。</p>
-<h3 id="寻址能力"><a href="#寻址能力" class="headerlink" title="寻址能力"></a>寻址能力</h3><p>内存中一个地址占用8bit，即一个字节，32位cpu含有32根地址线，寻址能力为2的32次方个字节，相当于4G内存（所以，如果我们装32位系统，安装8G内存实际上是没有用的）。而64位cpu理论上寻址能力为2的64次方个字节，但目前硬件还达不到这个水准，当然我们用不了这么大的内存。</p>
-<p>另外，补充两点：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1 Byte &#x3D; 8 bit （8）</span><br><span class="line">1 KB &#x3D; 2^10 Byte （1024）</span><br><span class="line">1 MB &#x3D; 2^10 KB （1024）</span><br><span class="line">1 GB &#x3D; 2^10 MB （1024）</span><br><span class="line">1 TB &#x3D; 2^10 GB （1024）</span><br></pre></td></tr></table></figure>
-<p>64位系统下运行64位软件比32位系统运行32位软件要快；<br>但是，64位系统运行32位软件跟32位系统运行32位软件速度应该是一样的 。<br>总结： 64位CPU有更大的寻址能力。</p>
-<h2 id="Linux内核版本命名规则"><a href="#Linux内核版本命名规则" class="headerlink" title="Linux内核版本命名规则"></a>Linux内核版本命名规则</h2><p><strong>1.有关Linux内核版本命名如下：</strong></p>
-<pre><code>major.minor.patch-build.desc
-</code></pre>
-<p>major—–表示主版本号<br>minor—–次版本号<br>patch——对minor版本的修订次数<br>build—–编译次数<br>desc—–当前版本的特殊信息</p>
-<ul>
-<li>次版本号有奇数偶数之分，奇数表示开发版本，偶数表示稳定版</li>
-<li>每次对内核修订一次或打一次补丁就递增版本号中的patch域</li>
-<li>当对少量代码做了优化或者修改，并重新编译一次，那么就递增版本号中的build域</li>
-</ul>
-<p><strong>2.有关desc域</strong><br>desc即description，采用一些具有实际意义的省略字符串来描述当前内核的关键特征。常用的主要有以下几种：<br>rc—-release candidate，表示候选版本<br>smp—-symmetric multiprocessing,表示对称多处理器<br>pp—–pre-patch,表示测试版本<br>EL—-enterprise Linux ，表示企业版<br>fc—-fedora core ,表示Fedora core</p>
-<hr>
-<!--http://c.biancheng.net/view/710.html-->
-<!--https://www.kancloud.cn/thinkphp/linux_basic/43178-->
-<!--https://www.bookstack.cn/read/fasionchan-learn-linux/c01ec522d84363da.md--> 
-
-
-
-]]></content>
-      <categories>
-        <category>基础运维</category>
-      </categories>
   </entry>
   <entry>
     <title>Hello World</title>
@@ -3198,6 +3261,331 @@ inode和block：
       </tags>
   </entry>
   <entry>
+    <title>Linux ln命令：建立链接（硬链接和软链接）文件</title>
+    <url>/2017/03/21/linux_command_ln/</url>
+    <content><![CDATA[<pre><code>软连接与硬连接：
+    硬链接：通过inode进行链接，硬链接就是文件的入口，多硬链删除一个不影响，删除所有才消失，目录也不能做硬链，且不能跨分区，多个硬链接inode相同
+    软连接：相当于快捷方式，链连接就是一个文本文件，文件中记录着另一个文件的位置，并指向目的位置，多个软链接inode不同。
+inode和block：
+    Block：实际存储数据用的。
+    Inode：存储数据属性信息，包含文件大小、属主、归属、用户组、权限、文件类型、修改时间，就不包括文件名
+</code></pre>
+<hr>
+<p>如果要想说清楚 ln 命令，则必须先解释下 ext 文件系统（Linux 文件系统）是如何工作的。我们在前面讲解了分区的格式化就是写入文件系统，而我们的 Linux 目前使用的是 ext4 文件系统。用一张示意图来描述 ext4 文件系统</p>
+<p><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/06/2-1P92Q6130RO.jpg?x-oss-process=style/original_format" alt="ext4 文件系统示意图"></p>
+<p>ext4 文件系统会把分区主要分为两大部分（暂时不提超级块）：小部分用于保存文件的 inode (i 节点）信息；剩余的大部分用于保存 block 信息。</p>
+<p>inode 的默认大小为 128 Byte，用来记录文件的权限（r、w、x）、文件的所有者和属组、文件的大小、文件的状态改变时间（ctime）、文件的最近一次读取时间（atime）、文件的最近一次修改时间（mtime）、文件的数据真正保存的 block 编号。每个文件需要占用一个 inode。大家如果仔细查看，就会发现 inode 中是不记录文件名的，那是因为文件名记录在文件所在目录的 block 中。</p>
+<p>block 的大小可以是 1KB、2KB、4KB，默认为 4KB。block 用于实际的数据存储，如果一个 block 放不下数据，则可以占用多个 block。例如，有一个 10KB 的文件需要存储，则会占用 3 个 block，虽然最后一个 block 不能占满，但也不能再放入其他文件的数据。这 3 个 block 有可能是连续的，也有可能是分散的。</p>
+<p>由此，我们可以知道以下 2 个重要的信息：</p>
+<ul>
+<li>每个文件都独自占用一个 inode，文件内容由 inode 的记录来指向；</li>
+<li>如果想要读取文件内容，就必须借助目录中记录的文件名找到该文件的 inode，才能成功找到文件内容所在的 block 块；</li>
+</ul>
+<p>了解了 Linux 系统底层文件的存储状态后，接下来学习 ln 命令。</p>
+<h1 id="ln-命令"><a href="#ln-命令" class="headerlink" title="ln 命令"></a>ln 命令</h1><p>ln 命令用于给文件创建链接，根据 Linux 系统存储文件的特点，链接的方式分为以下 2 种：</p>
+<ul>
+<li>软链接：类似于 Windows 系统中给文件创建快捷方式，即产生一个特殊的文件，该文件用来指向另一个文件，此链接方式同样适用于目录。</li>
+<li>硬链接：我们知道，文件的基本信息都存储在 inode 中，而硬链接指的就是给一个文件的 inode 分配多个文件名，通过任何一个文件名，都可以找到此文件的 inode，从而读取该文件的数据信息。</li>
+</ul>
+<p><strong>语法：</strong></p>
+<pre><code>ln [选项] 源文件 目标文件
+</code></pre>
+<p><strong>选项：</strong></p>
+<ul>
+<li>-s：建立软链接文件。如果不加 “-s” 选项，则建立硬链接文件；</li>
+<li>-f：强制。如果目标文件已经存在，则删除目标文件后再建立链接文件；</li>
+</ul>
+<p><strong>举例：</strong></p>
+<blockquote>
+<p>Example 1：创建硬链接：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# touch cangls</span><br><span class="line">[root@localhost ~]# ln &#x2F;root&#x2F;cangls &#x2F;tmp</span><br><span class="line"># 建立硬链接文件，目标文件没有写文件名，会和原名一致；也就是&#x2F;tmp&#x2F;cangls 是硬链接文件</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Example 2：创建软链接：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# touch bols</span><br><span class="line">[root@localhost ~]# In -s &#x2F;root&#x2F;bols &#x2F;tmp</span><br><span class="line"># 建立软链接文件</span><br></pre></td></tr></table></figure>
+<p>这里需要注意的是，软链接文件的源文件必须写成绝对路径，而不能写成相对路径（硬链接没有这样的要求）；否则软链接文件会报错。这是初学者非常容易犯的错误。</p>
+]]></content>
+      <categories>
+        <category>基础运维</category>
+      </categories>
+      <tags>
+        <tag>Linux文件和目录管理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux tar/zip/unzip命令：打包（归档）和压缩详解</title>
+    <url>/2017/03/25/linux_command_tar/</url>
+    <content><![CDATA[<p><strong>打包</strong> 指的是将多个文件和目录集中存储在一个文件中；<br><strong>压缩</strong> 指的是利用算法对文件进行处理，从而达到缩减占用磁盘空间的目的。<br>Linux 下，常用归档（打包）命令有 2 个，分别是 <code>tar</code> 和 <code>dd</code>（相对而言，tar 的使用更为广泛）；常用的压缩命令有很多，比如 <code>gzip、zip、bzip2</code> 等</p>
+<h1 id="tar"><a href="#tar" class="headerlink" title="tar"></a><a href="https://wangchujiang.com/linux-command/c/tar.html">tar</a></h1><p>Linux 系统中，最常用的归档（打包）命令就是 tar，该命令可以将许多文件一起保存到一个单独的磁带或磁盘中进行归档。不仅如此，该命令还可以从归档文件中还原所需文件，也就是打包的反过程，称为解打包。</p>
+<pre><code>使用 tar 命令归档的包通常称为 tar 包（tar 包文件都是以“.tar”结尾的）
+</code></pre>
+<h2 id="tar命令做打包操作"><a href="#tar命令做打包操作" class="headerlink" title="tar命令做打包操作"></a>tar命令做打包操作</h2><p><strong>语法：</strong></p>
+<pre><code>tar [选项] 源文件或目录
+</code></pre>
+<p><strong>选项：</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">-c</td>
+<td align="left">将多个文件或目录进行打包。</td>
+</tr>
+<tr>
+<td align="left">-A</td>
+<td align="left">追加 tar 文件到归档文件。</td>
+</tr>
+<tr>
+<td align="left">-f 包名</td>
+<td align="left">指定包的文件名。包的扩展名是用来给管理员识别格式的，所以一定要正确指定扩展名；</td>
+</tr>
+<tr>
+<td align="left">-v</td>
+<td align="left">显示打包文件过程；</td>
+</tr>
+</tbody></table>
+<p>需要注意的是，在使用 tar 命令指定选项时可以不在选项前面输入“-”。例如，使用“cvf”选项和 “-cvf”起到的作用一样。</p>
+<p><strong>举例：</strong></p>
+<blockquote>
+<p>Example 1：打包文件和目录</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# tar -cvf anaconda-ks.cfg.tar anaconda-ks.cfg</span><br><span class="line"># 把anacondehks.cfg打包为 anacondehks.cfg.tar文件</span><br></pre></td></tr></table></figure>
+<p>选项 “-cvf” 一般是习惯用法，记住打包时需要指定打包之后的文件名，而且要用 “.tar” 作为扩展名。打包目录也是如此：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# ll -d test&#x2F;</span><br><span class="line">drwxr-xr-x 2 root root 4096 6月 17 21:09 test&#x2F;</span><br><span class="line"># test是我们之前的测试目录</span><br><span class="line">[root@localhost ~]# tar -cvf test.tar test&#x2F;</span><br><span class="line">test&#x2F;</span><br><span class="line">test&#x2F;test3</span><br><span class="line">test&#x2F;test2</span><br><span class="line">test&#x2F;test1</span><br><span class="line"># 把目录打包为test.tar文件</span><br><span class="line"># tar命令也可以打包多个文件或目录，只要用空格分开即可。例如:</span><br><span class="line">[root@localhost ~]# tar -cvf ana.tar anaconda-ks.cfg &#x2F;tmp&#x2F;</span><br><span class="line"># 把anaconda-ks.cfg文件和&#x2F;tmp目录打包成ana.tar文件包</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Example 2：包并压缩目录。</p>
+</blockquote>
+<p>首先声明一点，压缩命令不能直接压缩目录，必须先用 tar 命令将目录打包，然后才能用 gzip 命令或 bzip2 命令对打包文件进行压缩。例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]#ll -d test test.tar</span><br><span class="line">drwxr-xr-x 2 root root 4096 6月 17 21:09 test</span><br><span class="line">-rw-r--r-- 1 root root 10240 6月 18 01:06 test.tar</span><br><span class="line"># 我们之前已经把test目录打包成test.tar文件</span><br><span class="line">[root@localhost ~]# gzip test.tar</span><br><span class="line">[root@localhost ~]# ll test.tar.gz</span><br><span class="line">-rw-r--r-- 1 root root 176 6月 18 01:06 test.tar.gz</span><br><span class="line"># gzip命令会把test.tar压缩成test.tar.gz</span><br></pre></td></tr></table></figure>
+<h2 id="tar命令做解打包操作"><a href="#tar命令做解打包操作" class="headerlink" title="tar命令做解打包操作"></a>tar命令做解打包操作</h2><p><strong>语法：</strong></p>
+<pre><code>tar [选项] 压缩包
+</code></pre>
+<p><strong>选项：</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">-x</td>
+<td align="left">对 tar 包做解打包操作。</td>
+</tr>
+<tr>
+<td align="left">-f</td>
+<td align="left">指定要解压的 tar 包的包名。</td>
+</tr>
+<tr>
+<td align="left">-t</td>
+<td align="left">只查看 tar 包中有哪些文件或目录，不对 tar 包做解打包操作。</td>
+</tr>
+<tr>
+<td align="left">-C 目录</td>
+<td align="left">指定解打包位置。</td>
+</tr>
+<tr>
+<td align="left">-v</td>
+<td align="left">显示解打包的具体过程。</td>
+</tr>
+</tbody></table>
+<p>其实解打包和打包相比，只是把打包选项 “-cvf” 更换为 “-xvf”</p>
+<p><strong>举例：</strong></p>
+<blockquote>
+<p>Example1：解打包到当前目录下</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# tar -xvf anaconda-ks.cfg. tar</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Example2：解打包到指定目录下</p>
+</blockquote>
+<p>如果使用 “-xvf” 选项，则会把包中的文件解压到当前目录下。如果想要指定解压位置，则需要使用 “-C(大写)” 选项。例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# tar -xvf test.tar -C &#x2F;tmp</span><br><span class="line"># 把文件包test.tar解打包到&#x2F;tmp&#x2F;目录下</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Example3：查看包中有哪些文件</p>
+</blockquote>
+<p>如果只想查看文件包中有哪些文件，则可以把解打包选项 <code>&quot;-x&quot;</code> 更换为测试选项 <code>&quot;-t&quot;</code>。例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# tar -tvf test.tar</span><br><span class="line">drwxr-xr-x root&#x2F;root 0 2016-06-17 21:09 test&#x2F;</span><br><span class="line">-rw-r-r- root&#x2F;root 0 2016-06-17 17:51 test&#x2F;test3</span><br><span class="line">-rw-r-r- root&#x2F;root 0 2016-06-17 17:51 test&#x2F;test2</span><br><span class="line">-rw-r-r- root&#x2F;root 0 2016-06-17 17:51 test&#x2F;test1</span><br><span class="line"># 会用长格式显示test.tar文件包中文件的详细信息</span><br></pre></td></tr></table></figure>
+<h2 id="tar命令做打包压缩（解压缩解打包）操作"><a href="#tar命令做打包压缩（解压缩解打包）操作" class="headerlink" title="tar命令做打包压缩（解压缩解打包）操作"></a>tar命令做打包压缩（解压缩解打包）操作</h2><p>你可能会觉得 Linux 实在太不智能了，一个打包压缩，居然还要先打包成 “.tar” 格式，再压缩成 “.tar.gz” 或 “.tar.bz2” 格式。其实 tar 命令是可以同时打包压缩的，前面的讲解之所打包和压缩分开，是为了让大家了解在 Linux 中打包和压缩的不同。</p>
+<p><strong>语法：</strong></p>
+<pre><code>tar [选项] 压缩包 源文件或目录
+</code></pre>
+<p><strong>选项：</strong><br>此处常用的选项有以下 2 个，分别是：</p>
+<ul>
+<li>-z：压缩和解压缩 “.tar.gz” 格式；</li>
+<li>-j：压缩和解压缩 “.tar.bz2”格式。</li>
+</ul>
+<p><strong>举例：</strong></p>
+<blockquote>
+<p>Example 1：压缩与解压缩 “.tar.gz”格式。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# tar -zcvf tmp.tar.gz &#x2F;tmp&#x2F;</span><br><span class="line"># 把&#x2F;temp&#x2F;目录直接打包压缩为&quot;.tar.gz&quot;格式，通过&quot;-z&quot;来识别格式，&quot;-cvf&quot;和打包选项一致</span><br></pre></td></tr></table></figure>
+<p>解压缩也只是在解打包选项 “-xvf” 前面加了一个 “-z” 选项。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# tar -zxvf tmp.tar.gz</span><br><span class="line"># 解压缩与解打包&quot;.tar.gz&quot;格式</span><br></pre></td></tr></table></figure>
+<p>前面讲的选项 “-C” 用于指定解压位置、”-t” 用于查看压缩包内容，在这里同样适用。</p>
+<blockquote>
+<p>Example 2：压缩与解压缩 “.tar.bz2” 格式。</p>
+</blockquote>
+<p>和”.tar.gz”格式唯一的不同就是”-zcvf”选项换成了 “-jcvf”，如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# tar -jcvf tmp.tar.bz2 &#x2F;tmp&#x2F;</span><br><span class="line"># 打包压缩为&quot;.tar.bz2&quot;格式，注意压缩包文件名</span><br><span class="line">[root@localhost ~]# tar -jxvf tmp.tar.bz2</span><br><span class="line"># 解压缩与解打包&quot;.tar.bz2&quot;格式</span><br></pre></td></tr></table></figure>
+<p>把文件直接压缩成”.tar.gz”和”.tar.bz2”格式，才是 Linux 中最常用的压缩方式，这是大家一定要掌握的压缩和解压缩方法。</p>
+<p>tar 命令最初被用来在磁带上创建备份，现在可以在任何设备上创建备份。利用 tar 命令可以把一大堆的文件和目录打包成一个文件，这对于备份文件或是将几个文件组合成为一个文件进行网络传输是非常有用的。</p>
+<h1 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h1><p>我们经常会在 Windows 系统上使用 “.zip”格式压缩文件，其实“.zip”格式文件是 Windows 和 Linux 系统都通用的压缩文件类型，属于几种主流的压缩格式（zip、rar等）之一，是一种相当简单的分别压缩每个文件的存储格式，</p>
+<p><strong>语法：</strong></p>
+<pre><code>zip [选项] 压缩包名 源文件或源目录列表
+</code></pre>
+<p><strong>选项：</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">-r</td>
+<td align="left">递归压缩目录，及将制定目录下的所有文件以及子目录全部压缩。</td>
+</tr>
+<tr>
+<td align="left">-m</td>
+<td align="left">将文件压缩之后，删除原始文件，相当于把文件移到压缩文件中。</td>
+</tr>
+<tr>
+<td align="left">-v</td>
+<td align="left">显示详细的压缩过程信息。</td>
+</tr>
+<tr>
+<td align="left">-q</td>
+<td align="left">在压缩的时候不显示命令的执行过程。</td>
+</tr>
+<tr>
+<td align="left">-压缩级别</td>
+<td align="left">压缩级别是从 1~9 的数字，-1 代表压缩速度更快，-9 代表压缩效果更好。</td>
+</tr>
+<tr>
+<td align="left">-u</td>
+<td align="left">更新压缩文件，即往压缩文件中添加新文件。</td>
+</tr>
+</tbody></table>
+<h1 id="unzip"><a href="#unzip" class="headerlink" title="unzip"></a>unzip</h1><p>unzip 命令可以查看和解压缩 zip 文件。<br><strong>语法：</strong></p>
+<pre><code>unzip [选项] 压缩包名
+</code></pre>
+<p><strong>选项：</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">-d 目录名</td>
+<td align="left">将压缩文件解压到指定目录下。</td>
+</tr>
+<tr>
+<td align="left">-q</td>
+<td align="left">执行时不显示任何信息；</td>
+</tr>
+<tr>
+<td align="left">-n</td>
+<td align="left">解压时并不覆盖已经存在的文件。</td>
+</tr>
+<tr>
+<td align="left">-o</td>
+<td align="left">解压时覆盖已经存在的文件，并且无需用户确认。</td>
+</tr>
+<tr>
+<td align="left">-v</td>
+<td align="left">查看压缩文件的详细信息，包括压缩文件中包含的文件大小、文件名以及压缩比等，但并不做解压操作。</td>
+</tr>
+<tr>
+<td align="left">-t</td>
+<td align="left">测试压缩文件有无损坏，但并不解压。</td>
+</tr>
+<tr>
+<td align="left">-x 文件列表</td>
+<td align="left">解压文件，但不包含文件列表中指定的文件。</td>
+</tr>
+</tbody></table>
+<p><strong>举例：</strong></p>
+<blockquote>
+<p>Example 1：使用 -d 选项手动指定解压缩位置，例如：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# unzip -d &#x2F;tmp&#x2F; ana.zip</span><br><span class="line">Archive: ana.zip</span><br><span class="line">inflating: &#x2F;tmp&#x2F;anaconda-ks.cfg</span><br><span class="line"># 把压缩包解压到指定位置</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>基础运维</category>
+      </categories>
+      <tags>
+        <tag>tar</tag>
+        <tag>command</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux文件系统的层次结构</title>
+    <url>/2017/03/20/linux_directory_structure/</url>
+    <content><![CDATA[<h2 id="Linux文件系统的层次结构"><a href="#Linux文件系统的层次结构" class="headerlink" title="Linux文件系统的层次结构"></a>Linux文件系统的层次结构</h2><p>在 Linux 操作系统中，所有的文件和目录都被组织成以一个根节点“/”开始的倒置的树状结构</p>
+<p><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/06/2-1Z5061A1003X.gif?x-oss-process=style/original_format" alt="Linux 系统文件和目录组织示意图"></p>
+<p>其中，目录就相当于 Windows 中的文件夹，目录中存放的既可以是文件，也可以是其他的子目录，而文件中存储的是真正的信息。</p>
+<p>文件系统的最顶层是由根目录开始的，系统使用“/”来表示根目录，在根目录之下的既可以是目录，也可以是文件，而每一个目录中又可以包含（子）目录或文件。如此反复就可以构成一个庞大的文件系统。</p>
+<pre><code>其实，使用这种树状、具有层次的文件结构主要目的是方便文件系统的管理和维护，想象一下，如果所有的文件都放在一个目录下，其文件系统的管理和维护将变成一场噩梦。
+</code></pre>
+<p>现实中也有许多类似的例子，例如在整个行政管理体制中，村民就相当于文件，他们住在一个村庄中，村庄就是存储村民的目录。许多村又组成了个乡，这个乡就相当于存储村的目录，依此类推，最终就构建出了一个庞大的行政区域管理结构图。</p>
+<p>注意，目录名或文件名都是区分大小写的，如 dog、DOG 和 Dog 为 3 个不同的目录或文件。完整的目录或文件路径是由一连串的目录名所组成的，其中每一个目录由“/”来分隔。如 cat 的完整路径是 /home/cat。</p>
+<p>在文件系统中，有两个特殊的目录，一个是用户所在的工作目录，即当前目录，可用一个点“.”表示；另一个是当前目录的上一层目录，也叫父目录，用两个点“..”表示。</p>
+<pre><code>如果一个目录或文件名是以一个点开始，就表示这个目录或文件是一个隐藏目录或文件。即以默认方式査找（后续会讲查找命令）时，不显示该目录或文件。
+</code></pre>
+]]></content>
+      <categories>
+        <category>基础运维</category>
+      </categories>
+      <tags>
+        <tag>Linux安装</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux touch命令：创建文件及修改文件时间戳</title>
+    <url>/2017/03/21/linux_command_touch/</url>
+    <content><![CDATA[<h1 id="touch-命令"><a href="#touch-命令" class="headerlink" title="touch 命令"></a>touch 命令</h1><p>touch 命令不光可以用来创建文件（当指定操作文件不存在时，该命令会在当前位置建立一个空文件），此命令更重要的功能是修改文件的时间参数（但当文件存在时，会修改此文件的时间参数）。</p>
+<p>Linux 系统中，每个文件主要拥有 3 个时间参数（通过 stat 命令进行查看），分别是文件的访问时间、数据修改时间以及状态修改时间：<br>访问时间（Access Time，简称 atime）：只要文件的内容被读取，访问时间就会更新。例如，使用 cat 命令可以查看文件的内容，此时文件的访问时间就会发生改变。<br>数据修改时间（Modify Time，简称 mtime）：当文件的内容数据发生改变，此文件的数据修改时间就会跟着相应改变。<br>状态修改时间（Change Time，简称 ctime）：当文件的状态发生变化，就会相应改变这个时间。比如说，如果文件的权限或者属性发生改变，此时间就会相应改变。</p>
+<p><strong>语法：</strong></p>
+<pre><code>touch [选项] 文件名
+</code></pre>
+<p><strong>选项：</strong></p>
+<ul>
+<li>-a：只修改文件的访问时间；</li>
+<li>-c：仅修改文件的时间参数（3 个时间参数都改变），如果文件不存在，则不建立新文件。</li>
+<li>-d：后面可以跟欲修订的日期，而不用当前的日期，即把文件的 atime 和 mtime 时间改为指定的时间。</li>
+<li>-m：只修改文件的数据修改时间。</li>
+<li>-t：命令后面可以跟欲修订的时间，而不用目前的时间，时间书写格式为 YYMMDDhhmm。</li>
+</ul>
+<p>可以看到，touch 命令可以只修改文件的访问时间，也可以只修改文件的数据修改时间，但是<code>不能只修改文件的状态修改时间</code>。因为，不论是修改访问时间，还是修改文件的数据时间，对文件来讲，状态都会发生改变，即状态修改时间会随之改变（更新为操作当前文件的真正时间）。</p>
+<p><strong>举例：</strong></p>
+<blockquote>
+<p>Example 1：touch 命令创建文件</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]#touch bols</span><br><span class="line"># 建立名为 bols 的空文件</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Example 2：在例 1 的基础上修改文件的访问时间。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]#ll --time&#x3D;atime bols</span><br><span class="line"># 查看文件的访问时间</span><br><span class="line">-rw-r--r-- 1 root root 0 Sep 25 21:23 bols</span><br><span class="line"># 文件上次的访问时间为 9 月 25 号 21：23</span><br><span class="line">[root@localhost ~]#touch bols</span><br><span class="line">[root@localhost ~]#ll --time&#x3D;atime bols</span><br><span class="line">-rw-r--r-- 1 root root 0 May 15 16:36 bols</span><br><span class="line"># 而如果文件已经存在，则也不会报错，只是会修改文件的访问时间。</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Example 3：修改 bols 文件的 atime 和 mtime。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# touch -d &quot;2017-05-04 15:44&quot; bols</span><br><span class="line">[root@localhost ~]# ll bols; ll --time&#x3D;atime bols; ll --time&#x3D;ctime bols</span><br><span class="line">-rw-r--r-- 1 root root 0 May 4 2017 bols</span><br><span class="line">-rw-r--r-- 1 root root 0 May 4 2017 bols</span><br><span class="line">-rw-r--r-- 1 root root 0 Sep 25 21:40 bols</span><br><span class="line"># ctime不会变为设定时间，但更新为当前服务器的时间</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>基础运维</category>
+      </categories>
+      <tags>
+        <tag>Linux文件和目录管理</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Centos忘记root密码</title>
     <url>/2020/07/30/linux_reset_root/</url>
     <content><![CDATA[<h2 id="重置忘记的-root-用户密码"><a href="#重置忘记的-root-用户密码" class="headerlink" title="重置忘记的 root 用户密码"></a><a href="https://wiki.centos.org/zh/TipsAndTricks/ResetRootPassword">重置忘记的 root 用户密码</a></h2><p>如果你忘记了 root 的密码，可以按照如下方法重新设置一个：</p>
@@ -3219,6 +3607,54 @@ inode和block：
       <tags>
         <tag>Linux安装</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Linux简介以及32位与64位操作系统</title>
+    <url>/2017/03/16/linux_introduction/</url>
+    <content><![CDATA[<h2 id="Linux操作系统简介"><a href="#Linux操作系统简介" class="headerlink" title="Linux操作系统简介"></a>Linux操作系统简介</h2><p><a href="https://baike.baidu.com/item/Linux/27050?fr=aladdin">Linux</a>，全称GNU/Linux，是一种免费使用和自由传播的类UNIX操作系统，其内核由林纳斯·本纳第克特·托瓦兹于1991年10月5日首次发布，它主要受到Minix和Unix思想的启发，是一个基于POSIX的多用户、多任务、支持多线程和多CPU的操作系统。它能运行主要的Unix工具软件、应用程序和网络协议。它支持32位和64位硬件。Linux继承了Unix以网络为核心的设计思想，是一个性能稳定的多用户网络操作系统。</p>
+<h2 id="常见Linux发行版本"><a href="#常见Linux发行版本" class="headerlink" title="常见Linux发行版本"></a>常见Linux发行版本</h2><p>从技术上来说，李纳斯•托瓦兹开发的 Linux 只是一个内核。内核指的是一个提供设备驱动、文件系统、进程管理、网络通信等功能的系统软件，内核并不是一套完整的操作系统，它只是操作系统的核心。一些组织或厂商将 Linux 内核与各种软件和文档包装起来，并提供系统安装界面和系统配置、设定与管理工具，就构成了 Linux 的发行版本。</p>
+<p>在 Linux 内核的发展过程中，各种 Linux 发行版本起了巨大的作用，正是它们推动了 Linux 的应用，从而让更多的人开始关注 Linux。因此，把 Red Hat、Ubuntu、SUSE 等直接说成 Linux 其实是不确切的，它们是 Linux 的发行版本，更确切地说，应该叫作“以Linux为核心的操作系统软件包”。</p>
+<p>Linux 的各个发行版本使用的是同一个 Linux 内核，因此在内核层不存在什么兼容性问题，每个版本有不一样的感觉，只是在发行版本的最外层（由发行商整合开发的应用）才有所体现。</p>
+<p><strong>Linux 的发行版本可以大体分为两类：</strong></p>
+<ul>
+<li>商业公司维护的发行版本，以著名的 Red Hat 为代表；</li>
+<li>社区组织维护的发行版本，以 Debian 为代表。</li>
+</ul>
+<p><strong>Linux 发行版本的选择：</strong><br>Linux 的发行版本众多，在此不逐一介绍，下面给选择 Linux 发行版本犯愁的朋友一点建议：<br>如果你需要的是一个服务器系统，而且已经厌烦了各种 Linux 的配置，只是想要一个比较稳定的服务器系统，那么建议你选择 CentOS 或 RHEL。<br>如果你只是需要一个桌面系统，而且既不想使用盗版，又不想花大价钱购买商业软件，不想自己定制，也不想在系统上浪费太多时间，则可以选择 Ubuntu。<br>如果你想深入摸索一下 Linux 各个方面的知识，而且还想非常灵活地定制自己的 Linux 系统，那就选择 Gentoo 吧，尽情享受 Gentoo 带来的自由快感。<br>如果你对系统稳定性要求很高，则可以考虑 FreeBSD。<br>如果你需要使用数据库高级服务和电子邮件网络应用，则可以选择 SuSE。</p>
+<h2 id="32位与64位操作系统的区别"><a href="#32位与64位操作系统的区别" class="headerlink" title="32位与64位操作系统的区别"></a>32位与64位操作系统的区别</h2><p><strong><code>操作系统</code></strong> （英语：operating system，缩写作 OS）是管理计算机硬件与软件资源的计算机程序，同时也是计算机系统的内核与基石。操作系统需要处理如管理与配置内存、决定系统资源供需的优先次序、控制输入与输出设备、操作网络与管理文件系统等基本事务。操作系统也提供一个让用户与系统交互的操作界面。</p>
+<p><strong><code>中央处理器</code></strong> （<a href="https://baike.baidu.com/item/%E4%B8%AD%E5%A4%AE%E5%A4%84%E7%90%86%E5%99%A8/284033?fromtitle=CPU&fromid=120556&fr=aladdin">CPU</a>）是你智能设备的大脑。<br>它的任务是通过执行一系列指令来驱动你的设备，包括显示屏、触摸屏、调制解调器等，让一坨塑料金属混合物变成闪亮的智能手机或者平板电脑。<br>移动设备非常复杂，其中的处理器需要执行数百万行指令才能完成人们希望这些设备去做的事。速度和功耗对处理器来说至关重要。速度影响用户体验，功耗影响电池寿命。完美的移动设备必须有好性能以及低功耗。这就是为什么选择什么样的处理器很重要。一个超级耗电、反应迟钝的处理器会很快吸干你的电池，而一个考究的、高效的处理器给你带来高性能和长久的电池寿命。</p>
+<h3 id="CPU对比"><a href="#CPU对比" class="headerlink" title="CPU对比"></a>CPU对比</h3><p>32位系统CPU一次可处理32位数据，即一次处理4个字节<br>64位系统CPU一次可处理64位数据，即一次处理8个字节。</p>
+<p>通俗一点说：</p>
+<ul>
+<li>32位，就相当于你拥有32个工人，每次能完成32个工人的工作量</li>
+<li>64位，就相当于你拥有64个工人，每次能完成64个工人的工作量</li>
+</ul>
+<p>总结： 由32位系统过渡到64位系统，CPU处理数据能力提升了一倍。</p>
+<h3 id="寻址能力"><a href="#寻址能力" class="headerlink" title="寻址能力"></a>寻址能力</h3><p>内存中一个地址占用8bit，即一个字节，32位cpu含有32根地址线，寻址能力为2的32次方个字节，相当于4G内存（所以，如果我们装32位系统，安装8G内存实际上是没有用的）。而64位cpu理论上寻址能力为2的64次方个字节，但目前硬件还达不到这个水准，当然我们用不了这么大的内存。</p>
+<p>另外，补充两点：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1 Byte &#x3D; 8 bit （8）</span><br><span class="line">1 KB &#x3D; 2^10 Byte （1024）</span><br><span class="line">1 MB &#x3D; 2^10 KB （1024）</span><br><span class="line">1 GB &#x3D; 2^10 MB （1024）</span><br><span class="line">1 TB &#x3D; 2^10 GB （1024）</span><br></pre></td></tr></table></figure>
+<p>64位系统下运行64位软件比32位系统运行32位软件要快；<br>但是，64位系统运行32位软件跟32位系统运行32位软件速度应该是一样的 。<br>总结： 64位CPU有更大的寻址能力。</p>
+<h2 id="Linux内核版本命名规则"><a href="#Linux内核版本命名规则" class="headerlink" title="Linux内核版本命名规则"></a>Linux内核版本命名规则</h2><p><strong>1.有关Linux内核版本命名如下：</strong></p>
+<pre><code>major.minor.patch-build.desc
+</code></pre>
+<p>major—–表示主版本号<br>minor—–次版本号<br>patch——对minor版本的修订次数<br>build—–编译次数<br>desc—–当前版本的特殊信息</p>
+<ul>
+<li>次版本号有奇数偶数之分，奇数表示开发版本，偶数表示稳定版</li>
+<li>每次对内核修订一次或打一次补丁就递增版本号中的patch域</li>
+<li>当对少量代码做了优化或者修改，并重新编译一次，那么就递增版本号中的build域</li>
+</ul>
+<p><strong>2.有关desc域</strong><br>desc即description，采用一些具有实际意义的省略字符串来描述当前内核的关键特征。常用的主要有以下几种：<br>rc—-release candidate，表示候选版本<br>smp—-symmetric multiprocessing,表示对称多处理器<br>pp—–pre-patch,表示测试版本<br>EL—-enterprise Linux ，表示企业版<br>fc—-fedora core ,表示Fedora core</p>
+<hr>
+<!--http://c.biancheng.net/view/710.html-->
+<!--https://www.kancloud.cn/thinkphp/linux_basic/43178-->
+<!--https://www.bookstack.cn/read/fasionchan-learn-linux/c01ec522d84363da.md--> 
+
+
+
+]]></content>
+      <categories>
+        <category>基础运维</category>
+      </categories>
   </entry>
   <entry>
     <title>centos7系统安装及Raid划分的完整流程</title>
@@ -3814,442 +4250,6 @@ StrictHostKeyChecking=no 对询问的回应（不进行对密钥检查）
       <tags>
         <tag>ansible基础</tag>
         <tag>实践总结</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>自定义监控 EC2 内存和磁盘使用率</title>
-    <url>/2020/09/02/aws_ec2_monitor-disk_memory/</url>
-    <content><![CDATA[<blockquote>
-<p><strong>知识文档</strong>：</p>
-</blockquote>
-<ul>
-<li><a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/mon-scripts.html">监控EC2内存和磁盘使用率</a></li>
-<li><a href="https://docs.aws.amazon.com/zh_cn/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html">设置SNS通知</a></li>
-</ul>
-<hr>
-<p>AWS提供的CloudWatch中，没有提供内存使用率和磁盘使用率的信息，因此需要手动添加cron<br>不过，AWS提供了官方的脚本，可以直接下载安装；环境以<code>Amazon Linux 2 或 Amazon Linux AMI </code>为例</p>
-<h2 id="Role权限"><a href="#Role权限" class="headerlink" title="Role权限"></a><strong>Role权限</strong></h2><p>首先确保用户权限中有操作权限，没有的话，用户界面添加：</p>
-<ul>
-<li>cloudwatch:PutMetricData</li>
-<li>cloudwatch:GetMetricStatistics</li>
-<li>cloudwatch:ListMetrics</li>
-<li>ec2:DescribeTags</li>
-</ul>
-<h2 id="依赖包的安装"><a href="#依赖包的安装" class="headerlink" title="依赖包的安装"></a>依赖包的安装</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo yum install -y perl-Switch perl-DateTime perl-Sys-Syslog perl-LWP-Protocol-https perl-Digest-SHA.x86_64</span><br></pre></td></tr></table></figure>
-<h2 id="安装监控脚本"><a href="#安装监控脚本" class="headerlink" title="安装监控脚本"></a>安装监控脚本</h2><p><strong>下载、安装和配置监控脚本：</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">curl https:&#x2F;&#x2F;aws-cloudwatch.s3.amazonaws.com&#x2F;downloads&#x2F;CloudWatchMonitoringScripts-1.2.2.zip -O</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>执行以下命令安装监控脚本：</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">unzip CloudWatchMonitoringScripts-1.2.2.zip &amp;&amp; \</span><br><span class="line">rm CloudWatchMonitoringScripts-1.2.2.zip &amp;&amp; \</span><br><span class="line">cd aws-scripts-mon</span><br></pre></td></tr></table></figure>
-<h2 id="配置IAM访问认证"><a href="#配置IAM访问认证" class="headerlink" title="配置IAM访问认证"></a>配置IAM访问认证</h2><p>您需要提供一个 IAM 角色或 awscreds.conf 文件。否则，您必须使用 –aws-access-key-id 和 –aws-secret-key 参数为这些命令提供凭证。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cp awscreds.template awscreds.conf</span><br></pre></td></tr></table></figure>
-<p><code>sudo vim awscreds.conf</code>，配置认证信息：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">AWSAccessKeyId &#x3D; my-access-key-id</span><br><span class="line">AWSSecretKey &#x3D; my-secret-access-key</span><br></pre></td></tr></table></figure>
-<h2 id="收集信息发送到CloudWatch"><a href="#收集信息发送到CloudWatch" class="headerlink" title="收集信息发送到CloudWatch"></a>收集信息发送到CloudWatch</h2><p><strong>测试使用：</strong><br>以下示例执行简单的测试运行而不将数据发布到 CloudWatch。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;mon-put-instance-data.pl --mem-util --verify --verbose</span><br></pre></td></tr></table></figure>
-<p>以下示例收集所有可用内存指标并将其发送到 CloudWatch，将缓存和缓冲区内存计为“已用”</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;mon-put-instance-data.pl --mem-used-incl-cache-buff --mem-util --mem-used --mem-avail</span><br></pre></td></tr></table></figure>
-<p><strong><code>crontab -e</code>，添加定时任务：</strong><br>以下示例收集指定将内存和磁盘空间使用率报告到 CloudWatch：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">*&#x2F;5 * * * * ~&#x2F;aws-scripts-mon&#x2F;mon-put-instance-data.pl --mem-used-incl-cache-buff --mem-util --disk-space-util --disk-path&#x3D;&#x2F; --from-cron --aws-credential-file&#x3D;&#x2F;root&#x2F;aws-scripts-mon&#x2F;awscreds.conf</span><br></pre></td></tr></table></figure>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/1113/aws-diskmonitor_20201113104839.png?x-oss-process=style/original_format"></p>
-<h2 id="创建CloudWatch控制面板"><a href="#创建CloudWatch控制面板" class="headerlink" title="创建CloudWatch控制面板"></a>创建CloudWatch控制面板</h2><p>创建一个自定义监控面板<br><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/1113/control_20201113105603.png?x-oss-process=style/original_format"></p>
-<p>搜索并添加你想要监控的指标<br><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/1113/comment1_20201113105910.png?x-oss-process=style/original_format"></p>
-<p><code>创建小部件</code>》<code>保存控制面板</code><br><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/1113/comment2_20201113110200.png?x-oss-process=style/original_format"></p>
-<h2 id="添加报警"><a href="#添加报警" class="headerlink" title="添加报警"></a>添加报警</h2><ul>
-<li>方式一：通过CloudWatch控制台主页的“警报”入库，添加警报</li>
-<li>方式二：通过控制面板中创建的图表，进入选择对应的指标，点击“小铃铛”，添加警报<br><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/1113/monitor2_20201113111010.png?x-oss-process=style/original_format"></li>
-</ul>
-<h3 id="SNS"><a href="#SNS" class="headerlink" title="SNS"></a>SNS</h3><p>在配置报警前，创建一个用于接收和发送告警信息的SNS主题，配置方法参考<a href="https://docs.aws.amazon.com/zh_cn/AmazonCloudWatch/latest/monitoring/US_SetupSNS.html">Amazon SNS 主题</a><br><strong>服务简介<a href="https://docs.aws.amazon.com/zh_cn/sns/latest/dg/welcome.html">(more)</a>：</strong><br>Amazon Simple Notification Service (Amazon SNS) 是一项 Web 服务，用于协调和管理向订阅终端节点或客户端交付或发送消息的过程。在 Amazon SNS 中，有两类客户端—发布者和订阅者—也称为创建者和用户。发布者通过创建消息并将消息发送至主题与订阅者进行异步交流，主题是一个逻辑访问点和通信渠道。订阅者（即 Web 服务器、电子邮件地址、Amazon SQS 队列、AWS Lambda 函数）在其订阅主题后通过受支持协议（即 Amazon SQS、HTTP/S、电子邮件、SMS、Lambda）之一使用或接收消息或通知</p>
-<h3 id="配置报警"><a href="#配置报警" class="headerlink" title="配置报警"></a>配置报警</h3><p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/1113/monitor3_20201113112849.png?x-oss-process=style/original_format"></p>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/1113/alarm1_20201113134723.png?x-oss-process=style/original_format"></p>
-<hr>
-<blockquote>
-<p><strong>触发报警后，会通过SNS发出邮件提醒：</strong></p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Alarm Details:</span><br><span class="line">- Name:                       EC2-Diskspace-Alarm</span><br><span class="line">- Description:                磁盘空间不足20%告警</span><br><span class="line">- State Change:               OK -&gt; ALARM</span><br><span class="line">- Reason for State Change:    Threshold Crossed: 1 out of the last 1 datapoints [30.8640807993983 (13&#x2F;11&#x2F;20 06:01:00)] was greater than or equal to the threshold (18.0) (minimum 1 datapoint for OK -&gt; ALARM transition).</span><br><span class="line">- Timestamp:                  Friday 13 November, 2020 06:06:29 UTC</span><br><span class="line">- AWS Account:                845089424886</span><br><span class="line">- Alarm Arn:                  arn:aws:cloudwatch:us-east-1:845089424886:alarm:EC2-Diskspace-Alarm</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-<hr>
-<!--https://blog.csdn.net/oblily/article/details/86767502-->  
-<!--https://docs.aws.amazon.com/zh_cn/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html-->  
-<!--https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/mon-scripts.html-->  
-<!--https://blog.csdn.net/newtyun/article/details/105384430-->  
-
-
-]]></content>
-      <categories>
-        <category>AWS</category>
-      </categories>
-      <tags>
-        <tag>EC2</tag>
-        <tag>CloudWatch</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>EC2监控最佳实践</title>
-    <url>/2020/09/01/aws_ec2_monitor_ideas/</url>
-    <content><![CDATA[<h1 id="EC2监控最佳实践"><a href="#EC2监控最佳实践" class="headerlink" title="EC2监控最佳实践"></a>EC2监控最佳实践</h1><p>使用以下监控最佳实践，帮助您执行 Amazon EC2 监控任务。</p>
-<ul>
-<li>让监控成为优先事务，阻止小问题演变为大问题。</li>
-<li>创建并实施从 AWS 解决方案各个部分收集监控数据的监控计划，以便更轻松地调试发生的多点故障。您的监控计划至少应该解决以下问题：<ul>
-<li>您的监控目标是什么？</li>
-<li>您将监控哪些资源？</li>
-<li>监控这些资源的频率如何？</li>
-<li>您将使用哪些监控工具？</li>
-<li>谁负责执行监控任务？</li>
-<li>出现错误时应通知谁？</li>
-</ul>
-</li>
-<li>尽可能自动监控任务。</li>
-<li>检查 EC2 实例的日志文件。</li>
-</ul>
-<hr>
-<h2 id="使用-EC2-控制台创建警报"><a href="#使用-EC2-控制台创建警报" class="headerlink" title="使用 EC2 控制台创建警报"></a>使用 EC2 控制台创建警报</h2><blockquote>
-<p><strong>知识文档</strong>：</p>
-</blockquote>
-<ul>
-<li><a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/using-cloudwatch-createalarm.html">为实例创建 CloudWatch 警报</a></li>
-<li><a href="https://docs.aws.amazon.com/zh_cn/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html">使用CloudWatch 警报</a></li>
-</ul>
-<p>您可以使用 Amazon EC2 控制台创建 CloudWatch 警报，或者使用 CloudWatch 控制台提供的更多高级选项。</p>
-<p>当该指标达到指定阈值时，CloudWatch 自动向您发送通知。</p>
-<p><strong>使用 CloudWatch 控制台创建警报</strong><br>有关示例，请参阅Amazon CloudWatch 用户指南中的<a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html">创建 Amazon CloudWatch 警报</a>。</p>
-<p><strong>使用 Amazon EC2 控制台创建警报</strong></p>
-<ul>
-<li>打开 Amazon EC2 控制台 <a href="https://console.aws.amazon.com/ec2/%E3%80%82">https://console.aws.amazon.com/ec2/。</a></li>
-<li>在导航窗格中，选择 <code>Instances</code>。</li>
-<li>选择所需实例，然后依次选择<code>操作、监控、管理 CloudWatch 警报</code>。</li>
-<li>在<code>管理 CloudWatch 警报</code>详细信息页面的<code>添加或编辑警报</code>下，选择<code>创建新警报</code>。</li>
-<li>对于<code>警报通知</code>，选择打开或关闭开关来配置 Amazon Simple Notification Service (<strong>Amazon SNS</strong>) 通知。输入现有 Amazon SNS 主题或输入名称来创建新主题。</li>
-<li>对于<code>警报操作</code>，选择打开或关闭开关来指定触发警报时要执行的操作。从下拉列表中选择一个操作。</li>
-<li>对于<code>警报阈值</code>，选择警报的指标和条件。例如，您可以为<code>样本分组依据（平均）</code>和<code>要采样的数据类型（CPU 利用率）</code>保留默认设置。对于<code>警报触发条件</code>，选择 &gt;= 并输入 <code>0.80</code>。对于<code>连续周期</code>，输入 1。对于<code>时段</code>，选择 <code>5 分钟</code>。</li>
-<li>（可选）对于<code>样本指标数据</code>，选择<code>添加到控制面板</code>。 </li>
-<li>选择<code>创建</code>。</li>
-</ul>
-<hr>
-]]></content>
-      <categories>
-        <category>AWS</category>
-      </categories>
-      <tags>
-        <tag>EC2</tag>
-        <tag>CloudWatch</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>AWS S3 Bucket 简介</title>
-    <url>/2020/09/05/aws_s3_introduction/</url>
-    <content><![CDATA[<blockquote>
-<p><strong>知识文档</strong>：</p>
-</blockquote>
-<ul>
-<li><a href="https://aws.amazon.com/cn/s3/">产品介绍</a></li>
-<li><a href="https://docs.aws.amazon.com/zh_cn/AmazonS3/latest/gsg/GetStartedWithS3.html">DOSC</a></li>
-</ul>
-<hr>
-<h2 id="对象存储-Amazon-S3"><a href="#对象存储-Amazon-S3" class="headerlink" title="对象存储 Amazon S3"></a>对象存储 <a href="https://docs.aws.amazon.com/zh_cn/AmazonS3/latest/userguide/Welcome.html">Amazon S3</a></h2><p>Amazon Simple Storage Service (Amazon S3) 是一种<code>对象存储</code>服务，提供行业领先的可扩展性、数据可用性、安全性和性能。Amazon S3 可达到 99.999999999%（11 个 9）的持久性，并为全球各地的公司存储数百万个应用程序的数据。</p>
-<h2 id="使用-Amazon-S3-的优势"><a href="#使用-Amazon-S3-的优势" class="headerlink" title="使用 Amazon S3 的优势"></a>使用 Amazon S3 的优势</h2><p>Amazon S3 特意内置了着重于简易性和稳健性的最小功能集。以下是使用 Amazon S3 的一些优势：</p>
-<ul>
-<li>创建存储桶 – 创建和命名存储数据的存储桶。存储桶是 Amazon S3 中用于数据存储的基础容器。</li>
-<li>存储数据 – 在存储桶中存储无限量的数据。可将所需数量的对象上传到 Amazon S3 存储桶。每个对象可包含最多 5 TB 的数据。使用开发人员分配的唯一键值存储和检索每个对象。</li>
-<li>下载数据 – 下载您的数据或允许其他人进行下载。随时下载您的数据或允许其他人进行下载。</li>
-<li>权限 – 对于要在您的 Amazon S3 存储桶中上传或下载数据的其他人员，您可以授予其访问权限或拒绝其访问。将上传和下载的许可授予三种类型的用户。身份验证机制可帮助确保数据安全，以防未授权访问。</li>
-<li>标准接口 – 使用基于标准的 REST 和 SOAP 接口，它们可与任何 Internet 开发工具包搭配使用。<ul>
-<li>注意：HTTP 上的 SOAP 支持已弃用，但是仍可在 HTTPS 上使用。不支持将新 Amazon S3 功能用于 SOAP。我们建议您使用 REST API 或 AWS 开发工具包。</li>
-</ul>
-</li>
-</ul>
-<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
-<li>存储桶：存储桶是 Amazon S3 中用于存储对象的容器。每个对象都储存在一个存储桶中。</li>
-<li>对象：对象是 Amazon S3 中存储的基本实体。对象由对象数据和元数据组成。数据部分对 Amazon S3 不透明。元数据是一组描述对象的名称-值对。其中包括一些默认元数据（如上次修改日期）和标准 HTTP 元数据（如 Content-Type）。您还可以在存储对象时指定自定义元数据。在存储桶中，对象将由键 (名称) 和版本 ID 进行唯一地标识。</li>
-<li>键：键是指存储桶中对象的唯一标识符。存储桶内的每个对象都只能有一个键。存储桶、键和版本 ID 的组合唯一标识各个对象。</li>
-<li>区域：您可以选择一个 AWS 区域供 Amazon S3 存储您创建的存储桶。您可以选择一个区域，以便优化延迟、尽可能降低成本或满足法规要求。在某一区域存储的数据元将一直留在该区域，除非您特意将其传输到另一区域。</li>
-<li>Amazon S3 数据一致性模型：最终一致性</li>
-</ul>
-<h2 id="S3-收费模式"><a href="#S3-收费模式" class="headerlink" title="S3 收费模式"></a>S3 收费模式</h2><p>参考 <a href="https://aws.amazon.com/cn/s3/pricing/">Amazon S3 定价</a>，Amazon S3 成本组成：</p>
-<ul>
-<li>存储</li>
-<li>请求和数据检索(API 调用)</li>
-<li>数据传输</li>
-<li>管理和分析</li>
-<li>复制</li>
-<li>S3 Object Lambda</li>
-</ul>
-<h2 id="Amazon-S3-存储类比较"><a href="#Amazon-S3-存储类比较" class="headerlink" title="Amazon S3 存储类比较"></a>Amazon S3 存储类比较</h2><p>存储类别只有在上传对象，或者通过生命周期管理时涉及到。<br><strong>Topics：</strong></p>
-<ul>
-<li>经常访问对象的存储类</li>
-<li>用于自动优化访问模式不断变化或未知的数据的存储类</li>
-<li>不经常访问对象的存储类</li>
-<li>用于存档对象的存储类</li>
-<li>Amazon S3 on Outposts 的存储类</li>
-<li>比较 Amazon S3 存储类</li>
-<li>设置对象的存储类</li>
-</ul>
-<h2 id="操作入门"><a href="#操作入门" class="headerlink" title="操作入门"></a>操作入门</h2><p>参考文档<a href="https://docs.aws.amazon.com/zh_cn/AmazonS3/latest/gsg/GetStartedWithS3.html"> AWS S3 DOSC</a></p>
-<hr>
-<!--https://docs.aws.amazon.com/zh_cn/AmazonS3/latest/userguide/Welcome.html-->  
-
-]]></content>
-      <categories>
-        <category>AWS</category>
-      </categories>
-      <tags>
-        <tag>S3</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>s3cmd——AWS S3存储桶管理工具</title>
-    <url>/2020/09/05/aws_s3cmd/</url>
-    <content><![CDATA[<p>s3cmd 是用于创建S3桶，上传，检索和管理数据到对象存储命令行实用程序。 本文将指导linux下安装s3cmd程序，以及对象存储服务桶和对象数据管理，包括创建桶、上传、检索、删除及本地与对象存储服务间数据同步等。本文以下内容将以CentOS 7.3的弹性云服务器为例，windows操作系统使用类似。</p>
-<h2 id="1-安装s3cmd"><a href="#1-安装s3cmd" class="headerlink" title="1. 安装s3cmd"></a>1. 安装s3cmd</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ yum -y install s3cmd</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-配置s3cmd"><a href="#2-配置s3cmd" class="headerlink" title="2. 配置s3cmd"></a>2. 配置s3cmd</h2><p><strong>执行 <code>$ s3cmd --configure</code>生成配置文件，一路<code>Enter</code>，注意跳过认证并保存配置</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">......</span><br><span class="line">...</span><br><span class="line">Test access with supplied credentials? [Y&#x2F;n] n</span><br><span class="line"></span><br><span class="line">Save settings? [y&#x2F;N] y</span><br><span class="line">Configuration saved to &#39;&#x2F;root&#x2F;.s3cfg&#39;</span><br></pre></td></tr></table></figure>
-<p><strong>修改一下几项：</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ vim &#x2F;root&#x2F;.s3cfg</span><br><span class="line">access_key &#x3D; xxx</span><br><span class="line">secret_key &#x3D; xxx</span><br><span class="line">host_base &#x3D; ip:port</span><br><span class="line">host_bucket &#x3D; ip&#x2F;kucketname</span><br><span class="line">use_https &#x3D; False</span><br></pre></td></tr></table></figure>
-<p>其中，access_key和secret_key是在本地创建S3用户时获得，host_base是S3服务所使用的ip地址（包括端口 号）,host_bucket为S3用户下的一个bucket(可在配置之后再创建，但该字段不能为空)</p>
-<h2 id="3-使用s3cmd"><a href="#3-使用s3cmd" class="headerlink" title="3. 使用s3cmd"></a>3. 使用s3cmd</h2><p>通过s3cmd –help查看具体使用方法；</p>
-<ul>
-<li>列举所有 Buckets<br><code>$ s3cmd ls</code></li>
-<li>创建 bucket，且 bucket 名称是唯一的，不能重复。<br><code>s3cmd mb s3://my-bucket-name</code></li>
-<li>删除空 bucket<br><code>s3cmd rb s3://my-bucket-name</code></li>
-<li>列举 Bucket 中的内容<br><code>s3cmd ls s3://my-bucket-name</code></li>
-<li>上传 file.txt 到某个 bucket，<br><code>s3cmd put file.txt s3://my-bucket-name/file.txt</code></li>
-<li>上传并将权限设置为所有人可读<br><code>s3cmd put --acl-public file.txt s3://my-bucket-name/file.txt</code></li>
-<li>批量上传文件<br><code>s3cmd put ./* s3://my-bucket-name/</code></li>
-<li>下载文件<br><code>s3cmd get s3://my-bucket-name/file.txt file.txt</code></li>
-<li>批量下载<br><code>s3cmd get s3://my-bucket-name/* ./</code></li>
-<li>删除文件<br><code>s3cmd del s3://my-bucket-name/file.txt</code></li>
-<li>来获得对应的bucket所占用的空间大小<br><code>s3cmd du -H s3://my-bucket-name</code></li>
-<li>设置S3 bucket的Public权限<br><code>s3cmd setacl s3://myexamplebucket.calvium.com/ --acl-public --recursive</code></li>
-</ul>
-<hr>
-<!--  https://blog.csdn.net/baidu_26495369/article/details/81535209  -->
-<!--  https://blog.51cto.com/weimouren/2166601  -->
-<!--  https://bbs.huaweicloud.com/blogs/378ac7ff96c611e7b8317ca23e93a891  -->
-<!--  https://www.cnblogs.com/xd502djj/p/3604783.htmlhttps://www.cnblogs.com/xd502djj/p/3604783.html  -->
-<!--https://www.cnblogs.com/hiyang/p/12631922.html-->
-
-
-]]></content>
-      <categories>
-        <category>AWS</category>
-      </categories>
-      <tags>
-        <tag>S3</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux tar/zip/unzip命令：打包（归档）和压缩详解</title>
-    <url>/2017/03/25/linux_command_tar/</url>
-    <content><![CDATA[<p><strong>打包</strong> 指的是将多个文件和目录集中存储在一个文件中；<br><strong>压缩</strong> 指的是利用算法对文件进行处理，从而达到缩减占用磁盘空间的目的。<br>Linux 下，常用归档（打包）命令有 2 个，分别是 <code>tar</code> 和 <code>dd</code>（相对而言，tar 的使用更为广泛）；常用的压缩命令有很多，比如 <code>gzip、zip、bzip2</code> 等</p>
-<h1 id="tar"><a href="#tar" class="headerlink" title="tar"></a><a href="https://wangchujiang.com/linux-command/c/tar.html">tar</a></h1><p>Linux 系统中，最常用的归档（打包）命令就是 tar，该命令可以将许多文件一起保存到一个单独的磁带或磁盘中进行归档。不仅如此，该命令还可以从归档文件中还原所需文件，也就是打包的反过程，称为解打包。</p>
-<pre><code>使用 tar 命令归档的包通常称为 tar 包（tar 包文件都是以“.tar”结尾的）
-</code></pre>
-<h2 id="tar命令做打包操作"><a href="#tar命令做打包操作" class="headerlink" title="tar命令做打包操作"></a>tar命令做打包操作</h2><p><strong>语法：</strong></p>
-<pre><code>tar [选项] 源文件或目录
-</code></pre>
-<p><strong>选项：</strong></p>
-<table>
-<thead>
-<tr>
-<th align="left">选项</th>
-<th align="left">含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">-c</td>
-<td align="left">将多个文件或目录进行打包。</td>
-</tr>
-<tr>
-<td align="left">-A</td>
-<td align="left">追加 tar 文件到归档文件。</td>
-</tr>
-<tr>
-<td align="left">-f 包名</td>
-<td align="left">指定包的文件名。包的扩展名是用来给管理员识别格式的，所以一定要正确指定扩展名；</td>
-</tr>
-<tr>
-<td align="left">-v</td>
-<td align="left">显示打包文件过程；</td>
-</tr>
-</tbody></table>
-<p>需要注意的是，在使用 tar 命令指定选项时可以不在选项前面输入“-”。例如，使用“cvf”选项和 “-cvf”起到的作用一样。</p>
-<p><strong>举例：</strong></p>
-<blockquote>
-<p>Example 1：打包文件和目录</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# tar -cvf anaconda-ks.cfg.tar anaconda-ks.cfg</span><br><span class="line"># 把anacondehks.cfg打包为 anacondehks.cfg.tar文件</span><br></pre></td></tr></table></figure>
-<p>选项 “-cvf” 一般是习惯用法，记住打包时需要指定打包之后的文件名，而且要用 “.tar” 作为扩展名。打包目录也是如此：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# ll -d test&#x2F;</span><br><span class="line">drwxr-xr-x 2 root root 4096 6月 17 21:09 test&#x2F;</span><br><span class="line"># test是我们之前的测试目录</span><br><span class="line">[root@localhost ~]# tar -cvf test.tar test&#x2F;</span><br><span class="line">test&#x2F;</span><br><span class="line">test&#x2F;test3</span><br><span class="line">test&#x2F;test2</span><br><span class="line">test&#x2F;test1</span><br><span class="line"># 把目录打包为test.tar文件</span><br><span class="line"># tar命令也可以打包多个文件或目录，只要用空格分开即可。例如:</span><br><span class="line">[root@localhost ~]# tar -cvf ana.tar anaconda-ks.cfg &#x2F;tmp&#x2F;</span><br><span class="line"># 把anaconda-ks.cfg文件和&#x2F;tmp目录打包成ana.tar文件包</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>Example 2：包并压缩目录。</p>
-</blockquote>
-<p>首先声明一点，压缩命令不能直接压缩目录，必须先用 tar 命令将目录打包，然后才能用 gzip 命令或 bzip2 命令对打包文件进行压缩。例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]#ll -d test test.tar</span><br><span class="line">drwxr-xr-x 2 root root 4096 6月 17 21:09 test</span><br><span class="line">-rw-r--r-- 1 root root 10240 6月 18 01:06 test.tar</span><br><span class="line"># 我们之前已经把test目录打包成test.tar文件</span><br><span class="line">[root@localhost ~]# gzip test.tar</span><br><span class="line">[root@localhost ~]# ll test.tar.gz</span><br><span class="line">-rw-r--r-- 1 root root 176 6月 18 01:06 test.tar.gz</span><br><span class="line"># gzip命令会把test.tar压缩成test.tar.gz</span><br></pre></td></tr></table></figure>
-<h2 id="tar命令做解打包操作"><a href="#tar命令做解打包操作" class="headerlink" title="tar命令做解打包操作"></a>tar命令做解打包操作</h2><p><strong>语法：</strong></p>
-<pre><code>tar [选项] 压缩包
-</code></pre>
-<p><strong>选项：</strong></p>
-<table>
-<thead>
-<tr>
-<th align="left">选项</th>
-<th align="left">含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">-x</td>
-<td align="left">对 tar 包做解打包操作。</td>
-</tr>
-<tr>
-<td align="left">-f</td>
-<td align="left">指定要解压的 tar 包的包名。</td>
-</tr>
-<tr>
-<td align="left">-t</td>
-<td align="left">只查看 tar 包中有哪些文件或目录，不对 tar 包做解打包操作。</td>
-</tr>
-<tr>
-<td align="left">-C 目录</td>
-<td align="left">指定解打包位置。</td>
-</tr>
-<tr>
-<td align="left">-v</td>
-<td align="left">显示解打包的具体过程。</td>
-</tr>
-</tbody></table>
-<p>其实解打包和打包相比，只是把打包选项 “-cvf” 更换为 “-xvf”</p>
-<p><strong>举例：</strong></p>
-<blockquote>
-<p>Example1：解打包到当前目录下</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# tar -xvf anaconda-ks.cfg. tar</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>Example2：解打包到指定目录下</p>
-</blockquote>
-<p>如果使用 “-xvf” 选项，则会把包中的文件解压到当前目录下。如果想要指定解压位置，则需要使用 “-C(大写)” 选项。例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# tar -xvf test.tar -C &#x2F;tmp</span><br><span class="line"># 把文件包test.tar解打包到&#x2F;tmp&#x2F;目录下</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>Example3：查看包中有哪些文件</p>
-</blockquote>
-<p>如果只想查看文件包中有哪些文件，则可以把解打包选项 <code>&quot;-x&quot;</code> 更换为测试选项 <code>&quot;-t&quot;</code>。例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# tar -tvf test.tar</span><br><span class="line">drwxr-xr-x root&#x2F;root 0 2016-06-17 21:09 test&#x2F;</span><br><span class="line">-rw-r-r- root&#x2F;root 0 2016-06-17 17:51 test&#x2F;test3</span><br><span class="line">-rw-r-r- root&#x2F;root 0 2016-06-17 17:51 test&#x2F;test2</span><br><span class="line">-rw-r-r- root&#x2F;root 0 2016-06-17 17:51 test&#x2F;test1</span><br><span class="line"># 会用长格式显示test.tar文件包中文件的详细信息</span><br></pre></td></tr></table></figure>
-<h2 id="tar命令做打包压缩（解压缩解打包）操作"><a href="#tar命令做打包压缩（解压缩解打包）操作" class="headerlink" title="tar命令做打包压缩（解压缩解打包）操作"></a>tar命令做打包压缩（解压缩解打包）操作</h2><p>你可能会觉得 Linux 实在太不智能了，一个打包压缩，居然还要先打包成 “.tar” 格式，再压缩成 “.tar.gz” 或 “.tar.bz2” 格式。其实 tar 命令是可以同时打包压缩的，前面的讲解之所打包和压缩分开，是为了让大家了解在 Linux 中打包和压缩的不同。</p>
-<p><strong>语法：</strong></p>
-<pre><code>tar [选项] 压缩包 源文件或目录
-</code></pre>
-<p><strong>选项：</strong><br>此处常用的选项有以下 2 个，分别是：</p>
-<ul>
-<li>-z：压缩和解压缩 “.tar.gz” 格式；</li>
-<li>-j：压缩和解压缩 “.tar.bz2”格式。</li>
-</ul>
-<p><strong>举例：</strong></p>
-<blockquote>
-<p>Example 1：压缩与解压缩 “.tar.gz”格式。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# tar -zcvf tmp.tar.gz &#x2F;tmp&#x2F;</span><br><span class="line"># 把&#x2F;temp&#x2F;目录直接打包压缩为&quot;.tar.gz&quot;格式，通过&quot;-z&quot;来识别格式，&quot;-cvf&quot;和打包选项一致</span><br></pre></td></tr></table></figure>
-<p>解压缩也只是在解打包选项 “-xvf” 前面加了一个 “-z” 选项。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# tar -zxvf tmp.tar.gz</span><br><span class="line"># 解压缩与解打包&quot;.tar.gz&quot;格式</span><br></pre></td></tr></table></figure>
-<p>前面讲的选项 “-C” 用于指定解压位置、”-t” 用于查看压缩包内容，在这里同样适用。</p>
-<blockquote>
-<p>Example 2：压缩与解压缩 “.tar.bz2” 格式。</p>
-</blockquote>
-<p>和”.tar.gz”格式唯一的不同就是”-zcvf”选项换成了 “-jcvf”，如下所示：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# tar -jcvf tmp.tar.bz2 &#x2F;tmp&#x2F;</span><br><span class="line"># 打包压缩为&quot;.tar.bz2&quot;格式，注意压缩包文件名</span><br><span class="line">[root@localhost ~]# tar -jxvf tmp.tar.bz2</span><br><span class="line"># 解压缩与解打包&quot;.tar.bz2&quot;格式</span><br></pre></td></tr></table></figure>
-<p>把文件直接压缩成”.tar.gz”和”.tar.bz2”格式，才是 Linux 中最常用的压缩方式，这是大家一定要掌握的压缩和解压缩方法。</p>
-<p>tar 命令最初被用来在磁带上创建备份，现在可以在任何设备上创建备份。利用 tar 命令可以把一大堆的文件和目录打包成一个文件，这对于备份文件或是将几个文件组合成为一个文件进行网络传输是非常有用的。</p>
-<h1 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h1><p>我们经常会在 Windows 系统上使用 “.zip”格式压缩文件，其实“.zip”格式文件是 Windows 和 Linux 系统都通用的压缩文件类型，属于几种主流的压缩格式（zip、rar等）之一，是一种相当简单的分别压缩每个文件的存储格式，</p>
-<p><strong>语法：</strong></p>
-<pre><code>zip [选项] 压缩包名 源文件或源目录列表
-</code></pre>
-<p><strong>选项：</strong></p>
-<table>
-<thead>
-<tr>
-<th align="left">选项</th>
-<th align="left">含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">-r</td>
-<td align="left">递归压缩目录，及将制定目录下的所有文件以及子目录全部压缩。</td>
-</tr>
-<tr>
-<td align="left">-m</td>
-<td align="left">将文件压缩之后，删除原始文件，相当于把文件移到压缩文件中。</td>
-</tr>
-<tr>
-<td align="left">-v</td>
-<td align="left">显示详细的压缩过程信息。</td>
-</tr>
-<tr>
-<td align="left">-q</td>
-<td align="left">在压缩的时候不显示命令的执行过程。</td>
-</tr>
-<tr>
-<td align="left">-压缩级别</td>
-<td align="left">压缩级别是从 1~9 的数字，-1 代表压缩速度更快，-9 代表压缩效果更好。</td>
-</tr>
-<tr>
-<td align="left">-u</td>
-<td align="left">更新压缩文件，即往压缩文件中添加新文件。</td>
-</tr>
-</tbody></table>
-<h1 id="unzip"><a href="#unzip" class="headerlink" title="unzip"></a>unzip</h1><p>unzip 命令可以查看和解压缩 zip 文件。<br><strong>语法：</strong></p>
-<pre><code>unzip [选项] 压缩包名
-</code></pre>
-<p><strong>选项：</strong></p>
-<table>
-<thead>
-<tr>
-<th align="left">选项</th>
-<th align="left">含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">-d 目录名</td>
-<td align="left">将压缩文件解压到指定目录下。</td>
-</tr>
-<tr>
-<td align="left">-q</td>
-<td align="left">执行时不显示任何信息；</td>
-</tr>
-<tr>
-<td align="left">-n</td>
-<td align="left">解压时并不覆盖已经存在的文件。</td>
-</tr>
-<tr>
-<td align="left">-o</td>
-<td align="left">解压时覆盖已经存在的文件，并且无需用户确认。</td>
-</tr>
-<tr>
-<td align="left">-v</td>
-<td align="left">查看压缩文件的详细信息，包括压缩文件中包含的文件大小、文件名以及压缩比等，但并不做解压操作。</td>
-</tr>
-<tr>
-<td align="left">-t</td>
-<td align="left">测试压缩文件有无损坏，但并不解压。</td>
-</tr>
-<tr>
-<td align="left">-x 文件列表</td>
-<td align="left">解压文件，但不包含文件列表中指定的文件。</td>
-</tr>
-</tbody></table>
-<p><strong>举例：</strong></p>
-<blockquote>
-<p>Example 1：使用 -d 选项手动指定解压缩位置，例如：</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# unzip -d &#x2F;tmp&#x2F; ana.zip</span><br><span class="line">Archive: ana.zip</span><br><span class="line">inflating: &#x2F;tmp&#x2F;anaconda-ks.cfg</span><br><span class="line"># 把压缩包解压到指定位置</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>基础运维</category>
-      </categories>
-      <tags>
-        <tag>tar</tag>
-        <tag>command</tag>
       </tags>
   </entry>
 </search>
