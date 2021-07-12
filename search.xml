@@ -1349,8 +1349,7 @@ roles/
   <entry>
     <title>Windows打印机漏洞修复</title>
     <url>/2021/07/10/ansible_win_spooler_fix/</url>
-    <content><![CDATA[<p>[toc]</p>
-<blockquote>
+    <content><![CDATA[<blockquote>
 <p><strong>知识文档</strong>：</p>
 </blockquote>
 <ul>
