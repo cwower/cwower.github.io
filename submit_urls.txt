@@ -1,3 +1,5 @@
+https://www.996promax.com/2021/07/10/ansible_win_spooler_fix/
+https://www.996promax.com/2019/07/22/ansible_remote_win/
 https://www.996promax.com/2020/09/05/aws_s3cmd/
 https://www.996promax.com/2017/03/25/linux_command_tar/
 https://www.996promax.com/2020/09/05/aws_s3_introduction/
@@ -46,5 +48,3 @@ https://www.996promax.com/2020/04/08/go_var_constant/
 https://www.996promax.com/2020/04/09/go_base_process_control/
 https://www.996promax.com/2020/05/10/go_base_func2/
 https://www.996promax.com/2020/05/07/go_base_func/
-https://www.996promax.com/2020/04/09/go_base_array/
-https://www.996promax.com/2020/04/29/go_base_slice/

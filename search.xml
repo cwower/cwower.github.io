@@ -396,6 +396,99 @@ timezone: 时区
       </tags>
   </entry>
   <entry>
+    <title>ansible中的幂等性</title>
+    <url>/2019/07/06/ansible_Idempotency/</url>
+    <content><![CDATA[<blockquote>
+<p>幂等性（Idempotency）</p>
+</blockquote>
+<p>幂等性是数学和计算机科学上一个常见的概念，多次执行产生的结果不会发生改变，这样的特性就被成为幂等性。幂等性是Idempotency的中文翻译，幂在数学上表示乘方结果，乘方的结果相等可以简洁地描述多次执行后得到相同结果这一概念的意思。</p>
+<h2 id="ansible中的幂等性"><a href="#ansible中的幂等性" class="headerlink" title="ansible中的幂等性"></a>ansible中的幂等性</h2><p>ansible中绝大多数的模块都具有幂等特性，意味着执行一次或多次不会产生副作用。但是<code>shell、command、script、raw</code>这四个模块时不满足幂等性，所有操作会重复执行，但是有些操作不允许重复执行，比如MySQL的初始化命令mysql_install_db，逻辑上它只在第一次配置的过程中初始化一次，其他任何时候都不应该再执行。所有，每当使用这四个模块的时候，都要想一想，重复执行这个命令会不会产生负面影响。</p>
+<p>当然，在上面的四个模块中，除了raw模块外，都提供了实现幂等特性的参数，就是creates和removes：</p>
+<ul>
+<li><strong><code>creates参数</code>：</strong>当指定的文件或目录存在时，则不执行命令；</li>
+<li><strong><code>removes参数</code>：</strong>定的文件或目录不存在时，则不执行命令；</li>
+</ul>
+<blockquote>
+<p>示例如下：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">- name: use some module</span><br><span class="line">  hosts: node</span><br><span class="line">  gather_facts: false</span><br><span class="line">  tasks:</span><br><span class="line">  # 网卡配置文件不存在时则不执行</span><br><span class="line">  - name: use command module</span><br><span class="line">    command: ifup ens33</span><br><span class="line">    args:</span><br><span class="line">      removes: &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33</span><br><span class="line"></span><br><span class="line">  # mysql配置文件已存在时则不执行，避免覆盖</span><br><span class="line">  - name: use shell module</span><br><span class="line">    shell: cp &#x2F;tmp&#x2F;my.cnf &#x2F;etc&#x2F;my.cnf</span><br><span class="line">    args:</span><br><span class="line">      creates: &#x2F;etc&#x2F;my.cnf</span><br></pre></td></tr></table></figure>
+<p>经过测试可以证明，使用removes或creates参数之后，就可以实现幂等性，保证命令不会重复执行。</p>
+<p>这四个模块都不限于执行shell命令或shell脚本，可以通过executable参数指定其他解释器，如expec执行expect脚本、perl解释器执行perl脚本等等。如下：</p>
+<p><strong><code>change_when 和 faild_when</code></strong><br>使用change_when 和 faild_when来改变task是changed还是faild的认定，也可以实现幂等性</p>
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!--  https://www.jianshu.com/p/af4eb9caa216  -->  
+
+
+]]></content>
+      <categories>
+        <category>Ansible</category>
+      </categories>
+      <tags>
+        <tag>ansible基础</tag>
+        <tag>实践总结</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ansible的配置文件</title>
+    <url>/2019/06/06/ansible.cfg/</url>
+    <content><![CDATA[<h2 id="Ansible的配置文件-more"><a href="#Ansible的配置文件-more" class="headerlink" title="Ansible的配置文件(more)"></a>Ansible的配置文件(<a href="https://ansible-tran.readthedocs.io/en/latest/docs/intro_configuration.html#ansible">more</a>)</h2><p>Ansible的一些的设置可以通过配置文件完成.在大多数场景下默认的配置就能满足大多数用户的需求,在一些特殊场景下,用户还是需要自行修改这些配置文件</p>
+<h2 id="读取配置文件的优先级"><a href="#读取配置文件的优先级" class="headerlink" title="读取配置文件的优先级"></a>读取配置文件的优先级</h2><p>ansible的默认配置文件是/etc/ansible/ansible.cfg。其实ansible会按照下面的顺序查找配置文件，并<code>使用第一个发现的</code>配置文件。</p>
+<ul>
+<li>ANSIBLE_CONFIG (an environment variable)</li>
+<li>ansible.cfg (in the current directory)</li>
+<li>.ansible.cfg (in the home directory)</li>
+<li>/etc/ansible/ansible.cfg</li>
+</ul>
+<p><strong>V1.5以前的版本顺序为：</strong></p>
+<ul>
+<li>ansible.cfg (in the current directory)</li>
+<li>ANSIBLE_CONFIG (an environment variable)</li>
+<li>.ansible.cfg (in the home directory)</li>
+<li>/etc/ansible/ansible.cfg</li>
+</ul>
+<h2 id="配置选项详解"><a href="#配置选项详解" class="headerlink" title="配置选项详解"></a>配置选项详解</h2><p>到目前为止，我还没有见到一个配置项超级少，配置超级简单的配置文件；同样的，Ansible的配置文件也不简单，配置项超级多；但是，二八法则同样也适用于这些配置文件，20%的配置项决定了80%的功能，只有那20%的配置项是我们需要去关心的。所以，大家不要害怕，下面我们就将这20%常用的选项进行一一说明和总结。</p>
+<h3 id="defaults配置"><a href="#defaults配置" class="headerlink" title="defaults配置"></a>defaults配置</h3><p><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/05/asb_conf.png?x-oss-process=style/original_format"></p>
+<h3 id="privilege-escalation配置"><a href="#privilege-escalation配置" class="headerlink" title="privilege_escalation配置"></a>privilege_escalation配置</h3><table>
+<thead>
+<tr>
+<th align="left">配置项</th>
+<th align="left">说明</th>
+<th align="left">默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">become</td>
+<td align="left">是否开启become模式</td>
+<td align="left">True</td>
+</tr>
+<tr>
+<td align="left">become_method</td>
+<td align="left">定义become方式</td>
+<td align="left">sudo</td>
+</tr>
+<tr>
+<td align="left">become_user</td>
+<td align="left">定义become方式</td>
+<td align="left">root</td>
+</tr>
+<tr>
+<td align="left">become_ask_pass</td>
+<td align="left">是否定义become提示密码</td>
+<td align="left">False</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>Ansible</category>
+      </categories>
+      <tags>
+        <tag>env</tag>
+        <tag>ansible基础</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Ad-Hoc命令——简单任务的执行</title>
     <url>/2019/06/07/ansible_ad_hoc/</url>
     <content><![CDATA[<blockquote>
@@ -480,99 +573,6 @@ timezone: 时区
       </tags>
   </entry>
   <entry>
-    <title>Ansible的配置文件</title>
-    <url>/2019/06/06/ansible.cfg/</url>
-    <content><![CDATA[<h2 id="Ansible的配置文件-more"><a href="#Ansible的配置文件-more" class="headerlink" title="Ansible的配置文件(more)"></a>Ansible的配置文件(<a href="https://ansible-tran.readthedocs.io/en/latest/docs/intro_configuration.html#ansible">more</a>)</h2><p>Ansible的一些的设置可以通过配置文件完成.在大多数场景下默认的配置就能满足大多数用户的需求,在一些特殊场景下,用户还是需要自行修改这些配置文件</p>
-<h2 id="读取配置文件的优先级"><a href="#读取配置文件的优先级" class="headerlink" title="读取配置文件的优先级"></a>读取配置文件的优先级</h2><p>ansible的默认配置文件是/etc/ansible/ansible.cfg。其实ansible会按照下面的顺序查找配置文件，并<code>使用第一个发现的</code>配置文件。</p>
-<ul>
-<li>ANSIBLE_CONFIG (an environment variable)</li>
-<li>ansible.cfg (in the current directory)</li>
-<li>.ansible.cfg (in the home directory)</li>
-<li>/etc/ansible/ansible.cfg</li>
-</ul>
-<p><strong>V1.5以前的版本顺序为：</strong></p>
-<ul>
-<li>ansible.cfg (in the current directory)</li>
-<li>ANSIBLE_CONFIG (an environment variable)</li>
-<li>.ansible.cfg (in the home directory)</li>
-<li>/etc/ansible/ansible.cfg</li>
-</ul>
-<h2 id="配置选项详解"><a href="#配置选项详解" class="headerlink" title="配置选项详解"></a>配置选项详解</h2><p>到目前为止，我还没有见到一个配置项超级少，配置超级简单的配置文件；同样的，Ansible的配置文件也不简单，配置项超级多；但是，二八法则同样也适用于这些配置文件，20%的配置项决定了80%的功能，只有那20%的配置项是我们需要去关心的。所以，大家不要害怕，下面我们就将这20%常用的选项进行一一说明和总结。</p>
-<h3 id="defaults配置"><a href="#defaults配置" class="headerlink" title="defaults配置"></a>defaults配置</h3><p><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/05/asb_conf.png?x-oss-process=style/original_format"></p>
-<h3 id="privilege-escalation配置"><a href="#privilege-escalation配置" class="headerlink" title="privilege_escalation配置"></a>privilege_escalation配置</h3><table>
-<thead>
-<tr>
-<th align="left">配置项</th>
-<th align="left">说明</th>
-<th align="left">默认值</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">become</td>
-<td align="left">是否开启become模式</td>
-<td align="left">True</td>
-</tr>
-<tr>
-<td align="left">become_method</td>
-<td align="left">定义become方式</td>
-<td align="left">sudo</td>
-</tr>
-<tr>
-<td align="left">become_user</td>
-<td align="left">定义become方式</td>
-<td align="left">root</td>
-</tr>
-<tr>
-<td align="left">become_ask_pass</td>
-<td align="left">是否定义become提示密码</td>
-<td align="left">False</td>
-</tr>
-</tbody></table>
-]]></content>
-      <categories>
-        <category>Ansible</category>
-      </categories>
-      <tags>
-        <tag>env</tag>
-        <tag>ansible基础</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ansible中的幂等性</title>
-    <url>/2019/07/06/ansible_Idempotency/</url>
-    <content><![CDATA[<blockquote>
-<p>幂等性（Idempotency）</p>
-</blockquote>
-<p>幂等性是数学和计算机科学上一个常见的概念，多次执行产生的结果不会发生改变，这样的特性就被成为幂等性。幂等性是Idempotency的中文翻译，幂在数学上表示乘方结果，乘方的结果相等可以简洁地描述多次执行后得到相同结果这一概念的意思。</p>
-<h2 id="ansible中的幂等性"><a href="#ansible中的幂等性" class="headerlink" title="ansible中的幂等性"></a>ansible中的幂等性</h2><p>ansible中绝大多数的模块都具有幂等特性，意味着执行一次或多次不会产生副作用。但是<code>shell、command、script、raw</code>这四个模块时不满足幂等性，所有操作会重复执行，但是有些操作不允许重复执行，比如MySQL的初始化命令mysql_install_db，逻辑上它只在第一次配置的过程中初始化一次，其他任何时候都不应该再执行。所有，每当使用这四个模块的时候，都要想一想，重复执行这个命令会不会产生负面影响。</p>
-<p>当然，在上面的四个模块中，除了raw模块外，都提供了实现幂等特性的参数，就是creates和removes：</p>
-<ul>
-<li><strong><code>creates参数</code>：</strong>当指定的文件或目录存在时，则不执行命令；</li>
-<li><strong><code>removes参数</code>：</strong>定的文件或目录不存在时，则不执行命令；</li>
-</ul>
-<blockquote>
-<p>示例如下：</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">- name: use some module</span><br><span class="line">  hosts: node</span><br><span class="line">  gather_facts: false</span><br><span class="line">  tasks:</span><br><span class="line">  # 网卡配置文件不存在时则不执行</span><br><span class="line">  - name: use command module</span><br><span class="line">    command: ifup ens33</span><br><span class="line">    args:</span><br><span class="line">      removes: &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33</span><br><span class="line"></span><br><span class="line">  # mysql配置文件已存在时则不执行，避免覆盖</span><br><span class="line">  - name: use shell module</span><br><span class="line">    shell: cp &#x2F;tmp&#x2F;my.cnf &#x2F;etc&#x2F;my.cnf</span><br><span class="line">    args:</span><br><span class="line">      creates: &#x2F;etc&#x2F;my.cnf</span><br></pre></td></tr></table></figure>
-<p>经过测试可以证明，使用removes或creates参数之后，就可以实现幂等性，保证命令不会重复执行。</p>
-<p>这四个模块都不限于执行shell命令或shell脚本，可以通过executable参数指定其他解释器，如expec执行expect脚本、perl解释器执行perl脚本等等。如下：</p>
-<p><strong><code>change_when 和 faild_when</code></strong><br>使用change_when 和 faild_when来改变task是changed还是faild的认定，也可以实现幂等性</p>
-<hr>
-<p>&nbsp;  </p>
-<!--**参考文章**：-->  
-<!--  https://www.jianshu.com/p/af4eb9caa216  -->  
-
-
-]]></content>
-      <categories>
-        <category>Ansible</category>
-      </categories>
-      <tags>
-        <tag>ansible基础</tag>
-        <tag>实践总结</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Ansible目录结构介绍</title>
     <url>/2019/05/09/ansible_dir_structure/</url>
     <content><![CDATA[<blockquote>
@@ -603,6 +603,39 @@ timezone: 时区
       <tags>
         <tag>env</tag>
         <tag>ansible基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>handler响应事件</title>
+    <url>/2019/07/10/ansible_handler/</url>
+    <content><![CDATA[<h2 id="什么是handler"><a href="#什么是handler" class="headerlink" title="什么是handler?"></a>什么是handler?</h2><p>每个主流的编程语言都会有event机制，那么handler就是playbook的event。<br>Handlers里面的每一个handler，也是对module的一次调用。而handlers与tasks不同，tasks会默认的按定义顺序执行每一个task，handlers则不会，它需要在tasks中被调用，才有可能被执行。<br>Tasks中的任务都是有状态的，changed或者ok。 在Ansible中，只在task的执行状态为changed的时候，才会执行该task调用的handler，这也是handler与普通的event机制不同的地方。</p>
+<h2 id="一个handler最多只执行一次"><a href="#一个handler最多只执行一次" class="headerlink" title="一个handler最多只执行一次"></a>一个handler最多只执行一次</h2><p>在所有的任务里表执行之后执行，如果有多个task notify同一个handler,那么只执行一次。</p>
+<h2 id="action是Changed-才会执行handler"><a href="#action是Changed-才会执行handler" class="headerlink" title="action是Changed ,才会执行handler"></a>action是Changed ,才会执行handler</h2><p>只有当TASKS种的action的执行状态是changed时，才会触发notify handler的执行。<br>下面的脚本执行两次,执行结果是不同的:</p>
+<ul>
+<li>第一次执行是，tasks的状态都是changed，会触发两个handler</li>
+<li>第二次执行是,</li>
+</ul>
+<ul>
+<li>第一个task的状态是OK，那么不会触发handlers”call by /tmp/hosts”,</li>
+<li>第二个task的状态是changed，触发了handler”call by /tmp/hosts.random_number”</li>
+</ul>
+<blockquote>
+<p>示例代码：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: lb</span><br><span class="line">  remote_user: root</span><br><span class="line">  vars:</span><br><span class="line">      random_number: &quot;&#123;&#123; 10000 | random &#125;&#125;&quot;</span><br><span class="line">  tasks:</span><br><span class="line">    - name: Copy the &#x2F;etc&#x2F;hosts to &#x2F;tmp&#x2F;hosts</span><br><span class="line">      copy: src&#x3D;&#x2F;etc&#x2F;hosts dest&#x3D;&#x2F;tmp&#x2F;hosts</span><br><span class="line">      notify:</span><br><span class="line">        - call by &#x2F;tmp&#x2F;hosts</span><br><span class="line">    - name: Copy the &#x2F;etc&#x2F;hosts to &#x2F;tmp&#x2F;hosts.&#123;&#123; random_number &#125;&#125;</span><br><span class="line">      copy: src&#x3D;&#x2F;etc&#x2F;hosts dest&#x3D;&#x2F;tmp&#x2F;hosts.&#123;&#123; random_number &#125;&#125;</span><br><span class="line">      notify:</span><br><span class="line">        - call by &#x2F;tmp&#x2F;hosts.random_number</span><br><span class="line">  handlers:</span><br><span class="line">    - name: call by &#x2F;tmp&#x2F;hosts</span><br><span class="line">      debug: msg&#x3D;&quot;call first time&quot;</span><br><span class="line">    - name: call by &#x2F;tmp&#x2F;hosts.random_number</span><br><span class="line">      debug: msg&#x3D;&quot;call by &#x2F;tmp&#x2F;hosts.random_number&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="按Handler的定义顺序执行"><a href="#按Handler的定义顺序执行" class="headerlink" title="按Handler的定义顺序执行"></a>按Handler的定义顺序执行</h2><p>handlers是按照在handlers中定义的顺序执行的，而不是按照notify的顺序执行的。<br>下面的例子定义的顺序是1&gt;2&gt;3，notify的顺序是3&gt;2&gt;1，实际执行顺序：1&gt;2&gt;3.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: lb</span><br><span class="line">  remote_user: root</span><br><span class="line">  gather_facts: no</span><br><span class="line">  vars:</span><br><span class="line">      random_number1: &quot;&#123;&#123; 10000 | random &#125;&#125;&quot;</span><br><span class="line">      random_number2: &quot;&#123;&#123; 10000000000 | random &#125;&#125;&quot;</span><br><span class="line">  tasks:</span><br><span class="line">    - name: Copy the &#x2F;etc&#x2F;hosts to &#x2F;tmp&#x2F;hosts.&#123;&#123; random_number1 &#125;&#125;</span><br><span class="line">      copy: src&#x3D;&#x2F;etc&#x2F;hosts dest&#x3D;&#x2F;tmp&#x2F;hosts.&#123;&#123; random_number1 &#125;&#125;</span><br><span class="line">      notify:</span><br><span class="line">        - define the 3nd handler</span><br><span class="line">    - name: Copy the &#x2F;etc&#x2F;hosts to &#x2F;tmp&#x2F;hosts.&#123;&#123; random_number2 &#125;&#125;</span><br><span class="line">      copy: src&#x3D;&#x2F;etc&#x2F;hosts dest&#x3D;&#x2F;tmp&#x2F;hosts.&#123;&#123; random_number2 &#125;&#125;</span><br><span class="line">    notify:</span><br><span class="line">      - define the 2nd handler</span><br><span class="line">      - define the 1nd handler</span><br><span class="line">  handlers:</span><br><span class="line">    - name: define the 1nd handler</span><br><span class="line">      debug: msg&#x3D;&quot;define the 1nd handler&quot;</span><br><span class="line">    - name: define the 2nd handler</span><br><span class="line">      debug: msg&#x3D;&quot;define the 2nd handler&quot;</span><br><span class="line">    - name: define the 3nd handler</span><br><span class="line">      debug: msg&#x3D;&quot;define the 3nd handler&quot;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<!--  https://ansible-book.gitbooks.io/ansible-first-book/advance/playbook/handler.html  -->  
+
+]]></content>
+      <categories>
+        <category>Ansible</category>
+      </categories>
+      <tags>
+        <tag>ansible基础</tag>
+        <tag>playbook</tag>
       </tags>
   </entry>
   <entry>
@@ -653,6 +686,29 @@ timezone: 时区
       </tags>
   </entry>
   <entry>
+    <title>Ansible关闭ssh首次连接(公钥认证)提示</title>
+    <url>/2019/06/09/ansible_host_key_ckeck/</url>
+    <content><![CDATA[<p>Ansible1.2.1及其之后的版本都会默认启用公钥认证.</p>
+<p>公钥认证就是如果之后的某一台客户端和之前登录过的某一台主机IP相同，那么在“known_hosts”中有了不同的key，这时会提示一个错误信息直到被纠正为止。</p>
+<p>在使用Ansible时，可能不想遇到那样的情况，如果有个主机没有在“known_hosts”中被初始化将会导致在交互使用Ansible或定时执行Ansible时对key信息的确认提示。如果想要禁用这个行为的话，可以关闭公钥认证，而且公钥认证会比较慢，也是提高效率的一个方法</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 认证提示：</span><br><span class="line">&quot;msg&quot;: &quot;Using a SSH password instead of a key is not possible because Host Key checking is enabled and sshpass does not support this. Please add this host&#39;s fingerprint to your known_hosts file to manage this host.&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="关闭ssh首次连接的公钥认证提示"><a href="#关闭ssh首次连接的公钥认证提示" class="headerlink" title="关闭ssh首次连接的公钥认证提示"></a>关闭ssh首次连接的公钥认证提示</h2><p><strong>方法1</strong>：<br>编辑<code>ansible.cfg</code>配置文件：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 用来禁止ssh的指纹key字串检查</span><br><span class="line">host_key_checking &#x3D; False</span><br></pre></td></tr></table></figure>
+<p>或者直接设置环境变量：<code>export ANSIBLE_HOST_KEY_CHECKING=False</code></p>
+<p><strong>方法2</strong>：<br>可以使用-o参数将StrictHostKeyChecking设置为no，使用ssh连接时避免首次连接时让输入yes/no部分的提示。通过查看ansible.cfg配置文件，发现如下行：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[ssh_connection]</span><br><span class="line"># ssh arguments to use</span><br><span class="line"># Leaving off ControlPersist will result in poor performance, so use</span><br><span class="line"># paramiko on older platforms rather than removing it</span><br><span class="line">#ssh_args &#x3D; -o ControlMaster&#x3D;auto -o ControlPersist&#x3D;60s</span><br></pre></td></tr></table></figure>
+<p>修改配置文件：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ssh_args &#x3D; -o ControlMaster&#x3D;auto -o ControlPersist&#x3D;60s -o StrictHostKeyChecking＝no</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Ansible</category>
+      </categories>
+      <tags>
+        <tag>ansible基础</tag>
+        <tag>实践总结</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Ansible简介与安装</title>
     <url>/2019/05/09/ansible_env_install/</url>
     <content><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Ansible是一个开源配置管理工具，可以使用它来自动化任务，部署应用程序实现IT基础架构。</p>
@@ -697,62 +753,6 @@ timezone: 时区
       </categories>
       <tags>
         <tag>env</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>handler响应事件</title>
-    <url>/2019/07/10/ansible_handler/</url>
-    <content><![CDATA[<h2 id="什么是handler"><a href="#什么是handler" class="headerlink" title="什么是handler?"></a>什么是handler?</h2><p>每个主流的编程语言都会有event机制，那么handler就是playbook的event。<br>Handlers里面的每一个handler，也是对module的一次调用。而handlers与tasks不同，tasks会默认的按定义顺序执行每一个task，handlers则不会，它需要在tasks中被调用，才有可能被执行。<br>Tasks中的任务都是有状态的，changed或者ok。 在Ansible中，只在task的执行状态为changed的时候，才会执行该task调用的handler，这也是handler与普通的event机制不同的地方。</p>
-<h2 id="一个handler最多只执行一次"><a href="#一个handler最多只执行一次" class="headerlink" title="一个handler最多只执行一次"></a>一个handler最多只执行一次</h2><p>在所有的任务里表执行之后执行，如果有多个task notify同一个handler,那么只执行一次。</p>
-<h2 id="action是Changed-才会执行handler"><a href="#action是Changed-才会执行handler" class="headerlink" title="action是Changed ,才会执行handler"></a>action是Changed ,才会执行handler</h2><p>只有当TASKS种的action的执行状态是changed时，才会触发notify handler的执行。<br>下面的脚本执行两次,执行结果是不同的:</p>
-<ul>
-<li>第一次执行是，tasks的状态都是changed，会触发两个handler</li>
-<li>第二次执行是,</li>
-</ul>
-<ul>
-<li>第一个task的状态是OK，那么不会触发handlers”call by /tmp/hosts”,</li>
-<li>第二个task的状态是changed，触发了handler”call by /tmp/hosts.random_number”</li>
-</ul>
-<blockquote>
-<p>示例代码：</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: lb</span><br><span class="line">  remote_user: root</span><br><span class="line">  vars:</span><br><span class="line">      random_number: &quot;&#123;&#123; 10000 | random &#125;&#125;&quot;</span><br><span class="line">  tasks:</span><br><span class="line">    - name: Copy the &#x2F;etc&#x2F;hosts to &#x2F;tmp&#x2F;hosts</span><br><span class="line">      copy: src&#x3D;&#x2F;etc&#x2F;hosts dest&#x3D;&#x2F;tmp&#x2F;hosts</span><br><span class="line">      notify:</span><br><span class="line">        - call by &#x2F;tmp&#x2F;hosts</span><br><span class="line">    - name: Copy the &#x2F;etc&#x2F;hosts to &#x2F;tmp&#x2F;hosts.&#123;&#123; random_number &#125;&#125;</span><br><span class="line">      copy: src&#x3D;&#x2F;etc&#x2F;hosts dest&#x3D;&#x2F;tmp&#x2F;hosts.&#123;&#123; random_number &#125;&#125;</span><br><span class="line">      notify:</span><br><span class="line">        - call by &#x2F;tmp&#x2F;hosts.random_number</span><br><span class="line">  handlers:</span><br><span class="line">    - name: call by &#x2F;tmp&#x2F;hosts</span><br><span class="line">      debug: msg&#x3D;&quot;call first time&quot;</span><br><span class="line">    - name: call by &#x2F;tmp&#x2F;hosts.random_number</span><br><span class="line">      debug: msg&#x3D;&quot;call by &#x2F;tmp&#x2F;hosts.random_number&quot;</span><br></pre></td></tr></table></figure>
-<h2 id="按Handler的定义顺序执行"><a href="#按Handler的定义顺序执行" class="headerlink" title="按Handler的定义顺序执行"></a>按Handler的定义顺序执行</h2><p>handlers是按照在handlers中定义的顺序执行的，而不是按照notify的顺序执行的。<br>下面的例子定义的顺序是1&gt;2&gt;3，notify的顺序是3&gt;2&gt;1，实际执行顺序：1&gt;2&gt;3.</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: lb</span><br><span class="line">  remote_user: root</span><br><span class="line">  gather_facts: no</span><br><span class="line">  vars:</span><br><span class="line">      random_number1: &quot;&#123;&#123; 10000 | random &#125;&#125;&quot;</span><br><span class="line">      random_number2: &quot;&#123;&#123; 10000000000 | random &#125;&#125;&quot;</span><br><span class="line">  tasks:</span><br><span class="line">    - name: Copy the &#x2F;etc&#x2F;hosts to &#x2F;tmp&#x2F;hosts.&#123;&#123; random_number1 &#125;&#125;</span><br><span class="line">      copy: src&#x3D;&#x2F;etc&#x2F;hosts dest&#x3D;&#x2F;tmp&#x2F;hosts.&#123;&#123; random_number1 &#125;&#125;</span><br><span class="line">      notify:</span><br><span class="line">        - define the 3nd handler</span><br><span class="line">    - name: Copy the &#x2F;etc&#x2F;hosts to &#x2F;tmp&#x2F;hosts.&#123;&#123; random_number2 &#125;&#125;</span><br><span class="line">      copy: src&#x3D;&#x2F;etc&#x2F;hosts dest&#x3D;&#x2F;tmp&#x2F;hosts.&#123;&#123; random_number2 &#125;&#125;</span><br><span class="line">    notify:</span><br><span class="line">      - define the 2nd handler</span><br><span class="line">      - define the 1nd handler</span><br><span class="line">  handlers:</span><br><span class="line">    - name: define the 1nd handler</span><br><span class="line">      debug: msg&#x3D;&quot;define the 1nd handler&quot;</span><br><span class="line">    - name: define the 2nd handler</span><br><span class="line">      debug: msg&#x3D;&quot;define the 2nd handler&quot;</span><br><span class="line">    - name: define the 3nd handler</span><br><span class="line">      debug: msg&#x3D;&quot;define the 3nd handler&quot;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<!--  https://ansible-book.gitbooks.io/ansible-first-book/advance/playbook/handler.html  -->  
-
-]]></content>
-      <categories>
-        <category>Ansible</category>
-      </categories>
-      <tags>
-        <tag>ansible基础</tag>
-        <tag>playbook</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ansible关闭ssh首次连接(公钥认证)提示</title>
-    <url>/2019/06/09/ansible_host_key_ckeck/</url>
-    <content><![CDATA[<p>Ansible1.2.1及其之后的版本都会默认启用公钥认证.</p>
-<p>公钥认证就是如果之后的某一台客户端和之前登录过的某一台主机IP相同，那么在“known_hosts”中有了不同的key，这时会提示一个错误信息直到被纠正为止。</p>
-<p>在使用Ansible时，可能不想遇到那样的情况，如果有个主机没有在“known_hosts”中被初始化将会导致在交互使用Ansible或定时执行Ansible时对key信息的确认提示。如果想要禁用这个行为的话，可以关闭公钥认证，而且公钥认证会比较慢，也是提高效率的一个方法</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 认证提示：</span><br><span class="line">&quot;msg&quot;: &quot;Using a SSH password instead of a key is not possible because Host Key checking is enabled and sshpass does not support this. Please add this host&#39;s fingerprint to your known_hosts file to manage this host.&quot;</span><br></pre></td></tr></table></figure>
-<h2 id="关闭ssh首次连接的公钥认证提示"><a href="#关闭ssh首次连接的公钥认证提示" class="headerlink" title="关闭ssh首次连接的公钥认证提示"></a>关闭ssh首次连接的公钥认证提示</h2><p><strong>方法1</strong>：<br>编辑<code>ansible.cfg</code>配置文件：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 用来禁止ssh的指纹key字串检查</span><br><span class="line">host_key_checking &#x3D; False</span><br></pre></td></tr></table></figure>
-<p>或者直接设置环境变量：<code>export ANSIBLE_HOST_KEY_CHECKING=False</code></p>
-<p><strong>方法2</strong>：<br>可以使用-o参数将StrictHostKeyChecking设置为no，使用ssh连接时避免首次连接时让输入yes/no部分的提示。通过查看ansible.cfg配置文件，发现如下行：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[ssh_connection]</span><br><span class="line"># ssh arguments to use</span><br><span class="line"># Leaving off ControlPersist will result in poor performance, so use</span><br><span class="line"># paramiko on older platforms rather than removing it</span><br><span class="line">#ssh_args &#x3D; -o ControlMaster&#x3D;auto -o ControlPersist&#x3D;60s</span><br></pre></td></tr></table></figure>
-<p>修改配置文件：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ssh_args &#x3D; -o ControlMaster&#x3D;auto -o ControlPersist&#x3D;60s -o StrictHostKeyChecking＝no</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Ansible</category>
-      </categories>
-      <tags>
-        <tag>ansible基础</tag>
-        <tag>实践总结</tag>
       </tags>
   </entry>
   <entry>
@@ -865,31 +865,6 @@ timezone: 时区
       <tags>
         <tag>env</tag>
         <tag>ansible基础</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ansible Playbook 标准构建</title>
-    <url>/2019/07/12/ansible_play_example/</url>
-    <content><![CDATA[<p>playbooks是 一个不同于使用Ansible命令行执行方式的模式，其功能更强大灵活。简单来说，playbook是一个非常简单的配置管理和多主机部署系统，不同于任何已经存在的模式，可作为一个适合部署复杂应用程序的基础。Playbook可以定制配置，可以按照指定的操作步骤有序执行，支持同步和异步方式。值得注意的是playbook是通过YAML格式来进行描述定义的。</p>
-<h1 id="playbook最佳使用方法："><a href="#playbook最佳使用方法：" class="headerlink" title="playbook最佳使用方法："></a>playbook最佳使用方法：</h1><ul>
-<li>鼓励文件的重用，尽量使用include和role避免重复的代码。</li>
-<li>尽量把大的文件分成小的文件</li>
-</ul>
-<blockquote>
-<p><a href="https://github.com/ansible/ansible-examples">https://github.com/ansible/ansible-examples</a></p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">production                # inventory file for production servers</span><br><span class="line">staging                   # inventory file for staging environment</span><br><span class="line">group_vars&#x2F;</span><br><span class="line">   group1                 # 在这里，我们将变量分配给特定的组</span><br><span class="line">   group2                 # &quot;&quot;</span><br><span class="line">host_vars&#x2F;</span><br><span class="line">   hostname1              # 如果系统需要特定的变量，请将其放在此处</span><br><span class="line">   hostname2              # &quot;&quot;</span><br><span class="line">library&#x2F;                  # 如果有任何自定义模块，请将其放在此处（可选）</span><br><span class="line">filter_plugins&#x2F;           # i如果有任何自定义过滤器插件，请将其放在此处（可选）</span><br><span class="line">site.yml                  # master playbook</span><br><span class="line">webservers.yml            # 适用于Web服务器层的playbook</span><br><span class="line">dbservers.yml             # playbook for dbserver tier</span><br><span class="line">roles&#x2F;</span><br><span class="line">    common&#x2F;               # 代表&quot;role&quot;的命名</span><br><span class="line">        tasks&#x2F;            #</span><br><span class="line">            main.yml      #  &lt;-- tasks file can include smaller files if warranted</span><br><span class="line">        handlers&#x2F;         # 处理程序</span><br><span class="line">            main.yml      #  &lt;-- handlers file</span><br><span class="line">        defaults&#x2F;         #</span><br><span class="line">            main.yml      #  &lt;-- default lower priority variables for this role</span><br><span class="line">        vars&#x2F;             #</span><br><span class="line">            main.yml      #  &lt;-- variables associated with this role</span><br><span class="line">        files&#x2F;            #</span><br><span class="line">            bar.txt       #  &lt;-- files for use with the copy resource</span><br><span class="line">            foo.sh        #  &lt;-- script files for use with the script resource</span><br><span class="line">        templates&#x2F;        #  &lt;-- files for use with the template resource</span><br><span class="line">            ntp.conf.j2   #  &lt;------- templates end in .j2</span><br><span class="line">        README.md         #  &lt;-- role 角色用途 及 使用说明</span><br><span class="line">        meta&#x2F;             #</span><br><span class="line">            main.yml      #  &lt;-- role dependencies</span><br><span class="line">    webtier&#x2F;              # 上述“ common”相同的结构，用于webtier角色</span><br><span class="line">    monitoring&#x2F;           # &quot;&quot;</span><br><span class="line">    fooapp&#x2F;               # &quot;&quot;</span><br></pre></td></tr></table></figure>
-<h2 id="ansible目录及文件含义"><a href="#ansible目录及文件含义" class="headerlink" title="ansible目录及文件含义"></a>ansible目录及文件含义</h2><p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/ansible/a_20201202102534.png?x-oss-process=style/original_format"></p>
-<hr>
-<!--  https://blog.csdn.net/dick633/article/details/110220279  -->  
-<!--  http://gitlab.xpaas.lenovo.com/CBP-Application/ansiblerepos/roles  -->  
-]]></content>
-      <categories>
-        <category>Ansible</category>
-      </categories>
-      <tags>
-        <tag>ansible基础</tag>
-        <tag>playbook</tag>
       </tags>
   </entry>
   <entry>
@@ -1014,6 +989,31 @@ Identifier. Can be used for documentation, in or tasks/handlers.
       </categories>
       <tags>
         <tag>实践总结</tag>
+        <tag>playbook</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ansible Playbook 标准构建</title>
+    <url>/2019/07/12/ansible_play_example/</url>
+    <content><![CDATA[<p>playbooks是 一个不同于使用Ansible命令行执行方式的模式，其功能更强大灵活。简单来说，playbook是一个非常简单的配置管理和多主机部署系统，不同于任何已经存在的模式，可作为一个适合部署复杂应用程序的基础。Playbook可以定制配置，可以按照指定的操作步骤有序执行，支持同步和异步方式。值得注意的是playbook是通过YAML格式来进行描述定义的。</p>
+<h1 id="playbook最佳使用方法："><a href="#playbook最佳使用方法：" class="headerlink" title="playbook最佳使用方法："></a>playbook最佳使用方法：</h1><ul>
+<li>鼓励文件的重用，尽量使用include和role避免重复的代码。</li>
+<li>尽量把大的文件分成小的文件</li>
+</ul>
+<blockquote>
+<p><a href="https://github.com/ansible/ansible-examples">https://github.com/ansible/ansible-examples</a></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">production                # inventory file for production servers</span><br><span class="line">staging                   # inventory file for staging environment</span><br><span class="line">group_vars&#x2F;</span><br><span class="line">   group1                 # 在这里，我们将变量分配给特定的组</span><br><span class="line">   group2                 # &quot;&quot;</span><br><span class="line">host_vars&#x2F;</span><br><span class="line">   hostname1              # 如果系统需要特定的变量，请将其放在此处</span><br><span class="line">   hostname2              # &quot;&quot;</span><br><span class="line">library&#x2F;                  # 如果有任何自定义模块，请将其放在此处（可选）</span><br><span class="line">filter_plugins&#x2F;           # i如果有任何自定义过滤器插件，请将其放在此处（可选）</span><br><span class="line">site.yml                  # master playbook</span><br><span class="line">webservers.yml            # 适用于Web服务器层的playbook</span><br><span class="line">dbservers.yml             # playbook for dbserver tier</span><br><span class="line">roles&#x2F;</span><br><span class="line">    common&#x2F;               # 代表&quot;role&quot;的命名</span><br><span class="line">        tasks&#x2F;            #</span><br><span class="line">            main.yml      #  &lt;-- tasks file can include smaller files if warranted</span><br><span class="line">        handlers&#x2F;         # 处理程序</span><br><span class="line">            main.yml      #  &lt;-- handlers file</span><br><span class="line">        defaults&#x2F;         #</span><br><span class="line">            main.yml      #  &lt;-- default lower priority variables for this role</span><br><span class="line">        vars&#x2F;             #</span><br><span class="line">            main.yml      #  &lt;-- variables associated with this role</span><br><span class="line">        files&#x2F;            #</span><br><span class="line">            bar.txt       #  &lt;-- files for use with the copy resource</span><br><span class="line">            foo.sh        #  &lt;-- script files for use with the script resource</span><br><span class="line">        templates&#x2F;        #  &lt;-- files for use with the template resource</span><br><span class="line">            ntp.conf.j2   #  &lt;------- templates end in .j2</span><br><span class="line">        README.md         #  &lt;-- role 角色用途 及 使用说明</span><br><span class="line">        meta&#x2F;             #</span><br><span class="line">            main.yml      #  &lt;-- role dependencies</span><br><span class="line">    webtier&#x2F;              # 上述“ common”相同的结构，用于webtier角色</span><br><span class="line">    monitoring&#x2F;           # &quot;&quot;</span><br><span class="line">    fooapp&#x2F;               # &quot;&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="ansible目录及文件含义"><a href="#ansible目录及文件含义" class="headerlink" title="ansible目录及文件含义"></a>ansible目录及文件含义</h2><p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/ansible/a_20201202102534.png?x-oss-process=style/original_format"></p>
+<hr>
+<!--  https://blog.csdn.net/dick633/article/details/110220279  -->  
+<!--  http://gitlab.xpaas.lenovo.com/CBP-Application/ansiblerepos/roles  -->  
+]]></content>
+      <categories>
+        <category>Ansible</category>
+      </categories>
+      <tags>
+        <tag>ansible基础</tag>
         <tag>playbook</tag>
       </tags>
   </entry>
@@ -1272,6 +1272,59 @@ roles/
       </tags>
   </entry>
   <entry>
+    <title>ansible 远程Windows主机</title>
+    <url>/2019/07/22/ansible_remote_win/</url>
+    <content><![CDATA[<h2 id="Windows客户端配置"><a href="#Windows客户端配置" class="headerlink" title="Windows客户端配置"></a>Windows客户端配置</h2><p>Powershell请在标准镜像中进行预配置，以降低人员成本。</p>
+<h3 id="PowerShell-升级至4-0"><a href="#PowerShell-升级至4-0" class="headerlink" title="PowerShell 升级至4.0+"></a>PowerShell 升级至4.0+</h3><p>Windows机器需要安装或升级powershell4.0以上版本，升级PowerShell步骤：</p>
+<ol>
+<li>检查powershell版本<br><code>$PSVersionTable</code></li>
+<li>下载并安装 <a href="https://pan.baidu.com/s/1p4uZs0k3aaShmVGBsbpD4g">PowerShell 4.0</a>（提取码：c7kl ）： </li>
+</ol>
+<ul>
+<li>Microsoft .NET Framework 4.5</li>
+<li>powershell4.0( Windows Management Framework 4.0 )</li>
+</ul>
+<p><strong>注意</strong> ：先安装.NET Framework 4.5 ，而后安装powershell4.0</p>
+<blockquote>
+<p>关于Windows已内置的Powershell版本说明：</p>
+</blockquote>
+<pre><code>Powershell是运行在Windows机器上实现系统和应用程序管理自动化的命令行脚本环境。 需要.NET环境的支持，
+同时支持.NET对象。当前PowerShell有5个版本，分别为1.0、2.0、3.0、4.0、5.0
+如果系统是Windows 7或者Windows Server 2008 R2，那么PowerShell 2.0已经内置了，可以升级为3.0或4.0版本 
+如果系统是Windows Server 2012，那么PowerShell 3.0已经内置了，可以升级为4.0版本
+如果系统是Windows 8.1或者Windows server 2012 R2，那么默认已经是4.0版本
+如果系统是Windows Server 2016或者Windows 10，那么默认为5.0版本
+</code></pre>
+<h3 id="配置winrm，启用powershell远程管理"><a href="#配置winrm，启用powershell远程管理" class="headerlink" title="配置winrm，启用powershell远程管理"></a>配置winrm，启用powershell远程管理</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 查看powershell版本</span><br><span class="line">get-host</span><br><span class="line"># 查看powershell执行策略</span><br><span class="line">get-executionpolicy</span><br><span class="line"># 更改powershell执行策略为remotesigned</span><br><span class="line">set-executionpolicy remotesigned</span><br><span class="line"># 配置winrm service并启动服务</span><br><span class="line">winrm quickconfig</span><br><span class="line"># 查看winrm service启动监听状态</span><br><span class="line">winrm enumerate winrm&#x2F;config&#x2F;listener</span><br><span class="line"># 修改winrm配置，启用远程连接认证</span><br><span class="line">winrm set winrm&#x2F;config&#x2F;service&#x2F;auth &#39;@&#123;Basic&#x3D;&quot;true&quot;&#125;&#39;</span><br><span class="line">winrm set winrm&#x2F;config&#x2F;service &#39;@&#123;AllowUnencrypted&#x3D;&quot;true&quot;&#125;&#39;</span><br></pre></td></tr></table></figure>
+<h2 id="Ansible服务端配置"><a href="#Ansible服务端配置" class="headerlink" title="Ansible服务端配置"></a>Ansible服务端配置</h2><h3 id="模块安装"><a href="#模块安装" class="headerlink" title="模块安装"></a>模块安装</h3><p>安装request2.9版本依赖</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo pip install -I requests&#x3D;&#x3D;2.9</span><br></pre></td></tr></table></figure>
+<p>安装winrm</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo pip install pywinrm</span><br></pre></td></tr></table></figure>
+<h3 id="编写剧本测试连接Windows"><a href="#编写剧本测试连接Windows" class="headerlink" title="编写剧本测试连接Windows"></a>编写剧本测试连接Windows</h3><p>编辑<code>/etc/ansible/hosts</code>，添加客户端主机信息</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[windows]</span><br><span class="line">ansible_ssh_user&#x3D;&quot;Administrator&quot; ansible_ssh_pass&#x3D;&quot;123123&quot; ansible_ssh_port&#x3D;5985 ansible_connection&#x3D;&quot;winrm&quot; ansible_winrm_server_cert_validation&#x3D;ignore</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>需要的主机变量：</p>
+</blockquote>
+<ul>
+<li>ansible_ssh_user: </li>
+<li>ansible_ssh_password: </li>
+<li>ansible_ssh_port: 5986</li>
+<li>ansible_connection: winrm</li>
+<li>ansible_winrm_server_cert_validation: ignore</li>
+</ul>
+<p>测试ping探测windows客户主机是否存活</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ansible 172.16.10.23 -m win_ping</span><br></pre></td></tr></table></figure>
+<hr>
+]]></content>
+      <categories>
+        <category>Ansible</category>
+      </categories>
+      <tags>
+        <tag>实践总结</tag>
+        <tag>playbook</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>playbook常见的变量分类与变量优先级</title>
     <url>/2019/07/10/ansible_var_categores/</url>
     <content><![CDATA[<h2 id="playbook常见的变量分类"><a href="#playbook常见的变量分类" class="headerlink" title="playbook常见的变量分类"></a>playbook常见的变量分类</h2><p>在Playbook中常用的几种变量包含一下几种情况：</p>
@@ -1291,6 +1344,47 @@ roles/
       <tags>
         <tag>env</tag>
         <tag>playbook</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Windows打印机漏洞修复</title>
+    <url>/2021/07/10/ansible_win_spooler_fix/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>知识文档</strong>：</p>
+</blockquote>
+<ul>
+<li><a href="https://msrc.microsoft.com/update-guide/vulnerability/CVE-2021-34527">CVE-2021-34527</a></li>
+<li><a href=""></a></li>
+</ul>
+<hr>
+<p><strong>漏洞风险描述：</strong>Windows 打印后台处理程序远程代码执行漏洞 (CVE-2021-34527)</p>
+<p>当 Windows 打印后台处理程序服务不正确地执行特权文件操作时，存在远程执行代码漏洞。成功利用此漏洞的攻击者可以使用系统特权运行任意代码。攻击者可随后安装程序；查看、更改或删除数据；或者创建拥有完全用户权限的新帐户。</p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><h3 id="Powershell"><a href="#Powershell" class="headerlink" title="Powershell"></a>Powershell</h3><p>运行PowerShell：<code>Win+X</code>，选择<code>以管理员身份运行</code>命令行或 Windows Terminal；<br>确定打印后台处理程序服务是否正在运行：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Get-Service -Name Spooler</span><br></pre></td></tr></table></figure>
+<p>关闭并禁用打印后台处理程序服务：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Stop-Service -Name Spooler -Force</span><br><span class="line">Set-Service -Name Spooler -StartupType Disabled</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：禁用打印后台处理程序服务会禁用本地和远程打印功能</p>
+</blockquote>
+<h3 id="手动关闭"><a href="#手动关闭" class="headerlink" title="手动关闭"></a>手动关闭</h3><p><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/06/disable_win_print_spooler_20210712134258.png?x-oss-process=style/original_format"></p>
+<h3 id="ansible-role远程关闭"><a href="#ansible-role远程关闭" class="headerlink" title="ansible role远程关闭"></a>ansible <a href="https://www.996promax.com/2019/07/12/ansible_play_example/">role</a>远程关闭</h3><blockquote>
+<p>Windows端需要提前进行环境配置，文档请参考<a href="">ansible 远程Windows主机</a>；</p>
+</blockquote>
+<p>配置<strong>inventory hosts：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># windows主机变量</span><br><span class="line">ansible_ssh_user: </span><br><span class="line">ansible_ssh_password: </span><br><span class="line">ansible_ssh_port: 5986</span><br><span class="line">ansible_connection: winrm</span><br><span class="line">ansible_winrm_server_cert_validation: ignore</span><br></pre></td></tr></table></figure>
+<p>模块使用：<code>$ansible-doc win_command</code>，tasks的执行语句如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">- name: Windows Print Spooler - Stop</span><br><span class="line">  win_command: powershell.exe -</span><br><span class="line">  args:</span><br><span class="line">    stdin: Stop-Service -Name Spooler -Force</span><br><span class="line"></span><br><span class="line">- name: Windows Print Spooler - Disabled</span><br><span class="line">  win_command: powershell.exe -</span><br><span class="line">  args:</span><br><span class="line">    stdin: Set-Service -Name Spooler -StartupType Disabled</span><br></pre></td></tr></table></figure>
+
+
+]]></content>
+      <categories>
+        <category>Security</category>
+        <category>Ansible</category>
+      </categories>
+      <tags>
+        <tag>实践总结</tag>
+        <tag>baseline</tag>
+        <tag>CVE</tag>
       </tags>
   </entry>
   <entry>
@@ -1340,37 +1434,6 @@ roles/
       </categories>
       <tags>
         <tag>AMI</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>实例类型及收费方式</title>
-    <url>/2020/08/22/aws_ec2_calculator/</url>
-    <content><![CDATA[<h2 id="如何选择实例类型和购买选项"><a href="#如何选择实例类型和购买选项" class="headerlink" title="如何选择实例类型和购买选项"></a>如何选择实例类型和购买选项</h2><p><strong>实例类型</strong>：</p>
-<ul>
-<li>通用实例</li>
-<li>计算优化型实例</li>
-<li>内存优化型实例</li>
-<li>存储优化型实例</li>
-<li>加速计算实例</li>
-</ul>
-<p>更多详情请查看<a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/instance-types.html">官方文档</a></p>
-<p><strong>实例购买选择</strong>：</p>
-<ul>
-<li>按需实例（On-Demand Instances ） 按秒为启动的实例付费。</li>
-<li>预留实例 （Reserved Instances）以大幅折扣购买一年期到三年期的始终可用的实例。</li>
-<li>计划实例 （Scheduled Instances）以一年为期限购买按指定重复计划始终可用的实例。</li>
-<li>Spot 实例 （Spot Instances）请求未使用的 EC2 实例，这可能会显著降低您的 Amazon EC2 成本。</li>
-<li>专用主机 （Dedicated Hosts）为完全专用于运行您的实例的物理主机付费，让您现有的按插槽、按内核或按 VM 计费的软件许可证降低成本。</li>
-<li>专用实例 （Dedicated Instances）为在单一租户硬件上运行的实例按小时付费。</li>
-<li>容量预留 （Capacity Reservations）可在特定可用区中为 EC2 实例预留容量，持续时间不限。</li>
-</ul>
-<p><strong>计算器</strong>：<br><a href="https://calculator.aws/#/createCalculator">https://calculator.aws/#/createCalculator</a></p>
-]]></content>
-      <categories>
-        <category>AWS</category>
-      </categories>
-      <tags>
-        <tag>EC2</tag>
       </tags>
   </entry>
   <entry>
@@ -1426,6 +1489,82 @@ roles/
       </tags>
   </entry>
   <entry>
+    <title>实例类型及收费方式</title>
+    <url>/2020/08/22/aws_ec2_calculator/</url>
+    <content><![CDATA[<h2 id="如何选择实例类型和购买选项"><a href="#如何选择实例类型和购买选项" class="headerlink" title="如何选择实例类型和购买选项"></a>如何选择实例类型和购买选项</h2><p><strong>实例类型</strong>：</p>
+<ul>
+<li>通用实例</li>
+<li>计算优化型实例</li>
+<li>内存优化型实例</li>
+<li>存储优化型实例</li>
+<li>加速计算实例</li>
+</ul>
+<p>更多详情请查看<a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/instance-types.html">官方文档</a></p>
+<p><strong>实例购买选择</strong>：</p>
+<ul>
+<li>按需实例（On-Demand Instances ） 按秒为启动的实例付费。</li>
+<li>预留实例 （Reserved Instances）以大幅折扣购买一年期到三年期的始终可用的实例。</li>
+<li>计划实例 （Scheduled Instances）以一年为期限购买按指定重复计划始终可用的实例。</li>
+<li>Spot 实例 （Spot Instances）请求未使用的 EC2 实例，这可能会显著降低您的 Amazon EC2 成本。</li>
+<li>专用主机 （Dedicated Hosts）为完全专用于运行您的实例的物理主机付费，让您现有的按插槽、按内核或按 VM 计费的软件许可证降低成本。</li>
+<li>专用实例 （Dedicated Instances）为在单一租户硬件上运行的实例按小时付费。</li>
+<li>容量预留 （Capacity Reservations）可在特定可用区中为 EC2 实例预留容量，持续时间不限。</li>
+</ul>
+<p><strong>计算器</strong>：<br><a href="https://calculator.aws/#/createCalculator">https://calculator.aws/#/createCalculator</a></p>
+]]></content>
+      <categories>
+        <category>AWS</category>
+      </categories>
+      <tags>
+        <tag>EC2</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AWS 实例生命周期管理</title>
+    <url>/2020/08/25/aws_ec2_management/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>知识文档</strong>：</p>
+</blockquote>
+<ul>
+<li><a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/ec2-launch-templates.html#launch-template-permissions">EC2增删启停</a></li>
+<li><a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/Configure_Instance.html">EC2系统基础配置</a></li>
+</ul>
+<hr>
+<h1 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h1><p>创建实例常用的几种方式：</p>
+<ol>
+<li>从控制台向导<code>启动实例</code>：一般是用于建立一个全新的EC2</li>
+<li>从<code>现有实例</code>启动类似实例：操作》映像和模板》启动更多类似实例</li>
+<li>从<code>启动模板</code>启动实例：控制台向导<code>启动实例</code>》从模板启动实例</li>
+</ol>
+<h1 id="停止和启动"><a href="#停止和启动" class="headerlink" title="停止和启动"></a>停止和启动</h1><p>您只能停止由 Amazon <code>EBS</code> 支持的实例。当您停止运行实例时，将出现以下情况：</p>
+<ul>
+<li>所有 Amazon EBS 卷保持连接至实例，而且其数据将保留下来。</li>
+<li>存储在主机 RAM 或主机实例存储卷中的所有数据都不复存在。</li>
+<li>大多数情况下，实例在启动时会迁移到新的底层主机（尽管在某些情况下，它仍会保留在当前主机上）。</li>
+<li>实例会在停止和启动时保留其私有 IPv4 地址以及任何 IPv6 地址。我们会<code>释放公有 IPv4 地址</code>并在您启动实例时为其分配新的 IPv4 地址。</li>
+<li>实例会保留其关联的弹性 IP 地址。您需要<code>对所有与已停止实例关联的弹性 IP 地址付费</code>。借助 <a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/ec2-classic-platform.html">EC2-Classic</a>，弹性 IP 地址会在您停止实例时取消与其的关联。</li>
+<li>如果您的实例处于 Auto Scaling 组中，则 Amazon EC2 Auto Scaling 服务会将已停止的实例标记为<code>运行状况不佳</code>，可能会<code>终止它并启动替换实例</code>。参阅<a href="https://docs.aws.amazon.com/autoscaling/latest/userguide/healthcheck.html">Auto Scaling 实例的运行状况检查。</a></li>
+</ul>
+<p>只有在实例停止时，您才能修改以下实例属性：</p>
+<ul>
+<li>实例类型</li>
+<li>用户数据</li>
+<li>内核</li>
+<li>RAM 磁盘</li>
+</ul>
+<h1 id="重启"><a href="#重启" class="headerlink" title="重启"></a>重启</h1><p>实例重启相当于操作系统重启。在许多情况下，只需要几分钟时间即可重启您的实例。当您重新启动实例时，将会保留其公有 DNS 名称 (IPv4)、私有 IPv4 地址、IPv6 地址（如果适用）以及实例存储卷上的任何数据。</p>
+<p>与停止并启动您的实例不同，重启实例不会启动新的实例计费周期 (最低收取一分钟的费用)。</p>
+<h1 id="终止"><a href="#终止" class="headerlink" title="终止"></a>终止</h1><p>当实例终止时，与该实例关联的所有实例存储卷上的数据都会被删除。</p>
+<p>默认情况下，当实例终止时，Amazon EBS 根设备卷将自动删除。但是，默认情况下，即使在实例终止后，您在启动时附加的所有额外 EBS 卷或您附加到现有实例的所有 EBS 卷也会保留。这一操作是由卷的 <code>DeleteOnTermination</code> 属性控制的，您可以对其进行修改。有关更多信息，请参阅<a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/terminating-instances.html#preserving-volumes-on-termination">在实例终止时保留 Amazon EBS 卷</a>。</p>
+]]></content>
+      <categories>
+        <category>AWS</category>
+      </categories>
+      <tags>
+        <tag>EC2</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>创建一个EC2的步骤</title>
     <url>/2020/08/23/aws_ec2_create/</url>
     <content><![CDATA[<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><h3 id="创建密钥对"><a href="#创建密钥对" class="headerlink" title="创建密钥对"></a>创建密钥对</h3><p>AWS 使用公共密钥密码术来保护您的实例的登录信息。Linux 实例没有密码；您可以使用密钥对安全地登录您的实例。 使用 SSH 登录时，您在启动实例时指定密钥对的名称，然后提供私有密钥。<br>如果您尚未创建密钥对，则可以通过 Amazon EC2 控制台自行创建。请注意，如果您计划在多个区域中启动实例，则需要在每个区域中创建密钥对。</p>
@@ -1441,6 +1580,57 @@ roles/
       </categories>
       <tags>
         <tag>EC2</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>EC2监控最佳实践</title>
+    <url>/2020/09/01/aws_ec2_monitor_ideas/</url>
+    <content><![CDATA[<h1 id="EC2监控最佳实践"><a href="#EC2监控最佳实践" class="headerlink" title="EC2监控最佳实践"></a>EC2监控最佳实践</h1><p>使用以下监控最佳实践，帮助您执行 Amazon EC2 监控任务。</p>
+<ul>
+<li>让监控成为优先事务，阻止小问题演变为大问题。</li>
+<li>创建并实施从 AWS 解决方案各个部分收集监控数据的监控计划，以便更轻松地调试发生的多点故障。您的监控计划至少应该解决以下问题：<ul>
+<li>您的监控目标是什么？</li>
+<li>您将监控哪些资源？</li>
+<li>监控这些资源的频率如何？</li>
+<li>您将使用哪些监控工具？</li>
+<li>谁负责执行监控任务？</li>
+<li>出现错误时应通知谁？</li>
+</ul>
+</li>
+<li>尽可能自动监控任务。</li>
+<li>检查 EC2 实例的日志文件。</li>
+</ul>
+<hr>
+<h2 id="使用-EC2-控制台创建警报"><a href="#使用-EC2-控制台创建警报" class="headerlink" title="使用 EC2 控制台创建警报"></a>使用 EC2 控制台创建警报</h2><blockquote>
+<p><strong>知识文档</strong>：</p>
+</blockquote>
+<ul>
+<li><a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/using-cloudwatch-createalarm.html">为实例创建 CloudWatch 警报</a></li>
+<li><a href="https://docs.aws.amazon.com/zh_cn/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html">使用CloudWatch 警报</a></li>
+</ul>
+<p>您可以使用 Amazon EC2 控制台创建 CloudWatch 警报，或者使用 CloudWatch 控制台提供的更多高级选项。</p>
+<p>当该指标达到指定阈值时，CloudWatch 自动向您发送通知。</p>
+<p><strong>使用 CloudWatch 控制台创建警报</strong><br>有关示例，请参阅Amazon CloudWatch 用户指南中的<a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html">创建 Amazon CloudWatch 警报</a>。</p>
+<p><strong>使用 Amazon EC2 控制台创建警报</strong></p>
+<ul>
+<li>打开 Amazon EC2 控制台 <a href="https://console.aws.amazon.com/ec2/%E3%80%82">https://console.aws.amazon.com/ec2/。</a></li>
+<li>在导航窗格中，选择 <code>Instances</code>。</li>
+<li>选择所需实例，然后依次选择<code>操作、监控、管理 CloudWatch 警报</code>。</li>
+<li>在<code>管理 CloudWatch 警报</code>详细信息页面的<code>添加或编辑警报</code>下，选择<code>创建新警报</code>。</li>
+<li>对于<code>警报通知</code>，选择打开或关闭开关来配置 Amazon Simple Notification Service (<strong>Amazon SNS</strong>) 通知。输入现有 Amazon SNS 主题或输入名称来创建新主题。</li>
+<li>对于<code>警报操作</code>，选择打开或关闭开关来指定触发警报时要执行的操作。从下拉列表中选择一个操作。</li>
+<li>对于<code>警报阈值</code>，选择警报的指标和条件。例如，您可以为<code>样本分组依据（平均）</code>和<code>要采样的数据类型（CPU 利用率）</code>保留默认设置。对于<code>警报触发条件</code>，选择 &gt;= 并输入 <code>0.80</code>。对于<code>连续周期</code>，输入 1。对于<code>时段</code>，选择 <code>5 分钟</code>。</li>
+<li>（可选）对于<code>样本指标数据</code>，选择<code>添加到控制面板</code>。 </li>
+<li>选择<code>创建</code>。</li>
+</ul>
+<hr>
+]]></content>
+      <categories>
+        <category>AWS</category>
+      </categories>
+      <tags>
+        <tag>EC2</tag>
+        <tag>CloudWatch</tag>
       </tags>
   </entry>
   <entry>
@@ -1514,102 +1704,6 @@ roles/
       </tags>
   </entry>
   <entry>
-    <title>AWS 实例生命周期管理</title>
-    <url>/2020/08/25/aws_ec2_management/</url>
-    <content><![CDATA[<blockquote>
-<p><strong>知识文档</strong>：</p>
-</blockquote>
-<ul>
-<li><a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/ec2-launch-templates.html#launch-template-permissions">EC2增删启停</a></li>
-<li><a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/Configure_Instance.html">EC2系统基础配置</a></li>
-</ul>
-<hr>
-<h1 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h1><p>创建实例常用的几种方式：</p>
-<ol>
-<li>从控制台向导<code>启动实例</code>：一般是用于建立一个全新的EC2</li>
-<li>从<code>现有实例</code>启动类似实例：操作》映像和模板》启动更多类似实例</li>
-<li>从<code>启动模板</code>启动实例：控制台向导<code>启动实例</code>》从模板启动实例</li>
-</ol>
-<h1 id="停止和启动"><a href="#停止和启动" class="headerlink" title="停止和启动"></a>停止和启动</h1><p>您只能停止由 Amazon <code>EBS</code> 支持的实例。当您停止运行实例时，将出现以下情况：</p>
-<ul>
-<li>所有 Amazon EBS 卷保持连接至实例，而且其数据将保留下来。</li>
-<li>存储在主机 RAM 或主机实例存储卷中的所有数据都不复存在。</li>
-<li>大多数情况下，实例在启动时会迁移到新的底层主机（尽管在某些情况下，它仍会保留在当前主机上）。</li>
-<li>实例会在停止和启动时保留其私有 IPv4 地址以及任何 IPv6 地址。我们会<code>释放公有 IPv4 地址</code>并在您启动实例时为其分配新的 IPv4 地址。</li>
-<li>实例会保留其关联的弹性 IP 地址。您需要<code>对所有与已停止实例关联的弹性 IP 地址付费</code>。借助 <a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/ec2-classic-platform.html">EC2-Classic</a>，弹性 IP 地址会在您停止实例时取消与其的关联。</li>
-<li>如果您的实例处于 Auto Scaling 组中，则 Amazon EC2 Auto Scaling 服务会将已停止的实例标记为<code>运行状况不佳</code>，可能会<code>终止它并启动替换实例</code>。参阅<a href="https://docs.aws.amazon.com/autoscaling/latest/userguide/healthcheck.html">Auto Scaling 实例的运行状况检查。</a></li>
-</ul>
-<p>只有在实例停止时，您才能修改以下实例属性：</p>
-<ul>
-<li>实例类型</li>
-<li>用户数据</li>
-<li>内核</li>
-<li>RAM 磁盘</li>
-</ul>
-<h1 id="重启"><a href="#重启" class="headerlink" title="重启"></a>重启</h1><p>实例重启相当于操作系统重启。在许多情况下，只需要几分钟时间即可重启您的实例。当您重新启动实例时，将会保留其公有 DNS 名称 (IPv4)、私有 IPv4 地址、IPv6 地址（如果适用）以及实例存储卷上的任何数据。</p>
-<p>与停止并启动您的实例不同，重启实例不会启动新的实例计费周期 (最低收取一分钟的费用)。</p>
-<h1 id="终止"><a href="#终止" class="headerlink" title="终止"></a>终止</h1><p>当实例终止时，与该实例关联的所有实例存储卷上的数据都会被删除。</p>
-<p>默认情况下，当实例终止时，Amazon EBS 根设备卷将自动删除。但是，默认情况下，即使在实例终止后，您在启动时附加的所有额外 EBS 卷或您附加到现有实例的所有 EBS 卷也会保留。这一操作是由卷的 <code>DeleteOnTermination</code> 属性控制的，您可以对其进行修改。有关更多信息，请参阅<a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/terminating-instances.html#preserving-volumes-on-termination">在实例终止时保留 Amazon EBS 卷</a>。</p>
-]]></content>
-      <categories>
-        <category>AWS</category>
-      </categories>
-      <tags>
-        <tag>EC2</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>EC2监控最佳实践</title>
-    <url>/2020/09/01/aws_ec2_monitor_ideas/</url>
-    <content><![CDATA[<h1 id="EC2监控最佳实践"><a href="#EC2监控最佳实践" class="headerlink" title="EC2监控最佳实践"></a>EC2监控最佳实践</h1><p>使用以下监控最佳实践，帮助您执行 Amazon EC2 监控任务。</p>
-<ul>
-<li>让监控成为优先事务，阻止小问题演变为大问题。</li>
-<li>创建并实施从 AWS 解决方案各个部分收集监控数据的监控计划，以便更轻松地调试发生的多点故障。您的监控计划至少应该解决以下问题：<ul>
-<li>您的监控目标是什么？</li>
-<li>您将监控哪些资源？</li>
-<li>监控这些资源的频率如何？</li>
-<li>您将使用哪些监控工具？</li>
-<li>谁负责执行监控任务？</li>
-<li>出现错误时应通知谁？</li>
-</ul>
-</li>
-<li>尽可能自动监控任务。</li>
-<li>检查 EC2 实例的日志文件。</li>
-</ul>
-<hr>
-<h2 id="使用-EC2-控制台创建警报"><a href="#使用-EC2-控制台创建警报" class="headerlink" title="使用 EC2 控制台创建警报"></a>使用 EC2 控制台创建警报</h2><blockquote>
-<p><strong>知识文档</strong>：</p>
-</blockquote>
-<ul>
-<li><a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/using-cloudwatch-createalarm.html">为实例创建 CloudWatch 警报</a></li>
-<li><a href="https://docs.aws.amazon.com/zh_cn/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html">使用CloudWatch 警报</a></li>
-</ul>
-<p>您可以使用 Amazon EC2 控制台创建 CloudWatch 警报，或者使用 CloudWatch 控制台提供的更多高级选项。</p>
-<p>当该指标达到指定阈值时，CloudWatch 自动向您发送通知。</p>
-<p><strong>使用 CloudWatch 控制台创建警报</strong><br>有关示例，请参阅Amazon CloudWatch 用户指南中的<a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html">创建 Amazon CloudWatch 警报</a>。</p>
-<p><strong>使用 Amazon EC2 控制台创建警报</strong></p>
-<ul>
-<li>打开 Amazon EC2 控制台 <a href="https://console.aws.amazon.com/ec2/%E3%80%82">https://console.aws.amazon.com/ec2/。</a></li>
-<li>在导航窗格中，选择 <code>Instances</code>。</li>
-<li>选择所需实例，然后依次选择<code>操作、监控、管理 CloudWatch 警报</code>。</li>
-<li>在<code>管理 CloudWatch 警报</code>详细信息页面的<code>添加或编辑警报</code>下，选择<code>创建新警报</code>。</li>
-<li>对于<code>警报通知</code>，选择打开或关闭开关来配置 Amazon Simple Notification Service (<strong>Amazon SNS</strong>) 通知。输入现有 Amazon SNS 主题或输入名称来创建新主题。</li>
-<li>对于<code>警报操作</code>，选择打开或关闭开关来指定触发警报时要执行的操作。从下拉列表中选择一个操作。</li>
-<li>对于<code>警报阈值</code>，选择警报的指标和条件。例如，您可以为<code>样本分组依据（平均）</code>和<code>要采样的数据类型（CPU 利用率）</code>保留默认设置。对于<code>警报触发条件</code>，选择 &gt;= 并输入 <code>0.80</code>。对于<code>连续周期</code>，输入 1。对于<code>时段</code>，选择 <code>5 分钟</code>。</li>
-<li>（可选）对于<code>样本指标数据</code>，选择<code>添加到控制面板</code>。 </li>
-<li>选择<code>创建</code>。</li>
-</ul>
-<hr>
-]]></content>
-      <categories>
-        <category>AWS</category>
-      </categories>
-      <tags>
-        <tag>EC2</tag>
-        <tag>CloudWatch</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>AWS ELB介绍</title>
     <url>/2020/09/02/aws_elb_introduction/</url>
     <content><![CDATA[<blockquote>
@@ -1665,35 +1759,6 @@ roles/
 <ul>
 <li>您可以根据应用程序按需选择合适的负载均衡器。如果您需要灵活管理应用程序，建议您使用 Application Load Balancer。如果应用程序需要实现极致性能和静态 IP，建议您使用网络负载均衡器。如果您的现有应用程序构建于 EC2-Classic 网络内，则您应使用 Classic Load Balancer。</li>
 </ul>
-]]></content>
-      <categories>
-        <category>AWS</category>
-      </categories>
-      <tags>
-        <tag>ELB</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>AWS 侦听器配置管理</title>
-    <url>/2020/09/03/aws_elb_listener/</url>
-    <content><![CDATA[<blockquote>
-<p><strong>知识文档</strong>：</p>
-</blockquote>
-<ul>
-<li><a href="https://docs.aws.amazon.com/zh_cn/elasticloadbalancing/latest/application/load-balancer-listeners.html">ALB侦听器</a></li>
-<li><a href="https://blog.csdn.net/zhuzixiangshui/article/details/83341343">ELB disable TLSv1.0</a></li>
-</ul>
-<h2 id="Application-Load-Balancer-的侦听器"><a href="#Application-Load-Balancer-的侦听器" class="headerlink" title="Application Load Balancer 的侦听器"></a>Application Load Balancer 的侦听器</h2><p>在开始使用 应用程序负载均衡器 之前，您必须添加一个或多个侦听器。侦听器是一个使用您配置的协议和端口检查连接请求的进程。您为侦听器定义的规则确定负载均衡器如何将请求路由到其已注册目标。</p>
-<h2 id="更新HTTPS侦听器"><a href="#更新HTTPS侦听器" class="headerlink" title="更新HTTPS侦听器"></a>更新HTTPS侦听器</h2><p><strong>更新安全策略：</strong><a href="https://blog.csdn.net/zhuzixiangshui/article/details/83341343">ELB disable TLSv1.0</a></p>
-<p>在创建 HTTPS 侦听器时，您可以选择满足您的需求的安全策略。添加新的安全策略后，您可以将 HTTPS 侦听器更新为使用此新安全策略。Application Load Balancer 不支持自定义安全策略。</p>
-<p><strong>使用控制台更新安全策略：</strong></p>
-<ol>
-<li>打开 Amazon EC2 控制台 <a href="https://console.aws.amazon.com/ec2/">https://console.aws.amazon.com/ec2/</a></li>
-<li>在导航窗格上的 <code>LOAD BALANCING</code> 下，选择 <code>Load Balancers</code>。</li>
-<li>选择负载均衡器，然后选择 <code>Listeners</code>。</li>
-<li>选中 HTTPS 侦听器对应的复选框，然后选择 <code>Edit (编辑)</code>。</li>
-<li>对于 <code>Security policy (安全策略)</code>，选择安全策略。</li>
-</ol>
 ]]></content>
       <categories>
         <category>AWS</category>
@@ -1894,6 +1959,78 @@ roles/
       </tags>
   </entry>
   <entry>
+    <title>AWS 侦听器配置管理</title>
+    <url>/2020/09/03/aws_elb_listener/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>知识文档</strong>：</p>
+</blockquote>
+<ul>
+<li><a href="https://docs.aws.amazon.com/zh_cn/elasticloadbalancing/latest/application/load-balancer-listeners.html">ALB侦听器</a></li>
+<li><a href="https://blog.csdn.net/zhuzixiangshui/article/details/83341343">ELB disable TLSv1.0</a></li>
+</ul>
+<h2 id="Application-Load-Balancer-的侦听器"><a href="#Application-Load-Balancer-的侦听器" class="headerlink" title="Application Load Balancer 的侦听器"></a>Application Load Balancer 的侦听器</h2><p>在开始使用 应用程序负载均衡器 之前，您必须添加一个或多个侦听器。侦听器是一个使用您配置的协议和端口检查连接请求的进程。您为侦听器定义的规则确定负载均衡器如何将请求路由到其已注册目标。</p>
+<h2 id="更新HTTPS侦听器"><a href="#更新HTTPS侦听器" class="headerlink" title="更新HTTPS侦听器"></a>更新HTTPS侦听器</h2><p><strong>更新安全策略：</strong><a href="https://blog.csdn.net/zhuzixiangshui/article/details/83341343">ELB disable TLSv1.0</a></p>
+<p>在创建 HTTPS 侦听器时，您可以选择满足您的需求的安全策略。添加新的安全策略后，您可以将 HTTPS 侦听器更新为使用此新安全策略。Application Load Balancer 不支持自定义安全策略。</p>
+<p><strong>使用控制台更新安全策略：</strong></p>
+<ol>
+<li>打开 Amazon EC2 控制台 <a href="https://console.aws.amazon.com/ec2/">https://console.aws.amazon.com/ec2/</a></li>
+<li>在导航窗格上的 <code>LOAD BALANCING</code> 下，选择 <code>Load Balancers</code>。</li>
+<li>选择负载均衡器，然后选择 <code>Listeners</code>。</li>
+<li>选中 HTTPS 侦听器对应的复选框，然后选择 <code>Edit (编辑)</code>。</li>
+<li>对于 <code>Security policy (安全策略)</code>，选择安全策略。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>AWS</category>
+      </categories>
+      <tags>
+        <tag>ELB</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AWS账号注册和控制台介绍</title>
+    <url>/2020/04/09/aws_present/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="https://docs.aws.amazon.com/">AWS官方文档</a></p>
+</blockquote>
+<hr>
+<h2 id="AWS账号注册"><a href="#AWS账号注册" class="headerlink" title="AWS账号注册"></a>AWS账号注册</h2><p>首先，注册一个Global账号：</p>
+<ul>
+<li><a href="https://aws.amazon.com/">https://aws.amazon.com</a></li>
+<li><a href="https://amazonaws-china.com/">https://amazonaws-china.com</a></li>
+</ul>
+<p>注册帐号美国版和中国版一致, 创建EC2时注意选择的国家区域；不要用 <a href="https://www.amazonaws.cn注册/">https://www.amazonaws.cn注册</a><br>免费套餐介绍：<a href="https://amazonaws-china.com/cn/free/faqs/">https://amazonaws-china.com/cn/free/faqs/</a></p>
+<h2 id="AWS控制台"><a href="#AWS控制台" class="headerlink" title="AWS控制台"></a>AWS控制台</h2><p><strong>申请IAM用户</strong><br>登录到aws控制台，打开IAM控制台，开启MFA安全认证，保证根用户的安全；<br>申请一个IAM用户并授权此用户最大权限（AWS架构师第一准则，<code>不要使用根用户登录控制台操作</code>）；<br>用申请的IAM用户进行所有的操作，根用户在没有必要的情况不要使用，并由专人负责；</p>
+<p><strong>熟悉AWS控制台</strong></p>
+<p>把控制台上面的服务选项都点一遍，看看各个服务在哪里；方便后期使用的话知道点击哪里；<br><code>控制台的左下角可以切换语言</code>，如果英语不好的可以换成中文显示；</p>
+<p><strong>熟悉AWS账单管理</strong></p>
+<p>切换到账单控制台，查看账单<br>登录账单控制台，看看账单首选项、付款方式、整合账单、税务设置、订单发票、服务抵扣金额、成本管理等等<br>这个要认真搞下，因为账号区分全球的和中国区账号。</p>
+<ol>
+<li>汇款方式（信用卡（外币卡&amp;银联卡）、电汇、）</li>
+<li>发票问题（中国区可以提供发票、全球区没有发票只有收据）</li>
+<li>缴费时间点（账单生成时间、最迟缴费时间）</li>
+</ol>
+<p><strong>熟悉AWS服务限制</strong></p>
+<p>通过控制台查看服务的限制，或者通过此链接：</p>
+<p><a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/ec2-resource-limits.html">Amazon EC2 服务限制</a><br><a href="https://docs.aws.amazon.com/zh_cn/general/latest/gr/aws_service_limits.html">AWS 服务配额</a></p>
+<p>服务限制，会更好的控制对于AWS资源的合理利用，防止有心人有意或无意的无节制的开启资源。<br>还有就是一些其他不知道的原因，某项服务在某个region不能使用，这些都要知道；防止你们公司业务要上线了。发现那个地区没有想使用的服务；因为你测试的时候使用的region跟上线所在的那个region不一样，而且你也没有提前确认；等等原因。</p>
+<p><strong>熟悉AWS的support中心</strong><br>技术支持，服务限制申请提高；<br>技术支持分为三种，开发人员、商业、企业。<br>具体收费模式请看链接：<a href="https://aws.amazon.com/cn/premiumsupport/plans/">https://aws.amazon.com/cn/premiumsupport/plans/</a><br>还有一种技术支持，就是安排专门的架构师服务于你们公司的，But你公司必须在AWS消费很多大洋才可以伺候你</p>
+<h2 id="AWS学习-阶段划分"><a href="#AWS学习-阶段划分" class="headerlink" title="AWS学习 阶段划分"></a>AWS学习 阶段划分</h2><p><strong>基础玩法</strong></p>
+<p>EC2、ELB、S3、ElastiCache（redis）、RDS（MySql）<br>建议你们先熟悉上面几个服务，使用默认选项（默认VPC、安全组）等创建简单的三层服务并测试。<br>因为几乎迁移到AWS，使用的服务属上面几项最多，当然也是最常用的服务；先熟悉熟悉基本情况，打好基础。</p>
+<p><strong>中级玩法</strong></p>
+<p>首先，<code>全面深入学习VPC一定要学明白VPC</code>，因为AWS大多数服务，多AZ、高可用，都是基于VPC网络区分开的。<br>还有个问题就是，强迫症选手做事情是不会选择默认的选项去做事的。<br>通过自定义VPC，进行网络划分；各个服务做使用的网络不同（公有子网、私有子网），后期扩展。<br>这样做的好处就是，你可以清楚的了解到你们整个架构的划分、业务划分、网络划分、安全防护、后期如何进行架构扩展，都能清楚的了解到；<br>通过自定义的VPC网络进行服务创建，先把基础那几项服务玩一遍；再去测试其他的服务。</p>
+<p><strong>高级玩法</strong></p>
+<p>DevOps<br>ECS、EKS<br>Serverless</p>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/aws-55ed8db05deb6a0c99575b200bd4d317.jpeg?x-oss-process=style/watermark"></p>
+<hr>
+<!--  https://www.bookstack.cn/read/awschina/c0f7d53e63c37006.md  -->  
+<!--  https://www.jianshu.com/p/89004a16789f  -->  
+]]></content>
+      <categories>
+        <category>AWS</category>
+      </categories>
+  </entry>
+  <entry>
     <title>AWS S3 Bucket 简介</title>
     <url>/2020/09/05/aws_s3_introduction/</url>
     <content><![CDATA[<blockquote>
@@ -1955,49 +2092,6 @@ roles/
       </tags>
   </entry>
   <entry>
-    <title>AWS账号注册和控制台介绍</title>
-    <url>/2020/04/09/aws_present/</url>
-    <content><![CDATA[<blockquote>
-<p><a href="https://docs.aws.amazon.com/">AWS官方文档</a></p>
-</blockquote>
-<hr>
-<h2 id="AWS账号注册"><a href="#AWS账号注册" class="headerlink" title="AWS账号注册"></a>AWS账号注册</h2><p>首先，注册一个Global账号：</p>
-<ul>
-<li><a href="https://aws.amazon.com/">https://aws.amazon.com</a></li>
-<li><a href="https://amazonaws-china.com/">https://amazonaws-china.com</a></li>
-</ul>
-<p>注册帐号美国版和中国版一致, 创建EC2时注意选择的国家区域；不要用 <a href="https://www.amazonaws.cn注册/">https://www.amazonaws.cn注册</a><br>免费套餐介绍：<a href="https://amazonaws-china.com/cn/free/faqs/">https://amazonaws-china.com/cn/free/faqs/</a></p>
-<h2 id="AWS控制台"><a href="#AWS控制台" class="headerlink" title="AWS控制台"></a>AWS控制台</h2><p><strong>申请IAM用户</strong><br>登录到aws控制台，打开IAM控制台，开启MFA安全认证，保证根用户的安全；<br>申请一个IAM用户并授权此用户最大权限（AWS架构师第一准则，<code>不要使用根用户登录控制台操作</code>）；<br>用申请的IAM用户进行所有的操作，根用户在没有必要的情况不要使用，并由专人负责；</p>
-<p><strong>熟悉AWS控制台</strong></p>
-<p>把控制台上面的服务选项都点一遍，看看各个服务在哪里；方便后期使用的话知道点击哪里；<br><code>控制台的左下角可以切换语言</code>，如果英语不好的可以换成中文显示；</p>
-<p><strong>熟悉AWS账单管理</strong></p>
-<p>切换到账单控制台，查看账单<br>登录账单控制台，看看账单首选项、付款方式、整合账单、税务设置、订单发票、服务抵扣金额、成本管理等等<br>这个要认真搞下，因为账号区分全球的和中国区账号。</p>
-<ol>
-<li>汇款方式（信用卡（外币卡&amp;银联卡）、电汇、）</li>
-<li>发票问题（中国区可以提供发票、全球区没有发票只有收据）</li>
-<li>缴费时间点（账单生成时间、最迟缴费时间）</li>
-</ol>
-<p><strong>熟悉AWS服务限制</strong></p>
-<p>通过控制台查看服务的限制，或者通过此链接：</p>
-<p><a href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/ec2-resource-limits.html">Amazon EC2 服务限制</a><br><a href="https://docs.aws.amazon.com/zh_cn/general/latest/gr/aws_service_limits.html">AWS 服务配额</a></p>
-<p>服务限制，会更好的控制对于AWS资源的合理利用，防止有心人有意或无意的无节制的开启资源。<br>还有就是一些其他不知道的原因，某项服务在某个region不能使用，这些都要知道；防止你们公司业务要上线了。发现那个地区没有想使用的服务；因为你测试的时候使用的region跟上线所在的那个region不一样，而且你也没有提前确认；等等原因。</p>
-<p><strong>熟悉AWS的support中心</strong><br>技术支持，服务限制申请提高；<br>技术支持分为三种，开发人员、商业、企业。<br>具体收费模式请看链接：<a href="https://aws.amazon.com/cn/premiumsupport/plans/">https://aws.amazon.com/cn/premiumsupport/plans/</a><br>还有一种技术支持，就是安排专门的架构师服务于你们公司的，But你公司必须在AWS消费很多大洋才可以伺候你</p>
-<h2 id="AWS学习-阶段划分"><a href="#AWS学习-阶段划分" class="headerlink" title="AWS学习 阶段划分"></a>AWS学习 阶段划分</h2><p><strong>基础玩法</strong></p>
-<p>EC2、ELB、S3、ElastiCache（redis）、RDS（MySql）<br>建议你们先熟悉上面几个服务，使用默认选项（默认VPC、安全组）等创建简单的三层服务并测试。<br>因为几乎迁移到AWS，使用的服务属上面几项最多，当然也是最常用的服务；先熟悉熟悉基本情况，打好基础。</p>
-<p><strong>中级玩法</strong></p>
-<p>首先，<code>全面深入学习VPC一定要学明白VPC</code>，因为AWS大多数服务，多AZ、高可用，都是基于VPC网络区分开的。<br>还有个问题就是，强迫症选手做事情是不会选择默认的选项去做事的。<br>通过自定义VPC，进行网络划分；各个服务做使用的网络不同（公有子网、私有子网），后期扩展。<br>这样做的好处就是，你可以清楚的了解到你们整个架构的划分、业务划分、网络划分、安全防护、后期如何进行架构扩展，都能清楚的了解到；<br>通过自定义的VPC网络进行服务创建，先把基础那几项服务玩一遍；再去测试其他的服务。</p>
-<p><strong>高级玩法</strong></p>
-<p>DevOps<br>ECS、EKS<br>Serverless</p>
-<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/aws/aws-55ed8db05deb6a0c99575b200bd4d317.jpeg?x-oss-process=style/watermark"></p>
-<hr>
-<!--  https://www.bookstack.cn/read/awschina/c0f7d53e63c37006.md  -->  
-<!--  https://www.jianshu.com/p/89004a16789f  -->  
-]]></content>
-      <categories>
-        <category>AWS</category>
-      </categories>
-  </entry>
-  <entry>
     <title>s3cmd——AWS S3存储桶管理工具</title>
     <url>/2020/09/05/aws_s3cmd/</url>
     <content><![CDATA[<p>s3cmd 是用于创建S3桶，上传，检索和管理数据到对象存储命令行实用程序。 本文将指导linux下安装s3cmd程序，以及对象存储服务桶和对象数据管理，包括创建桶、上传、检索、删除及本地与对象存储服务间数据同步等。本文以下内容将以CentOS 7.3的弹性云服务器为例，windows操作系统使用类似。</p>
@@ -2037,6 +2131,48 @@ roles/
       </categories>
       <tags>
         <tag>S3</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>go基础之数组</title>
+    <url>/2020/04/09/go_base_array/</url>
+    <content><![CDATA[<h1 id="Array-数组"><a href="#Array-数组" class="headerlink" title="Array(数组)"></a>Array(数组)</h1><p>数组：是同一种数据类型的固定长度的序列。 在Go语言中，数组从声明时就确定，使用时可以修改数组成员，但是数组大小不可变化。 基本语法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 定义一个长度为3元素类型为int的数组a</span><br><span class="line">var a [3]int</span><br></pre></td></tr></table></figure>
+<h2 id="数组定义"><a href="#数组定义" class="headerlink" title="数组定义"></a>数组定义</h2><p><code>var 数组变量名 [元素数量]Type</code><br>比如：<code>var a [5]int</code>， 数组的长度必须是常量，并且长度是数组类型的一部分。一旦定义，长度不能变。<code>[5]int和[10]int</code>是不同的类型。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var a [3]int</span><br><span class="line">var b [4]int</span><br><span class="line">a &#x3D; b &#x2F;&#x2F;不可以这样做，因为此时a和b是不同的类型</span><br></pre></td></tr></table></figure>
+<p>数组可以通过下标进行访问，下标是从0开始，最后一个元素下标是：<code>len-1</code>，访问越界（下标在合法范围之外），则触发访问越界，会panic。</p>
+<h2 id="数组的初始化"><a href="#数组的初始化" class="headerlink" title="数组的初始化"></a>数组的初始化</h2><p><strong><em>一维数组</em></strong></p>
+<h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h3><p>初始化数组时可以使用初始化列表来设置数组元素的值。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var testArray [3]int                        &#x2F;&#x2F;数组会初始化为int类型的零值</span><br><span class="line">    var numArray &#x3D; [3]int&#123;1, 2&#125;                 &#x2F;&#x2F;使用指定的初始值完成初始化</span><br><span class="line">    var cityArray &#x3D; [3]string&#123;&quot;北京&quot;, &quot;上海&quot;, &quot;深圳&quot;&#125; &#x2F;&#x2F;使用指定的初始值完成初始化</span><br><span class="line">    fmt.Println(testArray)                      &#x2F;&#x2F;[0 0 0]</span><br><span class="line">    fmt.Println(numArray)                       &#x2F;&#x2F;[1 2 0]</span><br><span class="line">    fmt.Println(cityArray)                      &#x2F;&#x2F;[北京 上海 深圳]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>按照上面的方法每次都要确保提供的初始值和数组长度一致，一般情况下我们可以让编译器根据初始值的个数自行推断数组的长度，例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var testArray [3]int</span><br><span class="line">    var numArray &#x3D; [...]int&#123;1, 2&#125;</span><br><span class="line">    var cityArray &#x3D; [...]string&#123;&quot;北京&quot;, &quot;上海&quot;, &quot;深圳&quot;&#125;</span><br><span class="line">    fmt.Println(testArray)                          &#x2F;&#x2F;[0 0 0]</span><br><span class="line">    fmt.Println(numArray)                           &#x2F;&#x2F;[1 2]</span><br><span class="line">    fmt.Printf(&quot;type of numArray:%T\n&quot;, numArray)   &#x2F;&#x2F;type of numArray:[2]int</span><br><span class="line">    fmt.Println(cityArray)                          &#x2F;&#x2F;[北京 上海 深圳]</span><br><span class="line">    fmt.Printf(&quot;type of cityArray:%T\n&quot;, cityArray) &#x2F;&#x2F;type of cityArray:[3]string</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a>方法三</h3><p>我们还可以使用指定索引值的方式来初始化数组，例如:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [...]int&#123;1: 1, 3: 5&#125;</span><br><span class="line">    fmt.Println(a)                  &#x2F;&#x2F; [0 1 0 5]</span><br><span class="line">    fmt.Printf(&quot;type of a:%T\n&quot;, a) &#x2F;&#x2F;type of a:[4]int</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="数组的遍历"><a href="#数组的遍历" class="headerlink" title="数组的遍历"></a>数组的遍历</h2><p><strong><em>一维数组</em></strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 遍历数组a有以下两种方法：</span><br><span class="line">func main() &#123;</span><br><span class="line">    var a &#x3D; [...]string&#123;&quot;北京&quot;, &quot;上海&quot;, &quot;深圳&quot;&#125;</span><br><span class="line">    &#x2F;&#x2F; 方法1：for循环遍历</span><br><span class="line">    for i :&#x3D; 0; i &lt; len(a); i++ &#123;</span><br><span class="line">        fmt.Println(a[i])</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 方法2：for range遍历</span><br><span class="line">    for index, value :&#x3D; range a &#123;</span><br><span class="line">        fmt.Println(index, value)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="多维数组"><a href="#多维数组" class="headerlink" title="多维数组"></a>多维数组</h2><h3 id="二维数组的定义"><a href="#二维数组的定义" class="headerlink" title="二维数组的定义"></a>二维数组的定义</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [3][2]string&#123;</span><br><span class="line">        &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">        &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">        &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(a) &#x2F;&#x2F;[[北京 上海] [广州 深圳] [成都 重庆]]</span><br><span class="line">    fmt.Println(a[2][1]) &#x2F;&#x2F;支持索引取值:重庆</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="二维数组的遍历"><a href="#二维数组的遍历" class="headerlink" title="二维数组的遍历"></a>二维数组的遍历</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [3][2]string&#123;</span><br><span class="line">        &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">        &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">        &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    for _, v1 :&#x3D; range a &#123;</span><br><span class="line">        for _, v2 :&#x3D; range v1 &#123;</span><br><span class="line">            fmt.Printf(&quot;%s\t&quot;, v2)</span><br><span class="line">        &#125;</span><br><span class="line">        fmt.Println()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">北京    上海    </span><br><span class="line">广州    深圳    </span><br><span class="line">成都    重庆    </span><br></pre></td></tr></table></figure>
+<p><code>注意</code>： 多维数组<code>只有第一层</code>可以使用<code>...</code>来让编译器推导数组长度。例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;支持的写法</span><br><span class="line">a :&#x3D; [...][2]string&#123;</span><br><span class="line">    &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">    &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">    &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;不支持多维数组的内层使用...</span><br><span class="line">b :&#x3D; [3][...]string&#123;</span><br><span class="line">    &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">    &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">    &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="数组拷贝和传参"><a href="#数组拷贝和传参" class="headerlink" title="数组拷贝和传参"></a>数组拷贝和传参</h2><p>数组是值类型，赋值和传参会复制整个数组。因此改变副本的值，不会改变本身的值。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func modifyArray(x [3]int) &#123;</span><br><span class="line">    x[0] &#x3D; 100</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func modifyArray2(x [3][2]int) &#123;</span><br><span class="line">    x[2][0] &#x3D; 100</span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [3]int&#123;10, 20, 30&#125;</span><br><span class="line">    modifyArray(a) &#x2F;&#x2F;在modify中修改的是a的副本x</span><br><span class="line">    fmt.Println(a) &#x2F;&#x2F;[10 20 30]</span><br><span class="line">    b :&#x3D; [3][2]int&#123;</span><br><span class="line">        &#123;1, 1&#125;,</span><br><span class="line">        &#123;1, 1&#125;,</span><br><span class="line">        &#123;1, 1&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    modifyArray2(b) &#x2F;&#x2F;在modify中修改的是b的副本x</span><br><span class="line">    fmt.Println(b)  &#x2F;&#x2F;[[1 1] [1 1] [1 1]]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong></p>
+<ol>
+<li>数组支持 “==“、”!=” 操作符，因为内存总是被初始化过的。</li>
+<li>[n]*T表示指针数组，*[n]T表示数组指针 。</li>
+</ol>
+<h2 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h2><p>求数组[1, 3, 5, 7, 8]所有元素的和<br>找出数组中和为指定值的两个元素的下标，比如从数组[1, 3, 5, 7, 8]中找出和为8的两个元素的下标分别为(0,3)和(1,2)。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>go语言基础</tag>
+        <tag>array</tag>
       </tags>
   </entry>
   <entry>
@@ -2087,48 +2223,6 @@ roles/
       <tags>
         <tag>go语言基础</tag>
         <tag>函数</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>go基础之数组</title>
-    <url>/2020/04/09/go_base_array/</url>
-    <content><![CDATA[<h1 id="Array-数组"><a href="#Array-数组" class="headerlink" title="Array(数组)"></a>Array(数组)</h1><p>数组：是同一种数据类型的固定长度的序列。 在Go语言中，数组从声明时就确定，使用时可以修改数组成员，但是数组大小不可变化。 基本语法：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 定义一个长度为3元素类型为int的数组a</span><br><span class="line">var a [3]int</span><br></pre></td></tr></table></figure>
-<h2 id="数组定义"><a href="#数组定义" class="headerlink" title="数组定义"></a>数组定义</h2><p><code>var 数组变量名 [元素数量]Type</code><br>比如：<code>var a [5]int</code>， 数组的长度必须是常量，并且长度是数组类型的一部分。一旦定义，长度不能变。<code>[5]int和[10]int</code>是不同的类型。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var a [3]int</span><br><span class="line">var b [4]int</span><br><span class="line">a &#x3D; b &#x2F;&#x2F;不可以这样做，因为此时a和b是不同的类型</span><br></pre></td></tr></table></figure>
-<p>数组可以通过下标进行访问，下标是从0开始，最后一个元素下标是：<code>len-1</code>，访问越界（下标在合法范围之外），则触发访问越界，会panic。</p>
-<h2 id="数组的初始化"><a href="#数组的初始化" class="headerlink" title="数组的初始化"></a>数组的初始化</h2><p><strong><em>一维数组</em></strong></p>
-<h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h3><p>初始化数组时可以使用初始化列表来设置数组元素的值。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var testArray [3]int                        &#x2F;&#x2F;数组会初始化为int类型的零值</span><br><span class="line">    var numArray &#x3D; [3]int&#123;1, 2&#125;                 &#x2F;&#x2F;使用指定的初始值完成初始化</span><br><span class="line">    var cityArray &#x3D; [3]string&#123;&quot;北京&quot;, &quot;上海&quot;, &quot;深圳&quot;&#125; &#x2F;&#x2F;使用指定的初始值完成初始化</span><br><span class="line">    fmt.Println(testArray)                      &#x2F;&#x2F;[0 0 0]</span><br><span class="line">    fmt.Println(numArray)                       &#x2F;&#x2F;[1 2 0]</span><br><span class="line">    fmt.Println(cityArray)                      &#x2F;&#x2F;[北京 上海 深圳]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>按照上面的方法每次都要确保提供的初始值和数组长度一致，一般情况下我们可以让编译器根据初始值的个数自行推断数组的长度，例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var testArray [3]int</span><br><span class="line">    var numArray &#x3D; [...]int&#123;1, 2&#125;</span><br><span class="line">    var cityArray &#x3D; [...]string&#123;&quot;北京&quot;, &quot;上海&quot;, &quot;深圳&quot;&#125;</span><br><span class="line">    fmt.Println(testArray)                          &#x2F;&#x2F;[0 0 0]</span><br><span class="line">    fmt.Println(numArray)                           &#x2F;&#x2F;[1 2]</span><br><span class="line">    fmt.Printf(&quot;type of numArray:%T\n&quot;, numArray)   &#x2F;&#x2F;type of numArray:[2]int</span><br><span class="line">    fmt.Println(cityArray)                          &#x2F;&#x2F;[北京 上海 深圳]</span><br><span class="line">    fmt.Printf(&quot;type of cityArray:%T\n&quot;, cityArray) &#x2F;&#x2F;type of cityArray:[3]string</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a>方法三</h3><p>我们还可以使用指定索引值的方式来初始化数组，例如:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [...]int&#123;1: 1, 3: 5&#125;</span><br><span class="line">    fmt.Println(a)                  &#x2F;&#x2F; [0 1 0 5]</span><br><span class="line">    fmt.Printf(&quot;type of a:%T\n&quot;, a) &#x2F;&#x2F;type of a:[4]int</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="数组的遍历"><a href="#数组的遍历" class="headerlink" title="数组的遍历"></a>数组的遍历</h2><p><strong><em>一维数组</em></strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 遍历数组a有以下两种方法：</span><br><span class="line">func main() &#123;</span><br><span class="line">    var a &#x3D; [...]string&#123;&quot;北京&quot;, &quot;上海&quot;, &quot;深圳&quot;&#125;</span><br><span class="line">    &#x2F;&#x2F; 方法1：for循环遍历</span><br><span class="line">    for i :&#x3D; 0; i &lt; len(a); i++ &#123;</span><br><span class="line">        fmt.Println(a[i])</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 方法2：for range遍历</span><br><span class="line">    for index, value :&#x3D; range a &#123;</span><br><span class="line">        fmt.Println(index, value)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="多维数组"><a href="#多维数组" class="headerlink" title="多维数组"></a>多维数组</h2><h3 id="二维数组的定义"><a href="#二维数组的定义" class="headerlink" title="二维数组的定义"></a>二维数组的定义</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [3][2]string&#123;</span><br><span class="line">        &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">        &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">        &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(a) &#x2F;&#x2F;[[北京 上海] [广州 深圳] [成都 重庆]]</span><br><span class="line">    fmt.Println(a[2][1]) &#x2F;&#x2F;支持索引取值:重庆</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="二维数组的遍历"><a href="#二维数组的遍历" class="headerlink" title="二维数组的遍历"></a>二维数组的遍历</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [3][2]string&#123;</span><br><span class="line">        &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">        &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">        &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    for _, v1 :&#x3D; range a &#123;</span><br><span class="line">        for _, v2 :&#x3D; range v1 &#123;</span><br><span class="line">            fmt.Printf(&quot;%s\t&quot;, v2)</span><br><span class="line">        &#125;</span><br><span class="line">        fmt.Println()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">北京    上海    </span><br><span class="line">广州    深圳    </span><br><span class="line">成都    重庆    </span><br></pre></td></tr></table></figure>
-<p><code>注意</code>： 多维数组<code>只有第一层</code>可以使用<code>...</code>来让编译器推导数组长度。例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;支持的写法</span><br><span class="line">a :&#x3D; [...][2]string&#123;</span><br><span class="line">    &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">    &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">    &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;不支持多维数组的内层使用...</span><br><span class="line">b :&#x3D; [3][...]string&#123;</span><br><span class="line">    &#123;&quot;北京&quot;, &quot;上海&quot;&#125;,</span><br><span class="line">    &#123;&quot;广州&quot;, &quot;深圳&quot;&#125;,</span><br><span class="line">    &#123;&quot;成都&quot;, &quot;重庆&quot;&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="数组拷贝和传参"><a href="#数组拷贝和传参" class="headerlink" title="数组拷贝和传参"></a>数组拷贝和传参</h2><p>数组是值类型，赋值和传参会复制整个数组。因此改变副本的值，不会改变本身的值。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func modifyArray(x [3]int) &#123;</span><br><span class="line">    x[0] &#x3D; 100</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func modifyArray2(x [3][2]int) &#123;</span><br><span class="line">    x[2][0] &#x3D; 100</span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">    a :&#x3D; [3]int&#123;10, 20, 30&#125;</span><br><span class="line">    modifyArray(a) &#x2F;&#x2F;在modify中修改的是a的副本x</span><br><span class="line">    fmt.Println(a) &#x2F;&#x2F;[10 20 30]</span><br><span class="line">    b :&#x3D; [3][2]int&#123;</span><br><span class="line">        &#123;1, 1&#125;,</span><br><span class="line">        &#123;1, 1&#125;,</span><br><span class="line">        &#123;1, 1&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    modifyArray2(b) &#x2F;&#x2F;在modify中修改的是b的副本x</span><br><span class="line">    fmt.Println(b)  &#x2F;&#x2F;[[1 1] [1 1] [1 1]]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>注意：</strong></p>
-<ol>
-<li>数组支持 “==“、”!=” 操作符，因为内存总是被初始化过的。</li>
-<li>[n]*T表示指针数组，*[n]T表示数组指针 。</li>
-</ol>
-<h2 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h2><p>求数组[1, 3, 5, 7, 8]所有元素的和<br>找出数组中和为指定值的两个元素的下标，比如从数组[1, 3, 5, 7, 8]中找出和为8的两个元素的下标分别为(0,3)和(1,2)。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>Go</category>
-      </categories>
-      <tags>
-        <tag>go语言基础</tag>
-        <tag>array</tag>
       </tags>
   </entry>
   <entry>
@@ -2238,6 +2332,72 @@ roles/
       <tags>
         <tag>go语言基础</tag>
         <tag>函数</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>go基础之map</title>
+    <url>/2020/04/30/go_base_map/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="http://wen.topgoer.com/docs/golang/chapter03-13">map</a> 是Go语言中提供的<code>映射关系容器</code>，其内部使用散列表（hash）实现。</p>
+</blockquote>
+<h1 id="map"><a href="#map" class="headerlink" title="map"></a>map</h1><p>map是一种无序的基于key-value的数据结构，Go语言中的map是引用类型，必须初始化才能使用。</p>
+<h2 id="map的定义语法"><a href="#map的定义语法" class="headerlink" title="map的定义语法"></a>map的定义语法</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">map[KeyType]ValueType</span><br></pre></td></tr></table></figure>
+<p>其中，</p>
+<ul>
+<li>KeyType:表示键的类型。</li>
+<li>ValueType:表示键对应的值的类型。</li>
+</ul>
+<p>map类型的变量默认初始值为nil，需要使用make()函数来分配内存。语法为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">make(map[KeyType]ValueType, cap)</span><br></pre></td></tr></table></figure>
+<p>其中cap表示map的容量，该参数虽然不是必须的，但是我们应该在初始化map的时候就为其指定一个合适的容量。</p>
+<h2 id="map的使用"><a href="#map的使用" class="headerlink" title="map的使用"></a>map的使用</h2><p>map中的数据都是成对出现的，map的基本使用示例代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int, 8)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    fmt.Println(scoreMap)                  &#x2F;&#x2F; map[小明:100 张三:90]</span><br><span class="line">    fmt.Println(scoreMap[&quot;小明&quot;])          &#x2F;&#x2F; 100</span><br><span class="line">    fmt.Printf(&quot;type of a:%T\n&quot;, scoreMap) &#x2F;&#x2F;type of a:map[string]int</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]string, 8)</span><br><span class="line">    scoreMap[&quot;射手&quot;] &#x3D; &quot;小鲁蛋&quot;</span><br><span class="line">    scoreMap[&quot;打野&quot;] &#x3D; &quot;赵云&quot;</span><br><span class="line">    scoreMap[&quot;辅助&quot;] &#x3D; &quot;廉颇&quot;</span><br><span class="line">    fmt.Println(scoreMap)</span><br><span class="line">    fmt.Printf(&quot;type of scoreMap is: %T\n&quot;, scoreMap)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 输出：</span><br><span class="line">&#x2F;&#x2F; map[坦边:吕布 射手:小鲁蛋 打野:赵云 辅助:廉颇]</span><br><span class="line">&#x2F;&#x2F; type of scoreMap is: map[string]string</span><br></pre></td></tr></table></figure>
+<p>map也支持在声明的时候填充元素，例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    userLogin :&#x3D; map[string]string&#123;</span><br><span class="line">        &quot;username&quot;: &quot;xyxxb&quot;,</span><br><span class="line">        &quot;password&quot;: &quot;123123&quot;,</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(userLogin) &#x2F;&#x2F; map[password:123123 username:xyxxb]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="判断某个键是否存在"><a href="#判断某个键是否存在" class="headerlink" title="判断某个键是否存在"></a>判断某个键是否存在</h2><p>Go语言中判断map中键是否存在的特殊写法，格式如下:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">value, ok :&#x3D; map[key]</span><br></pre></td></tr></table></figure>
+<p>举个例子：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    &#x2F;&#x2F; 如果key存在ok为true,v为对应的值；不存在ok为false,v为值类型的零值</span><br><span class="line">    v, ok :&#x3D; scoreMap[&quot;张三&quot;]</span><br><span class="line">    if ok &#123;</span><br><span class="line">        fmt.Println(v)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        fmt.Println(&quot;查无此人&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h2><p>使用for range遍历map</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    scoreMap[&quot;娜扎&quot;] &#x3D; 60</span><br><span class="line">    for k, v :&#x3D; range scoreMap &#123;</span><br><span class="line">        fmt.Println(k, v)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>仅遍历key的时候，可以按下面的写法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    scoreMap[&quot;娜扎&quot;] &#x3D; 60</span><br><span class="line">    for k :&#x3D; range scoreMap &#123;</span><br><span class="line">        scoreMap[&quot;小明&quot;] &#x3D; 120</span><br><span class="line">        fmt.Println(k) &#x2F;&#x2F; 取value：fmt.Println(scoreMap[k])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>**<code>注意</code>**： 遍历map时的元素顺序与添加键值对的顺序无关。</p>
+<h2 id="使用delete-函数删除键值对"><a href="#使用delete-函数删除键值对" class="headerlink" title="使用delete()函数删除键值对"></a>使用delete()函数删除键值对</h2><p>使用delete()内建函数从map中删除一组键值对，delete()函数的格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">delete(map, key)</span><br></pre></td></tr></table></figure>
+<p>其中，</p>
+<ul>
+<li>map:表示要删除键值对的map</li>
+<li>key:表示要删除的键值对的键</li>
+</ul>
+<p>示例代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main()&#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    scoreMap[&quot;娜扎&quot;] &#x3D; 60</span><br><span class="line">    delete(scoreMap, &quot;小明&quot;)&#x2F;&#x2F;将小明:100从map中删除</span><br><span class="line">    for k,v :&#x3D; range scoreMap&#123;</span><br><span class="line">        fmt.Println(k, v)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="按照指定顺序遍历map"><a href="#按照指定顺序遍历map" class="headerlink" title="按照指定顺序遍历map"></a>按照指定顺序遍历map</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    rand.Seed(time.Now().UnixNano()) &#x2F;&#x2F;初始化随机数种子</span><br><span class="line"></span><br><span class="line">    var scoreMap &#x3D; make(map[string]int, 200)</span><br><span class="line"></span><br><span class="line">    for i :&#x3D; 0; i &lt; 100; i++ &#123;</span><br><span class="line">        key :&#x3D; fmt.Sprintf(&quot;stu%02d&quot;, i) &#x2F;&#x2F; 生成stu开头的字符串</span><br><span class="line">        value :&#x3D; rand.Intn(100)          &#x2F;&#x2F; 生成0~99的随机整数</span><br><span class="line">        scoreMap[key] &#x3D; value</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 取出map中的所有key存入切片keys</span><br><span class="line">    var keys &#x3D; make([]string, 0, 200)</span><br><span class="line">    for key :&#x3D; range scoreMap &#123;</span><br><span class="line">        keys &#x3D; append(keys, key)</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 对切片进行排序</span><br><span class="line">    sort.Strings(keys)</span><br><span class="line">    &#x2F;&#x2F; 按照排序后的key遍历map</span><br><span class="line">    for _, key :&#x3D; range keys &#123;</span><br><span class="line">        fmt.Println(key, scoreMap[key])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="元素为map类型的切片"><a href="#元素为map类型的切片" class="headerlink" title="元素为map类型的切片"></a>元素为map类型的切片</h2><p>下面的代码演示了切片中的元素为map类型时的操作：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var mapSlice &#x3D; make([]map[string]string, 3)</span><br><span class="line">    for index, value :&#x3D; range mapSlice &#123;</span><br><span class="line">        fmt.Printf(&quot;index:%d value:%v\n&quot;, index, value)</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(&quot;after init&quot;)</span><br><span class="line">    &#x2F;&#x2F; 对切片中的map元素进行初始化</span><br><span class="line">    mapSlice[0] &#x3D; make(map[string]string, 10)</span><br><span class="line">    mapSlice[0][&quot;name&quot;] &#x3D; &quot;小王子&quot;</span><br><span class="line">    mapSlice[0][&quot;password&quot;] &#x3D; &quot;123456&quot;</span><br><span class="line">    mapSlice[0][&quot;address&quot;] &#x3D; &quot;沙河&quot;</span><br><span class="line">    for index, value :&#x3D; range mapSlice &#123;</span><br><span class="line">        fmt.Printf(&quot;index:%d value:%v\n&quot;, index, value)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">index:0 value:map[]</span><br><span class="line">index:1 value:map[]</span><br><span class="line">index:2 value:map[]</span><br><span class="line">after init</span><br><span class="line">index:0 value:map[address:沙河 name:小王子 password:123456]</span><br><span class="line">index:1 value:map[]</span><br><span class="line">index:2 value:map[]</span><br></pre></td></tr></table></figure>
+<h2 id="值为切片类型的map"><a href="#值为切片类型的map" class="headerlink" title="值为切片类型的map"></a>值为切片类型的map</h2><p>下面的代码演示了map中值为切片类型的操作：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var sliceMap &#x3D; make(map[string][]string, 3)</span><br><span class="line">    fmt.Println(sliceMap)</span><br><span class="line">    fmt.Println(&quot;after init&quot;)</span><br><span class="line">    key :&#x3D; &quot;中国&quot;</span><br><span class="line">    value, ok :&#x3D; sliceMap[key]</span><br><span class="line">    if !ok &#123;</span><br><span class="line">        value &#x3D; make([]string, 0, 2)</span><br><span class="line">    &#125;</span><br><span class="line">    value &#x3D; append(value, &quot;北京&quot;, &quot;上海&quot;)</span><br><span class="line">    sliceMap[key] &#x3D; value</span><br><span class="line">    fmt.Println(sliceMap)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">map[]</span><br><span class="line">after init</span><br><span class="line">map[中国:[北京 上海]]</span><br></pre></td></tr></table></figure>
+<h2 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h2><p>写一个程序，统计一个字符串中每个单词出现的次数。比如：”how do you do”中how=1 do=2 you=1。<br>观察下面代码，写出最终的打印结果。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    type Map map[string][]int</span><br><span class="line">    m :&#x3D; make(Map)</span><br><span class="line">    s :&#x3D; []int&#123;1, 2&#125;</span><br><span class="line">    s &#x3D; append(s, 3)</span><br><span class="line">    fmt.Printf(&quot;%+v\n&quot;, s)</span><br><span class="line">    m[&quot;q1mi&quot;] &#x3D; s</span><br><span class="line">    s &#x3D; append(s[:1], s[2:]...)</span><br><span class="line">    fmt.Printf(&quot;%+v\n&quot;, s)</span><br><span class="line">    fmt.Printf(&quot;%+v\n&quot;, m[&quot;q1mi&quot;])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>解答：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!---->  
+<!---->  
+]]></content>
+      <categories>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>go语言基础</tag>
+        <tag>map</tag>
       </tags>
   </entry>
   <entry>
@@ -2425,72 +2585,6 @@ roles/
       </categories>
       <tags>
         <tag>go语言基础</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>go基础之map</title>
-    <url>/2020/04/30/go_base_map/</url>
-    <content><![CDATA[<blockquote>
-<p><a href="http://wen.topgoer.com/docs/golang/chapter03-13">map</a> 是Go语言中提供的<code>映射关系容器</code>，其内部使用散列表（hash）实现。</p>
-</blockquote>
-<h1 id="map"><a href="#map" class="headerlink" title="map"></a>map</h1><p>map是一种无序的基于key-value的数据结构，Go语言中的map是引用类型，必须初始化才能使用。</p>
-<h2 id="map的定义语法"><a href="#map的定义语法" class="headerlink" title="map的定义语法"></a>map的定义语法</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">map[KeyType]ValueType</span><br></pre></td></tr></table></figure>
-<p>其中，</p>
-<ul>
-<li>KeyType:表示键的类型。</li>
-<li>ValueType:表示键对应的值的类型。</li>
-</ul>
-<p>map类型的变量默认初始值为nil，需要使用make()函数来分配内存。语法为：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">make(map[KeyType]ValueType, cap)</span><br></pre></td></tr></table></figure>
-<p>其中cap表示map的容量，该参数虽然不是必须的，但是我们应该在初始化map的时候就为其指定一个合适的容量。</p>
-<h2 id="map的使用"><a href="#map的使用" class="headerlink" title="map的使用"></a>map的使用</h2><p>map中的数据都是成对出现的，map的基本使用示例代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int, 8)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    fmt.Println(scoreMap)                  &#x2F;&#x2F; map[小明:100 张三:90]</span><br><span class="line">    fmt.Println(scoreMap[&quot;小明&quot;])          &#x2F;&#x2F; 100</span><br><span class="line">    fmt.Printf(&quot;type of a:%T\n&quot;, scoreMap) &#x2F;&#x2F;type of a:map[string]int</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]string, 8)</span><br><span class="line">    scoreMap[&quot;射手&quot;] &#x3D; &quot;小鲁蛋&quot;</span><br><span class="line">    scoreMap[&quot;打野&quot;] &#x3D; &quot;赵云&quot;</span><br><span class="line">    scoreMap[&quot;辅助&quot;] &#x3D; &quot;廉颇&quot;</span><br><span class="line">    fmt.Println(scoreMap)</span><br><span class="line">    fmt.Printf(&quot;type of scoreMap is: %T\n&quot;, scoreMap)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 输出：</span><br><span class="line">&#x2F;&#x2F; map[坦边:吕布 射手:小鲁蛋 打野:赵云 辅助:廉颇]</span><br><span class="line">&#x2F;&#x2F; type of scoreMap is: map[string]string</span><br></pre></td></tr></table></figure>
-<p>map也支持在声明的时候填充元素，例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    userLogin :&#x3D; map[string]string&#123;</span><br><span class="line">        &quot;username&quot;: &quot;xyxxb&quot;,</span><br><span class="line">        &quot;password&quot;: &quot;123123&quot;,</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(userLogin) &#x2F;&#x2F; map[password:123123 username:xyxxb]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="判断某个键是否存在"><a href="#判断某个键是否存在" class="headerlink" title="判断某个键是否存在"></a>判断某个键是否存在</h2><p>Go语言中判断map中键是否存在的特殊写法，格式如下:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">value, ok :&#x3D; map[key]</span><br></pre></td></tr></table></figure>
-<p>举个例子：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    &#x2F;&#x2F; 如果key存在ok为true,v为对应的值；不存在ok为false,v为值类型的零值</span><br><span class="line">    v, ok :&#x3D; scoreMap[&quot;张三&quot;]</span><br><span class="line">    if ok &#123;</span><br><span class="line">        fmt.Println(v)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        fmt.Println(&quot;查无此人&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h2><p>使用for range遍历map</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    scoreMap[&quot;娜扎&quot;] &#x3D; 60</span><br><span class="line">    for k, v :&#x3D; range scoreMap &#123;</span><br><span class="line">        fmt.Println(k, v)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>仅遍历key的时候，可以按下面的写法：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    scoreMap[&quot;娜扎&quot;] &#x3D; 60</span><br><span class="line">    for k :&#x3D; range scoreMap &#123;</span><br><span class="line">        scoreMap[&quot;小明&quot;] &#x3D; 120</span><br><span class="line">        fmt.Println(k) &#x2F;&#x2F; 取value：fmt.Println(scoreMap[k])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>**<code>注意</code>**： 遍历map时的元素顺序与添加键值对的顺序无关。</p>
-<h2 id="使用delete-函数删除键值对"><a href="#使用delete-函数删除键值对" class="headerlink" title="使用delete()函数删除键值对"></a>使用delete()函数删除键值对</h2><p>使用delete()内建函数从map中删除一组键值对，delete()函数的格式如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">delete(map, key)</span><br></pre></td></tr></table></figure>
-<p>其中，</p>
-<ul>
-<li>map:表示要删除键值对的map</li>
-<li>key:表示要删除的键值对的键</li>
-</ul>
-<p>示例代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main()&#123;</span><br><span class="line">    scoreMap :&#x3D; make(map[string]int)</span><br><span class="line">    scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">    scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">    scoreMap[&quot;娜扎&quot;] &#x3D; 60</span><br><span class="line">    delete(scoreMap, &quot;小明&quot;)&#x2F;&#x2F;将小明:100从map中删除</span><br><span class="line">    for k,v :&#x3D; range scoreMap&#123;</span><br><span class="line">        fmt.Println(k, v)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="按照指定顺序遍历map"><a href="#按照指定顺序遍历map" class="headerlink" title="按照指定顺序遍历map"></a>按照指定顺序遍历map</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    rand.Seed(time.Now().UnixNano()) &#x2F;&#x2F;初始化随机数种子</span><br><span class="line"></span><br><span class="line">    var scoreMap &#x3D; make(map[string]int, 200)</span><br><span class="line"></span><br><span class="line">    for i :&#x3D; 0; i &lt; 100; i++ &#123;</span><br><span class="line">        key :&#x3D; fmt.Sprintf(&quot;stu%02d&quot;, i) &#x2F;&#x2F; 生成stu开头的字符串</span><br><span class="line">        value :&#x3D; rand.Intn(100)          &#x2F;&#x2F; 生成0~99的随机整数</span><br><span class="line">        scoreMap[key] &#x3D; value</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 取出map中的所有key存入切片keys</span><br><span class="line">    var keys &#x3D; make([]string, 0, 200)</span><br><span class="line">    for key :&#x3D; range scoreMap &#123;</span><br><span class="line">        keys &#x3D; append(keys, key)</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 对切片进行排序</span><br><span class="line">    sort.Strings(keys)</span><br><span class="line">    &#x2F;&#x2F; 按照排序后的key遍历map</span><br><span class="line">    for _, key :&#x3D; range keys &#123;</span><br><span class="line">        fmt.Println(key, scoreMap[key])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="元素为map类型的切片"><a href="#元素为map类型的切片" class="headerlink" title="元素为map类型的切片"></a>元素为map类型的切片</h2><p>下面的代码演示了切片中的元素为map类型时的操作：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var mapSlice &#x3D; make([]map[string]string, 3)</span><br><span class="line">    for index, value :&#x3D; range mapSlice &#123;</span><br><span class="line">        fmt.Printf(&quot;index:%d value:%v\n&quot;, index, value)</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(&quot;after init&quot;)</span><br><span class="line">    &#x2F;&#x2F; 对切片中的map元素进行初始化</span><br><span class="line">    mapSlice[0] &#x3D; make(map[string]string, 10)</span><br><span class="line">    mapSlice[0][&quot;name&quot;] &#x3D; &quot;小王子&quot;</span><br><span class="line">    mapSlice[0][&quot;password&quot;] &#x3D; &quot;123456&quot;</span><br><span class="line">    mapSlice[0][&quot;address&quot;] &#x3D; &quot;沙河&quot;</span><br><span class="line">    for index, value :&#x3D; range mapSlice &#123;</span><br><span class="line">        fmt.Printf(&quot;index:%d value:%v\n&quot;, index, value)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">index:0 value:map[]</span><br><span class="line">index:1 value:map[]</span><br><span class="line">index:2 value:map[]</span><br><span class="line">after init</span><br><span class="line">index:0 value:map[address:沙河 name:小王子 password:123456]</span><br><span class="line">index:1 value:map[]</span><br><span class="line">index:2 value:map[]</span><br></pre></td></tr></table></figure>
-<h2 id="值为切片类型的map"><a href="#值为切片类型的map" class="headerlink" title="值为切片类型的map"></a>值为切片类型的map</h2><p>下面的代码演示了map中值为切片类型的操作：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var sliceMap &#x3D; make(map[string][]string, 3)</span><br><span class="line">    fmt.Println(sliceMap)</span><br><span class="line">    fmt.Println(&quot;after init&quot;)</span><br><span class="line">    key :&#x3D; &quot;中国&quot;</span><br><span class="line">    value, ok :&#x3D; sliceMap[key]</span><br><span class="line">    if !ok &#123;</span><br><span class="line">        value &#x3D; make([]string, 0, 2)</span><br><span class="line">    &#125;</span><br><span class="line">    value &#x3D; append(value, &quot;北京&quot;, &quot;上海&quot;)</span><br><span class="line">    sliceMap[key] &#x3D; value</span><br><span class="line">    fmt.Println(sliceMap)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">map[]</span><br><span class="line">after init</span><br><span class="line">map[中国:[北京 上海]]</span><br></pre></td></tr></table></figure>
-<h2 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h2><p>写一个程序，统计一个字符串中每个单词出现的次数。比如：”how do you do”中how=1 do=2 you=1。<br>观察下面代码，写出最终的打印结果。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    type Map map[string][]int</span><br><span class="line">    m :&#x3D; make(Map)</span><br><span class="line">    s :&#x3D; []int&#123;1, 2&#125;</span><br><span class="line">    s &#x3D; append(s, 3)</span><br><span class="line">    fmt.Printf(&quot;%+v\n&quot;, s)</span><br><span class="line">    m[&quot;q1mi&quot;] &#x3D; s</span><br><span class="line">    s &#x3D; append(s[:1], s[2:]...)</span><br><span class="line">    fmt.Printf(&quot;%+v\n&quot;, s)</span><br><span class="line">    fmt.Printf(&quot;%+v\n&quot;, m[&quot;q1mi&quot;])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>解答：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-
-<hr>
-<p>&nbsp;  </p>
-<!--**参考文章**：-->  
-<!---->  
-<!---->  
-]]></content>
-      <categories>
-        <category>Go</category>
-      </categories>
-      <tags>
-        <tag>go语言基础</tag>
-        <tag>map</tag>
       </tags>
   </entry>
   <entry>
@@ -2710,67 +2804,6 @@ roles/
       <tags>
         <tag>go语言基础</tag>
         <tag>slice</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>go基础之变量和常量</title>
-    <url>/2020/04/08/go_var_constant/</url>
-    <content><![CDATA[<h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><h2 id="变量类型"><a href="#变量类型" class="headerlink" title="变量类型"></a>变量类型</h2><p>变量（Variable）的功能是存储数据。不同的变量保存的数据类型可能会不一样。经过半个多世纪的发展，编程语言已经基本形成了一套固定的类型，常见变量的数据类型有：<code>整型、浮点型、布尔型</code>等。</p>
-<p>Go语言中的每一个变量都有自己的类型，并且变量必须经过声明才能开始使用。</p>
-<h2 id="变量声明-var"><a href="#变量声明-var" class="headerlink" title="变量声明 var"></a>变量声明 var</h2><p>Go语言中的变量需要声明后才能使用，同一作用域内不支持重复声明。 并且Go语言的变量声明后必须使用。</p>
-<h3 id="标准声明"><a href="#标准声明" class="headerlink" title="标准声明"></a>标准声明</h3><p>Go语言的变量声明格式为：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var 变量名 变量类型</span><br></pre></td></tr></table></figure>
-<p>变量声明以关键字<code>var</code>开头，变量类型放在变量的后面，行尾无需分号。 举个例子：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name string</span><br><span class="line">var age int</span><br><span class="line">var isOk bool</span><br></pre></td></tr></table></figure>
-<h3 id="批量声明"><a href="#批量声明" class="headerlink" title="批量声明"></a>批量声明</h3><p>每声明一个变量就需要写<code>var</code>关键字会比较繁琐，go语言中还支持批量变量声明：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var (</span><br><span class="line">    a string</span><br><span class="line">    b int</span><br><span class="line">    c bool</span><br><span class="line">    d float32</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<h3 id="变量的初始化"><a href="#变量的初始化" class="headerlink" title="变量的初始化"></a>变量的初始化</h3><p>Go语言在声明变量的时候，会自动对变量对应的内存区域进行初始化操作。每个变量会被初始化成其类型的默认值，例如： 整型和浮点型变量的默认值为<code>0</code>。 字符串变量的默认值为<code>空字符串</code>。 布尔型变量默认为<code>false</code>。 切片、函数、指针变量的默认为<code>nil</code>。</p>
-<p>当然我们也可在声明变量的时候为其指定初始值。变量初始化的标准格式如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var 变量名 类型 &#x3D; 表达式</span><br></pre></td></tr></table></figure>
-<p>举个例子：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name string &#x3D; &quot;Q1mi&quot;</span><br><span class="line">var age int &#x3D; 18</span><br></pre></td></tr></table></figure>
-<p>或者一次初始化多个变量</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name, age &#x3D; &quot;Q1mi&quot;, 20</span><br></pre></td></tr></table></figure>
-<p><strong>类型推导</strong><br>有时候我们会将变量的类型省略，这个时候编译器会根据等号右边的值来推导变量的类型完成初始化。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name &#x3D; &quot;Q1mi&quot;</span><br><span class="line">var age &#x3D; 18</span><br></pre></td></tr></table></figure>
-<h3 id="短变量声明"><a href="#短变量声明" class="headerlink" title="短变量声明 :="></a><strong>短变量声明</strong> :=</h3><p>在函数内部，可以使用更简略的<code>:=</code>方式声明并初始化变量。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">)</span><br><span class="line">&#x2F;&#x2F; 全局变量m</span><br><span class="line">var m &#x3D; 100</span><br><span class="line">&#x2F;&#x2F; n :&#x3D; &quot;smile111&quot; &#x2F;&#x2F; 非法，短变量声明方式只能用于函数内部</span><br><span class="line">func main() &#123;</span><br><span class="line">    n :&#x3D; 10</span><br><span class="line">    m :&#x3D; 200 &#x2F;&#x2F; 此处声明局部变量m</span><br><span class="line">    fmt.Println(m, n)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="匿名变量"><a href="#匿名变量" class="headerlink" title="匿名变量 _"></a><strong>匿名变量</strong> _</h3><p>在使用多重赋值时，如果想要忽略某个值，可以使用<code>匿名变量（anonymous variable）</code>。 匿名变量用一个下划线_表示，例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func foo() (int, string) &#123;</span><br><span class="line">    return 10, &quot;Q1mi&quot;</span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">    x, _ :&#x3D; foo()</span><br><span class="line">    _, y :&#x3D; foo()</span><br><span class="line">    fmt.Println(&quot;x&#x3D;&quot;, x)</span><br><span class="line">    fmt.Println(&quot;y&#x3D;&quot;, y)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>匿名变量不占用命名空间，不会分配内存，所以匿名变量之间不存在重复声明。 (在<code>Lua</code>等编程语言里，匿名变量也被叫做哑元变量。)</p>
-<p> <code>注意事项：</code></p>
-<ol>
-<li>函数外的每个语句都必须以关键字开始（var、const、func等）</li>
-<li><code>:=</code>不能使用在函数外。</li>
-<li><code>_</code>多用于占位，表示忽略值。</li>
-</ol>
-<h2 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h2><p>相对于变量，常量是恒定不变的值，多用于定义程序运行期间不会改变的那些值。 常量的声明和变量声明非常类似，只是把<code>var</code>换成了<code>const</code>，常量在定义的时候必须赋值。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const pi &#x3D; 3.1415</span><br><span class="line">const e &#x3D; 2.7182</span><br></pre></td></tr></table></figure>
-<p>声明了<code>pi</code>和<code>e</code>这两个常量之后，在整个程序运行期间它们的值都不能再发生变化了。</p>
-<p>多个常量也可以一起声明：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    pi &#x3D; 3.1415</span><br><span class="line">    e &#x3D; 2.7182</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p>const同时声明多个常量时，如果省略了值则表示和上面一行的值相同。 例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; 100</span><br><span class="line">    n2</span><br><span class="line">    n3</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p>上面示例中，常量<code>n1</code>、<code>n2</code>、<code>n3</code>的值都是100。</p>
-<h3 id="iota"><a href="#iota" class="headerlink" title="iota"></a>iota</h3><p><code>iota</code>是go语言的常量计数器，只能在常量的表达式中使用。</p>
-<p><code>iota</code>在const关键字出现时将被重置为0。const中每新增一行常量声明将使iota计数一次(iota可理解为const语句块中的行索引)。 使用iota能简化定义，在定义枚举时很有用。</p>
-<p><strong>举个例子：</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; iota &#x2F;&#x2F;0</span><br><span class="line">    n2        &#x2F;&#x2F;1</span><br><span class="line">    n3        &#x2F;&#x2F;2</span><br><span class="line">    n4        &#x2F;&#x2F;3</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p><strong>几个常见的iota示例:</strong><br>使用<code>_</code>跳过某些值</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; iota &#x2F;&#x2F;0</span><br><span class="line">    n2        &#x2F;&#x2F;1</span><br><span class="line">    _</span><br><span class="line">    n4        &#x2F;&#x2F;3</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p><code>iota</code>声明中间插队</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; iota &#x2F;&#x2F;0</span><br><span class="line">    n2 &#x3D; 100  &#x2F;&#x2F;100</span><br><span class="line">    n3 &#x3D; iota &#x2F;&#x2F;2</span><br><span class="line">    n4        &#x2F;&#x2F;3</span><br><span class="line">)</span><br><span class="line">const n5 &#x3D; iota &#x2F;&#x2F;0</span><br></pre></td></tr></table></figure>
-<p>定义数量级 （这里的<code>&lt;&lt;</code>表示左移操作，<code>1&lt;&lt;10</code>表示将1的二进制表示向左移10位，也就是由<code>1</code>变成了<code>10000000000</code>，也就是十进制的1024。同理<code>2&lt;&lt;2</code>表示将2的二进制表示向左移2位，也就是由<code>10</code>变成了<code>1000</code>，也就是十进制的8。）</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    _  &#x3D; iota</span><br><span class="line">    KB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    MB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    GB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    TB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    PB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p>多个<code>iota</code>定义在一行</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    a, b &#x3D; iota + 1, iota + 2 &#x2F;&#x2F;1,2</span><br><span class="line">    c, d                      &#x2F;&#x2F;2,3</span><br><span class="line">    e, f                      &#x2F;&#x2F;3,4</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Go</category>
-      </categories>
-      <tags>
-        <tag>go语言基础</tag>
-        <tag>variable</tag>
       </tags>
   </entry>
   <entry>
@@ -3097,6 +3130,67 @@ roles/
       </categories>
       <tags>
         <tag>go语言基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>go基础之变量和常量</title>
+    <url>/2020/04/08/go_var_constant/</url>
+    <content><![CDATA[<h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><h2 id="变量类型"><a href="#变量类型" class="headerlink" title="变量类型"></a>变量类型</h2><p>变量（Variable）的功能是存储数据。不同的变量保存的数据类型可能会不一样。经过半个多世纪的发展，编程语言已经基本形成了一套固定的类型，常见变量的数据类型有：<code>整型、浮点型、布尔型</code>等。</p>
+<p>Go语言中的每一个变量都有自己的类型，并且变量必须经过声明才能开始使用。</p>
+<h2 id="变量声明-var"><a href="#变量声明-var" class="headerlink" title="变量声明 var"></a>变量声明 var</h2><p>Go语言中的变量需要声明后才能使用，同一作用域内不支持重复声明。 并且Go语言的变量声明后必须使用。</p>
+<h3 id="标准声明"><a href="#标准声明" class="headerlink" title="标准声明"></a>标准声明</h3><p>Go语言的变量声明格式为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var 变量名 变量类型</span><br></pre></td></tr></table></figure>
+<p>变量声明以关键字<code>var</code>开头，变量类型放在变量的后面，行尾无需分号。 举个例子：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name string</span><br><span class="line">var age int</span><br><span class="line">var isOk bool</span><br></pre></td></tr></table></figure>
+<h3 id="批量声明"><a href="#批量声明" class="headerlink" title="批量声明"></a>批量声明</h3><p>每声明一个变量就需要写<code>var</code>关键字会比较繁琐，go语言中还支持批量变量声明：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var (</span><br><span class="line">    a string</span><br><span class="line">    b int</span><br><span class="line">    c bool</span><br><span class="line">    d float32</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h3 id="变量的初始化"><a href="#变量的初始化" class="headerlink" title="变量的初始化"></a>变量的初始化</h3><p>Go语言在声明变量的时候，会自动对变量对应的内存区域进行初始化操作。每个变量会被初始化成其类型的默认值，例如： 整型和浮点型变量的默认值为<code>0</code>。 字符串变量的默认值为<code>空字符串</code>。 布尔型变量默认为<code>false</code>。 切片、函数、指针变量的默认为<code>nil</code>。</p>
+<p>当然我们也可在声明变量的时候为其指定初始值。变量初始化的标准格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var 变量名 类型 &#x3D; 表达式</span><br></pre></td></tr></table></figure>
+<p>举个例子：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name string &#x3D; &quot;Q1mi&quot;</span><br><span class="line">var age int &#x3D; 18</span><br></pre></td></tr></table></figure>
+<p>或者一次初始化多个变量</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name, age &#x3D; &quot;Q1mi&quot;, 20</span><br></pre></td></tr></table></figure>
+<p><strong>类型推导</strong><br>有时候我们会将变量的类型省略，这个时候编译器会根据等号右边的值来推导变量的类型完成初始化。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var name &#x3D; &quot;Q1mi&quot;</span><br><span class="line">var age &#x3D; 18</span><br></pre></td></tr></table></figure>
+<h3 id="短变量声明"><a href="#短变量声明" class="headerlink" title="短变量声明 :="></a><strong>短变量声明</strong> :=</h3><p>在函数内部，可以使用更简略的<code>:=</code>方式声明并初始化变量。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">)</span><br><span class="line">&#x2F;&#x2F; 全局变量m</span><br><span class="line">var m &#x3D; 100</span><br><span class="line">&#x2F;&#x2F; n :&#x3D; &quot;smile111&quot; &#x2F;&#x2F; 非法，短变量声明方式只能用于函数内部</span><br><span class="line">func main() &#123;</span><br><span class="line">    n :&#x3D; 10</span><br><span class="line">    m :&#x3D; 200 &#x2F;&#x2F; 此处声明局部变量m</span><br><span class="line">    fmt.Println(m, n)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="匿名变量"><a href="#匿名变量" class="headerlink" title="匿名变量 _"></a><strong>匿名变量</strong> _</h3><p>在使用多重赋值时，如果想要忽略某个值，可以使用<code>匿名变量（anonymous variable）</code>。 匿名变量用一个下划线_表示，例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func foo() (int, string) &#123;</span><br><span class="line">    return 10, &quot;Q1mi&quot;</span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">    x, _ :&#x3D; foo()</span><br><span class="line">    _, y :&#x3D; foo()</span><br><span class="line">    fmt.Println(&quot;x&#x3D;&quot;, x)</span><br><span class="line">    fmt.Println(&quot;y&#x3D;&quot;, y)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>匿名变量不占用命名空间，不会分配内存，所以匿名变量之间不存在重复声明。 (在<code>Lua</code>等编程语言里，匿名变量也被叫做哑元变量。)</p>
+<p> <code>注意事项：</code></p>
+<ol>
+<li>函数外的每个语句都必须以关键字开始（var、const、func等）</li>
+<li><code>:=</code>不能使用在函数外。</li>
+<li><code>_</code>多用于占位，表示忽略值。</li>
+</ol>
+<h2 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h2><p>相对于变量，常量是恒定不变的值，多用于定义程序运行期间不会改变的那些值。 常量的声明和变量声明非常类似，只是把<code>var</code>换成了<code>const</code>，常量在定义的时候必须赋值。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const pi &#x3D; 3.1415</span><br><span class="line">const e &#x3D; 2.7182</span><br></pre></td></tr></table></figure>
+<p>声明了<code>pi</code>和<code>e</code>这两个常量之后，在整个程序运行期间它们的值都不能再发生变化了。</p>
+<p>多个常量也可以一起声明：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    pi &#x3D; 3.1415</span><br><span class="line">    e &#x3D; 2.7182</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>const同时声明多个常量时，如果省略了值则表示和上面一行的值相同。 例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; 100</span><br><span class="line">    n2</span><br><span class="line">    n3</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>上面示例中，常量<code>n1</code>、<code>n2</code>、<code>n3</code>的值都是100。</p>
+<h3 id="iota"><a href="#iota" class="headerlink" title="iota"></a>iota</h3><p><code>iota</code>是go语言的常量计数器，只能在常量的表达式中使用。</p>
+<p><code>iota</code>在const关键字出现时将被重置为0。const中每新增一行常量声明将使iota计数一次(iota可理解为const语句块中的行索引)。 使用iota能简化定义，在定义枚举时很有用。</p>
+<p><strong>举个例子：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; iota &#x2F;&#x2F;0</span><br><span class="line">    n2        &#x2F;&#x2F;1</span><br><span class="line">    n3        &#x2F;&#x2F;2</span><br><span class="line">    n4        &#x2F;&#x2F;3</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><strong>几个常见的iota示例:</strong><br>使用<code>_</code>跳过某些值</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; iota &#x2F;&#x2F;0</span><br><span class="line">    n2        &#x2F;&#x2F;1</span><br><span class="line">    _</span><br><span class="line">    n4        &#x2F;&#x2F;3</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><code>iota</code>声明中间插队</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    n1 &#x3D; iota &#x2F;&#x2F;0</span><br><span class="line">    n2 &#x3D; 100  &#x2F;&#x2F;100</span><br><span class="line">    n3 &#x3D; iota &#x2F;&#x2F;2</span><br><span class="line">    n4        &#x2F;&#x2F;3</span><br><span class="line">)</span><br><span class="line">const n5 &#x3D; iota &#x2F;&#x2F;0</span><br></pre></td></tr></table></figure>
+<p>定义数量级 （这里的<code>&lt;&lt;</code>表示左移操作，<code>1&lt;&lt;10</code>表示将1的二进制表示向左移10位，也就是由<code>1</code>变成了<code>10000000000</code>，也就是十进制的1024。同理<code>2&lt;&lt;2</code>表示将2的二进制表示向左移2位，也就是由<code>10</code>变成了<code>1000</code>，也就是十进制的8。）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    _  &#x3D; iota</span><br><span class="line">    KB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    MB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    GB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    TB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">    PB &#x3D; 1 &lt;&lt; (10 * iota)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>多个<code>iota</code>定义在一行</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">const (</span><br><span class="line">    a, b &#x3D; iota + 1, iota + 2 &#x2F;&#x2F;1,2</span><br><span class="line">    c, d                      &#x2F;&#x2F;2,3</span><br><span class="line">    e, f                      &#x2F;&#x2F;3,4</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>go语言基础</tag>
+        <tag>variable</tag>
       </tags>
   </entry>
   <entry>
@@ -3526,28 +3620,6 @@ inode和block：
       </tags>
   </entry>
   <entry>
-    <title>Linux文件系统的层次结构</title>
-    <url>/2017/03/20/linux_directory_structure/</url>
-    <content><![CDATA[<h2 id="Linux文件系统的层次结构"><a href="#Linux文件系统的层次结构" class="headerlink" title="Linux文件系统的层次结构"></a>Linux文件系统的层次结构</h2><p>在 Linux 操作系统中，所有的文件和目录都被组织成以一个根节点“/”开始的倒置的树状结构</p>
-<p><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/06/2-1Z5061A1003X.gif?x-oss-process=style/original_format" alt="Linux 系统文件和目录组织示意图"></p>
-<p>其中，目录就相当于 Windows 中的文件夹，目录中存放的既可以是文件，也可以是其他的子目录，而文件中存储的是真正的信息。</p>
-<p>文件系统的最顶层是由根目录开始的，系统使用“/”来表示根目录，在根目录之下的既可以是目录，也可以是文件，而每一个目录中又可以包含（子）目录或文件。如此反复就可以构成一个庞大的文件系统。</p>
-<pre><code>其实，使用这种树状、具有层次的文件结构主要目的是方便文件系统的管理和维护，想象一下，如果所有的文件都放在一个目录下，其文件系统的管理和维护将变成一场噩梦。
-</code></pre>
-<p>现实中也有许多类似的例子，例如在整个行政管理体制中，村民就相当于文件，他们住在一个村庄中，村庄就是存储村民的目录。许多村又组成了个乡，这个乡就相当于存储村的目录，依此类推，最终就构建出了一个庞大的行政区域管理结构图。</p>
-<p>注意，目录名或文件名都是区分大小写的，如 dog、DOG 和 Dog 为 3 个不同的目录或文件。完整的目录或文件路径是由一连串的目录名所组成的，其中每一个目录由“/”来分隔。如 cat 的完整路径是 /home/cat。</p>
-<p>在文件系统中，有两个特殊的目录，一个是用户所在的工作目录，即当前目录，可用一个点“.”表示；另一个是当前目录的上一层目录，也叫父目录，用两个点“..”表示。</p>
-<pre><code>如果一个目录或文件名是以一个点开始，就表示这个目录或文件是一个隐藏目录或文件。即以默认方式査找（后续会讲查找命令）时，不显示该目录或文件。
-</code></pre>
-]]></content>
-      <categories>
-        <category>基础运维</category>
-      </categories>
-      <tags>
-        <tag>Linux安装</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Linux touch命令：创建文件及修改文件时间戳</title>
     <url>/2017/03/21/linux_command_touch/</url>
     <content><![CDATA[<h1 id="touch-命令"><a href="#touch-命令" class="headerlink" title="touch 命令"></a>touch 命令</h1><p>touch 命令不光可以用来创建文件（当指定操作文件不存在时，该命令会在当前位置建立一个空文件），此命令更重要的功能是修改文件的时间参数（但当文件存在时，会修改此文件的时间参数）。</p>
@@ -3583,29 +3655,6 @@ inode和block：
       </categories>
       <tags>
         <tag>Linux文件和目录管理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Centos忘记root密码</title>
-    <url>/2020/07/30/linux_reset_root/</url>
-    <content><![CDATA[<h2 id="重置忘记的-root-用户密码"><a href="#重置忘记的-root-用户密码" class="headerlink" title="重置忘记的 root 用户密码"></a><a href="https://wiki.centos.org/zh/TipsAndTricks/ResetRootPassword">重置忘记的 root 用户密码</a></h2><p>如果你忘记了 root 的密码，可以按照如下方法重新设置一个：</p>
-<p><strong>CentOS-6 指引（亦适用于 CentOS 5）:</strong></p>
-<p>在 GRUB 阶段中断开机程序，当你看到一个含有 Booting CentOS (2.6.32-…) in X seconds 的选单时，利用以下步骤进入 runlevel 1，也就是单用户模式。</p>
-<ul>
-<li>按 Esc 键来中断 GRUB，接著输入 “a” 来添加内容到内核参数</li>
-<li>按 Backspace 删除 “rhgb quiet” 的内容（假如存在的话）</li>
-<li>增加一个空格，然后输入 1 字</li>
-<li>按 Enter 开机<br>这将会提供给你一个不需登录的 root 指令壳。此时你可以使用 passwd 指令来设置一个新的 root 用户口令。</li>
-</ul>
-<p><strong>CentOS-7 及 CentOS-8 请遵照上游的指引：</strong> <a href="https://www.redhat.com/sysadmin/recover-root-passwd">https://www.redhat.com/sysadmin/recover-root-passwd</a></p>
-<p>如果 SELinux 的模式是 enforcing 而上游的指引有所指示，别忘了在事后重新标签你的文件系统，否则你将不能登录，直至你重新开机，重复上述步骤并进行重新标签</p>
-<!--https://blog.csdn.net/m1585761297/article/details/80017269-->
-]]></content>
-      <categories>
-        <category>基础运维</category>
-      </categories>
-      <tags>
-        <tag>Linux安装</tag>
       </tags>
   </entry>
   <entry>
@@ -3655,6 +3704,28 @@ inode和block：
       <categories>
         <category>基础运维</category>
       </categories>
+  </entry>
+  <entry>
+    <title>Linux文件系统的层次结构</title>
+    <url>/2017/03/20/linux_directory_structure/</url>
+    <content><![CDATA[<h2 id="Linux文件系统的层次结构"><a href="#Linux文件系统的层次结构" class="headerlink" title="Linux文件系统的层次结构"></a>Linux文件系统的层次结构</h2><p>在 Linux 操作系统中，所有的文件和目录都被组织成以一个根节点“/”开始的倒置的树状结构</p>
+<p><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/06/2-1Z5061A1003X.gif?x-oss-process=style/original_format" alt="Linux 系统文件和目录组织示意图"></p>
+<p>其中，目录就相当于 Windows 中的文件夹，目录中存放的既可以是文件，也可以是其他的子目录，而文件中存储的是真正的信息。</p>
+<p>文件系统的最顶层是由根目录开始的，系统使用“/”来表示根目录，在根目录之下的既可以是目录，也可以是文件，而每一个目录中又可以包含（子）目录或文件。如此反复就可以构成一个庞大的文件系统。</p>
+<pre><code>其实，使用这种树状、具有层次的文件结构主要目的是方便文件系统的管理和维护，想象一下，如果所有的文件都放在一个目录下，其文件系统的管理和维护将变成一场噩梦。
+</code></pre>
+<p>现实中也有许多类似的例子，例如在整个行政管理体制中，村民就相当于文件，他们住在一个村庄中，村庄就是存储村民的目录。许多村又组成了个乡，这个乡就相当于存储村的目录，依此类推，最终就构建出了一个庞大的行政区域管理结构图。</p>
+<p>注意，目录名或文件名都是区分大小写的，如 dog、DOG 和 Dog 为 3 个不同的目录或文件。完整的目录或文件路径是由一连串的目录名所组成的，其中每一个目录由“/”来分隔。如 cat 的完整路径是 /home/cat。</p>
+<p>在文件系统中，有两个特殊的目录，一个是用户所在的工作目录，即当前目录，可用一个点“.”表示；另一个是当前目录的上一层目录，也叫父目录，用两个点“..”表示。</p>
+<pre><code>如果一个目录或文件名是以一个点开始，就表示这个目录或文件是一个隐藏目录或文件。即以默认方式査找（后续会讲查找命令）时，不显示该目录或文件。
+</code></pre>
+]]></content>
+      <categories>
+        <category>基础运维</category>
+      </categories>
+      <tags>
+        <tag>Linux安装</tag>
+      </tags>
   </entry>
   <entry>
     <title>centos7系统安装及Raid划分的完整流程</title>
@@ -3856,6 +3927,29 @@ Pre-release Draft STIG for CentOS Linux 7 Server #---CentOS7的预发布草案
       </categories>
       <tags>
         <tag>env</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Centos忘记root密码</title>
+    <url>/2020/07/30/linux_reset_root/</url>
+    <content><![CDATA[<h2 id="重置忘记的-root-用户密码"><a href="#重置忘记的-root-用户密码" class="headerlink" title="重置忘记的 root 用户密码"></a><a href="https://wiki.centos.org/zh/TipsAndTricks/ResetRootPassword">重置忘记的 root 用户密码</a></h2><p>如果你忘记了 root 的密码，可以按照如下方法重新设置一个：</p>
+<p><strong>CentOS-6 指引（亦适用于 CentOS 5）:</strong></p>
+<p>在 GRUB 阶段中断开机程序，当你看到一个含有 Booting CentOS (2.6.32-…) in X seconds 的选单时，利用以下步骤进入 runlevel 1，也就是单用户模式。</p>
+<ul>
+<li>按 Esc 键来中断 GRUB，接著输入 “a” 来添加内容到内核参数</li>
+<li>按 Backspace 删除 “rhgb quiet” 的内容（假如存在的话）</li>
+<li>增加一个空格，然后输入 1 字</li>
+<li>按 Enter 开机<br>这将会提供给你一个不需登录的 root 指令壳。此时你可以使用 passwd 指令来设置一个新的 root 用户口令。</li>
+</ul>
+<p><strong>CentOS-7 及 CentOS-8 请遵照上游的指引：</strong> <a href="https://www.redhat.com/sysadmin/recover-root-passwd">https://www.redhat.com/sysadmin/recover-root-passwd</a></p>
+<p>如果 SELinux 的模式是 enforcing 而上游的指引有所指示，别忘了在事后重新标签你的文件系统，否则你将不能登录，直至你重新开机，重复上述步骤并进行重新标签</p>
+<!--https://blog.csdn.net/m1585761297/article/details/80017269-->
+]]></content>
+      <categories>
+        <category>基础运维</category>
+      </categories>
+      <tags>
+        <tag>Linux安装</tag>
       </tags>
   </entry>
   <entry>
