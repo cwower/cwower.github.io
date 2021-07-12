@@ -1349,7 +1349,8 @@ roles/
   <entry>
     <title>Windows打印机漏洞修复</title>
     <url>/2021/07/10/ansible_win_spooler_fix/</url>
-    <content><![CDATA[<blockquote>
+    <content><![CDATA[<p>[toc]</p>
+<blockquote>
 <p><strong>知识文档</strong>：</p>
 </blockquote>
 <ul>
@@ -1371,7 +1372,7 @@ roles/
 <p>Windows端需要提前进行环境配置，文档请参考<a href="">ansible 远程Windows主机</a>；</p>
 </blockquote>
 <p>配置<strong>inventory hosts：</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># windows主机变量</span><br><span class="line">ansible_ssh_user: </span><br><span class="line">ansible_ssh_password: </span><br><span class="line">ansible_ssh_port: 5986</span><br><span class="line">ansible_connection: winrm</span><br><span class="line">ansible_winrm_server_cert_validation: ignore</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># windows需要的主机变量</span><br><span class="line">ansible_ssh_user: </span><br><span class="line">ansible_ssh_password: </span><br><span class="line">ansible_ssh_port: 5986</span><br><span class="line">ansible_connection: winrm</span><br><span class="line">ansible_winrm_server_cert_validation: ignore</span><br></pre></td></tr></table></figure>
 <p>模块使用：<code>$ansible-doc win_command</code>，tasks的执行语句如下：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">- name: Windows Print Spooler - Stop</span><br><span class="line">  win_command: powershell.exe -</span><br><span class="line">  args:</span><br><span class="line">    stdin: Stop-Service -Name Spooler -Force</span><br><span class="line"></span><br><span class="line">- name: Windows Print Spooler - Disabled</span><br><span class="line">  win_command: powershell.exe -</span><br><span class="line">  args:</span><br><span class="line">    stdin: Set-Service -Name Spooler -StartupType Disabled</span><br></pre></td></tr></table></figure>
 
