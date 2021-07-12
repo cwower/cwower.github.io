@@ -1379,8 +1379,7 @@ roles/
 
 ]]></content>
       <categories>
-        <category>Security</category>
-        <category>Ansible</category>
+        <category>Security, Ansible</category>
       </categories>
       <tags>
         <tag>实践总结</tag>
