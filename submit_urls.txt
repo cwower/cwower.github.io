@@ -1,10 +1,15 @@
+https://www.996promax.com/2017/04/05/linux_regular_redirect/
+https://www.996promax.com/2017/03/28/linux_regular_expression/
+https://www.996promax.com/2017/03/21/linux_command_touch/
+https://www.996promax.com/2017/03/21/linux_command_ln/
+https://www.996promax.com/2017/03/27/linux_cmd_vim/
+https://www.996promax.com/2017/04/06/linux_cmd_grep/
+https://www.996promax.com/2020/05/12/eat_1/
 https://www.996promax.com/2019/07/22/ansible_remote_win/
 https://www.996promax.com/2021/07/10/ansible_win_spooler_fix/
 https://www.996promax.com/2020/09/05/aws_s3cmd/
 https://www.996promax.com/2017/03/25/linux_command_tar/
 https://www.996promax.com/2020/09/05/aws_s3_introduction/
-https://www.996promax.com/2017/03/21/linux_command_touch/
-https://www.996promax.com/2017/03/21/linux_command_ln/
 https://www.996promax.com/2020/09/03/aws_elb_listener/
 https://www.996promax.com/2020/09/03/aws_elb_use/
 https://www.996promax.com/2020/09/01/aws_ec2_monitor_ideas/
@@ -43,8 +48,3 @@ https://www.996promax.com/2019/07/06/ansible_Idempotency/
 https://www.996promax.com/2019/06/09/ansible_host_key_ckeck/
 https://www.996promax.com/2019/05/09/ansible_env_install/
 https://www.996promax.com/2019/05/09/ansible_dir_structure/
-https://www.996promax.com/2019/06/06/ansible.cfg/
-https://www.996promax.com/2020/04/08/go_var_constant/
-https://www.996promax.com/2020/04/09/go_base_process_control/
-https://www.996promax.com/2020/05/10/go_base_func2/
-https://www.996promax.com/2020/05/07/go_base_func/
