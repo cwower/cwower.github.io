@@ -1,0 +1,417 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ansible免密登录和账号登录 | GO TO NEW WORLD</title><meta name="keywords" content="ansible基础,实践总结"><meta name="author" content="Mr.GaO"><meta name="copyright" content="Mr.GaO"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="TST2021">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ansible免密登录和账号登录">
+<meta property="og:url" content="https://www.1year1x.com/2019/06/09/ansible_login_nopasswd/index.html">
+<meta property="og:site_name" content="GO TO NEW WORLD">
+<meta property="og:description" content="TST2021">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.1year1x.com/img/cover/ansible.jpeg">
+<meta property="article:published_time" content="2019-06-09T13:11:10.000Z">
+<meta property="article:modified_time" content="2025-12-26T03:44:53.423Z">
+<meta property="article:author" content="Mr.GaO">
+<meta property="article:tag" content="ansible基础">
+<meta property="article:tag" content="实践总结">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.1year1x.com/img/cover/ansible.jpeg"><link rel="shortcut icon" href="/img/favicon_diy1.ico"><link rel="canonical" href="https://www.1year1x.com/2019/06/09/ansible_login_nopasswd/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?ea4aaa0a9d7561bf3699a38257cd1d4e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-12-26 11:44:53'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><link rel="stylesheet" href="/css/mycss.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><link rel="stylesheet" href="APlayer.min.css"><div id="aplayer"></div><script src="https://cdn.jsdelivr.net/gh/radium-bit/res@master/live2d/autoload.js" async></script><script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js" async></script><meta name="generator" content="Hexo 5.4.2"><link rel="stylesheet" href="\css\APlayer.min.css" class="aplayer-style-marker">
+<script src="\js\APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="\js\Meting.min.js" class="meting-script-marker"></script>
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">66</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 時間軸</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/cover/ansible.jpeg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">GO TO NEW WORLD</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 時間軸</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Ansible免密登录和账号登录</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-06-09T13:11:10.000Z" title="发表于 2019-06-09 21:11:10">2019-06-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-12-26T03:44:53.423Z" title="更新于 2025-12-26 11:44:53">2025-12-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Ansible/">Ansible</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>Ansible默认是通过<code>SSH key</code>和远程被控制主机进行通信,当然我们可以<code>SSH password</code>来和远程主机进行通信。 如果使用SSH KEY,则要将控制主机上的公钥放到被监控主机的<code>/root/.ssh/authorized_keys</code>文件中，这种方式也是官方提倡的。毕竟直接使用密码存在一定的风险。</p>
+<blockquote>
+<p>密钥认证原理</p>
+</blockquote>
+<p><img src="https://mrgao.oss-cn-beijing.aliyuncs.com/md/ansible/1545976-20190903164007168-245635235.png?x-oss-process=style/original_format"></p>
+<h1 id="一、通过ssh密钥免密登录"><a href="#一、通过ssh密钥免密登录" class="headerlink" title="一、通过ssh密钥免密登录"></a>一、通过ssh密钥免密登录</h1><h2 id="创建密钥对-ssh-keygen-more"><a href="#创建密钥对-ssh-keygen-more" class="headerlink" title="创建密钥对 ssh-keygen(more)"></a>创建密钥对 ssh-keygen<a target="_blank" rel="noopener" href="https://wangchujiang.com/linux-command/c/ssh-keygen.html">(more)</a></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 解决创建秘钥对需要进行交互的问题</span><br><span class="line">ssh-keygen -t dsa -f ~/.ssh/id_dsa -P &quot;&quot; -q</span><br></pre></td></tr></table></figure>
+
+<h2 id="分发公钥文件"><a href="#分发公钥文件" class="headerlink" title="分发公钥文件"></a>分发公钥文件</h2><h3 id="ssh-copy-id-手动分发公钥文件"><a href="#ssh-copy-id-手动分发公钥文件" class="headerlink" title="ssh-copy-id 手动分发公钥文件"></a>ssh-copy-id 手动分发公钥文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@sltkp3cbpch ~]# ssh-copy-id -i /root/.ssh/id_dsa.pub -p 22 root@10.122.60.68</span><br><span class="line">/bin/ssh-copy-id: INFO: Source of key(s) to be installed: &quot;/root/.ssh/id_dsa.pub&quot;</span><br><span class="line">The authenticity of host &#x27;10.122.60.68 (10.122.60.68)&#x27; can&#x27;t be established.</span><br><span class="line">ECDSA key fingerprint is SHA256:RHy25keGgWs+/k9ETi13P8KLjvaFS0P0kV1W9DLQgW8.</span><br><span class="line">ECDSA key fingerprint is MD5:25:c5:04:8e:5f:16:21:f1:53:9d:b2:bb:00:36:0e:08.</span><br><span class="line">Are you sure you want to continue connecting (yes/no)? yes # 可通过ansible.cfg配置&quot;host_key_checking = False&quot;跳过 ssh 首次连接提示验证部分</span><br><span class="line">/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed</span><br><span class="line">/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys</span><br><span class="line">root@10.122.60.68&#x27;s password: # 远程被管理端密码</span><br><span class="line"></span><br><span class="line">Number of key(s) added: 1</span><br><span class="line"></span><br><span class="line">Now try logging into the machine, with: &quot;ssh -p &#x27;22&#x27; &#x27;root@10.122.60.68&#x27;&quot;</span><br><span class="line">and check to make sure that only the key(s) you wanted were added.</span><br><span class="line"></span><br><span class="line">[root@sltkp3cbpch ~]#</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>基于ssh key的登录验证：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@sltkp3cbpch ~]# ssh root@10.122.60.68 &quot;hostname -i&quot;</span><br><span class="line">fe80::f816:3eff:fe4b:25a1%eth0 10.122.60.68 172.17.0.1 172.18.0.1</span><br></pre></td></tr></table></figure>
+
+<h3 id="sshpass-批量分发公钥"><a href="#sshpass-批量分发公钥" class="headerlink" title="sshpass 批量分发公钥"></a>sshpass 批量分发公钥</h3><h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><ol>
+<li>创建秘钥对需要进行交互<ul>
+<li>需要确认秘钥保存路径</li>
+<li>需要确认密码信息</li>
+</ul>
+</li>
+<li>分发公钥时需要进行交互<ul>
+<li>首次ssh连接时需要进行确认yes|no</li>
+<li>第一次分发公钥需要进行密码认证</li>
+</ul>
+</li>
+</ol>
+<h4 id="解决-创建秘钥-时需要进行的交互"><a href="#解决-创建秘钥-时需要进行的交互" class="headerlink" title="解决 创建秘钥 时需要进行的交互"></a>解决 创建秘钥 时需要进行的交互</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t dsa -f ~/.ssh/id_dsa -P &quot;&quot; -q</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>参数说明：</p>
+</blockquote>
+<pre><code>-f：filename Specifies the filename of the key file.
+    指定密钥文件保存的路径信息（免交互）
+-N：提供一个新密语；
+-P：提供（旧）密语；
+-q：安静的 不输出信息，减少信息输出
+</code></pre>
+<h4 id="解决-第一次分发公钥-时需要进行的交互-sshpass"><a href="#解决-第一次分发公钥-时需要进行的交互-sshpass" class="headerlink" title="解决 第一次分发公钥 时需要进行的交互(sshpass)"></a>解决 第一次分发公钥 时需要进行的交互(sshpass)</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sshpass -p $clientpasswd ssh-copy-id -p22 -i /root/.ssh/id_dsa.pub root@$ip -o StrictHostKeyChecking=no</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>参数说明：</p>
+</blockquote>
+<pre><code>-o option 选择 （man 手册中可以查到有很多选项）
+StrictHostKeyChecking=no 对询问的回应（不进行对密钥检查）
+</code></pre>
+<p>要实现免密码，需要一款软件 sshpass 该软件就是为ssh提供密码使用的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install sshpass -y</span><br></pre></td></tr></table></figure>
+
+<h4 id="分发脚本"><a href="#分发脚本" class="headerlink" title="分发脚本"></a>分发脚本</h4><p>非交互式创建/分发密钥：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"># check key pair</span><br><span class="line">ID_DSA=&#x27;/root/.ssh/id_dsa&#x27;</span><br><span class="line">ID_PUB=&#x27;/root/.ssh/id_dsa.pub&#x27;</span><br><span class="line"></span><br><span class="line"># distribute public key</span><br><span class="line">function Distribute_pubkey ()&#123;</span><br><span class="line">    for ip in 83 68</span><br><span class="line">    do</span><br><span class="line">        #sshpass -p $clientpasswd ssh-copy-id -p22 -i /root/.ssh/id_dsa.pub root@$ip -o StrictHostKeyChecking=no</span><br><span class="line">        sshpass -p&quot;$GKLPASSWD&quot; ssh-copy-id -p22 -i /root/.ssh/id_dsa.pub root@10.122.60.&quot;$ip&quot; -o StrictHostKeyChecking=no &gt;/dev/null 2&gt;&amp;1</span><br><span class="line">        if [ $? -ne 0 ];then</span><br><span class="line">            echo -e &quot;distribute public key to ip-$ip is false&quot;</span><br><span class="line">        else</span><br><span class="line">            echo -e &quot;distribute public key to ip-$ip is true&quot;</span><br><span class="line">        fi</span><br><span class="line">    done</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if [ -f &quot;$ID_DSA&quot; ] &amp;&amp; [ -f &quot;$ID_PUB&quot; ];then</span><br><span class="line">    echo &quot;key pair is already exists, Start distributing pub files&quot;</span><br><span class="line">    Distribute_pubkey</span><br><span class="line">else</span><br><span class="line">    # make key pair</span><br><span class="line">    ssh-keygen -t dsa -f ~/.ssh/id_dsa -P &quot;&quot; -q</span><br><span class="line">    Distribute_pubkey</span><br><span class="line">fi</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="ansible免密登录验证"><a href="#ansible免密登录验证" class="headerlink" title="ansible免密登录验证"></a>ansible免密登录验证</h2><p>添加ansible hosts，<code>编辑 /etc/ansible/hosts</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[nginx-servers]</span><br><span class="line">10.122.60.68</span><br><span class="line">10.122.60.83</span><br></pre></td></tr></table></figure>
+<p>验证：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@sltkp3cbpch ansible]# ansible all -m &quot;ping&quot;</span><br><span class="line">[DEPRECATION WARNING]: The TRANSFORM_INVALID_GROUP_CHARS settings is set to allow bad characters in group names by default,</span><br><span class="line">this will change, but still be user configurable on deprecation. This feature will be removed in version 2.10. Deprecation</span><br><span class="line">warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.</span><br><span class="line">[WARNING]: Invalid characters were found in group names but not replaced, use -vvvv to see details</span><br><span class="line">10.122.60.68 | SUCCESS =&gt; &#123;</span><br><span class="line">    &quot;ansible_facts&quot;: &#123;</span><br><span class="line">        &quot;discovered_interpreter_python&quot;: &quot;/usr/bin/python&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;changed&quot;: false,</span><br><span class="line">    &quot;ping&quot;: &quot;pong&quot;</span><br><span class="line">&#125;</span><br><span class="line">10.122.60.83 | SUCCESS =&gt; &#123;</span><br><span class="line">    &quot;ansible_facts&quot;: &#123;</span><br><span class="line">        &quot;discovered_interpreter_python&quot;: &quot;/usr/bin/python&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;changed&quot;: false,</span><br><span class="line">    &quot;ping&quot;: &quot;pong&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="二、ansible-账号密码登录-more"><a href="#二、ansible-账号密码登录-more" class="headerlink" title="二、ansible 账号密码登录(more)"></a>二、ansible 账号密码登录<a target="_blank" rel="noopener" href="https://blog.csdn.net/liumiaocn/article/details/82354158">(more)</a></h1><p>上一章中，我们利用<code>sshpass命令</code>完成了批量推送公钥的操作，使ansible可以通过<code>SSH key</code>进行免密登录来管理远程主机。</p>
+<p>本章将学习ansible通过<code>SSH password</code>来和远程主机进行通信。<br>需要用到的hosts文件内部支持的俩个特定指令(inventory参数)：</p>
+<ul>
+<li>ansible_ssh_user：连接到该主机的ssh用户</li>
+<li>ansible_ssh_pass：连接到该主机的ssh密码（连-k选项都省了），安全考虑还是建议使用私钥或在命令行指定-k选项输入</li>
+</ul>
+<p><strong>准备工作：</strong><br>首先，为了不影响实验效果，请<code>将推送完成的公钥信息从远程被控制主机</code>authorized_keys<code>中删除</code>并验证环境：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@sltkp3cbpch ansible]# ansible all -m &quot;ping&quot;</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">10.122.60.83 | UNREACHABLE! =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: false,</span><br><span class="line">    &quot;msg&quot;: &quot;Failed to connect to the host via ssh: Permission denied (publickey,gssapi-keyex,gssapi-with-mic,password).&quot;,</span><br><span class="line">    &quot;unreachable&quot;: true</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="添加ansible-hosts"><a href="#添加ansible-hosts" class="headerlink" title="添加ansible hosts"></a>添加ansible hosts</h2><p><code>$vim /etc/ansible/hosts</code></p>
+<blockquote>
+<p>格式：【主机名】 【主机地址】 【主机密码】 默认是root用户来进行的</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[nginx-servers]</span><br><span class="line">1 ansible_ssh_user=&quot;root&quot; ansible_ssh_host=10.122.60.68 ansible_ssh_pass=&quot;houjue1992***&quot;</span><br><span class="line">2 ansible_ssh_user=&quot;root&quot; ansible_ssh_host=10.122.60.83 ansible_ssh_pass=&quot;houjue1992***&quot;</span><br></pre></td></tr></table></figure>
+
+<p>新版的ansible(2.4+) hosts有更新， 用以下方式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[nginx-servers]</span><br><span class="line">10.122.60.68 ansible_user=root ansible_ssh_pass=&quot;houjue1992***&quot;</span><br><span class="line">10.122.60.83 ansible_user=root ansible_ssh_pass=&quot;houjue1992***&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="ansible账号密码登录验证"><a href="#ansible账号密码登录验证" class="headerlink" title="ansible账号密码登录验证"></a>ansible账号密码登录验证</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@sltkp3cbpch ansible]# ansible all -m &quot;ping&quot;</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">10.122.60.68 | SUCCESS =&gt; &#123;</span><br><span class="line">    &quot;ansible_facts&quot;: &#123;</span><br><span class="line">        &quot;discovered_interpreter_python&quot;: &quot;/usr/bin/python&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;changed&quot;: false,</span><br><span class="line">    &quot;ping&quot;: &quot;pong&quot;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><blockquote>
+<p>参考文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/liumiaocn/article/details/82354158">https://blog.csdn.net/liumiaocn/article/details/82354158</a></p>
+</blockquote>
+<p>ansible在执行的时候实际还是使用了ssh，可以不必打通ssh通道，但是实际在执行的时候需要输入用户名和密码，而这两个信息，可以通过<code>/etc/ansible/hosts</code>中的选项进行设定：<code>ansible_ssh_user</code>和<code>ansible_ssh_pass</code>。<br>另外，没有打通ssh通道的时候，ansible使用了sshpass , 而sshpass则正是免去交互式输入用户名密码的ssh命令。</p>
+<blockquote>
+<p>ansible 在执行时使用sshpass的过程：</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">Parsed /etc/ansible/hosts inventory source with ini plugin</span><br><span class="line">META: ran handlers</span><br><span class="line">&lt;10.122.60.68&gt; ESTABLISH SSH CONNECTION FOR USER: root</span><br><span class="line">&lt;10.122.60.68&gt; SSH: EXEC sshpass -d10 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o &#x27;User=&quot;root&quot;&#x27; -o ConnectTimeout=10 -o ControlPath=/root/.ansible/cp/2611c79bbc 10.122.60.68 &#x27;/bin/sh -c &#x27;&quot;&#x27;&quot;&#x27;echo ~root &amp;&amp; sleep 0&#x27;&quot;&#x27;&quot;&#x27;&#x27;</span><br><span class="line">&lt;10.122.60.68&gt; (0, &#x27;/root\n&#x27;, &#x27;&#x27;)</span><br><span class="line">&lt;10.122.60.68&gt; ESTABLISH SSH CONNECTION FOR USER: root</span><br><span class="line">&lt;10.122.60.68&gt; SSH: EXEC sshpass -d10 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o &#x27;User=&quot;root&quot;&#x27; -o ConnectTimeout=10 -o ControlPath=/root/.ansible/cp/2611c79bbc 10.122.60.68 &#x27;/bin/sh -c &#x27;&quot;&#x27;&quot;&#x27;( umask 77 &amp;&amp; mkdir -p &quot;` echo /root/.ansible/tmp `&quot;&amp;&amp; mkdir /root/.ansible/tmp/ansible-tmp-1588928466.74-17075-281433475095247 &amp;&amp; echo ansible-tmp-1588928466.74-17075-281433475095247=&quot;` echo /root/.ansible/tmp/ansible-tmp-1588928466.74-17075-281433475095247 `&quot; ) &amp;&amp; sleep 0&#x27;&quot;&#x27;&quot;&#x27;&#x27;</span><br><span class="line">&lt;10.122.60.68&gt; (0, &#x27;ansible-tmp-1588928466.74-17075-281433475095247=/root/.ansible/tmp/ansible-tmp-1588928466.74-17075-281433475095247\n&#x27;, &#x27;&#x27;)</span><br><span class="line">&lt;10.122.60.68&gt; Attempting python interpreter discovery</span><br><span class="line">&lt;10.122.60.68&gt; ESTABLISH SSH CONNECTION FOR USER: root</span><br><span class="line">&lt;10.122.60.68&gt; SSH: EXEC sshpass -d10 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o &#x27;User=&quot;root&quot;&#x27; -o ConnectTimeout=10 -o ControlPath=/root/.ansible/cp/2611c79bbc 10.122.60.68 &#x27;/bin/sh -c &#x27;&quot;&#x27;&quot;&#x27;echo PLATFORM; uname; echo FOUND; command -v &#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;/usr/bin/python&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;; command -v &#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;python3.7&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;; command -v &#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;python3.6&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;; command -v &#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;python3.5&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;; command -v &#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;python2.7&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;; command -v &#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;python2.6&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;; command -v &#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;/usr/libexec/platform-python&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;; command -v &#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;/usr/bin/python3&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;; command -v &#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;python&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;&quot;&#x27;; echo ENDFOUND &amp;&amp; sleep 0&#x27;&quot;&#x27;&quot;&#x27;&#x27;</span><br><span class="line">&lt;10.122.60.68&gt; (0, &#x27;PLATFORM\nLinux\nFOUND\n/usr/bin/python\n/usr/bin/python3.6\n/usr/bin/python2.7\n/usr/libexec/platform-python\n/usr/bin/python3\n/usr/bin/python\nENDFOUND\n&#x27;, &#x27;&#x27;)</span><br><span class="line">&lt;10.122.60.68&gt; ESTABLISH SSH CONNECTION FOR USER: root</span><br><span class="line">&lt;10.122.60.68&gt; SSH: EXEC sshpass -d10 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o &#x27;User=&quot;root&quot;&#x27; -o ConnectTimeout=10 -o ControlPath=/root/.ansible/cp/2611c79bbc 10.122.60.68 &#x27;/bin/sh -c &#x27;&quot;&#x27;&quot;&#x27;/usr/bin/python &amp;&amp; sleep 0&#x27;&quot;&#x27;&quot;&#x27;&#x27;</span><br><span class="line">&lt;10.122.60.68&gt; (0, &#x27;&#123;&quot;osrelease_content&quot;: &quot;NAME=\\&quot;CentOS Linux\\&quot;\\nVERSION=\\&quot;7 (Core)\\&quot;\\nID=\\&quot;centos\\&quot;\\nID_LIKE=\\&quot;rhel fedora\\&quot;\\nVERSION_ID=\\&quot;7\\&quot;\\nPRETTY_NAME=\\&quot;CentOS Linux 7 (Core)\\&quot;\\nANSI_COLOR=\\&quot;0;31\\&quot;\\nCPE_NAME=\\&quot;cpe:/o:centos:centos:7\\&quot;\\nHOME_URL=\\&quot;https://www.centos.org/\\&quot;\\nBUG_REPORT_URL=\\&quot;https://bugs.centos.org/\\&quot;\\n\\nCENTOS_MANTISBT_PROJECT=\\&quot;CentOS-7\\&quot;\\nCENTOS_MANTISBT_PROJECT_VERSION=\\&quot;7\\&quot;\\nREDHAT_SUPPORT_PRODUCT=\\&quot;centos\\&quot;\\nREDHAT_SUPPORT_PRODUCT_VERSION=\\&quot;7\\&quot;\\n\\n&quot;, &quot;platform_dist_result&quot;: [&quot;centos&quot;, &quot;7.5.1804&quot;, &quot;Core&quot;]&#125;\n&#x27;, &#x27;&#x27;)</span><br><span class="line">Using module file /usr/lib/python2.7/site-packages/ansible/modules/system/ping.py</span><br><span class="line">&lt;10.122.60.68&gt; PUT /root/.ansible/tmp/ansible-local-17067x6om3y/tmp1Exf0H TO /root/.ansible/tmp/ansible-tmp-1588928466.74-17075-281433475095247/AnsiballZ_ping.py</span><br><span class="line">&lt;10.122.60.68&gt; SSH: EXEC sshpass -d10 sftp -o BatchMode=no -b - -C -o ControlMaster=auto -o ControlPersist=60s -o &#x27;User=&quot;root&quot;&#x27; -o ConnectTimeout=10 -o ControlPath=/root/.ansible/cp/2611c79bbc &#x27;[10.122.60.68]&#x27;</span><br><span class="line">&lt;10.122.60.68&gt; (0, &#x27;sftp&gt; put /root/.ansible/tmp/ansible-local-17067x6om3y/tmp1Exf0H /root/.ansible/tmp/ansible-tmp-1588928466.74-17075-281433475095247/AnsiballZ_ping.py\n&#x27;, &#x27;&#x27;)</span><br><span class="line">&lt;10.122.60.68&gt; ESTABLISH SSH CONNECTION FOR USER: root</span><br><span class="line">&lt;10.122.60.68&gt; SSH: EXEC sshpass -d10 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o &#x27;User=&quot;root&quot;&#x27; -o ConnectTimeout=10 -o ControlPath=/root/.ansible/cp/2611c79bbc 10.122.60.68 &#x27;/bin/sh -c &#x27;&quot;&#x27;&quot;&#x27;chmod u+x /root/.ansible/tmp/ansible-tmp-1588928466.74-17075-281433475095247/ /root/.ansible/tmp/ansible-tmp-1588928466.74-17075-281433475095247/AnsiballZ_ping.py &amp;&amp; sleep 0&#x27;&quot;&#x27;&quot;&#x27;&#x27;</span><br><span class="line">&lt;10.122.60.68&gt; (0, &#x27;&#x27;, &#x27;&#x27;)</span><br><span class="line">&lt;10.122.60.68&gt; ESTABLISH SSH CONNECTION FOR USER: root</span><br><span class="line">&lt;10.122.60.68&gt; SSH: EXEC sshpass -d10 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o &#x27;User=&quot;root&quot;&#x27; -o ConnectTimeout=10 -o ControlPath=/root/.ansible/cp/2611c79bbc -tt 10.122.60.68 &#x27;/bin/sh -c &#x27;&quot;&#x27;&quot;&#x27;/usr/bin/python /root/.ansible/tmp/ansible-tmp-1588928466.74-17075-281433475095247/AnsiballZ_ping.py &amp;&amp; sleep 0&#x27;&quot;&#x27;&quot;&#x27;&#x27;</span><br><span class="line">&lt;10.122.60.68&gt; (0, &#x27;\r\n&#123;&quot;invocation&quot;: &#123;&quot;module_args&quot;: &#123;&quot;data&quot;: &quot;pong&quot;&#125;&#125;, &quot;ping&quot;: &quot;pong&quot;&#125;\r\n&#x27;, &#x27;Shared connection to 10.122.60.68 closed.\r\n&#x27;)</span><br><span class="line">&lt;10.122.60.68&gt; ESTABLISH SSH CONNECTION FOR USER: root</span><br><span class="line">&lt;10.122.60.68&gt; SSH: EXEC sshpass -d10 ssh -C -o ControlMaster=auto -o ControlPersist=60s -o &#x27;User=&quot;root&quot;&#x27; -o ConnectTimeout=10 -o ControlPath=/root/.ansible/cp/2611c79bbc 10.122.60.68 &#x27;/bin/sh -c &#x27;&quot;&#x27;&quot;&#x27;rm -f -r /root/.ansible/tmp/ansible-tmp-1588928466.74-17075-281433475095247/ &gt; /dev/null 2&gt;&amp;1 &amp;&amp; sleep 0&#x27;&quot;&#x27;&quot;&#x27;&#x27;</span><br><span class="line">&lt;10.122.60.68&gt; (0, &#x27;&#x27;, &#x27;&#x27;)</span><br><span class="line">10.122.60.68 | SUCCESS =&gt; &#123;</span><br><span class="line">    &quot;ansible_facts&quot;: &#123;</span><br><span class="line">        &quot;discovered_interpreter_python&quot;: &quot;/usr/bin/python&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;changed&quot;: false,</span><br><span class="line">    &quot;invocation&quot;: &#123;</span><br><span class="line">        &quot;module_args&quot;: &#123;</span><br><span class="line">            &quot;data&quot;: &quot;pong&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;ping&quot;: &quot;pong&quot;</span><br><span class="line">&#125;</span><br><span class="line">META: ran handlers</span><br><span class="line">META: ran handlers</span><br></pre></td></tr></table></figure>
+
+<h1 id="三、使用authorized-key模块推送公钥-more"><a href="#三、使用authorized-key模块推送公钥-more" class="headerlink" title="三、使用authorized_key模块推送公钥(more)"></a>三、使用authorized_key模块推送公钥<a target="_blank" rel="noopener" href="https://docs.ansible.com/ansible/2.8/modules/authorized_key_module.html#">(more)</a></h1><p>结合上面学习的内容，我们对比ansible管理远程主机的两种手段：</p>
+<ol>
+<li><code>SSH key</code>：将控制主机上的公钥放到被监控主机的<code>/root/.ssh/authorized_keys</code>文件中，这种方式安全并且是官方提倡的。</li>
+<li><code>SSH password</code>：ansible使用ssh通过读取<code>hosts</code>中配置的账号密码来登录并控制远程主机，这种方法存在账号密码泄漏的风险。</li>
+</ol>
+<p>由此可见，<code>SSH key</code> 安全且一本万利，但是前提是需要进行公钥推送的操作，而通过<code>sshpass</code>命令完成这个任务就需要进行脚本编写，无疑增加了工作量。此时，authorized_key模块就显得格外方便。</p>
+<hr>
+<p><strong>两个重要命令：</strong></p>
+<ul>
+<li>ssh-keygen ：这个命令是用来生成本机的公钥和私钥的</li>
+<li>ssh-keyscan ： 这条命令是用来把远程服务器的公钥来获取到本地的</li>
+</ul>
+<h2 id="首先关闭公钥认证"><a href="#首先关闭公钥认证" class="headerlink" title="首先关闭公钥认证"></a>首先关闭公钥认证</h2><p>如果说不想关闭公钥认证的话，可以用ssh-keycan 命令将公钥添加到本地的known_hosts文件里面去<br>具体命令是<code>ssh-keyscan IP1 (IP2 ...) &gt;&gt; /root/.ssh/known_hosts</code> 可以添加多个</p>
+<p>Ansible1.2.1及其之后的版本都会默认启用公钥认证.</p>
+<p>公钥认证就是如果之后的某一台客户端和之前登录过的某一台主机IP相同，那么在“known_hosts”中有了不同的key，这时会提示一个错误信息直到被纠正为止。<br>在使用Ansible时，可能不想遇到那样的情况，如果有个主机没有在“known_hosts”中被初始化将会导致在交互使用Ansible或定时执行Ansible时对key信息的确认提示。如果想要禁用这个行为的话，可以关闭公钥认证，而且公钥认证会比较慢，也是提高效率的一个方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 认证提示：</span><br><span class="line">&quot;msg&quot;: &quot;Using a SSH password instead of a key is not possible because Host Key checking is enabled and sshpass does not support this. Please add this host&#x27;s fingerprint to your known_hosts file to manage this host.&quot;</span><br></pre></td></tr></table></figure>
+
+<p>关闭公钥认证，编辑<code>ansible.cfg</code>配置文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 用来禁止ssh的指纹key字串检查</span><br><span class="line">host_key_checking = False</span><br></pre></td></tr></table></figure>
+<p>或者直接设置环境变量：<code>export ANSIBLE_HOST_KEY_CHECKING=False</code></p>
+<h2 id="使用ssh-key产生公钥和私钥"><a href="#使用ssh-key产生公钥和私钥" class="headerlink" title="使用ssh-key产生公钥和私钥"></a>使用ssh-key产生公钥和私钥</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 可参考第一章节内容</span><br><span class="line">ssh-keygen -t dsa -f ~/.ssh/id_dsa -P &#x27;&#x27;</span><br></pre></td></tr></table></figure>
+
+<h2 id="添加ansible-hosts-1"><a href="#添加ansible-hosts-1" class="headerlink" title="添加ansible hosts"></a>添加ansible hosts</h2><p><code>$vim /etc/ansible/hosts</code></p>
+<blockquote>
+<p>格式：【主机名】 【主机地址】 【主机密码】 默认是root用户来进行的</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[nginx-servers]</span><br><span class="line">1 ansible_ssh_user=&quot;root&quot; ansible_ssh_host=10.122.60.68 ansible_ssh_pass=&quot;houjue1992***&quot;</span><br><span class="line">2 ansible_ssh_user=&quot;root&quot; ansible_ssh_host=10.122.60.83 ansible_ssh_pass=&quot;houjue1992***&quot;</span><br></pre></td></tr></table></figure>
+
+<p>新版的ansible(2.4+) hosts有更新， 用以下方式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[nginx-servers]</span><br><span class="line">10.122.60.68 ansible_user=root ansible_ssh_pass=&quot;houjue1992***&quot;</span><br><span class="line">10.122.60.83 ansible_user=root ansible_ssh_pass=&quot;houjue1992***&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="批量推送公钥到远程机器"><a href="#批量推送公钥到远程机器" class="headerlink" title="批量推送公钥到远程机器"></a>批量推送公钥到远程机器</h2><h3 id="方法1：编写Playbook剧本文件"><a href="#方法1：编写Playbook剧本文件" class="headerlink" title="方法1：编写Playbook剧本文件"></a>方法1：编写Playbook剧本文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># put_ssh_pub_key.yml  是基于YAML语言编写的</span><br><span class="line"></span><br><span class="line">- hosts: all</span><br><span class="line">  #gather_facts: no</span><br><span class="line">  remote_user: root</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">    - name: install ssh key</span><br><span class="line">      authorized_key:</span><br><span class="line">        user: root</span><br><span class="line">        key: &quot;&#123;&#123; lookup(&#x27;file&#x27;, &#x27;/root/.ssh/id_dsa.pub&#x27;) &#125;&#125;&quot;</span><br><span class="line">        state: present</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible-playbook -i hosts put_ssh_pub_key.yml</span><br></pre></td></tr></table></figure>
+
+<h3 id="方法2：ansible命令行调用authorized-key模块"><a href="#方法2：ansible命令行调用authorized-key模块" class="headerlink" title="方法2：ansible命令行调用authorized_key模块"></a>方法2：ansible命令行调用authorized_key模块</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible nginx-server -m authorized_key -a &quot;user=root state=present key=&#x27;&#123;&#123; lookup(&#x27;file&#x27;, &#x27;/root/.ssh/id_dsa.pub&#x27;) &#125;&#125;&#x27;&quot;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>通过上面的方法，我们将ansible管理端的公钥批量推送后，就建立了ssh通道、实现了免密登录，这时<code>hosts</code>文件中配置的<code>ansible_user</code>和<code>ansible_ssh_pass</code>参数就没有用途了，我们需要进行安全优化操作，类似如下效果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[nginx-servers]</span><br><span class="line">10.122.60.68</span><br><span class="line">10.122.60.83</span><br></pre></td></tr></table></figure>
+
+<p>如果，ansible管理所有远程主机使用的账号密码是统一的一个，那么<code>hosts</code>文件中可以不进行账号信息的配置并保障了信息安全，而是执行ansible命令指定authorized_key模块时，通过<code>-k</code>选项，输入远程主机的统一密码，即可实现批量推送ssh公钥。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible nginx-server -m authorized_key -a &quot;user=root state=present key=&#x27;&#123;&#123; lookup(&#x27;file&#x27;, &#x27;/root/.ssh/id_dsa.pub&#x27;) &#125;&#125;&#x27;&quot; -k</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-ansible-playbook-免密登录优化"><a href="#5-ansible-playbook-免密登录优化" class="headerlink" title="5. ansible-playbook 免密登录优化"></a>5. ansible-playbook 免密登录优化</h2><p>占位符</p>
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!--  https://zhuanlan.zhihu.com/p/133998700  -->  
+<!--  https://www.bookstack.cn/read/ansible-first-book/advance-inventory-zhi_ding_lian_jie_de_can_shu.md  -->
+<!--  https://blog.51cto.com/13812615/2475306  -->
+<!-- https://docs.ansible.com/ansible/2.8/modules/list_of_system_modules.html -->
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Mr.GaO</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://www.1year1x.com/2019/06/09/ansible_login_nopasswd/">https://www.1year1x.com/2019/06/09/ansible_login_nopasswd/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://www.1year1x.com" target="_blank">GO TO NEW WORLD</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/ansible%E5%9F%BA%E7%A1%80/">ansible基础</a><a class="post-meta__tags" href="/tags/%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93/">实践总结</a></div><div class="post_share"><div class="social-share" data-image="/img/cover/ansible.jpeg" data-sites="facebook,wechat,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.png" target="_blank"><img class="post-qr-code-img" src="/img/wechat.png" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/06/09/ansible_host_key_ckeck/"><img class="prev-cover" src="/img/cover/ansible.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Ansible关闭ssh首次连接(公钥认证)提示</div></div></a></div><div class="next-post pull-right"><a href="/2019/06/07/ansible_ad_hoc/"><img class="next-cover" src="/img/cover/ansible.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Ad-Hoc命令——简单任务的执行</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/07/06/ansible_Idempotency/" title="ansible中的幂等性"><img class="cover" src="/img/cover/ansible.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-07-06</div><div class="title">ansible中的幂等性</div></div></a></div><div><a href="/2019/06/09/ansible_host_key_ckeck/" title="Ansible关闭ssh首次连接(公钥认证)提示"><img class="cover" src="/img/cover/ansible.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-06-09</div><div class="title">Ansible关闭ssh首次连接(公钥认证)提示</div></div></a></div><div><a href="/2019/06/06/ansible.cfg/" title="Ansible的配置文件"><img class="cover" src="/img/cover/ansible.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-06-06</div><div class="title">Ansible的配置文件</div></div></a></div><div><a href="/2019/05/09/ansible_dir_structure/" title="Ansible目录结构介绍"><img class="cover" src="/img/cover/ansible.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-05-09</div><div class="title">Ansible目录结构介绍</div></div></a></div><div><a href="/2019/06/07/ansible_ad_hoc/" title="Ad-Hoc命令——简单任务的执行"><img class="cover" src="/img/cover/ansible.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-06-07</div><div class="title">Ad-Hoc命令——简单任务的执行</div></div></a></div><div><a href="/2019/07/10/ansible_handler/" title="handler响应事件"><img class="cover" src="/img/cover/ansible.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-07-10</div><div class="title">handler响应事件</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Mr.GaO</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">66</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="mailto:xldsmile@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">冲鸭！！!</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%80%9A%E8%BF%87ssh%E5%AF%86%E9%92%A5%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95"><span class="toc-number">1.</span> <span class="toc-text">一、通过ssh密钥免密登录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%AF%86%E9%92%A5%E5%AF%B9-ssh-keygen-more"><span class="toc-number">1.1.</span> <span class="toc-text">创建密钥对 ssh-keygen(more)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E5%8F%91%E5%85%AC%E9%92%A5%E6%96%87%E4%BB%B6"><span class="toc-number">1.2.</span> <span class="toc-text">分发公钥文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ssh-copy-id-%E6%89%8B%E5%8A%A8%E5%88%86%E5%8F%91%E5%85%AC%E9%92%A5%E6%96%87%E4%BB%B6"><span class="toc-number">1.2.1.</span> <span class="toc-text">ssh-copy-id 手动分发公钥文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sshpass-%E6%89%B9%E9%87%8F%E5%88%86%E5%8F%91%E5%85%AC%E9%92%A5"><span class="toc-number">1.2.2.</span> <span class="toc-text">sshpass 批量分发公钥</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%97%AE%E9%A2%98"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3-%E5%88%9B%E5%BB%BA%E7%A7%98%E9%92%A5-%E6%97%B6%E9%9C%80%E8%A6%81%E8%BF%9B%E8%A1%8C%E7%9A%84%E4%BA%A4%E4%BA%92"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">解决 创建秘钥 时需要进行的交互</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3-%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%88%86%E5%8F%91%E5%85%AC%E9%92%A5-%E6%97%B6%E9%9C%80%E8%A6%81%E8%BF%9B%E8%A1%8C%E7%9A%84%E4%BA%A4%E4%BA%92-sshpass"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">解决 第一次分发公钥 时需要进行的交互(sshpass)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E5%8F%91%E8%84%9A%E6%9C%AC"><span class="toc-number">1.2.2.4.</span> <span class="toc-text">分发脚本</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ansible%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95%E9%AA%8C%E8%AF%81"><span class="toc-number">1.3.</span> <span class="toc-text">ansible免密登录验证</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81ansible-%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95-more"><span class="toc-number">2.</span> <span class="toc-text">二、ansible 账号密码登录(more)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0ansible-hosts"><span class="toc-number">2.1.</span> <span class="toc-text">添加ansible hosts</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ansible%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95%E9%AA%8C%E8%AF%81"><span class="toc-number">2.2.</span> <span class="toc-text">ansible账号密码登录验证</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">2.3.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E4%BD%BF%E7%94%A8authorized-key%E6%A8%A1%E5%9D%97%E6%8E%A8%E9%80%81%E5%85%AC%E9%92%A5-more"><span class="toc-number">3.</span> <span class="toc-text">三、使用authorized_key模块推送公钥(more)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A6%96%E5%85%88%E5%85%B3%E9%97%AD%E5%85%AC%E9%92%A5%E8%AE%A4%E8%AF%81"><span class="toc-number">3.1.</span> <span class="toc-text">首先关闭公钥认证</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8ssh-key%E4%BA%A7%E7%94%9F%E5%85%AC%E9%92%A5%E5%92%8C%E7%A7%81%E9%92%A5"><span class="toc-number">3.2.</span> <span class="toc-text">使用ssh-key产生公钥和私钥</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0ansible-hosts-1"><span class="toc-number">3.3.</span> <span class="toc-text">添加ansible hosts</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%B9%E9%87%8F%E6%8E%A8%E9%80%81%E5%85%AC%E9%92%A5%E5%88%B0%E8%BF%9C%E7%A8%8B%E6%9C%BA%E5%99%A8"><span class="toc-number">3.4.</span> <span class="toc-text">批量推送公钥到远程机器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%951%EF%BC%9A%E7%BC%96%E5%86%99Playbook%E5%89%A7%E6%9C%AC%E6%96%87%E4%BB%B6"><span class="toc-number">3.4.1.</span> <span class="toc-text">方法1：编写Playbook剧本文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%952%EF%BC%9Aansible%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%B0%83%E7%94%A8authorized-key%E6%A8%A1%E5%9D%97"><span class="toc-number">3.4.2.</span> <span class="toc-text">方法2：ansible命令行调用authorized_key模块</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-ansible-playbook-%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95%E4%BC%98%E5%8C%96"><span class="toc-number">3.5.</span> <span class="toc-text">5. ansible-playbook 免密登录优化</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/07/10/ansible_win_spooler_fix/" title="Windows打印机漏洞修复"><img src="/img/cover/goland.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Windows打印机漏洞修复"/></a><div class="content"><a class="title" href="/2021/07/10/ansible_win_spooler_fix/" title="Windows打印机漏洞修复">Windows打印机漏洞修复</a><time datetime="2021-07-10T13:11:10.000Z" title="发表于 2021-07-10 21:11:10">2021-07-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/09/05/aws_s3_introduction/" title="AWS S3 Bucket 简介"><img src="/img/cover/aws.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AWS S3 Bucket 简介"/></a><div class="content"><a class="title" href="/2020/09/05/aws_s3_introduction/" title="AWS S3 Bucket 简介">AWS S3 Bucket 简介</a><time datetime="2020-09-04T22:30:16.000Z" title="发表于 2020-09-05 06:30:16">2020-09-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/09/05/aws_s3cmd/" title="s3cmd—AWS S3存储桶管理工具"><img src="/img/cover/aws.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="s3cmd—AWS S3存储桶管理工具"/></a><div class="content"><a class="title" href="/2020/09/05/aws_s3cmd/" title="s3cmd—AWS S3存储桶管理工具">s3cmd—AWS S3存储桶管理工具</a><time datetime="2020-09-04T22:30:16.000Z" title="发表于 2020-09-05 06:30:16">2020-09-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/09/03/aws_elb_listener/" title="AWS 侦听器配置管理"><img src="/img/cover/aws.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AWS 侦听器配置管理"/></a><div class="content"><a class="title" href="/2020/09/03/aws_elb_listener/" title="AWS 侦听器配置管理">AWS 侦听器配置管理</a><time datetime="2020-09-02T22:30:16.000Z" title="发表于 2020-09-03 06:30:16">2020-09-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/09/03/aws_elb_use/" title="AWS应用程序负载均衡的使用"><img src="/img/cover/aws.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AWS应用程序负载均衡的使用"/></a><div class="content"><a class="title" href="/2020/09/03/aws_elb_use/" title="AWS应用程序负载均衡的使用">AWS应用程序负载均衡的使用</a><time datetime="2020-09-02T22:30:16.000Z" title="发表于 2020-09-03 06:30:16">2020-09-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;1992 - 2025 By Mr.GaO</div><div class="footer_custom_text"><a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn/">ICP号</a><img class="icp-icon" src="/img/psr.webp"><span>京ICP备 2021003300号</span></a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    let initData = {
+      el: '#vcomment',
+      appId: '0u8o4s6ycKDkm2rRxEvT2Sow-gzGzoHsz',
+      appKey: 'WHBcYyFS5JtqsdCt6ApiYMT1',
+      placeholder: '留下你的暱称和邮箱...可以快速收到回復',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+    
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script> let backimg =["url(/img/bg/bg3.webp)","url(/img/bg/bg5.jpg)"];let index =Math.ceil(Math.random() * (backimg.length-1));document.getElementById("web_bg").style.backgroundImage = backimg[index]</script><div class="aplayer no-destroy aplayer aplayer-tag-marker meting-tag-marker" data-id="7884240066" data-server="tencent" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="true" muted></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="GKD,Giao,404" data-fontsize="15px" data-random="false" async="async"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config-diff',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', '', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hibiki.model.json"},"display":{"position":"right","width":150,"height":370},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>

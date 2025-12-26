@@ -1,0 +1,424 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>go基础之切片 | GO TO NEW WORLD</title><meta name="keywords" content="go语言基础,slice"><meta name="author" content="Mr.GaO"><meta name="copyright" content="Mr.GaO"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="TST2021">
+<meta property="og:type" content="article">
+<meta property="og:title" content="go基础之切片">
+<meta property="og:url" content="https://www.1year1x.com/2020/04/29/go_base_slice/index.html">
+<meta property="og:site_name" content="GO TO NEW WORLD">
+<meta property="og:description" content="TST2021">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.1year1x.com/img/cover/goland.jpg">
+<meta property="article:published_time" content="2020-04-28T22:30:16.000Z">
+<meta property="article:modified_time" content="2025-12-26T03:44:53.680Z">
+<meta property="article:author" content="Mr.GaO">
+<meta property="article:tag" content="go语言基础">
+<meta property="article:tag" content="slice">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.1year1x.com/img/cover/goland.jpg"><link rel="shortcut icon" href="/img/favicon_diy1.ico"><link rel="canonical" href="https://www.1year1x.com/2020/04/29/go_base_slice/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?ea4aaa0a9d7561bf3699a38257cd1d4e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-12-26 11:44:53'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><link rel="stylesheet" href="/css/mycss.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><link rel="stylesheet" href="APlayer.min.css"><div id="aplayer"></div><script src="https://cdn.jsdelivr.net/gh/radium-bit/res@master/live2d/autoload.js" async></script><script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js" async></script><meta name="generator" content="Hexo 5.4.2"><link rel="stylesheet" href="\css\APlayer.min.css" class="aplayer-style-marker">
+<script src="\js\APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="\js\Meting.min.js" class="meting-script-marker"></script>
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">66</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 時間軸</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/cover/goland.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">GO TO NEW WORLD</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 時間軸</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">go基础之切片</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-04-28T22:30:16.000Z" title="发表于 2020-04-29 06:30:16">2020-04-29</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-12-26T03:44:53.680Z" title="更新于 2025-12-26 11:44:53">2025-12-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Go/">Go</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p><strong>知识文档</strong>：</p>
+</blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://wen.topgoer.com/docs/golang/chapter03-10">切片Slice</a></li>
+</ul>
+<hr>
+<p>切片（Slice）是一个拥有相同类型元素的可变长度的序列。它是基于数组类型做的一层封装。切片一般用于快速地操作一块数据集合。</p>
+<pre><code>1. 切片：切片是数组的一个引用，因此切片是引用类型，它的内部结构包含地址、长度和容量。
+2. 切片的长度可以改变，因此，切片是一个可变的数组。
+3. 切片遍历方式和数组一样，可以用len()求长度。表示可用元素数量，读写操作不能超过该限制。 
+4. cap可以求出slice最大扩张容量，不能超出数组限制。0 &lt;= len(slice) &lt;= len(array)，其中array是slice引用的数组。
+5. 切片的定义：var 变量名 []类型，比如 var str []string  var arr []int。
+6. 如果 slice == nil，那么 len、cap 结果都等于 0。
+</code></pre>
+<h2 id="切片定义"><a href="#切片定义" class="headerlink" title="切片定义"></a>切片定义</h2><p>声明切片类型的基本语法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var name []T</span><br></pre></td></tr></table></figure>
+<p>其中，</p>
+<ul>
+<li>name:表示变量名</li>
+<li>T:表示切片中的元素类型</li>
+</ul>
+<p>举个例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    // 声明切片类型</span><br><span class="line">    var a []string              //声明一个字符串切片</span><br><span class="line">    var b = []int&#123;&#125;             //声明一个整型切片并初始化</span><br><span class="line">    var c = []bool&#123;false, true&#125; //声明一个布尔切片并初始化</span><br><span class="line">    var d = []bool&#123;false, true&#125; //声明一个布尔切片并初始化</span><br><span class="line">    fmt.Println(a)              //[]</span><br><span class="line">    fmt.Println(b)              //[]</span><br><span class="line">    fmt.Println(c)              //[false true]</span><br><span class="line">    fmt.Println(a == nil)       //true</span><br><span class="line">    fmt.Println(b == nil)       //false</span><br><span class="line">    fmt.Println(c == nil)       //false</span><br><span class="line">    // fmt.Println(c == d)   //切片是引用类型，不支持直接比较，只能和nil比较</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="切片的长度和容量"><a href="#切片的长度和容量" class="headerlink" title="切片的长度和容量"></a>切片的长度和容量</h3><p>切片拥有自己的长度和容量，我们可以通过使用内置的<code>len()</code>函数求长度，使用内置的<code>cap()</code>函数求切片的容量。</p>
+<h3 id="切片表达式"><a href="#切片表达式" class="headerlink" title="切片表达式"></a>切片表达式</h3><p>切片表达式从字符串、数组、指向数组或切片的指针构造子字符串或切片。它有两种变体：一种指定<code>low</code>和<code>high</code>两个索引界限值的简单的形式，另一种是除了<code>low</code>和<code>high</code>索引界限值外还指定容量的完整的形式。</p>
+<p><strong><code>简单切片表达式</code></strong><br>切片的底层就是一个数组，所以我们可以基于数组通过切片表达式得到切片。 切片表达式中的<code>low</code>和<code>high</code>表示一个索引范围（左包含，右不包含）</p>
+<ul>
+<li>切片的长度是它所包含的元素个数。</li>
+<li>切片的容量是从它的第一个元素到其底层数组元素末尾的个数。</li>
+<li>切片 s 的长度和容量可通过表达式 len(s) 和 cap(s) 来获取。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a := [5]int&#123;1, 2, 3, 4, 5&#125;</span><br><span class="line">    s := a[1:3]  // s := a[low:high]</span><br><span class="line">    fmt.Printf(&quot;s:%v len(s):%v cap(s):%v\n&quot;, s, len(s), cap(s))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s:[2 3] len(s):2 cap(s):4</span><br></pre></td></tr></table></figure>
+<p>为了方便起见，可以省略切片表达式中的任何索引。省略了low则默认为0；省略了high则默认为切片操作数的长度:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a[2:]  // 等同于 a[2:len(a)]</span><br><span class="line">a[:3]  // 等同于 a[0:3]</span><br><span class="line">a[:]   // 等同于 a[0:len(a)]</span><br></pre></td></tr></table></figure>
+
+<p><code>注意</code>：<br>对于数组或字符串，如果<code>0 &lt;= low &lt;= high &lt;= len(a)</code>，则索引合法，否则就会索引越界（out of range）。</p>
+<p>对切片再执行切片表达式时（切片再切片），<code>high</code>的上限边界是切片的容量<code>cap(a)</code>，而不是长度。<code>常量索引</code>必须是非负的，并且可以用int类型的值表示;对于数组或常量字符串，常量索引也必须在有效范围内。如果<code>low</code>和<code>high</code>两个指标都是常数，它们必须满足<code>low &lt;= high</code>。如果索引在运行时超出范围，就会发生运行时<code>panic</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a := [5]int&#123;1, 2, 3, 4, 5&#125;</span><br><span class="line">    s := a[1:3]  // s := a[low:high]</span><br><span class="line">    fmt.Printf(&quot;s:%v len(s):%v cap(s):%v\n&quot;, s, len(s), cap(s))</span><br><span class="line">    s2 := s[3:4]  // 索引的上限是cap(s)而不是len(s)</span><br><span class="line">    fmt.Printf(&quot;s2:%v len(s2):%v cap(s2):%v\n&quot;, s2, len(s2), cap(s2))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s:[2 3] len(s):2 cap(s):4</span><br><span class="line">s2:[5] len(s2):1 cap(s2):1</span><br></pre></td></tr></table></figure>
+
+<p><strong><code>完整切片表达式</code></strong><br>对于数组，指向数组的指针，或切片a(<code>注意不能是字符串</code>)支持完整切片表达式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a[low : high : max]</span><br></pre></td></tr></table></figure>
+<p>上面的代码会构造与简单切片表达式·<code>a[low: high]</code>相同类型、相同长度和元素的切片。另外，它会将得到的结果切片的容量设置为<code>max-low</code>。在完整切片表达式中只有第一个索引值（low）可以省略；它默认为0。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a := [5]int&#123;1, 2, 3, 4, 5&#125;</span><br><span class="line">    t := a[1:3:5]</span><br><span class="line">    fmt.Printf(&quot;t:%v len(t):%v cap(t):%v\n&quot;, t, len(t), cap(t))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">t:[2 3] len(t):2 cap(t):4</span><br></pre></td></tr></table></figure>
+<p>完整切片表达式需要满足的条件是<code>0 &lt;= low &lt;= high &lt;= max &lt;= cap(a)</code>，其他条件和简单切片表达式相同。</p>
+<h3 id="使用make-函数构造切片"><a href="#使用make-函数构造切片" class="headerlink" title="使用make()函数构造切片"></a>使用make()函数构造切片</h3><p>我们上面都是基于数组来创建的切片，如果需要动态的创建一个切片，我们就需要使用内置的make()函数，格式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make([]T, size, cap)</span><br></pre></td></tr></table></figure>
+<p>其中：</p>
+<ul>
+<li>T:切片的元素类型</li>
+<li>size:切片中元素的数量</li>
+<li>cap:切片的容量</li>
+</ul>
+<p>举个例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a := make([]int, 2, 10)</span><br><span class="line">    fmt.Println(a)      //[0 0]</span><br><span class="line">    fmt.Println(len(a)) //2</span><br><span class="line">    fmt.Println(cap(a)) //10</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码中<code>a</code>的内部存储空间已经分配了10个，但实际上只用了2个。 容量并不会影响当前元素的个数，所以<code>len(a)</code>返回2，<code>cap(a)</code>则返回该切片的容量。</p>
+<h3 id="切片的本质"><a href="#切片的本质" class="headerlink" title="切片的本质"></a>切片的本质</h3><p>切片的本质就是对底层数组的封装，它包含了三个信息：底层数组的指针、切片的长度（len）和切片的容量（cap）。<br>举个例子，现在有一个数组<code>a := [8]int&#123;0, 1, 2, 3, 4, 5, 6, 7&#125;</code>，切片<code>s1 := a[:5]</code>，相应示意图如下。<br><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/04/slice_01.png?x-oss-process=style/original_format"></p>
+<p>切片<code>s2 := a[3:6]</code>，相应示意图如下：<br><img src="https://996promax.oss-cn-beijing.aliyuncs.com/2021/04/slice_02.png?x-oss-process=style/original_format"></p>
+<h3 id="判断切片是否为空"><a href="#判断切片是否为空" class="headerlink" title="判断切片是否为空"></a>判断切片是否为空</h3><p>要检查切片是否为空，请始终使用<code>len(s) == 0</code>来判断，而不应该使用<code>s == nil</code>来判断。</p>
+<h2 id="切片不能直接比较"><a href="#切片不能直接比较" class="headerlink" title="切片不能直接比较"></a>切片不能直接比较</h2><p>切片之间是不能比较的，我们不能使用<code>==</code>操作符来判断两个切片是否含有全部相等元素。 切片唯一合法的比较操作是和<code>nil</code>比较。 一个<code>nil</code>值的切片并没有底层数组，一个<code>nil</code>值的切片的长度和容量都是0。但是我们不能说一个长度和容量都是0的切片一定是<code>nil</code>，例如下面的示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var s1 []int         //len(s1)=0;cap(s1)=0;s1==nil</span><br><span class="line">s2 := []int&#123;&#125;        //len(s2)=0;cap(s2)=0;s2!=nil</span><br><span class="line">s3 := make([]int, 0) //len(s3)=0;cap(s3)=0;s3!=nil</span><br></pre></td></tr></table></figure>
+<p>所以要判断一个切片是否是空的，要是用<code>len(s) == 0</code>来判断，不应该使用<code>s == nil</code>来判断。</p>
+<h2 id="切片的赋值拷贝"><a href="#切片的赋值拷贝" class="headerlink" title="切片的赋值拷贝"></a>切片的赋值拷贝</h2><p>下面的代码中演示了拷贝前后两个变量共享底层数组，对一个切片的修改会影响另一个切片的内容，这点需要特别注意。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    s1 := make([]int, 3) //[0 0 0]</span><br><span class="line">    s2 := s1             //将s1直接赋值给s2，s1和s2共用一个底层数组</span><br><span class="line">    s2[0] = 100</span><br><span class="line">    fmt.Println(s1) //[100 0 0]</span><br><span class="line">    fmt.Println(s2) //[100 0 0]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="切片遍历"><a href="#切片遍历" class="headerlink" title="切片遍历"></a>切片遍历</h2><p>切片的遍历方式和数组是一致的，支持索引遍历和<code>for range</code>遍历。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    s := []int&#123;1, 3, 5&#125;</span><br><span class="line"></span><br><span class="line">    for i := 0; i &lt; len(s); i++ &#123;</span><br><span class="line">        fmt.Println(i, s[i])</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    for index, value := range s &#123;</span><br><span class="line">        fmt.Println(index, value)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="append-方法为切片添加元素"><a href="#append-方法为切片添加元素" class="headerlink" title="append()方法为切片添加元素"></a>append()方法为切片添加元素</h2><p>Go语言的内建函数<code>append()</code>可以为切片动态添加元素。 可以一次添加一个元素，可以添加多个元素，也可以添加另一个切片中的元素（后面加…）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">func main()&#123;</span><br><span class="line">    var s []int</span><br><span class="line">    s = append(s, 1)        // [1]</span><br><span class="line">    s = append(s, 2, 3, 4)  // [1 2 3 4]</span><br><span class="line">    s2 := []int&#123;5, 6, 7&#125;  </span><br><span class="line">    s = append(s, s2...)    // [1 2 3 4 5 6 7]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>**<code>注意</code>**：通过var声明的零值切片可以在<code>append()</code>函数直接使用，无需初始化。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var s []int</span><br><span class="line">s = append(s, 1, 2, 3)</span><br></pre></td></tr></table></figure>
+
+<p>没有必要像下面的代码一样初始化一个切片再传入<code>append()</code>函数使用，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">s := []int&#123;&#125;  // 没有必要初始化</span><br><span class="line">s = append(s, 1, 2, 3)</span><br><span class="line"></span><br><span class="line">var s = make([]int)  // 没有必要初始化</span><br><span class="line">s = append(s, 1, 2, 3)</span><br></pre></td></tr></table></figure>
+
+<p>每个切片会指向一个底层数组，这个数组的容量够用就添加新增元素。当底层数组不能容纳新增的元素时，切片就会自动按照一定的策略进行“扩容”，此时该切片指向的底层数组就会更换。“扩容”操作往往发生在<code>append()</code>函数调用时，所以我们通常都需要用原变量接收append函数的返回值。<br>举个例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    //append()添加元素和切片扩容</span><br><span class="line">    var numSlice []int</span><br><span class="line">    for i := 0; i &lt; 10; i++ &#123;</span><br><span class="line">        numSlice = append(numSlice, i)</span><br><span class="line">        fmt.Printf(&quot;%v  len:%d  cap:%d  ptr:%p\n&quot;, numSlice, len(numSlice), cap(numSlice), numSlice)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[0]  len:1  cap:1  ptr:0xc0000a8000</span><br><span class="line">[0 1]  len:2  cap:2  ptr:0xc0000a8040</span><br><span class="line">[0 1 2]  len:3  cap:4  ptr:0xc0000b2020</span><br><span class="line">[0 1 2 3]  len:4  cap:4  ptr:0xc0000b2020</span><br><span class="line">[0 1 2 3 4]  len:5  cap:8  ptr:0xc0000b6000</span><br><span class="line">[0 1 2 3 4 5]  len:6  cap:8  ptr:0xc0000b6000</span><br><span class="line">[0 1 2 3 4 5 6]  len:7  cap:8  ptr:0xc0000b6000</span><br><span class="line">[0 1 2 3 4 5 6 7]  len:8  cap:8  ptr:0xc0000b6000</span><br><span class="line">[0 1 2 3 4 5 6 7 8]  len:9  cap:16  ptr:0xc0000b8000</span><br><span class="line">[0 1 2 3 4 5 6 7 8 9]  len:10  cap:16  ptr:0xc0000b8000</span><br></pre></td></tr></table></figure>
+<p>从上面的结果可以看出：</p>
+<ul>
+<li>append()函数将元素追加到切片的最后并返回该切片。</li>
+<li>切片numSlice的容量按照1，2，4，8，16这样的规则自动进行扩容，每次扩容后都是扩容前的2倍。</li>
+</ul>
+<p>append()函数还支持一次性追加多个元素。 例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var citySlice []string</span><br><span class="line">// 追加一个元素</span><br><span class="line">citySlice = append(citySlice, &quot;北京&quot;)</span><br><span class="line">// 追加多个元素</span><br><span class="line">citySlice = append(citySlice, &quot;上海&quot;, &quot;广州&quot;, &quot;深圳&quot;)</span><br><span class="line">// 追加切片</span><br><span class="line">a := []string&#123;&quot;成都&quot;, &quot;重庆&quot;&#125;</span><br><span class="line">citySlice = append(citySlice, a...)</span><br><span class="line">fmt.Println(citySlice) //[北京 上海 广州 深圳 成都 重庆]</span><br></pre></td></tr></table></figure>
+
+<h2 id="切片的扩容策略"><a href="#切片的扩容策略" class="headerlink" title="切片的扩容策略"></a>切片的扩容策略</h2><p>可以通过查看<code>$GOROOT/src/runtime/slice.go</code>源码，其中扩容相关代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">newcap := old.cap</span><br><span class="line">doublecap := newcap + newcap</span><br><span class="line">if cap &gt; doublecap &#123;</span><br><span class="line">    newcap = cap</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    if old.len &lt; 1024 &#123;</span><br><span class="line">        newcap = doublecap</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        // Check 0 &lt; newcap to detect overflow</span><br><span class="line">        // and prevent an infinite loop.</span><br><span class="line">        for 0 &lt; newcap &amp;&amp; newcap &lt; cap &#123;</span><br><span class="line">            newcap += newcap / 4</span><br><span class="line">        &#125;</span><br><span class="line">        // Set newcap to the requested cap when</span><br><span class="line">        // the newcap calculation overflowed.</span><br><span class="line">        if newcap &lt;= 0 &#123;</span><br><span class="line">            newcap = cap</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从上面的代码可以看出以下内容：</p>
+<ul>
+<li>首先判断，如果新申请容量（cap）大于2倍的旧容量（old.cap），最终容量（newcap）就是新申请的容量（cap）。</li>
+<li>否则判断，如果旧切片的长度小于1024，则最终容量(newcap)就是旧容量(old.cap)的两倍，即（newcap=doublecap），</li>
+<li>否则判断，如果旧切片长度大于等于1024，则最终容量（newcap）从旧容量（old.cap）开始循环增加原来的1/4，即（newcap=old.cap,for {newcap += newcap/4}）直到最终容量（newcap）大于等于新申请的容量(cap)，即（newcap &gt;= cap）</li>
+<li>如果最终容量（cap）计算值溢出，则最终容量（cap）就是新申请容量（cap）。</li>
+</ul>
+<p>需要注意的是，切片扩容还会根据切片中元素的类型不同而做不同的处理，比如int和string类型的处理方式就不一样。</p>
+<h2 id="使用copy-函数复制切片"><a href="#使用copy-函数复制切片" class="headerlink" title="使用copy()函数复制切片"></a>使用copy()函数复制切片</h2><p>首先我们来看一个问题：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    a := []int&#123;1, 2, 3, 4, 5&#125;</span><br><span class="line">    b := a</span><br><span class="line">    fmt.Println(a) //[1 2 3 4 5]</span><br><span class="line">    fmt.Println(b) //[1 2 3 4 5]</span><br><span class="line">    b[0] = 1000</span><br><span class="line">    fmt.Println(a) //[1000 2 3 4 5]</span><br><span class="line">    fmt.Println(b) //[1000 2 3 4 5]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于切片是引用类型，所以a和b其实都指向了同一块内存地址。修改b的同时a的值也会发生变化。</p>
+<p>Go语言内建的<code>copy()</code>函数可以迅速地将一个切片的数据复制到另外一个切片空间中，<code>copy()</code>函数的使用格式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">copy(destSlice, srcSlice []T)</span><br></pre></td></tr></table></figure>
+<p>其中：</p>
+<ul>
+<li>srcSlice: 数据来源切片</li>
+<li>destSlice: 目标切片</li>
+</ul>
+<p>举个例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    // copy()复制切片</span><br><span class="line">    a := []int&#123;1, 2, 3, 4, 5&#125;</span><br><span class="line">    c := make([]int, 5, 5)</span><br><span class="line">    copy(c, a)     //使用copy()函数将切片a中的元素复制到切片c</span><br><span class="line">    fmt.Println(a) //[1 2 3 4 5]</span><br><span class="line">    fmt.Println(c) //[1 2 3 4 5]</span><br><span class="line">    c[0] = 1000</span><br><span class="line">    fmt.Println(a) //[1 2 3 4 5]</span><br><span class="line">    fmt.Println(c) //[1000 2 3 4 5]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="从切片中删除元素"><a href="#从切片中删除元素" class="headerlink" title="从切片中删除元素"></a>从切片中删除元素</h2><p>Go语言中并没有删除切片元素的专用方法，我们可以使用切片本身的特性来删除元素。 代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    // 从切片中删除元素</span><br><span class="line">    a := []int&#123;30, 31, 32, 33, 34, 35, 36, 37&#125;</span><br><span class="line">    // 要删除索引为2的元素</span><br><span class="line">    a = append(a[:2], a[3:]...)</span><br><span class="line">    fmt.Println(a) //[30 31 33 34 35 36 37]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>总结一下就是：要从切片a中删除索引为<code>index</code>的元素，操作方法是<code>a = append(a[:index], a[index+1:]...)</code></p>
+<h2 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h2><ol>
+<li>请写出下面代码的输出结果。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var a = make([]string, 5, 10)</span><br><span class="line">    for i := 0; i &lt; 10; i++ &#123;</span><br><span class="line">        a = append(a, fmt.Sprintf(&quot;%v&quot;, i))</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(a)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+解答：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ol>
+<ol start="2">
+<li>请使用内置的sort包对数组var a = […]int{3, 7, 8, 9, 1}进行排序（附加题，自行查资料解答）。<br>解答：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ol>
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!---->  
+<!---->  
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Mr.GaO</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://www.1year1x.com/2020/04/29/go_base_slice/">https://www.1year1x.com/2020/04/29/go_base_slice/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://www.1year1x.com" target="_blank">GO TO NEW WORLD</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/">go语言基础</a><a class="post-meta__tags" href="/tags/slice/">slice</a></div><div class="post_share"><div class="social-share" data-image="/img/cover/goland.jpg" data-sites="facebook,wechat,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.png" target="_blank"><img class="post-qr-code-img" src="/img/wechat.png" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/04/30/go_base_map/"><img class="prev-cover" src="/img/cover/goland.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">go基础之map</div></div></a></div><div class="next-post pull-right"><a href="/2020/04/09/aws_iam_suggest/"><img class="next-cover" src="/img/cover/aws.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">AWS用户的角色和权限的划分建议</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/04/09/go_base_array/" title="go基础之数组"><img class="cover" src="/img/cover/goland.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-09</div><div class="title">go基础之数组</div></div></a></div><div><a href="/2020/05/07/go_base_func/" title="go基础之函数"><img class="cover" src="/img/cover/goland.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-05-07</div><div class="title">go基础之函数</div></div></a></div><div><a href="/2020/04/30/go_base_map/" title="go基础之map"><img class="cover" src="/img/cover/goland.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-30</div><div class="title">go基础之map</div></div></a></div><div><a href="/2020/05/10/go_base_func2/" title="go基础之函数进阶"><img class="cover" src="/img/cover/goland.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-05-10</div><div class="title">go基础之函数进阶</div></div></a></div><div><a href="/2020/04/08/go_base_operator/" title="go基础之运算符"><img class="cover" src="/img/cover/goland.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-08</div><div class="title">go基础之运算符</div></div></a></div><div><a href="/2020/04/09/go_base_process_control/" title="go基础之流程控制"><img class="cover" src="/img/cover/goland.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-09</div><div class="title">go基础之流程控制</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Mr.GaO</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">66</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="mailto:xldsmile@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">冲鸭！！!</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%87%E7%89%87%E5%AE%9A%E4%B9%89"><span class="toc-number">1.</span> <span class="toc-text">切片定义</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%87%E7%89%87%E7%9A%84%E9%95%BF%E5%BA%A6%E5%92%8C%E5%AE%B9%E9%87%8F"><span class="toc-number">1.1.</span> <span class="toc-text">切片的长度和容量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%87%E7%89%87%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">切片表达式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8make-%E5%87%BD%E6%95%B0%E6%9E%84%E9%80%A0%E5%88%87%E7%89%87"><span class="toc-number">1.3.</span> <span class="toc-text">使用make()函数构造切片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%87%E7%89%87%E7%9A%84%E6%9C%AC%E8%B4%A8"><span class="toc-number">1.4.</span> <span class="toc-text">切片的本质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E5%88%87%E7%89%87%E6%98%AF%E5%90%A6%E4%B8%BA%E7%A9%BA"><span class="toc-number">1.5.</span> <span class="toc-text">判断切片是否为空</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%87%E7%89%87%E4%B8%8D%E8%83%BD%E7%9B%B4%E6%8E%A5%E6%AF%94%E8%BE%83"><span class="toc-number">2.</span> <span class="toc-text">切片不能直接比较</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%87%E7%89%87%E7%9A%84%E8%B5%8B%E5%80%BC%E6%8B%B7%E8%B4%9D"><span class="toc-number">3.</span> <span class="toc-text">切片的赋值拷贝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%87%E7%89%87%E9%81%8D%E5%8E%86"><span class="toc-number">4.</span> <span class="toc-text">切片遍历</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#append-%E6%96%B9%E6%B3%95%E4%B8%BA%E5%88%87%E7%89%87%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0"><span class="toc-number">5.</span> <span class="toc-text">append()方法为切片添加元素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%87%E7%89%87%E7%9A%84%E6%89%A9%E5%AE%B9%E7%AD%96%E7%95%A5"><span class="toc-number">6.</span> <span class="toc-text">切片的扩容策略</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8copy-%E5%87%BD%E6%95%B0%E5%A4%8D%E5%88%B6%E5%88%87%E7%89%87"><span class="toc-number">7.</span> <span class="toc-text">使用copy()函数复制切片</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E5%88%87%E7%89%87%E4%B8%AD%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0"><span class="toc-number">8.</span> <span class="toc-text">从切片中删除元素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0%E9%A2%98"><span class="toc-number">9.</span> <span class="toc-text">练习题</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/07/10/ansible_win_spooler_fix/" title="Windows打印机漏洞修复"><img src="/img/cover/goland.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Windows打印机漏洞修复"/></a><div class="content"><a class="title" href="/2021/07/10/ansible_win_spooler_fix/" title="Windows打印机漏洞修复">Windows打印机漏洞修复</a><time datetime="2021-07-10T13:11:10.000Z" title="发表于 2021-07-10 21:11:10">2021-07-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/09/05/aws_s3_introduction/" title="AWS S3 Bucket 简介"><img src="/img/cover/aws.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AWS S3 Bucket 简介"/></a><div class="content"><a class="title" href="/2020/09/05/aws_s3_introduction/" title="AWS S3 Bucket 简介">AWS S3 Bucket 简介</a><time datetime="2020-09-04T22:30:16.000Z" title="发表于 2020-09-05 06:30:16">2020-09-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/09/05/aws_s3cmd/" title="s3cmd—AWS S3存储桶管理工具"><img src="/img/cover/aws.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="s3cmd—AWS S3存储桶管理工具"/></a><div class="content"><a class="title" href="/2020/09/05/aws_s3cmd/" title="s3cmd—AWS S3存储桶管理工具">s3cmd—AWS S3存储桶管理工具</a><time datetime="2020-09-04T22:30:16.000Z" title="发表于 2020-09-05 06:30:16">2020-09-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/09/03/aws_elb_listener/" title="AWS 侦听器配置管理"><img src="/img/cover/aws.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AWS 侦听器配置管理"/></a><div class="content"><a class="title" href="/2020/09/03/aws_elb_listener/" title="AWS 侦听器配置管理">AWS 侦听器配置管理</a><time datetime="2020-09-02T22:30:16.000Z" title="发表于 2020-09-03 06:30:16">2020-09-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/09/03/aws_elb_use/" title="AWS应用程序负载均衡的使用"><img src="/img/cover/aws.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AWS应用程序负载均衡的使用"/></a><div class="content"><a class="title" href="/2020/09/03/aws_elb_use/" title="AWS应用程序负载均衡的使用">AWS应用程序负载均衡的使用</a><time datetime="2020-09-02T22:30:16.000Z" title="发表于 2020-09-03 06:30:16">2020-09-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;1992 - 2025 By Mr.GaO</div><div class="footer_custom_text"><a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn/">ICP号</a><img class="icp-icon" src="/img/psr.webp"><span>京ICP备 2021003300号</span></a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    let initData = {
+      el: '#vcomment',
+      appId: '0u8o4s6ycKDkm2rRxEvT2Sow-gzGzoHsz',
+      appKey: 'WHBcYyFS5JtqsdCt6ApiYMT1',
+      placeholder: '留下你的暱称和邮箱...可以快速收到回復',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+    
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script> let backimg =["url(/img/bg/bg3.webp)","url(/img/bg/bg5.jpg)"];let index =Math.ceil(Math.random() * (backimg.length-1));document.getElementById("web_bg").style.backgroundImage = backimg[index]</script><div class="aplayer no-destroy aplayer aplayer-tag-marker meting-tag-marker" data-id="7884240066" data-server="tencent" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="true" muted></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="GKD,Giao,404" data-fontsize="15px" data-random="false" async="async"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config-diff',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', '', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hibiki.model.json"},"display":{"position":"right","width":150,"height":370},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>

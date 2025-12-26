@@ -1,0 +1,339 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>go主要特征—标识符、关键字、构建、编译 | GO TO NEW WORLD</title><meta name="keywords" content="env"><meta name="author" content="Mr.GaO"><meta name="copyright" content="Mr.GaO"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="TST2021">
+<meta property="og:type" content="article">
+<meta property="og:title" content="go主要特征—标识符、关键字、构建、编译">
+<meta property="og:url" content="https://www.1year1x.com/2020/01/31/go%E4%B8%BB%E8%A6%81%E7%89%B9%E5%BE%81/index.html">
+<meta property="og:site_name" content="GO TO NEW WORLD">
+<meta property="og:description" content="TST2021">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.1year1x.com/img/cover/goland.jpg">
+<meta property="article:published_time" content="2020-01-31T12:30:16.000Z">
+<meta property="article:modified_time" content="2025-12-26T03:44:53.709Z">
+<meta property="article:author" content="Mr.GaO">
+<meta property="article:tag" content="env">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.1year1x.com/img/cover/goland.jpg"><link rel="shortcut icon" href="/img/favicon_diy1.ico"><link rel="canonical" href="https://www.1year1x.com/2020/01/31/go%E4%B8%BB%E8%A6%81%E7%89%B9%E5%BE%81/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?ea4aaa0a9d7561bf3699a38257cd1d4e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-12-26 11:44:53'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><link rel="stylesheet" href="/css/mycss.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><link rel="stylesheet" href="APlayer.min.css"><div id="aplayer"></div><script src="https://cdn.jsdelivr.net/gh/radium-bit/res@master/live2d/autoload.js" async></script><script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js" async></script><meta name="generator" content="Hexo 5.4.2"><link rel="stylesheet" href="\css\APlayer.min.css" class="aplayer-style-marker">
+<script src="\js\APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="\js\Meting.min.js" class="meting-script-marker"></script>
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">66</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 時間軸</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/cover/goland.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">GO TO NEW WORLD</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 時間軸</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">go主要特征—标识符、关键字、构建、编译</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-01-31T12:30:16.000Z" title="发表于 2020-01-31 20:30:16">2020-01-31</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-12-26T03:44:53.709Z" title="更新于 2025-12-26 11:44:53">2025-12-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Go/">Go</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p>区别关键字和标识符：</p>
+</blockquote>
+<pre><code>标识（zhi）符，所谓标识符，就是指变量、函数、属性的名字，或者是函数的参数。
+
+关键字，就是在控制语句的开始或结束以及执行特定操作时具有关键作用、特定作用的符号。
+
+保留（关键）字不能用作常量、变量、函数名以及结构字段等标识符。从字面意思上即可得知它是被保留的，将来可能被用作关键字
+</code></pre>
+<p><strong>划重点了：</strong>·<code>关键字是系统自带的 ，标识符是自定义的</code>。</p>
+<hr>
+<h2 id="文件名"><a href="#文件名" class="headerlink" title="文件名"></a>文件名</h2><p>Go 的源文件以 .go 为后缀名存储在计算机中，这些<code>文件名均由小写字母组成</code>，如 <code>scanner.go</code> 。如果文件名由多个部分组成，则使用下划线 _ 对它们进行分隔，如 <code>scanner_test.go</code> 。<code>文件名不包含空格或其他特殊字符</code>。</p>
+<p>一个源文件可以包含任意多行的代码，Go 本身没有对源文件的大小进行限制。</p>
+<h2 id="Go语言命名"><a href="#Go语言命名" class="headerlink" title="Go语言命名"></a>Go语言命名</h2><p>Go的函数、变量、常量、自定义类型、包<code>(package)</code>的命名方式遵循以下规则：</p>
+<pre><code>1）首字符可以是任意的Unicode字符或者下划线
+2）剩余字符可以是Unicode字符、下划线、数字
+3）字符长度不限
+</code></pre>
+<h3 id="标识符"><a href="#标识符" class="headerlink" title="标识符"></a>标识符</h3><p><code>具有特殊意义的词</code>，比如变量、常量、函数。</p>
+<blockquote>
+<p>标识符是允许作为变量（函数、类等）名称的有效字符串</p>
+</blockquote>
+<p>Go语言中标识符由字母数字和_(下划线）组成，并且只能以字母和_开头，然后紧跟着 0 个或多个字符或 Unicode 数字。<br>举几个例子：<code>abc</code>, <code>_</code>, <code>_123</code>, <code>a123</code>。</p>
+<h3 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h3><p>关键字是编程语言中<code>预先定义好的具有特殊含义的标识符</code>。关键字和保留字都不建议用作变量名。</p>
+<p><strong>Go语言中有25个关键字：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">break        default      func         interface    select</span><br><span class="line">case         defer        go           map          struct</span><br><span class="line">chan         else         goto         package      switch</span><br><span class="line">const        fallthrough  if           range        type</span><br><span class="line">continue     for          import       return       var</span><br></pre></td></tr></table></figure>
+
+<p><strong>此外，Go语言中还有37个保留字：</strong><br>（分类为<a target="_blank" rel="noopener" href="http://wen.topgoer.com/docs/golang/chapter02-2">内置常量/类型/函数</a>）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Constants:    true  false  iota  nil</span><br><span class="line"></span><br><span class="line">Types:    int  int8  int16  int32  int64  </span><br><span class="line">          uint  uint8  uint16  uint32  uint64  uintptr</span><br><span class="line">          float32  float64  complex128  complex64</span><br><span class="line">          bool  byte  rune  string  error</span><br><span class="line"></span><br><span class="line">Functions:   make  len  cap  new  append  copy  close  delete</span><br><span class="line">             complex  real  imag</span><br><span class="line">             panic  recover</span><br></pre></td></tr></table></figure>
+
+<h2 id="Go语言声明："><a href="#Go语言声明：" class="headerlink" title="Go语言声明："></a>Go语言声明：</h2><p>有四种主要声明方式：</p>
+<pre><code>var（声明变量）, const（声明常量）, type（声明类型） ,func（声明函数）。
+</code></pre>
+<p>Go的程序是保存在多个.go文件中，文件的第一行就是package XXX声明，用来说明该文件属于哪个包(package)，package声明下来就是import声明，再下来是类型，变量，常量，函数的声明。</p>
+<h2 id="预定义标识符的总结分类"><a href="#预定义标识符的总结分类" class="headerlink" title="预定义标识符的总结分类"></a>预定义标识符的总结分类</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xzpin/p/11659839.html">Go 内置常量 类型和函数</a></p>
+</blockquote>
+<h2 id="Go项目构建及编译"><a href="#Go项目构建及编译" class="headerlink" title="Go项目构建及编译"></a>Go项目构建及编译</h2><p>一个Go工程中主要包含以下三个目录：</p>
+<pre><code>src：源代码文件
+pkg：包文件
+bin：相关bin文件
+</code></pre>
+<p>1: 建立工程文件夹 goproject<br>2: 在工程文件夹中建立src,pkg,bin文件夹<br>3: 在GOPATH中添加projiect路径 例 e:/goproject<br>4: 如工程中有自己的包examplepackage，那在src文件夹下建立以包名命名的文件夹 例 examplepackage<br>5：在src文件夹下编写主程序代码代码 goproject.go<br>6：在examplepackage文件夹中编写 examplepackage.go 和 包测试文件 examplepackage_test.go<br>7：编译调试包<br>go build examplepackage<br>go test examplepackage<br>go install examplepackage<br>这时在pkg文件夹中可以发现会有一个相应的操作系统文件夹如windows_386z, 在这个文件夹中会有examplepackage文件夹，在该文件中有examplepackage.a文件<br>8：编译主程序<br>go build goproject.go<br>成功后会生成goproject.exe文件<br>至此一个Go工程编辑成功。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">1.建立工程文件夹 go</span><br><span class="line">$ pwd</span><br><span class="line">/Users/***/Desktop/go</span><br><span class="line">2: 在工程文件夹中建立src,pkg,bin文件夹</span><br><span class="line">$ ls</span><br><span class="line">bin        conf    pkg        src</span><br><span class="line">3: 在GOPATH中添加projiect路径</span><br><span class="line">$ go env</span><br><span class="line">GOPATH=&quot;/Users/liupengjie/Desktop/go&quot;</span><br><span class="line">4: 那在src文件夹下建立以自己的包 example 文件夹</span><br><span class="line">$ cd src/</span><br><span class="line">$ mkdir example</span><br><span class="line">5：在src文件夹下编写主程序代码代码 goproject.go</span><br><span class="line">6：在example文件夹中编写 example.go 和 包测试文件 example_test.go</span><br><span class="line">    example.go 写入如下代码：</span><br><span class="line"></span><br><span class="line">    package example</span><br><span class="line"></span><br><span class="line">    func add(a, b int) int &#123;</span><br><span class="line">        return a + b</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    func sub(a, b int) int &#123;</span><br><span class="line">        return a - b</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    example_test.go 写入如下代码：</span><br><span class="line"></span><br><span class="line">    package example</span><br><span class="line"></span><br><span class="line">    import (</span><br><span class="line">        &quot;testing&quot;</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    func TestAdd(t *testing.T) &#123;</span><br><span class="line">        r := add(2, 4)</span><br><span class="line">        if r != 6 &#123;</span><br><span class="line">            t.Fatalf(&quot;add(2, 4) error, expect:%d, actual:%d&quot;, 6, r)</span><br><span class="line">        &#125;</span><br><span class="line">        t.Logf(&quot;test add succ&quot;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">7：编译调试包</span><br><span class="line">$ go build example</span><br><span class="line">$ go test example</span><br><span class="line">ok      example    0.013s</span><br><span class="line">$ go install example</span><br><span class="line"></span><br><span class="line">$ ls /Users/***/Desktop/go/pkg/</span><br><span class="line">darwin_amd64</span><br><span class="line">$ ls /Users/***/Desktop/go/pkg/darwin_amd64/</span><br><span class="line">example.a    </span><br><span class="line">8：编译主程序</span><br><span class="line">oproject.go 写入如下代码：</span><br><span class="line">package main </span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func main()&#123;</span><br><span class="line">    fmt.Println(&quot;go project test&quot;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$ go build goproject.go</span><br><span class="line">$ ls</span><br><span class="line"> example        goproject.go    goproject</span><br><span class="line"></span><br><span class="line">成功后会生成goproject文件，至此一个Go工程编辑成功。</span><br><span class="line"></span><br><span class="line">运行该文件：</span><br><span class="line">$ ./goproject</span><br><span class="line">go project test</span><br></pre></td></tr></table></figure>
+
+<h2 id="go-编译问题"><a href="#go-编译问题" class="headerlink" title="go 编译问题"></a>go 编译问题</h2><p>golang的编译使用命令 go build , go install;除非仅写一个main函数，否则还是准备好目录结构；<br>GOPATH=工程根目录；其下应创建src，pkg，bin目录，bin目录中用于生成可执行文件，pkg目录中用于生成.a文件；<br>golang中的import name，实际是到GOPATH中去寻找name.a, 使用时是该name.a的源码中生命的package 名字；这个在前面已经介绍过了。</p>
+<p>注意点：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1.系统编译时 go install abc_name时，系统会到GOPATH的src目录中寻找abc_name目录，然后编译其下的go文件；</span><br><span class="line">2.同一个目录中所有的go文件的package声明必须相同，所以main方法要单独放一个文件，否则在eclipse和liteide中都会报错；</span><br><span class="line">编译报错如下：（假设test目录中有个main.go 和mymath.go,其中main.go声明package为main，mymath.go声明packag 为test);</span><br><span class="line"></span><br><span class="line">    $ go install test</span><br><span class="line">    can&#x27;t load package: package test: found packages main (main.go) and test (mymath.go) in /home/wanjm/go/src/test</span><br><span class="line">    报错说 不能加载package test（这是命令行的参数），因为发现了两个package，分别时main.go 和 mymath.go;</span><br><span class="line"></span><br><span class="line">3.对于main方法，只能在bin目录下运行 go build path_tomain.go; 可以用-o参数指出输出文件名；</span><br><span class="line">4.可以添加参数 go build -gcflags &quot;-N -l&quot; ****,可以更好的便于gdb；详细参见 http://golang.org/doc/gdb</span><br><span class="line">5.gdb全局变量主一点。 如有全局变量 a；则应写为 p &#x27;main.a&#x27;；注意但引号不可少；</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!--https://www.cnblogs.com/xzpin/p/11659839.html-->  
+<!--https://www.pianshen.com/article/2306569585/-->  
+<!--http://wen.topgoer.com/docs/golang/chapter02-1-->
+<!--https://blog.csdn.net/vongolar/article/details/108314005-->  
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Mr.GaO</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://www.1year1x.com/2020/01/31/go%E4%B8%BB%E8%A6%81%E7%89%B9%E5%BE%81/">https://www.1year1x.com/2020/01/31/go%E4%B8%BB%E8%A6%81%E7%89%B9%E5%BE%81/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://www.1year1x.com" target="_blank">GO TO NEW WORLD</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/env/">env</a></div><div class="post_share"><div class="social-share" data-image="/img/cover/goland.jpg" data-sites="facebook,wechat,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.png" target="_blank"><img class="post-qr-code-img" src="/img/wechat.png" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/01/31/Go%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/"><img class="prev-cover" src="/img/cover/goland.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Go语言开发环境</div></div></a></div><div class="next-post pull-right"><a href="/2020/01/31/go%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E2%80%94_godep_gomod/"><img class="next-cover" src="/img/cover/goland.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Go依赖管理—从godep到go mod</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/06/06/ansible.cfg/" title="Ansible的配置文件"><img class="cover" src="/img/cover/ansible.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-06-06</div><div class="title">Ansible的配置文件</div></div></a></div><div><a href="/2019/05/09/ansible_dir_structure/" title="Ansible目录结构介绍"><img class="cover" src="/img/cover/ansible.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-05-09</div><div class="title">Ansible目录结构介绍</div></div></a></div><div><a href="/2020/01/31/Go语言开发环境/" title="Go语言开发环境"><img class="cover" src="/img/cover/goland.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-01-31</div><div class="title">Go语言开发环境</div></div></a></div><div><a href="/2019/06/07/ansible_ad_hoc/" title="Ad-Hoc命令——简单任务的执行"><img class="cover" src="/img/cover/ansible.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-06-07</div><div class="title">Ad-Hoc命令——简单任务的执行</div></div></a></div><div><a href="/2019/05/09/ansible_env_install/" title="Ansible简介与安装"><img class="cover" src="/img/cover/ansible.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-05-09</div><div class="title">Ansible简介与安装</div></div></a></div><div><a href="/2019/06/05/ansible_inventory_patterns/" title="Inventory和Patterns"><img class="cover" src="/img/cover/ansible.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-06-05</div><div class="title">Inventory和Patterns</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Mr.GaO</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">66</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="mailto:xldsmile@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">冲鸭！！!</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%90%8D"><span class="toc-number">1.</span> <span class="toc-text">文件名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Go%E8%AF%AD%E8%A8%80%E5%91%BD%E5%90%8D"><span class="toc-number">2.</span> <span class="toc-text">Go语言命名</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E8%AF%86%E7%AC%A6"><span class="toc-number">2.1.</span> <span class="toc-text">标识符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E5%AD%97"><span class="toc-number">2.2.</span> <span class="toc-text">关键字</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Go%E8%AF%AD%E8%A8%80%E5%A3%B0%E6%98%8E%EF%BC%9A"><span class="toc-number">3.</span> <span class="toc-text">Go语言声明：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%84%E5%AE%9A%E4%B9%89%E6%A0%87%E8%AF%86%E7%AC%A6%E7%9A%84%E6%80%BB%E7%BB%93%E5%88%86%E7%B1%BB"><span class="toc-number">4.</span> <span class="toc-text">预定义标识符的总结分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Go%E9%A1%B9%E7%9B%AE%E6%9E%84%E5%BB%BA%E5%8F%8A%E7%BC%96%E8%AF%91"><span class="toc-number">5.</span> <span class="toc-text">Go项目构建及编译</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#go-%E7%BC%96%E8%AF%91%E9%97%AE%E9%A2%98"><span class="toc-number">6.</span> <span class="toc-text">go 编译问题</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/07/10/ansible_win_spooler_fix/" title="Windows打印机漏洞修复"><img src="/img/cover/goland.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Windows打印机漏洞修复"/></a><div class="content"><a class="title" href="/2021/07/10/ansible_win_spooler_fix/" title="Windows打印机漏洞修复">Windows打印机漏洞修复</a><time datetime="2021-07-10T13:11:10.000Z" title="发表于 2021-07-10 21:11:10">2021-07-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/09/05/aws_s3_introduction/" title="AWS S3 Bucket 简介"><img src="/img/cover/aws.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AWS S3 Bucket 简介"/></a><div class="content"><a class="title" href="/2020/09/05/aws_s3_introduction/" title="AWS S3 Bucket 简介">AWS S3 Bucket 简介</a><time datetime="2020-09-04T22:30:16.000Z" title="发表于 2020-09-05 06:30:16">2020-09-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/09/05/aws_s3cmd/" title="s3cmd—AWS S3存储桶管理工具"><img src="/img/cover/aws.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="s3cmd—AWS S3存储桶管理工具"/></a><div class="content"><a class="title" href="/2020/09/05/aws_s3cmd/" title="s3cmd—AWS S3存储桶管理工具">s3cmd—AWS S3存储桶管理工具</a><time datetime="2020-09-04T22:30:16.000Z" title="发表于 2020-09-05 06:30:16">2020-09-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/09/03/aws_elb_listener/" title="AWS 侦听器配置管理"><img src="/img/cover/aws.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AWS 侦听器配置管理"/></a><div class="content"><a class="title" href="/2020/09/03/aws_elb_listener/" title="AWS 侦听器配置管理">AWS 侦听器配置管理</a><time datetime="2020-09-02T22:30:16.000Z" title="发表于 2020-09-03 06:30:16">2020-09-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/09/03/aws_elb_use/" title="AWS应用程序负载均衡的使用"><img src="/img/cover/aws.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AWS应用程序负载均衡的使用"/></a><div class="content"><a class="title" href="/2020/09/03/aws_elb_use/" title="AWS应用程序负载均衡的使用">AWS应用程序负载均衡的使用</a><time datetime="2020-09-02T22:30:16.000Z" title="发表于 2020-09-03 06:30:16">2020-09-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;1992 - 2025 By Mr.GaO</div><div class="footer_custom_text"><a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn/">ICP号</a><img class="icp-icon" src="/img/psr.webp"><span>京ICP备 2021003300号</span></a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    let initData = {
+      el: '#vcomment',
+      appId: '0u8o4s6ycKDkm2rRxEvT2Sow-gzGzoHsz',
+      appKey: 'WHBcYyFS5JtqsdCt6ApiYMT1',
+      placeholder: '留下你的暱称和邮箱...可以快速收到回復',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+    
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script> let backimg =["url(/img/bg/bg3.webp)","url(/img/bg/bg5.jpg)"];let index =Math.ceil(Math.random() * (backimg.length-1));document.getElementById("web_bg").style.backgroundImage = backimg[index]</script><div class="aplayer no-destroy aplayer aplayer-tag-marker meting-tag-marker" data-id="7884240066" data-server="tencent" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="true" muted></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="GKD,Giao,404" data-fontsize="15px" data-random="false" async="async"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config-diff',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', '', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hibiki.model.json"},"display":{"position":"right","width":150,"height":370},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>

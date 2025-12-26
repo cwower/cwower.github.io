@@ -1,0 +1,405 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Inventory和Patterns | GO TO NEW WORLD</title><meta name="keywords" content="env,ansible基础"><meta name="author" content="Mr.GaO"><meta name="copyright" content="Mr.GaO"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="TST2021">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Inventory和Patterns">
+<meta property="og:url" content="https://www.1year1x.com/2019/06/05/ansible_inventory_patterns/index.html">
+<meta property="og:site_name" content="GO TO NEW WORLD">
+<meta property="og:description" content="TST2021">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.1year1x.com/img/cover/ansible.jpeg">
+<meta property="article:published_time" content="2019-06-05T13:11:10.000Z">
+<meta property="article:modified_time" content="2025-12-26T03:44:53.417Z">
+<meta property="article:author" content="Mr.GaO">
+<meta property="article:tag" content="env">
+<meta property="article:tag" content="ansible基础">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.1year1x.com/img/cover/ansible.jpeg"><link rel="shortcut icon" href="/img/favicon_diy1.ico"><link rel="canonical" href="https://www.1year1x.com/2019/06/05/ansible_inventory_patterns/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?ea4aaa0a9d7561bf3699a38257cd1d4e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-12-26 11:44:53'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><link rel="stylesheet" href="/css/mycss.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><link rel="stylesheet" href="APlayer.min.css"><div id="aplayer"></div><script src="https://cdn.jsdelivr.net/gh/radium-bit/res@master/live2d/autoload.js" async></script><script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js" async></script><meta name="generator" content="Hexo 5.4.2"><link rel="stylesheet" href="\css\APlayer.min.css" class="aplayer-style-marker">
+<script src="\js\APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="\js\Meting.min.js" class="meting-script-marker"></script>
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">66</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 時間軸</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/cover/ansible.jpeg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">GO TO NEW WORLD</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 時間軸</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Inventory和Patterns</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-06-05T13:11:10.000Z" title="发表于 2019-06-05 21:11:10">2019-06-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-12-26T03:44:53.417Z" title="更新于 2025-12-26 11:44:53">2025-12-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Ansible/">Ansible</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p><strong>知识文档</strong>：</p>
+</blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.bookstack.cn/read/ansible-first-book/begin-ansibleshang_shou.md">Ansible入门</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.ansible.com.cn/docs/intro_inventory.html#host-group">Ansible实践</a></li>
+</ul>
+<hr>
+<h1 id="Host-Inventory"><a href="#Host-Inventory" class="headerlink" title="Host Inventory"></a>Host Inventory</h1><p><strong>Host Inventory 配置文件：</strong>默认文件/etc/ansible/hosts，用来告诉Ansible需要管理哪些主机。并且把这些主机根据按需分类。</p>
+<p>可以根据用途分类：数据库节点，服务节点等；根据地点分类：中部，西部机房。</p>
+<p>Ansible可以同时操作属于一个组的多台主机，组和主机之间的关系通过 inventory 文件配置。</p>
+<h2 id="远程主机和组"><a href="#远程主机和组" class="headerlink" title="远程主机和组"></a>远程主机和组</h2><p><strong>简单分组：</strong><br>方括号<code>[]</code>中是组名，用于对组进行系统分类，便于对不同系统进行分开的管理</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mail.example.com</span><br><span class="line">[webservers]</span><br><span class="line">foo.example.com</span><br><span class="line">bar.example.com</span><br><span class="line"></span><br><span class="line">[dbservers]</span><br><span class="line">one.example.com</span><br><span class="line">two.example.com</span><br><span class="line">three.example.com</span><br></pre></td></tr></table></figure>
+
+<p><strong>一组相似的 hostname简写方法：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[webservers]</span><br><span class="line">www[01:50].example.com</span><br><span class="line">[databases]</span><br><span class="line">db-[a:f].example.com</span><br></pre></td></tr></table></figure>
+
+<p><strong>SSH端口不是22的表示方法：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">badwolf.example.com:5309</span><br></pre></td></tr></table></figure>
+
+<p><strong>单个主机设置别名方式：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jumper ansible_ssh_port=5555 ansible_ssh_host=192.168.1.50</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在这个例子中，通过 “jumper” 别名，会连接 192.168.1.50:5555<br>（这是通过 inventory 文件的特性功能设置的变量。一般而言,这不是设置变量(描述你的系统策略的变量)的最好方式）</p>
+</blockquote>
+<h2 id="远程主机的连接参数和变量"><a href="#远程主机的连接参数和变量" class="headerlink" title="远程主机的连接参数和变量"></a>远程主机的连接参数和变量</h2><p><strong>参数</strong><br>指定Server的连接参数，其中包括连接方法，用户等。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[targets]</span><br><span class="line"></span><br><span class="line">localhost ansible_connection=local</span><br><span class="line">other1.example.com ansible_connection=ssh ansible_user=mpdehaan</span><br><span class="line">other2.example.com ansible_connection=ssh ansible_user=mdehaan</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[atlanta]</span><br><span class="line">host1 http_port=80 maxRequestsPerChild=808</span><br><span class="line">host2 http_port=303 maxRequestsPerChild=909</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>可以指定的参数参考：<a target="_blank" rel="noopener" href="https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#list-of-behavioral-inventory-parameters">docs.ansible.com</a></p>
+</blockquote>
+<p><strong>为一个组指定变量：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[atlanta]</span><br><span class="line">host1</span><br><span class="line">host2</span><br><span class="line">[atlanta:vars]</span><br><span class="line">ntp_server=ntp.atlanta.example.com</span><br><span class="line">proxy=proxy.atlanta.example.com</span><br></pre></td></tr></table></figure>
+
+<h2 id="把一个组作为另一个组的子成员"><a href="#把一个组作为另一个组的子成员" class="headerlink" title="把一个组作为另一个组的子成员"></a>把一个组作为另一个组的子成员</h2><p>可以把一个组作为另一个组的子成员,以及分配变量给整个组使用，例：<br>分组usa的子组还可以是其它的组，例如[usa:children]中还可以包含子组southeast, [southeast:children]中还可以包含atlanta和releigh</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[atlanta]</span><br><span class="line">host1</span><br><span class="line">host2</span><br><span class="line">[raleigh]</span><br><span class="line">host2</span><br><span class="line">host3</span><br><span class="line">[southeast:children]</span><br><span class="line">atlanta</span><br><span class="line">raleigh</span><br><span class="line">[usa:children]</span><br><span class="line">southeast</span><br><span class="line">northeast</span><br><span class="line">southwest</span><br><span class="line">northwest</span><br></pre></td></tr></table></figure>
+
+<h2 id="按目录结构-组织Host和Group变量-more"><a href="#按目录结构-组织Host和Group变量-more" class="headerlink" title="按目录结构 组织Host和Group变量(more)"></a>按目录结构 组织Host和Group变量<a target="_blank" rel="noopener" href="https://www.bookstack.cn/read/ansible-first-book/advance-inventory-fen_zu_guan_li_wen_jian.md">(more)</a></h2><p>在 inventory 主文件中保存所有的变量并不是最佳的方式.还可以保存在独立的文件中,这些独立文件与 inventory 文件保持关联. 不同于 inventory 文件(INI 格式),这些独立文件的格式为 YAML.详见 <a target="_blank" rel="noopener" href="http://www.ansible.com.cn/docs/YAMLSyntax.html">YAML 语法</a> .</p>
+<p>假设 inventory 文件的路径为:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/ansible/hosts</span><br></pre></td></tr></table></figure>
+
+<p>假设有一个主机名为 ‘foosball’, 主机同时属于两个组，组的名字分别是 ‘raleigh’和 ‘webservers’.<br>那么以下组变量的配置文件中的变量可以被 ‘foosball’ 主机所用.</p>
+<p>下面依次为 ‘raleigh’ 的组变量,’webservers’ 的组变量,’foosball’ 的主机变量 的配置文件:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/etc/ansible/group_vars/raleigh # an optionally end in &#x27;.yml&#x27;, &#x27;.yaml&#x27;, or &#x27;.json</span><br><span class="line">/etc/ansible/group_vars/webservers</span><br><span class="line">/etc/ansible/host_vars/foosball</span><br></pre></td></tr></table></figure>
+
+<p>举例来说,假设你有一些主机,属于不同的数据中心,并依次进行划分.每一个数据中心使用一些不同的服务器.比如 ntp 服务器, database 服务器等等. 那么 ‘raleigh’ 这个组的组变量定义在文件 ‘/etc/ansible/group_vars/raleigh’ 之中,可能类似这样:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">ntp_server: acme.example.org</span><br><span class="line">database_server: storage.example.org</span><br></pre></td></tr></table></figure>
+
+<p>这些定义变量的文件不是一定要存在,因为这是可选的特性.</p>
+<p>还有更进一步的运用,你可以为一个主机,或一个组,创建一个目录,目录名就是主机名或组名.目录中的可以创建多个文件, 文件中的变量都会被读取为主机或组的变量.如下 ‘raleigh’ 组对应于 /etc/ansible/group_vars/raleigh/ 目录,其下有两个文件 db_settings 和 cluster_settings, 其中分别设置不同的变量:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/etc/ansible/group_vars/raleigh/db_settings</span><br><span class="line">/etc/ansible/group_vars/raleigh/cluster_settings</span><br></pre></td></tr></table></figure>
+<p>‘raleigh’ 组下的所有主机,都可以使用 ‘raleigh’ 组的变量.当变量变得太多时,分文件定义变量更方便我们进行管理和组织. 还有一个方式也可参考,详见 <a target="_blank" rel="noopener" href="http://www.ansible.com.cn/docs/playbooks_vault.html">Ansible Vault</a> 关于组变量的部分. 注意,分文件定义变量的方式只适用于 Ansible 1.4 及以上版本.</p>
+<p>Tip: Ansible 1.2 及以上的版本中,group_vars/ 和 host_vars/ 目录可放在 inventory 目录下,或是 playbook 目录下. 如果两个目录下都存在,那么 playbook 目录下的配置会覆盖 inventory 目录的配置.</p>
+<p>Tip: 把你的 inventory 文件 和 变量 放入 git repo 中,以便跟踪他们的更新,这是一种非常推荐的方式.</p>
+<h2 id="Inventory-参数的说明"><a href="#Inventory-参数的说明" class="headerlink" title="Inventory 参数的说明"></a>Inventory 参数的说明</h2><p>如同前面提到的,通过设置下面的参数,可以控制 ansible 与远程主机的交互方式,其中一些我们已经讲到过:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">ansible_ssh_host</span><br><span class="line">      将要连接的远程主机名.与你想要设定的主机的别名不同的话,可通过此变量设置.</span><br><span class="line"></span><br><span class="line">ansible_ssh_port</span><br><span class="line">      ssh端口号.如果不是默认的端口号,通过此变量设置.</span><br><span class="line"></span><br><span class="line">ansible_ssh_user</span><br><span class="line">      默认的 ssh 用户名</span><br><span class="line"></span><br><span class="line">ansible_ssh_pass</span><br><span class="line">      ssh 密码(这种方式并不安全,我们强烈建议使用 --ask-pass 或 SSH 密钥)</span><br><span class="line"></span><br><span class="line">ansible_sudo_pass</span><br><span class="line">      sudo 密码(这种方式并不安全,我们强烈建议使用 --ask-sudo-pass)</span><br><span class="line"></span><br><span class="line">ansible_sudo_exe (new in version 1.8)</span><br><span class="line">      sudo 命令路径(适用于1.8及以上版本)</span><br><span class="line"></span><br><span class="line">ansible_connection</span><br><span class="line">      与主机的连接类型.比如:local, ssh 或者 paramiko. Ansible 1.2 以前默认使用 paramiko.1.2 以后默认使用 &#x27;smart&#x27;,&#x27;smart&#x27; 方式会根据是否支持 ControlPersist, 来判断&#x27;ssh&#x27; 方式是否可行.</span><br><span class="line"></span><br><span class="line">ansible_ssh_private_key_file</span><br><span class="line">      ssh 使用的私钥文件.适用于有多个密钥,而你不想使用 SSH 代理的情况.</span><br><span class="line"></span><br><span class="line">ansible_shell_type</span><br><span class="line">      目标系统的shell类型.默认情况下,命令的执行使用 &#x27;sh&#x27; 语法,可设置为 &#x27;csh&#x27; 或 &#x27;fish&#x27;.</span><br><span class="line"></span><br><span class="line">ansible_python_interpreter</span><br><span class="line">      目标主机的 python 路径.适用于的情况: 系统中有多个 Python, 或者命令路径不是&quot;/usr/bin/python&quot;,比如 \*BSD, 或者 /usr/bin/python</span><br><span class="line">      不是 2.X 版本的 Python.我们不使用 &quot;/usr/bin/env&quot; 机制,因为这要求远程用户的路径设置正确,且要求 &quot;python&quot; 可执行程序名不可为 python以外的名字(实际有可能名为python26).</span><br><span class="line"></span><br><span class="line">      与 ansible_python_interpreter 的工作方式相同,可设定如 ruby 或 perl 的路径....</span><br></pre></td></tr></table></figure>
+
+<p>一个主机文件的例子:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">some_host ansible_ssh_port=2222 ansible_ssh_user=manager</span><br><span class="line">aws_host ansible_ssh_private_key_file=/home/example/.ssh/aws.pem</span><br><span class="line">freebsd_host ansible_python_interpreter=/usr/local/bin/python</span><br><span class="line">ruby_module_host ansible_ruby_interpreter=/usr/bin/ruby.1.9.3</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="Patterns匹配"><a href="#Patterns匹配" class="headerlink" title="Patterns匹配"></a>Patterns匹配</h1><h2 id="如何使用Patterns匹配主机或组"><a href="#如何使用Patterns匹配主机或组" class="headerlink" title="如何使用Patterns匹配主机或组"></a>如何使用Patterns匹配主机或组</h2><p>首先要知道，我们使用ansible执行任务的两种方法：</p>
+<ul>
+<li>Ad-Hoc：执行一个单行命令，适合于运行单个任务。</li>
+<li>Playbook：<br> 每个playbook 由一个或多个 <code>play</code> 组成，它的内容是一个以 plays` 为元素的列表。<br> 在 play 之中,一组机器被映射为定义好的角色.在 ansible中，play 的内容被称为 tasks，即任务。在基本层次的应用中,一个任务是一个对 ansible 模块的调用。</li>
+</ul>
+<p>Ansible中的Patterns决定了我们执行任务可以匹配到哪些主机，意思是与哪些主机进行交互。</p>
+<h3 id="Ad-Hoc"><a href="#Ad-Hoc" class="headerlink" title="Ad-Hoc"></a>Ad-Hoc</h3><p>命令格式如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible &lt;pattern_goes_here&gt; -m &lt;module_name&gt; -a &lt;arguments&gt;</span><br></pre></td></tr></table></figure>
+
+<p>使用示例:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible webservers -m service -a &quot;name=httpd state=restarted&quot;</span><br></pre></td></tr></table></figure>
+<p>一个pattern通常关联到一系列组(主机的集合) ,如上示例中,所有的主机均在 “webservers” 组中.</p>
+<p>不管怎么样,在使用Ansible前,我们需事先告诉Ansible哪台机器将被执行. 能这样做的前提是需要预先定义唯一的 host names 或者 主机组.</p>
+<p><strong>匹配所有的主机</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">all</span><br><span class="line">*</span><br></pre></td></tr></table></figure>
+
+<p><strong>精确匹配</strong><br>可以写IP地址或系列主机名:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">one.example.com</span><br><span class="line">one.example.com:two.example.com</span><br><span class="line">192.168.1.50</span><br><span class="line">192.168.1.*</span><br></pre></td></tr></table></figure>
+
+<p><strong>或匹配</strong><br>Patterns 表示匹配的主机在web组或db组中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">web:db</span><br></pre></td></tr></table></figure>
+
+<p><strong>非模式匹配</strong><br>命令下需转义特殊符号，以下Patterns 表示匹配的主机在web组，不在db组中，包含在web组，又在db中的用户</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">web:\!db</span><br></pre></td></tr></table></figure>
+
+<p><strong>交集匹配</strong><br>以下Patterns 表示匹配的主机同时在db组和dbservers组中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">web:&amp;db</span><br></pre></td></tr></table></figure>
+
+<p><strong>通配符匹配</strong><br>*表示所有字符，[0]表示组第一个成员，[0:25] 表示组第1个到第24个成员，类似python中得切片</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">web-*.com:dbserver</span><br><span class="line">webserver[0]</span><br><span class="line">webserver[0:25]</span><br></pre></td></tr></table></figure>
+
+<p><strong>正则表达式匹配</strong><br>在开头的地方使用“~”，表示这是一个正则表达式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~(web|db).*\.example\.com</span><br></pre></td></tr></table></figure>
+
+<p><strong>组合匹配</strong><br>在webservers 或者dbservers 组中，必须还存在于staging 组中，但是不在phoenix 组中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">webservers:dbservers:&amp;staging:!phoenix</span><br></pre></td></tr></table></figure>
+<p>上面这个例子表示“‘webservers’ 和 ‘dbservers’ 两个组中隶属于 ‘staging’ 组并且不属于 ‘phoenix’ 组的机器才执行命令” … 哟！唷! 好烧脑的说！</p>
+<h3 id="ansible-playbook"><a href="#ansible-playbook" class="headerlink" title="ansible-playbook"></a>ansible-playbook</h3><p>在ansible-palybook 命令中，你也可以使用变量来组成这样的表达式，但是你必须使用“-e”的选项来指定这个表达式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">webservers:!&#123;&#123;excluded&#125;&#125;:&amp;&#123;&#123;required&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>通过 –limit 标记来添加排除条件</strong><br>只对  “–limit” 后的主机或组 执行剧本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible-playbook site.yml --limit datacenter2</span><br></pre></td></tr></table></figure>
+<p>如果你想从文件读取hosts,文件名以@为前缀即可.从Ansible 1.2开始支持该功能:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible-playbook site.yml --limit @retry_hosts.txt</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 此时使用认证方式依然使用 Inventory hosts文件中的ssh密码，retry_hosts.txt 中只包含节点ip</span><br><span class="line">192.168.1.21</span><br><span class="line">192.168.1.22</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>&nbsp;  </p>
+<!--**参考文章**：-->  
+<!--Patterns-->  
+<!--https://blog.51cto.com/lxlxlx/1894384 -->  
+<!--  http://www.ansible.com.cn/docs/intro_patterns.html  -->  
+<!--  https://www.cnblogs.com/hanyifeng/p/6193249.html  -->  
+<!--Ansible用命令管理主机-->  
+<!--  https://www.jianshu.com/p/82b4e9162590  -->  
+<!--  https://blog.csdn.net/weixin_44033360/article/details/103779064  -->  
+<!--  https://blog.csdn.net/weixin_33743880/article/details/89595014  -->  
+<!--  https://blog.csdn.net/qq_34646546/article/details/86606408  -->  
+<!--  https://blog.csdn.net/MatrixGod/article/details/82149712?utm_medium=distribute.pc_relevant.none-task-blog-baidujs-3  -->  
+<!--  https://www.cnblogs.com/xiaoyaojinzhazhadehangcheng/articles/8628877.html  -->  
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Mr.GaO</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://www.1year1x.com/2019/06/05/ansible_inventory_patterns/">https://www.1year1x.com/2019/06/05/ansible_inventory_patterns/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://www.1year1x.com" target="_blank">GO TO NEW WORLD</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/env/">env</a><a class="post-meta__tags" href="/tags/ansible%E5%9F%BA%E7%A1%80/">ansible基础</a></div><div class="post_share"><div class="social-share" data-image="/img/cover/ansible.jpeg" data-sites="facebook,wechat,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.png" target="_blank"><img class="post-qr-code-img" src="/img/wechat.png" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/06/06/ansible.cfg/"><img class="prev-cover" src="/img/cover/ansible.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Ansible的配置文件</div></div></a></div><div class="next-post pull-right"><a href="/2019/05/09/ansible_dir_structure/"><img class="next-cover" src="/img/cover/ansible.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Ansible目录结构介绍</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/06/06/ansible.cfg/" title="Ansible的配置文件"><img class="cover" src="/img/cover/ansible.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-06-06</div><div class="title">Ansible的配置文件</div></div></a></div><div><a href="/2019/05/09/ansible_dir_structure/" title="Ansible目录结构介绍"><img class="cover" src="/img/cover/ansible.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-05-09</div><div class="title">Ansible目录结构介绍</div></div></a></div><div><a href="/2019/06/07/ansible_ad_hoc/" title="Ad-Hoc命令——简单任务的执行"><img class="cover" src="/img/cover/ansible.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-06-07</div><div class="title">Ad-Hoc命令——简单任务的执行</div></div></a></div><div><a href="/2020/01/31/Go语言开发环境/" title="Go语言开发环境"><img class="cover" src="/img/cover/goland.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-01-31</div><div class="title">Go语言开发环境</div></div></a></div><div><a href="/2019/05/09/ansible_env_install/" title="Ansible简介与安装"><img class="cover" src="/img/cover/ansible.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-05-09</div><div class="title">Ansible简介与安装</div></div></a></div><div><a href="/2019/07/10/ansible_var_categores/" title="playbook常见的变量分类与变量优先级"><img class="cover" src="/img/cover/ansible.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-07-10</div><div class="title">playbook常见的变量分类与变量优先级</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Mr.GaO</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">66</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="mailto:xldsmile@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">冲鸭！！!</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Host-Inventory"><span class="toc-number">1.</span> <span class="toc-text">Host Inventory</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E4%B8%BB%E6%9C%BA%E5%92%8C%E7%BB%84"><span class="toc-number">1.1.</span> <span class="toc-text">远程主机和组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E4%B8%BB%E6%9C%BA%E7%9A%84%E8%BF%9E%E6%8E%A5%E5%8F%82%E6%95%B0%E5%92%8C%E5%8F%98%E9%87%8F"><span class="toc-number">1.2.</span> <span class="toc-text">远程主机的连接参数和变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%8A%E4%B8%80%E4%B8%AA%E7%BB%84%E4%BD%9C%E4%B8%BA%E5%8F%A6%E4%B8%80%E4%B8%AA%E7%BB%84%E7%9A%84%E5%AD%90%E6%88%90%E5%91%98"><span class="toc-number">1.3.</span> <span class="toc-text">把一个组作为另一个组的子成员</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%89%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84-%E7%BB%84%E7%BB%87Host%E5%92%8CGroup%E5%8F%98%E9%87%8F-more"><span class="toc-number">1.4.</span> <span class="toc-text">按目录结构 组织Host和Group变量(more)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Inventory-%E5%8F%82%E6%95%B0%E7%9A%84%E8%AF%B4%E6%98%8E"><span class="toc-number">1.5.</span> <span class="toc-text">Inventory 参数的说明</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Patterns%E5%8C%B9%E9%85%8D"><span class="toc-number">2.</span> <span class="toc-text">Patterns匹配</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Patterns%E5%8C%B9%E9%85%8D%E4%B8%BB%E6%9C%BA%E6%88%96%E7%BB%84"><span class="toc-number">2.1.</span> <span class="toc-text">如何使用Patterns匹配主机或组</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ad-Hoc"><span class="toc-number">2.1.1.</span> <span class="toc-text">Ad-Hoc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ansible-playbook"><span class="toc-number">2.1.2.</span> <span class="toc-text">ansible-playbook</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/07/10/ansible_win_spooler_fix/" title="Windows打印机漏洞修复"><img src="/img/cover/goland.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Windows打印机漏洞修复"/></a><div class="content"><a class="title" href="/2021/07/10/ansible_win_spooler_fix/" title="Windows打印机漏洞修复">Windows打印机漏洞修复</a><time datetime="2021-07-10T13:11:10.000Z" title="发表于 2021-07-10 21:11:10">2021-07-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/09/05/aws_s3_introduction/" title="AWS S3 Bucket 简介"><img src="/img/cover/aws.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AWS S3 Bucket 简介"/></a><div class="content"><a class="title" href="/2020/09/05/aws_s3_introduction/" title="AWS S3 Bucket 简介">AWS S3 Bucket 简介</a><time datetime="2020-09-04T22:30:16.000Z" title="发表于 2020-09-05 06:30:16">2020-09-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/09/05/aws_s3cmd/" title="s3cmd—AWS S3存储桶管理工具"><img src="/img/cover/aws.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="s3cmd—AWS S3存储桶管理工具"/></a><div class="content"><a class="title" href="/2020/09/05/aws_s3cmd/" title="s3cmd—AWS S3存储桶管理工具">s3cmd—AWS S3存储桶管理工具</a><time datetime="2020-09-04T22:30:16.000Z" title="发表于 2020-09-05 06:30:16">2020-09-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/09/03/aws_elb_listener/" title="AWS 侦听器配置管理"><img src="/img/cover/aws.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AWS 侦听器配置管理"/></a><div class="content"><a class="title" href="/2020/09/03/aws_elb_listener/" title="AWS 侦听器配置管理">AWS 侦听器配置管理</a><time datetime="2020-09-02T22:30:16.000Z" title="发表于 2020-09-03 06:30:16">2020-09-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/09/03/aws_elb_use/" title="AWS应用程序负载均衡的使用"><img src="/img/cover/aws.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AWS应用程序负载均衡的使用"/></a><div class="content"><a class="title" href="/2020/09/03/aws_elb_use/" title="AWS应用程序负载均衡的使用">AWS应用程序负载均衡的使用</a><time datetime="2020-09-02T22:30:16.000Z" title="发表于 2020-09-03 06:30:16">2020-09-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;1992 - 2025 By Mr.GaO</div><div class="footer_custom_text"><a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn/">ICP号</a><img class="icp-icon" src="/img/psr.webp"><span>京ICP备 2021003300号</span></a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    let initData = {
+      el: '#vcomment',
+      appId: '0u8o4s6ycKDkm2rRxEvT2Sow-gzGzoHsz',
+      appKey: 'WHBcYyFS5JtqsdCt6ApiYMT1',
+      placeholder: '留下你的暱称和邮箱...可以快速收到回復',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+    
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script> let backimg =["url(/img/bg/bg3.webp)","url(/img/bg/bg5.jpg)"];let index =Math.ceil(Math.random() * (backimg.length-1));document.getElementById("web_bg").style.backgroundImage = backimg[index]</script><div class="aplayer no-destroy aplayer aplayer-tag-marker meting-tag-marker" data-id="7884240066" data-server="tencent" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="true" muted></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="GKD,Giao,404" data-fontsize="15px" data-random="false" async="async"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config-diff',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', '', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hibiki.model.json"},"display":{"position":"right","width":150,"height":370},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>
